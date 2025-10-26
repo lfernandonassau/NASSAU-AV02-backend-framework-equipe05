@@ -1,0 +1,19 @@
+{
+  "name": "nassau-av02-backend-framework-equipe05",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe05.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe05/issues"
+  },
+  "homepage": "https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe05#readme"
+}
