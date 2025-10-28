@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# 🧭 Kodan — Sistema de Gerenciamento Kanban
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Node.js](https://img.shields.io/badge/Backend-Express.js-68a063?logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black)
+![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📘 Sobre o Projeto
 
-### `npm start`
+**Kodan** é uma plataforma web desenvolvida para a disciplina de **Backend Framework**, com o objetivo de aplicar conceitos de **arquitetura MVC**, **APIs RESTful** e **integração entre front-end e back-end**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A aplicação oferece um ambiente de **gestão de projetos em formato Kanban**, onde **líderes e colaboradores** podem criar projetos, organizar tarefas e acompanhar o progresso das equipes.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+> 🎯 **Propósito:** facilitar a organização do fluxo de trabalho entre times e aplicar práticas reais de desenvolvimento web moderno com Express e React.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ Funcionalidades Principais
 
-### `npm run build`
+| Categoria | Descrição |
+|------------|------------|
+| **🪐 Landing Page** | Tela inicial com identidade visual do Kodan e botões para cadastro/login. |
+| **👤 Cadastro e Login** | Sistema de autenticação com e-mail único, CPF e senha criptografada. |
+| **📂 Criação de Projetos e Times** | Líderes podem criar projetos e adicionar membros. |
+| **🧩 Painel Kanban** | Criação e movimentação de cards entre colunas (“A Fazer”, “Em Progresso”, “Concluído”). |
+| **🪪 Papéis de Usuário** | Diferenciação visual e funcional entre **Líder 🛡️** e **Colaborador 👤**. |
+| **🔄 Promoção de Membros** | Líder pode promover ou rebaixar colaboradores dentro do projeto. |
+| **🗒️ Cards/Tarefas** | Cada card possui título, prioridade, descrição, status e responsável. |
+| **📊 Relatórios de Progresso** | Acompanhamento visual do desempenho dos times. |
+| **⚙️ Tela de Carregamento (Splash)** | Exibição do logotipo e inicialização das dependências principais. |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧱 Tecnologias Utilizadas
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🔹 Backend
+- **Node.js + Express.js**
+- **MySQL**
+- **bcrypt** para criptografia de senhas
+- **Arquitetura MVC (Model–View–Controller)**
 
-### `npm run eject`
+### 🔹 Frontend
+- **React.js** (Vite)
+- **Axios** para consumo da API
+- **React Router DOM** para navegação entre telas
+- **React Icons / Lucide** para ícones visuais
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🗃️ Modelagem de Dados (Entidades)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Entidade | Campos Principais |
+|-----------|------------------|
+| **Usuário** | id, nome, email (unique), CPF (unique opcional), senha, papel (líder/colaborador) |
+| **Projeto** | id, nome, descrição, líder_id |
+| **Time** | id, nome, projeto_id |
+| **Membro** | id, usuário_id, time_id, função |
+| **Quadro (Kanban)** | id, projeto_id |
+| **Coluna** | id, nome, posição, quadro_id |
+| **Card (Tarefa)** | id, título, descrição, prioridade, status, responsável_id |
+| **Comentário** | id, texto, autor_id, card_id |
+| **Notificação** | id, mensagem, tipo, destino_id |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> Total de **8 entidades principais**, conforme exigência da disciplina.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🧩 Estrutura do Projeto
