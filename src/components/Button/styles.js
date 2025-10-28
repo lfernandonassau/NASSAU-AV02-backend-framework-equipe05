@@ -25,7 +25,7 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #0684beff;
+        background: #0487c4ff;
 
         &::after {
             border-radius: 22px;
@@ -34,7 +34,6 @@ export const ButtonContainer = styled.button`
             background: #000000e0;
         }
     `}
-
 
 `
 export const HomeButton = styled.button`
