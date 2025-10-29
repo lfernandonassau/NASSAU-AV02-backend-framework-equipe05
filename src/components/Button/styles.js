@@ -25,7 +25,7 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #0487c4ff;
+        background: #05628dff;
 
         &::after {
             border-radius: 22px;

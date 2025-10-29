@@ -1,22 +1,53 @@
 import styled from 'styled-components'
 import { MdEmail, MdLock } from 'react-icons/md'
+import LoginBackgroundImage from '../../assets/login-background.svg'
 
 export const LoginContainer = styled.main`
-    width: 100%;
-    max-width: 50%;
-    margin: 0 auto;
-    margin-top: 60px;
+    width: 30vw;
+    
+    background-color: #ffffffb2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 0 10px 10px 0;
 
 `
-export const Wrapper = styled.div`
-    max-width: 300px;
+export const WelcomeContainer = styled.main`
+    width: 30vw;
+    
+    background-color: #0684bed7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 10px 0 0 10px;
 
 `
+export const PageWrapper = styled.div`
+  background-image: url(${LoginBackgroundImage});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  width: 100%;
+  min-height: 100vh; 
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+`
+export const LoginNewScreen = styled.div`
+    display: flex;
+    align-items: stretch;
+`
+
 
 export const Column = styled.div`
     flex: 1;
@@ -29,27 +60,12 @@ export const Row = styled.div`
     align-items: center;
     margin-top: 20px;
 `
-
-export const ImageContainer = styled.img`
-    display: block; /* Essencial para que margin: auto funcione */
-    max-width: 100%; /* Garante a responsividade */
-    height: auto;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    margin-top: 30px;
-
-`
-
 export const TitleKanban = styled.h2`
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 700;
-    color: #0684beff;
-    font-size: 50px;
-    text-align: center;
-    width: 800px;
-    margin-bottom: 15px;
-    line-height: 75px;
-
+    font-weight: 400;
+    color: #ffffffff;
+    font-size: 25px;
 `
 export const TitleLogin = styled.p`
     font-family: 'Inter';
@@ -63,9 +79,28 @@ export const TitleLogin = styled.p`
 
 `
 
-export const TitleColor = styled.h2`
-    color: #000000;
+export const TitleWelcome = styled.h2`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    color: #ffffffff;
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 75px;
+`
 
+export const WelcomeSubText = styled.p`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    color: #ffffffff;
+    font-size: 18px;
+    text-align: center; 
+    max-width: 420px;
+    margin-bottom: 35px;
+    line-height: 25px;
+    margin: 0 auto 20px auto;
 `
 
 export const KanbanSubText = styled.p`
