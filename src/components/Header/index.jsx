@@ -5,15 +5,16 @@ import {
     BuscarInputContainer,
     HeaderContainer,
     Input,
-    Menu,
-    MenuRight,
     Row,
     TitleMenu,
     Wrapper,
 } from './styles'
 import { HomeButton } from '../Button/styles'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+
+    const navigate = useNavigate()
   return (
     <Wrapper>
         <HeaderContainer>
@@ -23,7 +24,7 @@ const Header = () => {
             </Row>
             <Row>
                 <HomeButton onClick={() => null}>Home</HomeButton>
-                <Button title="Entrar"></Button>
+                <Button title="Entrar" onClick={() => navigate('/login')}></Button>
                 <Button title="Cadastrar"></Button>
                 <BuscarInputContainer>
                     <Input placeholder='Buscar...'/>
