@@ -1,12 +1,14 @@
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
+
+import { useNavigate } from 'react-router-dom'
+
 import { 
         Column, 
         Row, 
         TitleLogin, 
         KanbanSubText, 
-        EsqueciSubText,   
-        CriarContaText, 
+        EsqueciSubText,    
         LoginContainer, 
         EmailEstilizado,
         PasswordEstilizado,
@@ -18,8 +20,9 @@ import {
         TitleKanban,
         } 
         from './styles'
-import { Link } from 'react-router-dom'
 const Login = () => {
+
+    const navigate = useNavigate()
     return (
         <>
         <PageWrapper>
@@ -49,18 +52,13 @@ const Login = () => {
                         <form>
                             <Input placeholder="E-mail" leftIcon={<EmailEstilizado/>}/>
                             <Input placeholder="Senha" type="password" leftIcon={<PasswordEstilizado/>}/>
-                            <Row>
-                                <EsqueciSubText>
-                                Esqueci minha senha
-                            </EsqueciSubText>
-                            </Row>
                             <Button title="Entrar" ></Button>
                         </form>
                         <Row>
-                            <CriarContaText>
-                                Não tem uma conta ainda? <Link to="/">Criar conta</Link>
-                            </CriarContaText>
-                        </Row>
+                                <EsqueciSubText onClick= {() => { navigate('/')}}>
+                                    Esqueci minha senha
+                                </EsqueciSubText>
+                            </Row>
                     </Column>
                 </LoginContainer>
             </LoginNewScreen>

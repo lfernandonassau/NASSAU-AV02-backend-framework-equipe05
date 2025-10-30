@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
     width: 100%;
-    max-width: 80%;
+    max-width: 95%;
     height: 47px;
 
     display: flex;
@@ -28,7 +28,8 @@ export const Column = styled.div`
 `
 
 export const Wrapper = styled.div`
-    background: linear-gradient(1deg, #02416bff, #0e0d0dff);
+    */background: linear-gradient(1deg, #02416bff, #0e0d0dff); */
+    background: transparent;
     width: 100%;
     height: 47px;
     display: flex;
@@ -40,7 +41,7 @@ export const Wrapper = styled.div`
 export const BuscarInputContainer = styled.div`
     width: 170px;
     height: 30px;
-    background: #00000036;
+    background: #0000001a;
     border-radius: 8px;
     padding: 2px 5px;
     margin: 0 12px;
@@ -65,6 +66,7 @@ export const TitleMenu = styled.a`
     font-family: 'Inter';
     font-style: normal;
     font-size: 18px;
+    font-weight: 700;
     line-height: 25px;
     color: #FFFFFF;
     margin-right: 12px;
@@ -92,10 +94,3 @@ export const UserPicture = styled.img`
 
 `
 
-export const Input = styled.input`
-    background: transparent;
-    flex: 1;
-    border: 0;
-    color: #FFFFFF;
-
-`
