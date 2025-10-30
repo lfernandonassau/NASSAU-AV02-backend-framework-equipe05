@@ -1,16 +1,18 @@
 import React from 'react'
+import { MdSearch } from 'react-icons/md'
 import logo from '../../assets/logo.svg'
 import { Button } from '../Button'
 import {
     BuscarInputContainer,
     HeaderContainer,
-    Input,
     Row,
     TitleMenu,
     Wrapper,
 } from './styles'
 import { HomeButton } from '../Button/styles'
 import { useNavigate } from 'react-router-dom'
+import { Input } from '../../components/Input'
+
 
 const Header = () => {
 
@@ -27,7 +29,7 @@ const Header = () => {
                 <Button title="Entrar" onClick={() => navigate('/login')}></Button>
                 <Button title="Cadastrar"></Button>
                 <BuscarInputContainer>
-                    <Input placeholder='Buscar...'/>
+                    <Input placeholder='Buscar...' rightIcon={<MdSearch/>} variant="" />
                 </BuscarInputContainer>
             </Row>
         </HeaderContainer>

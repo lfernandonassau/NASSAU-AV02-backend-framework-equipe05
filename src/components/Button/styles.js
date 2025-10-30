@@ -26,6 +26,7 @@ export const ButtonContainer = styled.button`
         font-weight: 600;
 
         background: #05628dff;
+        filter: drop-shadow(2px 10px 6px rgba(0.10, 0.6, 0.8, 0.6));
 
         &::after {
             border-radius: 22px;

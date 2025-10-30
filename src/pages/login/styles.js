@@ -14,6 +14,7 @@ export const LoginContainer = styled.main`
     padding-top: 50px;
     padding-bottom: 50px;
     border-radius: 0 10px 10px 0;
+    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
 `
 export const WelcomeContainer = styled.main`
@@ -28,6 +29,7 @@ export const WelcomeContainer = styled.main`
     padding-top: 50px;
     padding-bottom: 50px;
     border-radius: 10px 0 0 10px;
+    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
 `
 export const PageWrapper = styled.div`
@@ -122,9 +124,9 @@ export const EsqueciSubText = styled.p`
     font-weight: 700;
     color: #001F36;
     font-size: 10px; 
-    line-height: 19px;
-    padding-left: 100px;
-    margin: 0 0 4px 0;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
 `
 
 export const CriarContaText = styled.p`

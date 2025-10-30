@@ -21,14 +21,14 @@ export const ImageContainer = styled.img`
     height: auto;
     margin: 0 auto; /* Centraliza horizontalmente */
     margin-top: 30px;
-
+    filter: drop-shadow(2px 35px 15px rgba(0.10, 0.6, 0.8, 0.6));
 `
 
 export const TitleKanban = styled.h2`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    color: #0684beff;
+    color: #ffffffff;
     font-size: 50px;
     text-align: center;
     width: 800px;

@@ -1,14 +1,19 @@
 import React from 'react'
 
-import { IconContainer, InputContainer, InputText } from './styles'
+import { InputContainer, InputText, LeftIcon, RightIcon } from './styles'
 
-const Input = ({leftIcon, name, ...rest}) => {
+const Input = ({variant = 'primary', rightIcon, leftIcon, name, ...rest}) => {
   return (
-    <InputContainer>
-        {leftIcon ? (<IconContainer>{leftIcon}</IconContainer>) : null}
+    <InputContainer variant={variant}>
+        {leftIcon ? (<LeftIcon>{leftIcon}</LeftIcon>) : null}
+
         <InputText {...rest}/>
+
+        {rightIcon ? (<RightIcon>{rightIcon}</RightIcon>) : null}
     </InputContainer>
   )
 }
+
+
 
 export { Input }
