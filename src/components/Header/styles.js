@@ -1,8 +1,9 @@
-import styled from 'styled-components'
+import { MdNotifications } from 'react-icons/md'
+import {styled, css} from 'styled-components'
 
 export const HeaderContainer = styled.div`
     width: 100%;
-    max-width: 95%;
+    max-width: 90%;
     height: 47px;
 
     display: flex;
@@ -35,6 +36,10 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    ${({variant}) => variant !== 'primary' && css`
+        background-color: #00b7d7ff;
+    `}
 
 `
 
@@ -70,16 +75,6 @@ export const TitleBorder = styled.div`
 
 `
 
-export const TitleMenu = styled.a`
-    font-family: 'Lobster Two';
-    font-style: normal;
-    font-size: 35px;
-    font-weight: 700;
-    line-height: 30px;
-    color: #0063918c;
-    text-decoration: none;
-
-`
 
 
 export const MenuRight = styled.a`
@@ -98,6 +93,14 @@ export const UserPicture = styled.img`
     height: 32px;
     border-radius: 22px;
     border: 2px solid #FFFFFF;
+    margin-right: 20px;
+
+`
+export const FeedPicture = styled(MdNotifications)`
+    width: 25px;
+    height: 20px;
+    border-radius: 22px;
+    margin-right: 10px;
 
 `
 

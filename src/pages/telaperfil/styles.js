@@ -1,14 +1,23 @@
 import styled from 'styled-components'
 
+export const Wrapper = styled.div`
+    width: 100%;
+    min-height: 100vh; /* Garante que cubra a altura inteira da tela */
+    background-color: #FAFAFA;
+
+    /* Adicionei 'flex' aqui para ajudar a centralizar o <Container> principal, que tem margem automática.
+    */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
 
 export const Container = styled.main`
     width: 100%;
     max-width: 50%;
     margin: 0 auto;
-    margin-top: 60px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     text-align: center;
 `
