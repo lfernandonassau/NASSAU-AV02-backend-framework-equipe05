@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MdEmail, MdLock } from 'react-icons/md'
+import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import LoginBackgroundImage from '../../assets/login-background.svg'
 
 export const LoginContainer = styled.main`
@@ -122,9 +122,10 @@ export const EsqueciSubText = styled.p`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    color: #001F36;
-    font-size: 10px; 
+    color: #000000ff;
+    font-size: 9px; 
     text-align: center;
+    margin-bottom: 20px;
     width: 100%;
     cursor: pointer;
 `
@@ -147,6 +148,18 @@ export const EmailEstilizado = styled(MdEmail)`
     font-size: 15px;
 `
 export const PasswordEstilizado = styled(MdLock)`
+    color: #0972c9ff;
+    margin-right: 5px;
+    font-size: 15px;
+`
+
+export const MagicEye = styled(MdVisibility)`
+    color: #0972c9ff;
+    margin-right: 5px;
+    font-size: 15px;
+`
+
+export const MagicEyeOff = styled(MdVisibilityOff)`
     color: #0972c9ff;
     margin-right: 5px;
     font-size: 15px;

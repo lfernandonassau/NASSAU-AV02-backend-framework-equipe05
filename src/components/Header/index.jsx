@@ -6,7 +6,6 @@ import {
     BuscarInputContainer,
     HeaderContainer,
     Row,
-    TitleBorder,
     TitleMenu,
     Wrapper,
 } from './styles'

@@ -1,6 +1,7 @@
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { 
@@ -18,10 +19,12 @@ import {
         TitleWelcome,
         WelcomeSubText,
         TitleKanban,
+        MagicEye,
+        MagicEyeOff,
         } 
         from './styles'
 const Login = () => {
-
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     return (
         <>
@@ -51,14 +54,14 @@ const Login = () => {
                         </KanbanSubText>
                         <form>
                             <Input placeholder="E-mail" leftIcon={<EmailEstilizado/>}/>
-                            <Input placeholder="Senha" type="password" leftIcon={<PasswordEstilizado/>}/>
-                            <Button title="Entrar" ></Button>
-                        </form>
-                        <Row>
+                            <Input placeholder="Senha" type={showPassword ? 'text' : 'password'} leftIcon={<PasswordEstilizado/>} rightIcon={showPassword ? (<MagicEye onClick={() => setShowPassword(false)}/>) : (<MagicEyeOff onClick={() => setShowPassword(true)}/>)}/>
+                            <Row>
                                 <EsqueciSubText onClick= {() => { navigate('/')}}>
                                     Esqueci minha senha
                                 </EsqueciSubText>
                             </Row>
+                            <Button title="Entrar" ></Button>
+                        </form>
                     </Column>
                 </LoginContainer>
             </LoginNewScreen>
