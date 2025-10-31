@@ -12,7 +12,7 @@ export const ButtonContainer = styled.button`
     margin-right: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    filter: drop-shadow(0 1px 3px rgba(0.10, 0.6, 0.8, 0.6));
+    filter: drop-shadow(0 5px 2px rgba(0.10, 0.6, 0.8, 0.6));
 
     &:hover {
         background: #000000;
