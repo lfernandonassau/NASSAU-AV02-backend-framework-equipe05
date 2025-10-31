@@ -97,7 +97,8 @@ export const HasInfo = styled.div`
         font-style: normal;
         font-weight: 700;
         font-size: 16px;
-        line-height: 22px;    
+        line-height: 22px;
+        color: #000000;    
     }
 
 `
