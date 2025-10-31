@@ -82,7 +82,7 @@ export const TitleLogin = styled.p`
 `
 
 export const TitleWelcome = styled.h2`
-    font-family: 'Inter';
+    font-family: 'Lobster Two';
     font-style: normal;
     font-weight: 700;
     color: #ffffffff;
