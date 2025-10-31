@@ -60,7 +60,7 @@ const Login = () => {
                                     Esqueci minha senha
                                 </EsqueciSubText>
                             </Row>
-                            <Button title="Entrar" ></Button>
+                            <Button title="Entrar" onClick={() => navigate('/perfil')} ></Button>
                         </form>
                     </Column>
                 </LoginContainer>

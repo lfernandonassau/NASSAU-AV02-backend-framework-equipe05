@@ -4,9 +4,10 @@ import logo from '../../assets/logo.svg'
 import { Button } from '../Button'
 import {
     BuscarInputContainer,
+    FeedPicture,
     HeaderContainer,
     Row,
-    TitleMenu,
+    UserPicture,
     Wrapper,
 } from './styles'
 import { HomeButton } from '../Button/styles'
@@ -14,25 +15,30 @@ import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/Input'
 
 
-const Header = () => {
+const Header = ({autenticado, variant = 'primary'}) => {
 
     const navigate = useNavigate()
   return (
-    <Wrapper>
+    <Wrapper variant={variant}>
         <HeaderContainer>
             <Row>
-                <img src={logo} alt="" />
-                <TitleMenu>
-                    Kodan
-                </TitleMenu>
+                <img src={logo} alt="Kodan Logo"/>
             </Row>
             <Row>
-                <HomeButton onClick={() => null}>Home</HomeButton>
-                <Button title="Entrar" onClick={() => navigate('/login')}></Button>
-                <Button title="Cadastrar"></Button>
-                <BuscarInputContainer>
-                    <Input placeholder='Buscar...' rightIcon={<MdSearch/>} variant="" />
-                </BuscarInputContainer>
+                {autenticado ?(<>
+                    <HomeButton onClick={() => navigate('/')}>Home</HomeButton>
+                    <BuscarInputContainer>
+                        <Input placeholder='Buscar...' rightIcon={<MdSearch/>} variant="" />
+                    </BuscarInputContainer>
+                    <FeedPicture />
+                    <UserPicture src="https://avatars.githubusercontent.com/u/179970243?v=4"/>
+                    </>) : (
+                    <>
+                        
+                        <Button title="Entrar" onClick={() => navigate('/login')}></Button>
+                        <Button title="Cadastrar"></Button>
+                    </>
+                )}
             </Row>
         </HeaderContainer>
 
