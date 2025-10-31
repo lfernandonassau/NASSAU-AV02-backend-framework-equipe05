@@ -25,7 +25,7 @@ export const ImageContainer = styled.img`
 `
 
 export const TitleKanban = styled.h2`
-    font-family: 'Inter';
+    font-family: 'Lobster Two';
     font-style: normal;
     font-weight: 700;
     color: #ffffffff;
@@ -38,7 +38,7 @@ export const TitleKanban = styled.h2`
 `
 
 export const TitleColor = styled.h2`
-    color: #000000;
+    color: #086194ff;
 
 `
 
