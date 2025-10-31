@@ -1,17 +1,18 @@
 import styled, { css } from 'styled-components'
 
 export const ButtonContainer = styled.button`
-    background: #043d69ff;
+    background: #0a6bb4ff;
     border-radius: 10px;
     position: relative;
     font-family: 'Inter';
     color: #FFFFFF;
     padding: 6px 12px;
-    min-width: 130px;
+    min-width: 105px;
     border: none;
     margin-right: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    filter: drop-shadow(0 1px 3px rgba(0.10, 0.6, 0.8, 0.6));
 
     &:hover {
         background: #000000;
@@ -25,7 +26,7 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #05628dff;
+        background: #0a6bb4ff;
         filter: drop-shadow(2px 10px 6px rgba(0.10, 0.6, 0.8, 0.6));
 
         &::after {
@@ -44,6 +45,7 @@ export const HomeButton = styled.button`
     border: none;
     font-style: normal;
     font-size: 12px;
+    font-weight: 400;
     line-height: 25px;
     color: #FFFFFF;
     margin-right: 12px;

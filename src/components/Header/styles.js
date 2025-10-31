@@ -62,14 +62,21 @@ export const Menu = styled.a`
 
 `
 
+export const TitleBorder = styled.div`
+    background-color: #0063918c;
+    border-radius: 20px;
+    text-align: center;
+    padding: 5px 10px 4px 10px;
+
+`
+
 export const TitleMenu = styled.a`
-    font-family: 'Inter';
+    font-family: 'Lobster Two';
     font-style: normal;
-    font-size: 18px;
+    font-size: 35px;
     font-weight: 700;
-    line-height: 25px;
-    color: #FFFFFF;
-    margin-right: 12px;
+    line-height: 30px;
+    color: #0063918c;
     text-decoration: none;
 
 `

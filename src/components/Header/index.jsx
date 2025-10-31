@@ -6,6 +6,7 @@ import {
     BuscarInputContainer,
     HeaderContainer,
     Row,
+    TitleBorder,
     TitleMenu,
     Wrapper,
 } from './styles'
@@ -21,8 +22,10 @@ const Header = () => {
     <Wrapper>
         <HeaderContainer>
             <Row>
-                <img src={logo} alt="Logo"/>
-                <TitleMenu>Kodan</TitleMenu>
+                <img src={logo} alt="" />
+                <TitleMenu>
+                    Kodan
+                </TitleMenu>
             </Row>
             <Row>
                 <HomeButton onClick={() => null}>Home</HomeButton>

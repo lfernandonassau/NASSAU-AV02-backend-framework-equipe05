@@ -20,7 +20,7 @@ export const LoginContainer = styled.main`
 export const WelcomeContainer = styled.main`
     width: 30vw;
     
-    background-color: #0684bed7;
+    background-color: #89c6ffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -142,12 +142,12 @@ export const CriarContaText = styled.p`
     margin-top: 0;
 `
 export const EmailEstilizado = styled(MdEmail)`
-    color: #000000;
+    color: #0972c9ff;
     margin-right: 5px;
-    font-size: 20px;
+    font-size: 15px;
 `
 export const PasswordEstilizado = styled(MdLock)`
-    color: #000000;
+    color: #0972c9ff;
     margin-right: 5px;
-    font-size: 20px;
+    font-size: 15px;
 `
