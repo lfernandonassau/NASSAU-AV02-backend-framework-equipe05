@@ -22,7 +22,7 @@ const Header = ({autenticado, variant = 'primary'}) => {
     <Wrapper variant={variant}>
         <HeaderContainer>
             <Row>
-                <img src={logo} alt="Kodan Logo"/>
+                <img src={logo} alt="Kodan Logo" onClick={() => navigate('/')}/>
             </Row>
             <Row>
                 {autenticado ?(<>
