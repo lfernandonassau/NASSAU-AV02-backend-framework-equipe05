@@ -20,6 +20,12 @@ export const Container = styled.main`
     display: flex;
     align-items: center;
     text-align: center;
+
+    @media (max-width: 768px) {
+        /* Aumenta a largura em telas menores para melhor visualização */
+        max-width: 90%; 
+        margin-top: 40px; /* Reduz a margem superior um pouco */
+    }
 `
 
 
@@ -42,6 +48,11 @@ export const TitleKanban = styled.h2`
     width: 800px;
     margin-bottom: 15px;
     line-height: 75px;
+
+    @media (max-width: 480px) {
+        /* Reduz o tamanho da fonte para smartphones */
+        font-size: 32px;
+    }
 
 `
 

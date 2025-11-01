@@ -54,6 +54,11 @@ export const BuscarInputContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 420px) {
+        /* Oculta a barra de pesquisa em telas de smartphone */
+        display: none;
+    }
 `
 
 export const Menu = styled.a`
