@@ -18,7 +18,7 @@ import { Input } from '../../components/Input'
 const Header = ({autenticado, variant = 'primary'}) => {
 
     const navigate = useNavigate()
-  return (
+    return (
     <Wrapper variant={variant}>
         <HeaderContainer>
             <Row>
@@ -43,7 +43,7 @@ const Header = ({autenticado, variant = 'primary'}) => {
         </HeaderContainer>
 
     </Wrapper> // Vai ficar por volta de tudo, é todo o background
-  )
+    )
 }
 
 

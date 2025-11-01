@@ -34,17 +34,17 @@ export const WelcomeContainer = styled.main`
 
 `
 export const PageWrapper = styled.div`
-  background-image: url(${LoginBackgroundImage});
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  width: 100%;
-  min-height: 100vh; 
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 480px) {
+    background-image: url(${LoginBackgroundImage});
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 480px) {
         /* Reduz o tamanho da fonte para smartphones */
         height: 300px;
         max-width: 95%;
@@ -52,7 +52,7 @@ export const PageWrapper = styled.div`
     @media (max-width: 768px) {
         
     }
-  
+
 `
 export const LoginNewScreen = styled.div`
     display: flex;
