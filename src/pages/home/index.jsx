@@ -17,7 +17,7 @@ const Home = () => {
             </TitleKanban>
             <KanbanText>Uma forma eficiente de turbinar os projetos da sua equipe!</KanbanText>
             <Button variant='secundary' title='Vamos começar!' onClick={() => null}/>
-            <ImageContainer src={banner} alt="Banner Kodan" />    
+            <ImageContainer src={banner} alt="Banner Kodan" />
         </Container>
         <Footer/>
         </>

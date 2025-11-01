@@ -1,5 +1,5 @@
 import { Header } from '../../components/Header'
-import { Card } from '../../components/Card'
+import CardTask from '../../components/CardTask'
 import { Container } from '../home/styles'
 import { Wrapper } from './styles'
 const TelaPerfil = ({variant= 'secondary'}) => {
@@ -7,7 +7,7 @@ const TelaPerfil = ({variant= 'secondary'}) => {
         <Wrapper>
             <Header autenticado={true} variant={variant} />
             <Container>
-                <Card />
+                <CardTask/>
             </Container>
         </Wrapper>
     </>)

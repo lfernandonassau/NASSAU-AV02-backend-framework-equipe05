@@ -41,21 +41,28 @@ export const Container = styled.main`
 
 
 export const ImageContainer = styled.img`
-    display: block; /* Essencial para que margin: auto funcione */
-    max-width: 100%; /* Garante a responsividade */
+    display: block;
+    max-width: 100%;
     height: auto;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    margin-top: 30px;
-    filter: drop-shadow(2px 35px 15px rgba(0.10, 0.6, 0.8, 0.6));
+    margin: 30px auto 0;
+    border-radius: 16px;
+    transition: all 0.3s ease-in-out;
+
+    filter: drop-shadow(0 25px 18px rgba(8, 16, 30, 0.35))
+            drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
+    &:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 35px 25px rgba(8, 16, 30, 0.4))
+            drop-shadow(0 12px 10px rgba(12, 24, 40, 0.3));
+    }
+
+    @media (max-width: 768px) {
+    max-width: 95%;
+    padding: 0;
+    }
 
     @media (max-width: 480px) {
-        /* Reduz o tamanho da fonte para smartphones */
-        height: 300px;
-        max-width: 95%;
-        padding: 0;
-    }
-    @media (max-width: 768px) {
-        padding: 0;
+    height: 300px;
     }
 `
 
