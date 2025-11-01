@@ -15,6 +15,7 @@ export const LoginContainer = styled.main`
     padding-bottom: 50px;
     border-radius: 0 10px 10px 0;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
+    
 
 `
 export const WelcomeContainer = styled.main`
@@ -43,6 +44,14 @@ export const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 480px) {
+        /* Reduz o tamanho da fonte para smartphones */
+        height: 300px;
+        max-width: 95%;
+    }
+    @media (max-width: 768px) {
+        
+    }
   
 `
 export const LoginNewScreen = styled.div`
