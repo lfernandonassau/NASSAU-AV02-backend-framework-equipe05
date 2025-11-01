@@ -26,7 +26,6 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     return (
-        <>
         <PageWrapper>
             <LoginNewScreen>
                 <WelcomeContainer>
@@ -37,7 +36,6 @@ const Login = () => {
                         </WelcomeSubText>
                         <TitleKanban> - Equipe Kodan</TitleKanban>
                         <WelcomeSubText>
-                            <br />
                             Ainda não é cadastrado?
                         </WelcomeSubText>
                         <Button title="Clique aqui!" variant="secondary"/>
@@ -65,7 +63,6 @@ const Login = () => {
                 </LoginContainer>
             </LoginNewScreen>
         </PageWrapper>
-        </>
     )
 }
 

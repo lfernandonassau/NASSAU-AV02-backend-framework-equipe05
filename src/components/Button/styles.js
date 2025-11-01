@@ -4,7 +4,7 @@ export const ButtonContainer = styled.button`
     background: #0a6bb4ff;
     border-radius: 10px;
     position: relative;
-    font-family: 'Inter';
+    font-family: 'Montserrat';
     color: #FFFFFF;
     padding: 6px 12px;
     min-width: 105px;
@@ -26,7 +26,7 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #0a6bb4ff;
+        background: #1b4668ff;
         filter: drop-shadow(2px 10px 6px rgba(0.10, 0.6, 0.8, 0.6));
 
         &::after {

@@ -3,34 +3,48 @@ import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import LoginBackgroundImage from '../../assets/login-background.svg'
 
 export const LoginContainer = styled.main`
-    width: 30vw;
-    
-    background-color: #ffffffb2;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+
+    background-color: #ffffff9c;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+
     border-radius: 0 10px 10px 0;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
+
+    @media (max-width: 768px) {
+      max-width: 100%; 
+      border-radius: 0 0 10px 10px;
+    }
     
 
 `
 export const WelcomeContainer = styled.main`
-    width: 30vw;
-    
-    background-color: #89c6ffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+
+    background-color: #9de3ffb2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    
     border-radius: 10px 0 0 10px;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
+
+    @media (max-width: 768px) {
+      
+        padding: 7px 10px 30px 2px;
+        max-width: 100%; 
+        border-radius: 10px 10px 0 0;
+    }
 
 `
 export const PageWrapper = styled.div`
@@ -44,12 +58,12 @@ export const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 480px) {
-        /* Reduz o tamanho da fonte para smartphones */
-        height: 300px;
-        max-width: 95%;
-    }
+
     @media (max-width: 768px) {
+        
+        padding: 60px 15px;
+        align-items: flex-start;
+        background-attachment: scroll;
         
     }
   
@@ -57,6 +71,13 @@ export const PageWrapper = styled.div`
 export const LoginNewScreen = styled.div`
     display: flex;
     align-items: stretch;
+    width: 100%;
+    max-width: 800px;
+
+    @media (max-width: 768px) {
+      flex-direction: column; /* << MÁGICO: Empilha os containers */
+      max-width: 450px; /* Largura de 1 coluna */
+    }
 `
 
 
@@ -72,14 +93,14 @@ export const Row = styled.div`
     margin-top: 20px;
 `
 export const TitleKanban = styled.h2`
-    font-family: 'Inter';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
     color: #ffffffff;
-    font-size: 25px;
+    font-size: 15px;
 `
 export const TitleLogin = styled.p`
-    font-family: 'Inter';
+    font-family: 'Lobster two';
     font-style: normal;
     font-weight: 700;
     color: #000000ff;
@@ -102,16 +123,19 @@ export const TitleWelcome = styled.h2`
 `
 
 export const WelcomeSubText = styled.p`
-    font-family: 'Inter';
+    font-family: 'Montserrat', 'sans serif';
     font-style: normal;
     font-weight: 300;
-    color: #ffffffff;
+    color: #000000ff;
     font-size: 18px;
     text-align: center; 
     max-width: 420px;
-    margin-bottom: 35px;
     line-height: 25px;
-    margin: 0 auto 20px auto;
+    margin: 20px auto 10px auto;
+    @media (max-width: 768px) {
+      font-size: 20px;
+      line-height: 20px;
+    }
 `
 
 export const KanbanSubText = styled.p`
