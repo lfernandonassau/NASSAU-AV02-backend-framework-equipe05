@@ -5,13 +5,16 @@ export const GlobalStyle = createGlobalStyle`
     *{
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
 
         
     }
 
     body {
-        background-color: #89c6ffff;
+        width: 100%;
         color: #FFFFFF;
     }
+
+    
 
 `
