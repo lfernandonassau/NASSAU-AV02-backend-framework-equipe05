@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
     width: 100%;
     min-height: 100vh; /* Garante que cubra a altura inteira da tela */
-    background-color: #FAFAFA;
+    background-image: linear-gradient(150deg, #9fcafcff, #ffffffff);
 
     /* Adicionei 'flex' aqui para ajudar a centralizar o <Container> principal, que tem margem automática.
     */
@@ -27,27 +27,42 @@ export const Container = styled.main`
         margin-top: 40px; /* Reduz a margem superior um pouco */
     }
 `
+export const PerfilContainer = styled.div`
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
 
+    background-color: #ffffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    
+    border-radius: 10px;
+    filter: drop-shadow(0 0 5px rgba(0.10, 0.6, 0.8, 0.6));
+
+
+`
 
 export const ImageContainer = styled.img`
     display: block; /* Essencial para que margin: auto funcione */
     max-width: 100%; /* Garante a responsividade */
-    height: auto;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    margin-top: 30px;
-    filter: drop-shadow(2px 35px 15px rgba(0.10, 0.6, 0.8, 0.6));
+    height: 100px;
+    border-radius: 50px;
+    
 `
 
-export const TitleKanban = styled.h2`
+export const TitleKanban = styled.p`
     font-family: 'Lobster Two';
     font-style: normal;
     font-weight: 700;
-    color: #ffffffff;
-    font-size: 50px;
+    color: #000000ff;
+    font-size: 20px;
     text-align: center;
     width: 800px;
     margin-bottom: 15px;
-    line-height: 75px;
+    line-height: 30px;
 
     @media (max-width: 480px) {
         /* Reduz o tamanho da fonte para smartphones */
@@ -56,8 +71,11 @@ export const TitleKanban = styled.h2`
 
 `
 
-export const TitleColor = styled.h2`
-    color: #086194ff;
+export const TitleColor = styled.p`
+    color: #000000ff;
+    font-style: 'Montserrat';
+    font-size: 20px;
+    font-weight: 500;
 
 `
 

@@ -12,7 +12,7 @@ import {
     ColumnsWrapper
 } from "./styles";
 
-const PainelPage = () => {
+const PainelPage = ({variant = 'secondary'}) => {
     const pendentesTasks = [
     {
         title: "Redesign da página inicial",
@@ -83,7 +83,7 @@ const PainelPage = () => {
 
     return (
     <PageWrapper>
-        <Header autenticado={true} />
+        <Header autenticado={true} variant={variant} />
 
       {/* Quadro branco central com tudo dentro */}
         <BoardOuterContainer>

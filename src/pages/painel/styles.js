@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageWrapper = styled.div`
     width: 100%;
     min-height: 100vh;
-    background-color: #9dc4f7;
+    background-image: linear-gradient( #9fcafcff, #ffffffff);
     padding-top: 60px;
     display: flex;
     flex-direction: column;
