@@ -11,12 +11,14 @@ export const ButtonContainer = styled.button`
     border: none;
     margin-right: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    filter: drop-shadow(0 5px 2px rgba(0.10, 0.6, 0.8, 0.6));
+    transition: all 0.3s ease-in-out;
+    filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35))
+            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 
     &:hover {
         background: #000000;
         opacity: 0.9;
+        transform: translateY(-1px);
     
     }
 
@@ -26,24 +28,51 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #1b4668ff;
-        filter: drop-shadow(2px 10px 6px rgba(0.10, 0.6, 0.8, 0.6));
+        background: #1b4768d7;
+        filter: drop-shadow(0 15px 10px rgba(8, 16, 30, 0.35))
+                drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 
         &::after {
             border-radius: 22px;
         }
         &:hover {
             background: #000000e0;
+            transform: translateY(-5px);
         }
     `}
 
 `
+
+
+export const LoginButton = styled.button`
+    background: #59adeec9;
+    border-radius: 10px;
+    position: relative;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    min-width: 105px;
+    border: none;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35))
+            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
+
+    &:hover {
+        background: #000000;
+        opacity: 0.9;
+        transform: translateY(-1px);
+    
+    }
+`
+
 export const HomeButton = styled.button`
     background: none;
     position: relative;
-    font-family: 'Inter';
+    font-family: 'Montserrat';
     border: none;
-    font-style: normal;
     font-size: 12px;
     font-weight: 400;
     line-height: 25px;

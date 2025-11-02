@@ -10,7 +10,7 @@ import {
     UserPicture,
     Wrapper,
 } from './styles'
-import { HomeButton } from '../Button/styles'
+import { HomeButton, LoginButton } from '../Button/styles'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/Input'
 
@@ -18,7 +18,7 @@ import { Input } from '../../components/Input'
 const Header = ({autenticado, variant = 'primary'}) => {
 
     const navigate = useNavigate()
-  return (
+    return (
     <Wrapper variant={variant}>
         <HeaderContainer>
             <Row>
@@ -35,15 +35,15 @@ const Header = ({autenticado, variant = 'primary'}) => {
                     </>) : (
                     <>
                         
-                        <Button title="Entrar" onClick={() => navigate('/login')}></Button>
-                        <Button title="Cadastrar"></Button>
+                        <LoginButton onClick={() => navigate('/login')}>Entrar</LoginButton>
+                        <LoginButton title="Cadastrar">Cadastrar</LoginButton>
                     </>
                 )}
             </Row>
         </HeaderContainer>
 
     </Wrapper> // Vai ficar por volta de tudo, é todo o background
-  )
+    )
 }
 
 

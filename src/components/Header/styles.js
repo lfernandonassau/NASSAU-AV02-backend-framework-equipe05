@@ -1,5 +1,5 @@
 import { MdNotifications } from 'react-icons/md'
-import {styled, css} from 'styled-components'
+import { css, styled } from 'styled-components'
 
 export const HeaderContainer = styled.div`
     width: 100%;
@@ -29,13 +29,16 @@ export const Column = styled.div`
 `
 
 export const Wrapper = styled.div`
-    */background: linear-gradient(1deg, #02416bff, #0e0d0dff); */
+    /*background: linear-gradient(1deg, #02416bff, #0e0d0dff); */
     background: transparent;
     width: 100%;
     height: 47px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
 
     ${({variant}) => variant !== 'primary' && css`
         background-color: #00b7d7ff;
