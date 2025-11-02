@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import LoginBackgroundImage from '../../assets/login-background.svg'
 
 export const LoginContainer = styled.main`
@@ -24,12 +24,14 @@ export const LoginContainer = styled.main`
     
 
 `
+
+
 export const WelcomeContainer = styled.main`
     width: 100%;
     max-width: 450px;
     padding: 30px;
 
-    background-color: #9de3ffb2;
+    background-color: #9fcafcb9;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,26 +50,30 @@ export const WelcomeContainer = styled.main`
 
 `
 export const PageWrapper = styled.div`
-  background-image: url(${LoginBackgroundImage});
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  width: 100%;
-  min-height: 100vh; 
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+    background-image: url(${LoginBackgroundImage});
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @media (max-width: 768px) {
         
         padding: 60px 15px;
         align-items: flex-start;
         background-attachment: scroll;
-        
     }
-  
+
 `
+export const PageLogin = styled.img`
+    padding-top: 20px;
+
+`
+
+
 export const LoginNewScreen = styled.div`
     display: flex;
     align-items: stretch;
@@ -83,7 +89,6 @@ export const LoginNewScreen = styled.div`
 
 export const Column = styled.div`
     flex: 1;
-
 `
 export const Row = styled.div`
     display: flex;
@@ -113,13 +118,12 @@ export const TitleLogin = styled.p`
 
 export const TitleWelcome = styled.h2`
     font-family: 'Lobster Two';
-    font-style: normal;
     font-weight: 700;
     color: #ffffffff;
     font-size: 50px;
     text-align: center;
     margin-bottom: 15px;
-    line-height: 75px;
+    line-height: 40px;
 `
 
 export const WelcomeSubText = styled.p`
@@ -134,12 +138,11 @@ export const WelcomeSubText = styled.p`
     margin: 20px auto 10px auto;
     @media (max-width: 768px) {
       font-size: 20px;
-      line-height: 20px;
     }
 `
 
 export const KanbanSubText = styled.p`
-    font-family: 'Inter';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
     color: #000000;
@@ -152,7 +155,7 @@ export const KanbanSubText = styled.p`
 `
 
 export const EsqueciSubText = styled.p`
-    font-family: 'Inter';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     color: #000000ff;
@@ -175,25 +178,25 @@ export const CriarContaText = styled.p`
 
     margin-top: 0;
 `
-export const EmailEstilizado = styled(MdEmail)`
-    color: #0972c9ff;
+export const EmailEstilizado = styled(MdPerson)`
+    color: #000000ff;
     margin-right: 5px;
     font-size: 15px;
 `
 export const PasswordEstilizado = styled(MdLock)`
-    color: #0972c9ff;
+    color: #000000ff;
     margin-right: 5px;
     font-size: 15px;
 `
 
 export const MagicEye = styled(MdVisibility)`
-    color: #0972c9ff;
+    color: #000000ff;
     margin-right: 5px;
     font-size: 15px;
 `
 
 export const MagicEyeOff = styled(MdVisibilityOff)`
-    color: #0972c9ff;
+    color: #000000ff;
     margin-right: 5px;
     font-size: 15px;
 `
