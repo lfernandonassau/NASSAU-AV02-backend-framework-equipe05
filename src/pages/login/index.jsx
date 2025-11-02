@@ -1,6 +1,6 @@
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
-
+import logo from '../../assets/logo.svg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
@@ -20,24 +20,26 @@ import {
         TitleKanban,
         MagicEye,
         MagicEyeOff,
+        PageLogin,
         } 
         from './styles'
+import { LoginButton } from '../../components/Button/styles'
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     return (
-        <>
         <PageWrapper>
             <LoginNewScreen>
                 <WelcomeContainer>
                     <Column>
+                        
+                        <PageLogin src={logo} alt="Logo Kodan" /> 
                         <TitleWelcome>Seja bem-vindo!</TitleWelcome>
                         <WelcomeSubText>
                             Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban. 
                         </WelcomeSubText>
                         <TitleKanban> - Equipe Kodan</TitleKanban>
                         <WelcomeSubText>
-                            <br />
                             Ainda não é cadastrado?
                         </WelcomeSubText>
                         <Button title="Clique aqui!" variant="secondary"/>
@@ -59,13 +61,12 @@ const Login = () => {
                                     Esqueci minha senha
                                 </EsqueciSubText>
                             </Row>
-                            <Button title="Entrar" onClick={() => navigate('/painel')} />
+                            <LoginButton onClick={() => navigate('/painel')}>Entrar</LoginButton>
                         </form>
                     </Column>
                 </LoginContainer>
             </LoginNewScreen>
         </PageWrapper>
-        </>
     )
 }
 

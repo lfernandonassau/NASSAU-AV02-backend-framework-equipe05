@@ -5,7 +5,7 @@ export const HeaderContainer = styled.div`
     width: 100%;
     max-width: 90%;
     height: 47px;
-
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
     left: 0;
 
     ${({variant}) => variant !== 'primary' && css`
-        background-color: #00b7d7ff;
+        background-color: #0063918c;
     `}
 
 `

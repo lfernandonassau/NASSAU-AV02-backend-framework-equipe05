@@ -1,7 +1,6 @@
 import React from 'react'
 import { MdSearch } from 'react-icons/md'
 import logo from '../../assets/logo.svg'
-import { Button } from '../Button'
 import {
     BuscarInputContainer,
     FeedPicture,
@@ -10,7 +9,7 @@ import {
     UserPicture,
     Wrapper,
 } from './styles'
-import { HomeButton } from '../Button/styles'
+import { HomeButton, LoginButton } from '../Button/styles'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/Input'
 
@@ -22,7 +21,7 @@ const Header = ({autenticado, variant = 'primary'}) => {
     <Wrapper variant={variant}>
         <HeaderContainer>
             <Row>
-                <img src={logo} alt="Kodan Logo"/>
+                <img src={logo} alt="Kodan Logo" onClick={() => navigate('/')}/>
             </Row>
             <Row>
                 {autenticado ?(<>
@@ -35,8 +34,8 @@ const Header = ({autenticado, variant = 'primary'}) => {
                     </>) : (
                     <>
                         
-                        <Button title="Entrar" onClick={() => navigate('/login')}></Button>
-                        <Button title="Cadastrar"></Button>
+                        <LoginButton onClick={() => navigate('/login')}>Entrar</LoginButton>
+                        <LoginButton title="Cadastrar">Cadastrar</LoginButton>
                     </>
                 )}
             </Row>

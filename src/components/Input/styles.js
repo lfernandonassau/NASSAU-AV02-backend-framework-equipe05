@@ -25,7 +25,7 @@ export const InputContainer = styled.div`
             width: 100%;
             height: 20px;
             &::placeholder {
-            color: #ffffff9f; /* Ex: Texto do placeholder cinza claro */
+                color: #ffffff9f; /* Ex: Texto do placeholder cinza claro */
             }
             
         }

@@ -13,7 +13,7 @@ import {
 
 import AddTaskModal from "../../components/AddTaskModal";
 
-const PainelPage = () => {
+const PainelPage = ({variant = 'secondary'}) => {
   // MOCKS: por enquanto ainda estático
     const pendentesTasks = [
     {
@@ -121,7 +121,7 @@ const PainelPage = () => {
 
     return (
     <PageWrapper>
-        <Header autenticado={true} />
+        <Header autenticado={true} variant={variant} />
 
         <BoardOuterContainer>
         <BoardHeader>
