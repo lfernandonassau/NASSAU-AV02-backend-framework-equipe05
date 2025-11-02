@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
     left: 0;
 
     ${({variant}) => variant !== 'primary' && css`
-        background-color: #00b7d7ff;
+        background-color: #0063918c;
     `}
 
 `

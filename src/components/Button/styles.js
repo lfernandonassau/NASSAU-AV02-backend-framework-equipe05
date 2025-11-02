@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 export const ButtonContainer = styled.button`
-    background: #0a6bb4ff;
+    background: #0a6ab4cb;
     border-radius: 10px;
     position: relative;
     font-family: 'Montserrat';
