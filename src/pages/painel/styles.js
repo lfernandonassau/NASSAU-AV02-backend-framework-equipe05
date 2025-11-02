@@ -64,4 +64,5 @@ export const ColumnsWrapper = styled.div`
     gap: 1.5rem;
     overflow-x: auto;
     padding-top: 0.5rem;
+    
 `;

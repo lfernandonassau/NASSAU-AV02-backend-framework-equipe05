@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "../../components/Header";
 import KanbanColumn from "../../components/KanbanColumn";
-
 import {
     PageWrapper,
     BoardOuterContainer,
@@ -12,13 +11,16 @@ import {
     ColumnsWrapper
 } from "./styles";
 
+import AddTaskModal from "../../components/AddTaskModal";
+
 const PainelPage = () => {
+  // MOCKS: por enquanto ainda estático
     const pendentesTasks = [
     {
         title: "Redesign da página inicial",
         subtitle: "Infraestrutura",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
         ],
         date: "12 de dez",
@@ -27,7 +29,7 @@ const PainelPage = () => {
         title: "API de Insights",
         subtitle: "Bug",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         ],
         date: "12 de dez",
     },
@@ -38,7 +40,7 @@ const PainelPage = () => {
         title: "Redesign da página inicial",
         subtitle: "Infraestrutura",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
         ],
         date: "12 de dez",
@@ -47,7 +49,7 @@ const PainelPage = () => {
         title: "Integração com backend",
         subtitle: "Infraestrutura",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         ],
         date: "12 de dez",
     },
@@ -66,7 +68,7 @@ const PainelPage = () => {
         title: "Definição de paleta de cores",
         subtitle: "Infraestrutura",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
         ],
         date: "12 de dez",
@@ -75,17 +77,52 @@ const PainelPage = () => {
         title: "Layout da tela de Login",
         subtitle: "UI/UX",
         members: [
-        { name: "Sam", avatarUrl: "https://via.placeholder.com/32" },
+        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         ],
         date: "12 de dez",
     },
     ];
 
+    // ESTADO: modal aberto/fechado
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // ESTADO: qual coluna chamou a criação
+    const [targetColumn, setTargetColumn] = useState(null);
+
+  // Avatar do usuário autenticado (do Header)
+    const currentUserAvatar = "https://avatars.githubusercontent.com/u/179970243?v=4";
+
+    // abre modal e marca de qual coluna veio
+    const handleOpenModal = (columnName) => {
+    setTargetColumn(columnName);
+    setIsModalOpen(true);
+    };
+
+    // fecha modal
+    const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTargetColumn(null);
+    };
+
+  // salvar tarefa (por enquanto só console.log)
+    const handleSaveTask = (taskData) => {
+        console.log("Salvar tarefa nova:", {
+            ...taskData,
+            coluna: targetColumn,
+            createdBy: currentUserAvatar,
+        });
+
+        // inserir no array de tasks via setState
+        // e mandar para o backend/prisma.
+
+        setIsModalOpen(false);
+        setTargetColumn(null);
+    };
+
     return (
     <PageWrapper>
         <Header autenticado={true} />
 
-      {/* Quadro branco central com tudo dentro */}
         <BoardOuterContainer>
         <BoardHeader>
             <BoardInfoLeft>
@@ -102,13 +139,15 @@ const PainelPage = () => {
             icon="🕒"
             accentColor="#00b7d7"
             tasks={pendentesTasks}
-        />
+            onAddTask={() => handleOpenModal("Pendentes")}
+            />
 
             <KanbanColumn
             title="Em andamento"
             icon="⏳"
             accentColor="#e5c100"
             tasks={andamentoTasks}
+            onAddTask={() => handleOpenModal("Em andamento")}
             />
 
             <KanbanColumn
@@ -116,9 +155,19 @@ const PainelPage = () => {
             icon="✅"
             accentColor="#00c851"
             tasks={concluidasTasks}
+            onAddTask={() => handleOpenModal("Concluídos")}
             />
         </ColumnsWrapper>
         </BoardOuterContainer>
+
+        {isModalOpen && (
+        <AddTaskModal
+            columnName={targetColumn}
+            onClose={handleCloseModal}
+            onSave={handleSaveTask}
+            userAvatar={currentUserAvatar}
+        />
+        )}
     </PageWrapper>
     );
 };
