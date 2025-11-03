@@ -29,7 +29,6 @@ import {
         PageLogin,
         } 
         from './styles'
-import { LoginButton } from '../../components/Button/styles'
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),

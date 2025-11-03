@@ -15,7 +15,6 @@ import {
 import { HomeButton, LoginButton } from '../Button/styles'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/Input'
-import { yupResolver } from '@hookform/resolvers/yup'
 
 
 const Header = ({autenticado, variant = 'primary'}) => {
