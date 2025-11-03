@@ -14,8 +14,9 @@ import {
 } from "./styles";
 
 import { Button } from "../Button";
+import { IAddTaskModel } from "./types";
 
-const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }) => {
+const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }:IAddTaskModel) => {
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState(""); // tipo / área / tag
     const [date, setDate] = useState("");

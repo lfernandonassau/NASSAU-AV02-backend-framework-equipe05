@@ -9,8 +9,9 @@ import {
 } from "./styles";
 
 import CardTask from "../CardTask";
+import { IKanbanColumnProps } from "./types";
 
-const KanbanColumn = ({
+const KanbanColumn: React.FC<IKanbanColumnProps> = ({
     title,
     icon,
     accentColor,

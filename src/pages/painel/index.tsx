@@ -12,8 +12,9 @@ import {
 } from "./styles";
 
 import AddTaskModal from "../../components/AddTaskModal";
+import { INewTaskPayload, IPainelPageProps } from "./types";
 
-const PainelPage = ({variant = 'secondary'}) => {
+const PainelPage: React.FC<IPainelPageProps> = ({variant = 'secondary'}) => {
   // MOCKS: por enquanto ainda estático
     const pendentesTasks = [
     {
@@ -84,16 +85,16 @@ const PainelPage = ({variant = 'secondary'}) => {
     ];
 
     // ESTADO: modal aberto/fechado
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     // ESTADO: qual coluna chamou a criação
-    const [targetColumn, setTargetColumn] = useState(null);
+    const [targetColumn, setTargetColumn] = useState<string | null>(null);
 
   // Avatar do usuário autenticado (do Header)
-    const currentUserAvatar = "https://avatars.githubusercontent.com/u/179970243?v=4";
+    const currentUserAvatar: string = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
     // abre modal e marca de qual coluna veio
-    const handleOpenModal = (columnName) => {
+    const handleOpenModal = (columnName: string) => {
     setTargetColumn(columnName);
     setIsModalOpen(true);
     };
@@ -105,7 +106,7 @@ const PainelPage = ({variant = 'secondary'}) => {
     };
 
   // salvar tarefa (por enquanto só console.log)
-    const handleSaveTask = (taskData) => {
+    const handleSaveTask = (taskData: INewTaskPayload) => {
         console.log("Salvar tarefa nova:", {
             ...taskData,
             coluna: targetColumn,
@@ -159,8 +160,8 @@ const PainelPage = ({variant = 'secondary'}) => {
             />
         </ColumnsWrapper>
         </BoardOuterContainer>
-
-        {isModalOpen && (
+    
+        {isModalOpen && targetColumn && (
         <AddTaskModal
             columnName={targetColumn}
             onClose={handleCloseModal}

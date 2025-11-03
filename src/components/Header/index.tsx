@@ -12,12 +12,14 @@ import {
     UserPicture,
     Wrapper,
 } from './styles'
-import { HomeButton, LoginButton } from '../Button/styles'
+import { HomeButton } from '../Button/styles'
 import { useNavigate } from 'react-router-dom'
-import { Input } from '../../components/Input'
+import { Input } from '../Input'
+import { IHeader } from './types'
+import { Button } from '../Button'
 
 
-const Header = ({autenticado, variant = 'primary'}) => {
+const Header = ({autenticado, variant = 'primary'}:IHeader) => {
 
     const { control } = useForm({
         mode: 'onChange',
@@ -43,8 +45,8 @@ const Header = ({autenticado, variant = 'primary'}) => {
                     </>) : (
                     <>
                         
-                        <LoginButton onClick={() => navigate('/login')}>Entrar</LoginButton>
-                        <LoginButton title="Cadastrar">Cadastrar</LoginButton>
+                        <Button title="Entrar" onClick={() => navigate('/login')}></Button>
+                        <Button title="Cadastrar"></Button>
                     </>
                 )}
             </Row>
