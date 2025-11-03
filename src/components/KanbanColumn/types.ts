@@ -1,3 +1,5 @@
+import type { Task } from 'types/task';
+
 // (Você já deve ter isso no seu types.ts)
 export interface IMember {
   name: string;
@@ -15,13 +17,16 @@ export interface ITask {
 /**
  * Props para o componente `KanbanColumn`.
  */
+
 export interface IKanbanColumnProps {
   title: string;
-  icon: string;
+  icon: React.ReactNode;
   accentColor: string;
-  tasks: ITask[];
+  droppableId: 'PENDENTE' | 'ANDAMENTO' | 'CONCLUIDO';
+  tasks: Task[];
   onAddTask: () => void;
 }
+
 
 /**
  * Props para o componente `CardTask` (descoberto no KanbanColumn).
@@ -33,3 +38,4 @@ export interface ICardTaskProps {
   members: IMember[];
   date: string;
 }
+

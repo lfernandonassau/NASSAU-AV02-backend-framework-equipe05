@@ -1,65 +1,66 @@
+import type { Member } from "types/task";
 import React from "react";
-import { 
-  CardContainer,
-  StatusBar,
-  TopRow,
-  Title,
-  Subtitle,
-  OptionsButton,
-  BottomRow,
-  UserBlock,
-  UserIcon,
-  AvatarsRow,
-  Avatar,
-  DateText
+import {
+    Avatar,
+    AvatarsRow,
+    BottomRow,
+    CardContainer,
+    DateText,
+    OptionsButton,
+    StatusBar,
+    Subtitle,
+    Title,
+    TopRow,
+    UserBlock, UserIcon
 } from "./styles";
 
-const CardTask = ({
+type CardTaskProps = {
+  id: string;
+  statusColor?: string;
+  title: string;
+  subtitle: string;
+  members: Member[];
+  date?: string;
+  onOptionsClick?: () => void;
+  // receber style/props se usar Draggable
+  draggableStyle?: React.CSSProperties;
+  dragHandleProps?: any;
+  innerRef?: (el: HTMLElement | null) => void;
+};
+
+const CardTask: React.FC<CardTaskProps> = ({
+  id,
   statusColor = "#00b7d7",
-  title = "Redesign da página inicial",
-  subtitle = "Infraestrutura",
-  members = [
-    { name: "Samuel", avatarUrl: "https://via.placeholder.com/32" },
-    { name: "Hen", avatarUrl: "https://via.placeholder.com/32" },
-  ],
+  title,
+  subtitle,
+  members,
   date = "12 de dez",
-  onOptionsClick = () => {},
+  onOptionsClick,
+  draggableStyle,
+  dragHandleProps,
+  innerRef
 }) => {
   return (
-    <CardContainer>
-      {/* Barrinha colorida do topo */}
+    <CardContainer ref={innerRef} style={draggableStyle}>
       <StatusBar style={{ backgroundColor: statusColor }} />
-
-      {/* Título + botão de opções */}
-      <TopRow>
+      <TopRow {...dragHandleProps}>
         <div>
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
         </div>
-
         <OptionsButton onClick={onOptionsClick} aria-label="Mais opções">
-          <span />
-          <span />
-          <span />
+          <span /><span /><span />
         </OptionsButton>
       </TopRow>
-
-      {/* Rodapé */}
       <BottomRow>
         <UserBlock>
           <UserIcon>👤</UserIcon>
           <AvatarsRow>
             {members.map((m, index) => (
-              <Avatar
-                key={index}
-                src={m.avatarUrl}
-                alt={m.name}
-                title={m.name}
-              />
+              <Avatar key={index} src={m.avatarUrl} alt={m.name} title={m.name} />
             ))}
           </AvatarsRow>
         </UserBlock>
-
         <DateText>{date}</DateText>
       </BottomRow>
     </CardContainer>
