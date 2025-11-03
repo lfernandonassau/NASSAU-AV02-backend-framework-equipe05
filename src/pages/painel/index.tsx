@@ -1,175 +1,91 @@
-import React, { useState } from "react";
-import { Header } from "../../components/Header";
-import KanbanColumn from "../../components/KanbanColumn";
-import {
-    PageWrapper,
-    BoardOuterContainer,
-    BoardHeader,
-    BoardInfoLeft,
-    BoardInfoTitle,
-    BoardInfoIcon,
-    ColumnsWrapper
-} from "./styles";
+import type { Status } from 'types/task';
+import AddTaskModal from 'components/AddTaskModal';
+import { Header } from 'components/Header';
+import KanbanColumn from 'components/KanbanColumn';
+import { useTasks } from 'context/TasksContext';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import React, { useMemo, useState } from 'react';
 
-import AddTaskModal from "../../components/AddTaskModal";
-import { INewTaskPayload, IPainelPageProps } from "./types";
+const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
-const PainelPage: React.FC<IPainelPageProps> = ({variant = 'secondary'}) => {
-  // MOCKS: por enquanto ainda estático
-    const pendentesTasks = [
-    {
-        title: "Redesign da página inicial",
-        subtitle: "Infraestrutura",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
-        ],
-        date: "12 de dez",
-    },
-    {
-        title: "API de Insights",
-        subtitle: "Bug",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        ],
-        date: "12 de dez",
-    },
-    ];
+const PainelPage: React.FC = () => {
+    const { tasks, addTask, moveTask } = useTasks();
+    const [modal, setModal] = useState<null | { status: Status; title: string }>(null);
 
-    const andamentoTasks = [
-    {
-        title: "Redesign da página inicial",
-        subtitle: "Infraestrutura",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
-        ],
-        date: "12 de dez",
-    },
-    {
-        title: "Integração com backend",
-        subtitle: "Infraestrutura",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        ],
-        date: "12 de dez",
-    },
-    {
-        title: "Refinamento de acessibilidade",
-        subtitle: "Acessibilidade",
-        members: [
-        { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
-        ],
-        date: "12 de dez",
-    },
-    ];
+    const columns = useMemo(() => ({
+    PENDENTE:  tasks.filter(t => t.status === 'PENDENTE'),
+    ANDAMENTO: tasks.filter(t => t.status === 'ANDAMENTO'),
+    CONCLUIDO: tasks.filter(t => t.status === 'CONCLUIDO'),
+    }), [tasks]);
 
-    const concluidasTasks = [
-    {
-        title: "Definição de paleta de cores",
-        subtitle: "Infraestrutura",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        { name: "Ana", avatarUrl: "https://via.placeholder.com/32" },
-        ],
-        date: "12 de dez",
-    },
-    {
-        title: "Layout da tela de Login",
-        subtitle: "UI/UX",
-        members: [
-        { name: "Sam", avatarUrl: "https://avatars.githubusercontent.com/u/179970243?v=4" },
-        ],
-        date: "12 de dez",
-    },
-    ];
-
-    // ESTADO: modal aberto/fechado
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-    // ESTADO: qual coluna chamou a criação
-    const [targetColumn, setTargetColumn] = useState<string | null>(null);
-
-  // Avatar do usuário autenticado (do Header)
-    const currentUserAvatar: string = "https://avatars.githubusercontent.com/u/179970243?v=4";
-
-    // abre modal e marca de qual coluna veio
-    const handleOpenModal = (columnName: string) => {
-    setTargetColumn(columnName);
-    setIsModalOpen(true);
+    const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    const from = source.droppableId as Status;
+    const to = destination.droppableId as Status;
+    if (from === to) return;
+    moveTask(draggableId, to);
     };
 
-    // fecha modal
-    const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTargetColumn(null);
+    const handleAdd = (status: Status) => {
+    setModal({ status, title: 
+        status === 'PENDENTE' ? 'Pendentes' :
+        status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
+    });
     };
 
-  // salvar tarefa (por enquanto só console.log)
-    const handleSaveTask = (taskData: INewTaskPayload) => {
-        console.log("Salvar tarefa nova:", {
-            ...taskData,
-            coluna: targetColumn,
-            createdBy: currentUserAvatar,
-        });
-
-        // inserir no array de tasks via setState
-        // e mandar para o backend/prisma.
-
-        setIsModalOpen(false);
-        setTargetColumn(null);
+    const handleSaveNew = (data: { title: string; subtitle: string; date?: string }) => {
+    if (!modal) return;
+    addTask({
+        ...data,
+        status: modal.status,
+        members: [{ name: 'Samuel', avatarUrl: USER_AVATAR }]
+    });
+    setModal(null);
     };
 
     return (
-    <PageWrapper>
-        <Header autenticado={true} variant={variant} />
-
-        <BoardOuterContainer>
-        <BoardHeader>
-            <BoardInfoLeft>
-            <BoardInfoTitle>
-                Nome do Projeto Kanban
-                <BoardInfoIcon role="img" aria-label="documento">📋</BoardInfoIcon>
-            </BoardInfoTitle>
-            </BoardInfoLeft>
-        </BoardHeader>
-
-        <ColumnsWrapper>
+    <>
+        <Header autenticado variant="secondary" />
+        <div style={{ marginTop: 64 }} />
+        <DragDropContext onDragEnd={onDragEnd}>
+        <div style={{ display:'flex', gap: '1rem', justifyContent:'center' }}>
             <KanbanColumn
             title="Pendentes"
-            icon="🕒"
-            accentColor="#00b7d7"
-            tasks={pendentesTasks}
-            onAddTask={() => handleOpenModal("Pendentes")}
+            icon={<span>⏱️</span>}
+            accentColor="#25B6CF"
+            droppableId="PENDENTE"
+            tasks={columns.PENDENTE}
+            onAddTask={() => handleAdd('PENDENTE')}
             />
-
             <KanbanColumn
             title="Em andamento"
-            icon="⏳"
-            accentColor="#e5c100"
-            tasks={andamentoTasks}
-            onAddTask={() => handleOpenModal("Em andamento")}
+            icon={<span>⏳</span>}
+            accentColor="#E0C02C"
+            droppableId="ANDAMENTO"
+            tasks={columns.ANDAMENTO}
+            onAddTask={() => handleAdd('ANDAMENTO')}
             />
-
             <KanbanColumn
             title="Concluídos"
-            icon="✅"
-            accentColor="#00c851"
-            tasks={concluidasTasks}
-            onAddTask={() => handleOpenModal("Concluídos")}
+            icon={<span>✅</span>}
+            accentColor="#24C464"
+            droppableId="CONCLUIDO"
+            tasks={columns.CONCLUIDO}
+            onAddTask={() => handleAdd('CONCLUIDO')}
             />
-        </ColumnsWrapper>
-        </BoardOuterContainer>
-    
-        {isModalOpen && targetColumn && (
+        </div>
+        </DragDropContext>
+
+        {modal && (
         <AddTaskModal
-            columnName={targetColumn}
-            onClose={handleCloseModal}
-            onSave={handleSaveTask}
-            userAvatar={currentUserAvatar}
+            columnName={modal.title}
+            userAvatar={USER_AVATAR}
+            onClose={() => setModal(null)}
+            onSave={handleSaveNew}
         />
         )}
-    </PageWrapper>
+    </>
     );
 };
 
