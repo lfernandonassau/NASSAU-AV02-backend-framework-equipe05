@@ -1,5 +1,5 @@
 import React from "react";
-import { 
+import {
     ColumnWrapper,
     ColumnHeader,
     ColumnTitle,
@@ -10,13 +10,20 @@ import {
 
 import CardTask from "../CardTask";
 
-const KanbanColumn = ({ title, icon, accentColor, tasks }) => {
+const KanbanColumn = ({
+    title,
+    icon,
+    accentColor,
+    tasks = [],          // valor padrão evita undefined
+    onAddTask
+}) => {
     return (
     <ColumnWrapper>
         <ColumnHeader>
         <ColumnTitle>
             <span className="icon">{icon}</span>
             <span className="text">{title}</span>
+            <span className="count">({tasks.length})</span>
         </ColumnTitle>
         </ColumnHeader>
 
@@ -34,7 +41,13 @@ const KanbanColumn = ({ title, icon, accentColor, tasks }) => {
         </CardsList>
 
         <AddButtonArea>
-        <AddButton>+</AddButton>
+        <AddButton
+            onClick={onAddTask}
+            aria-label={`Adicionar nova tarefa em ${title}`}
+            title={`Adicionar nova tarefa em ${title}`}
+        >
+            +
+        </AddButton>
         </AddButtonArea>
     </ColumnWrapper>
     );

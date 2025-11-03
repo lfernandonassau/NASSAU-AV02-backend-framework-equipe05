@@ -9,10 +9,17 @@ export const CardContainer = styled.div`
     flex-direction: column;
     gap: 0.75rem;
     min-width: 240px;
-
-    /* sombra leve pra destacar do fundo */
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+
+    &:hover {
+    transform: translateY(-1px);
+
+    background-color: #ffffff;
+    cursor: pointer;
+    }
 `;
+
 
 export const StatusBar = styled.div`
     width: 100%;
@@ -30,14 +37,14 @@ export const TopRow = styled.div`
 export const Title = styled.div`
     font-size: 0.9rem;
     font-weight: 600;
-    color: #0f172a; /* quase preto */
+    color: #0f172a;
     line-height: 1.3;
 `;
 
 export const Subtitle = styled.div`
     font-size: 0.75rem;
     font-weight: 400;
-    color: #6b7280; /* cinza médio */
+    color: #6b7280;
     line-height: 1.2;
     margin-top: 0.25rem;
 `;
@@ -80,11 +87,11 @@ export const UserBlock = styled.div`
 `;
 
 export const UserIcon = styled.span`
-font-size: 0.8rem;
-line-height: 1;
-color: #0f172a;
-display: flex;
-align-items: center;
+    font-size: 0.8rem;
+    line-height: 1;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
 `;
 
 export const AvatarsRow = styled.div`
@@ -101,7 +108,6 @@ export const Avatar = styled.img`
     object-fit: cover;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 
-    /* efeito de sobreposição dos avatares */
     &:not(:first-child) {
     margin-left: -8px;
     }

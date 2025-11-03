@@ -4,8 +4,8 @@ import {
   StatusBar,
   TopRow,
   Title,
-  OptionsButton,
   Subtitle,
+  OptionsButton,
   BottomRow,
   UserBlock,
   UserIcon,
@@ -15,7 +15,7 @@ import {
 } from "./styles";
 
 const CardTask = ({
-  statusColor = "#00b7d7",   // cor da barrinha no topo (azul, amarelo, etc.)
+  statusColor = "#00b7d7",
   title = "Redesign da página inicial",
   subtitle = "Infraestrutura",
   members = [
@@ -27,9 +27,10 @@ const CardTask = ({
 }) => {
   return (
     <CardContainer>
-      {/* Barrinha no topo indicando tipo/status */}
+      {/* Barrinha colorida do topo */}
       <StatusBar style={{ backgroundColor: statusColor }} />
 
+      {/* Título + botão de opções */}
       <TopRow>
         <div>
           <Title>{title}</Title>
@@ -43,13 +44,13 @@ const CardTask = ({
         </OptionsButton>
       </TopRow>
 
-      {/* Rodapé com ícone usuários, avatares e data */}
+      {/* Rodapé */}
       <BottomRow>
         <UserBlock>
           <UserIcon>👤</UserIcon>
           <AvatarsRow>
             {members.map((m, index) => (
-              <Avatar 
+              <Avatar
                 key={index}
                 src={m.avatarUrl}
                 alt={m.name}
