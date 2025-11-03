@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
+import { IButtonStyled } from './types'
 
-export const ButtonContainer = styled.button`
+export const ButtonContainer = styled.button<IButtonStyled>`
     background: #0a6ab4cb;
     border-radius: 10px;
     position: relative;
@@ -28,7 +29,7 @@ export const ButtonContainer = styled.button`
         height: 40px;
         font-weight: 600;
 
-        background: #1b4768d7;
+        background: #59adeec9;
         filter: drop-shadow(0 15px 10px rgba(8, 16, 30, 0.35))
                 drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 

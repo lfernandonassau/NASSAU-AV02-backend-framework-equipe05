@@ -29,6 +29,7 @@ import {
         PageLogin,
         } 
         from './styles'
+import { IFormData } from './types'
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
@@ -40,7 +41,7 @@ const Login = () => {
     
 
     //React-hook-form: Regras do formulário(Dentro do input)
-    const {control, handleSubmit , formState: { errors, isValid } } = useForm({
+    const {control, handleSubmit , formState: { errors, isValid } } = useForm<IFormData>({
         //verifica se realmente começou a validar ou não
         resolver: yupResolver(schema),
         //Assim que o usuário digitar ele já valida
@@ -48,7 +49,7 @@ const Login = () => {
     })
 
     const navigate = useNavigate()
-    const onSubmit = async formData => {
+    const onSubmit = async (formData: IFormData) => {
         try{
             //Lembrar de mudar para POST
             const { data } = await api.get(`users?email=${formData.email}&password=${formData.password}`)

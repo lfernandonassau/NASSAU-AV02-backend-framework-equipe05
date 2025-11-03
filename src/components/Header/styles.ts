@@ -1,5 +1,6 @@
 import { MdNotifications } from 'react-icons/md'
 import { css, styled } from 'styled-components'
+import { IHeaderStyled } from './types'
 
 export const HeaderContainer = styled.div`
     width: 100%;
@@ -28,7 +29,7 @@ export const Column = styled.div`
 
 `
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<IHeaderStyled>`
     /*background: linear-gradient(1deg, #02416bff, #0e0d0dff); */
     background: transparent;
     width: 100%;

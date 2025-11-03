@@ -1,7 +1,8 @@
 import {styled, css} from 'styled-components'
+import { IInputStyled } from './types'
 
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<IInputStyled>`
     max-width: 275px;
     height: 30px;
     border-bottom: 1px solid #000000ff;
@@ -10,7 +11,7 @@ export const InputContainer = styled.div`
     margin-bottom: 20px;
     cursor: pointer;
 
-    ${props => props.$variant === 'secondary' && css`
+    ${({variant}) => variant !== 'primary' && css`
         max-width: 150px;
         height: 150px;
         margin-bottom: 0;
