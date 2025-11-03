@@ -24,7 +24,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
             <CardsList ref={provided.innerRef} {...provided.droppableProps}>
             {tasks.map((task, index) => (
                 <Draggable key={task.id} draggableId={task.id} index={index}>
-                {(prov) => (
+                {(prov, snapshot) => (
                     <CardTask
                     id={task.id}
                     statusColor={accentColor}
@@ -32,9 +32,11 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                     subtitle={task.subtitle}
                     members={task.members}
                     date={task.date}
+                    draggableProps={prov.draggableProps}
                     innerRef={prov.innerRef}
                     draggableStyle={prov.draggableProps.style}
                     dragHandleProps={prov.dragHandleProps}
+                    isDragging={snapshot.isDragging}
                     {...prov.draggableProps}
                     />
                 )}

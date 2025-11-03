@@ -18,6 +18,9 @@ export const CardContainer = styled.div`
     background-color: #ffffff;
     cursor: pointer;
     }
+    &.is-dragging { 
+    transform: none !important;  /* não empurre durante drag */
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
 `;
 
 
