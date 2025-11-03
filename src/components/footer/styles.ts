@@ -1,26 +1,71 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
+// Container principal do rodapé
 export const FooterContainer = styled.footer`
-    background-color: #000000ff;
-    display: flex;
-    flex-direction: row; /* Adicionado para empilhar a área principal e o copyright */
-    align-items: center; /* Centraliza o conteúdo horizontalmente, se o width não for 100% */
-`
-export const Container = styled.main`
-    width: 100%;
-    max-width: 50%;
-    margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #000000ff;
+  color: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 20px 20px;
+  border-top: 2px solid #1e1e1e;
+`;
 
-`
+// Área interna com as seções
+export const FooterContent = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+`;
 
+// Cada bloco de conteúdo dentro do rodapé
+export const FooterSection = styled.div`
+  flex: 1 1 250px;
+  min-width: 200px;
+`;
+
+// Título de cada seção
+export const FooterTitle = styled.h4`
+  color: #00aaff;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+`;
+
+// Parágrafos e textos gerais
 export const FooterText = styled.p`
-    text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 4px 0;
+  color: #cccccc;
+`;
 
+// Links do rodapé com animação de hover
+export const FooterLink = styled.a`
+  display: block;
+  font-size: 14px;
+  color: #ffffff;
+  text-decoration: none;
+  margin: 4px 0;
+  transition: color 0.3s ease;
 
-`
+  &:hover {
+    color: #00aaff;
+  }
+`;
+
+// Texto de copyright
+export const Copyright = styled.p`
+  font-size: 12px;
+  color: #888;
+  margin-top: 30px;
+  text-align: center;
+  border-top: 1px solid #1e1e1e;
+  padding-top: 15px;
+  width: 100%;
+  max-width: 1200px;
+`;
