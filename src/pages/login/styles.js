@@ -68,6 +68,9 @@ export const PageWrapper = styled.div`
     }
 
 `
+
+
+
 export const PageLogin = styled.img`
     padding-top: 20px;
 

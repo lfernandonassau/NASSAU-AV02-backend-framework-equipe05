@@ -10,7 +10,7 @@ export const InputContainer = styled.div`
     margin-bottom: 20px;
     cursor: pointer;
 
-    ${({variant}) => variant !== 'primary' && css`
+    ${props => props.$variant === 'secondary' && css`
         max-width: 150px;
         height: 150px;
         margin-bottom: 0;
@@ -56,5 +56,13 @@ export const InputText = styled.input`
         transition: background-color 5000s ease-in-out 0s;
 
     }
+
+`
+
+export const ErrorText = styled.p`
+    color: #FF0000;
+    font-size: 10px;
+    font-family: 'Montserrat';
+    
 
 `
