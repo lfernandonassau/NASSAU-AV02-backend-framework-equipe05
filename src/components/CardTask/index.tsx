@@ -25,7 +25,9 @@ type CardTaskProps = {
   // receber style/props se usar Draggable
   draggableStyle?: React.CSSProperties;
   dragHandleProps?: any;
+  draggableProps?: any;
   innerRef?: (el: HTMLElement | null) => void;
+  isDragging?: boolean;
 };
 
 const CardTask: React.FC<CardTaskProps> = ({
@@ -36,12 +38,14 @@ const CardTask: React.FC<CardTaskProps> = ({
   members,
   date = "12 de dez",
   onOptionsClick,
+  draggableProps,
   draggableStyle,
   dragHandleProps,
   innerRef
 }) => {
   return (
-    <CardContainer ref={innerRef} style={draggableStyle}>
+    <CardContainer ref={innerRef} style={draggableStyle} {...draggableProps}>
+      
       <StatusBar style={{ backgroundColor: statusColor }} />
       <TopRow {...dragHandleProps}>
         <div>
