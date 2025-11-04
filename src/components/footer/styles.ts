@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // Container principal do rodapé
 export const FooterContainer = styled.footer`
-  background-color: #000000ff;
+  background-color: #0a0a0a;
   color: #f1f1f1;
   display: flex;
   flex-direction: column;
@@ -69,3 +69,4 @@ export const Copyright = styled.p`
   width: 100%;
   max-width: 1200px;
 `;
+
