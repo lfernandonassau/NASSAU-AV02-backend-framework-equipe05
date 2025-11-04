@@ -17,9 +17,9 @@ const Footer: React.FC = () => {
           <FooterTitle>Sobre</FooterTitle>
 
           <FooterText>
-            
-            Kodan é uma plataforma web desenvolvidacom que oferece um ambiente de gestão de projetos em formato Kanban , onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes.
-            
+          
+          Kodan é uma plataforma web desenvolvida com o objetivo de aplicar conceitos de arquitetura MVC, APIs RESTful e integração entre front-end e back-end.A aplicação oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes
+          
           </FooterText>
 
         </FooterSection>
@@ -33,21 +33,15 @@ const Footer: React.FC = () => {
 
         <FooterSection>
           <FooterTitle>Contato</FooterTitle>
-          <FooterText>Email: samuel.douglas@SAudosan.com</FooterText>
+          <FooterText>Email: samuel.douglas@example.com</FooterText>
           <FooterText>
-            GitHub: <FooterLink href="#"> ... </FooterLink>
-          </FooterText>
-          <FooterText>
-            <FooterLink href="#"> ... </FooterLink>
-          </FooterText>
-          <FooterText>
-        <FooterLink href="#"> ... </FooterLink>
+            GitHub: <FooterLink href="#">@Sadousan</FooterLink>
           </FooterText>
         </FooterSection>
       </FooterContent>
 
       <Copyright>
-        © {new Date().getFullYear()} copyright — Todos os direitos reservados
+        © {new Date().getFullYear()} — Desenvolvido por Samuel Douglas Santos Sadousan
       </Copyright>
     </FooterContainer>
   );
