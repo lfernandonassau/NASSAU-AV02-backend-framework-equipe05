@@ -28,7 +28,6 @@ export const Container = styled.main`
         margin-top: 100px;
         margin-bottom: 50px;
     }
-
     @media (max-width: 480px) {
         /* Garante que o padding seja menor em telas muito estreitas */
         padding: 0 10px;
