@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 // Container principal do rodapé
 export const FooterContainer = styled.footer`
-  background-color: #0a0a0a;
-  color: #f1f1f1;
+  font-family: 'Montserrat';
+  background-color: #ffffffee;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,10 +29,10 @@ export const FooterSection = styled.div`
 
 // Título de cada seção
 export const FooterTitle = styled.h4`
-  color: #00aaff;
-  font-size: 16px;
+  font-family: 'Lobster Two';
+  color: #57c2f8ff;
+  font-size: 20px;
   margin-bottom: 10px;
-  text-transform: uppercase;
   letter-spacing: 1px;
 `;
 
@@ -41,14 +41,14 @@ export const FooterText = styled.p`
   font-size: 14px;
   line-height: 1.5;
   margin: 4px 0;
-  color: #cccccc;
+  color: #000000ff;
 `;
 
 // Links do rodapé com animação de hover
 export const FooterLink = styled.a`
   display: block;
   font-size: 14px;
-  color: #ffffff;
+  color: #000000ff;
   text-decoration: none;
   margin: 4px 0;
   transition: color 0.3s ease;

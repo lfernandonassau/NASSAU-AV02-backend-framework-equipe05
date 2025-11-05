@@ -13,6 +13,11 @@ export const GlobalStyle = createGlobalStyle`
     body {
         width: 100%;
         color: #FFFFFF;
+        user-select: none;
+        
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
     }
 
     

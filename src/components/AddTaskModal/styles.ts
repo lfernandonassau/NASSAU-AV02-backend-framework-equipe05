@@ -8,6 +8,11 @@ export const Overlay = styled.div`
     align-items: center;
     justify-content: center;
     z-index: 999; /* acima do header fixo */
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 `;
 
 export const ModalCard = styled.div`
@@ -103,8 +108,7 @@ export const ModalFooter = styled.div`
     border-top: 1px solid #cbd5e1;
     background-color: #f8fafc;
     padding: 0.75rem 1rem;
-
     display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
 `;

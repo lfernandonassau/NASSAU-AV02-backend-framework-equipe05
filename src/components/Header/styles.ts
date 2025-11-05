@@ -12,6 +12,11 @@ export const HeaderContainer = styled.div`
     align-items: center;
     margin: 0 auto;
 
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
 
 `
 

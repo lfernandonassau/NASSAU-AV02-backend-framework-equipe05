@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const ColumnWrapper = styled.div`
+    font-family: 'Montserrat';
+
     background-color: #f5f5f5;
     border: 1px solid #8a8a8a;
     border-radius: 4px;
@@ -12,6 +14,11 @@ export const ColumnWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     
 `;
 
@@ -59,15 +66,13 @@ export const AddButtonArea = styled.div`
 `;
 
 export const AddButton = styled.button`
-    background-color: #0b1b2e;
-    color: #fff;
     font-size: 1.1rem;
     font-weight: 500;
     border-radius: 999px;
     width: 32px;
     height: 32px;
     border: 2px solid #fff;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    box-shadow: 0 1px 7px rgba(0,0,0,0.4);
 
     display: flex;
     align-items: center;
@@ -77,6 +82,6 @@ export const AddButton = styled.button`
     outline: none;
 
     &:hover {
-    filter: brightness(1.2);
+    filter: brightness(0.9);
     }
 `;
