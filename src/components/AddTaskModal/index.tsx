@@ -74,7 +74,6 @@ const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }:IAddTaskModel)
         <ModalFooter>
             <Button
             title="Cancelar"
-            variant="secondary"
             onClick={onClose}
             />
             <Button

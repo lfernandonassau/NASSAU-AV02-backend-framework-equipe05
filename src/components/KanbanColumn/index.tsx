@@ -6,6 +6,8 @@ import CardTask from "../CardTask";
 import { IKanbanColumnProps } from "./types";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 
+import ButtonImage from '../../assets/buttonmais.svg'
+
 const KanbanColumn: React.FC<IKanbanColumnProps> = ({
     title, icon, accentColor, droppableId, tasks = [], onAddTask
 }) => {
@@ -49,7 +51,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
 
         <AddButtonArea>
         <AddButton onClick={onAddTask} aria-label={`Adicionar nova tarefa em ${title}`} title={`Adicionar nova tarefa em ${title}`}>
-            +
+            <img src={ButtonImage} alt="Button X" />
         </AddButton>
         </AddButtonArea>
     </ColumnWrapper>
