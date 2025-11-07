@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const ColumnWrapper = styled.div`
+    
+
     font-family: 'Montserrat';
 
     background-color: #f5f5f5;
@@ -22,10 +24,11 @@ export const ColumnWrapper = styled.div`
     
 `;
 
+
 export const ColumnHeader = styled.div`
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #8a8a8a;
-    background-color: #fdfdfd;
+    background-color: #0063918c;
     border-radius: 4px 4px 0 0;
 `;
 
@@ -42,7 +45,7 @@ export const ColumnTitle = styled.div`
     .text {
     font-weight: 600;
     font-size: 1rem;
-    color: #000;
+    color: #ffffffff;
     }
 `;
 
@@ -85,3 +88,4 @@ export const AddButton = styled.button`
     filter: brightness(0.9);
     }
 `;
+
