@@ -1,0 +1,12 @@
+//o node n entende o ts naturalmente, por isso é necessário um transpilador ts -> js. E é esse arquivo que está indicando ao ts como transpilar (q palavra estranha, slk)
+{
+    "compilerOptions": {
+    "module": "commonjs",
+    // es2017 garante async/await
+    "target": "es2017",
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "strict": true
+    }
+}
