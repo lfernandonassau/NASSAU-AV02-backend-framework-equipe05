@@ -16,6 +16,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalCard = styled.div`
+    font-family: 'Montserrat';
     background: #fff;
     width: 100%;
     max-width: 400px;
@@ -28,8 +29,8 @@ export const ModalCard = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-    background-color: #f8fafc;
-    border-bottom: 1px solid #cbd5e1;
+    background-color: #0063918c;
+    border-bottom: 1px solid #ffffffff;
     padding: 1rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -37,9 +38,10 @@ export const ModalHeader = styled.div`
 `;
 
 export const ModalTitle = styled.h2`
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #0f172a;
+    font-family: 'Montserrat';
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffffff;
     display: flex;
     flex-direction: column;
     line-height: 1.4;
@@ -48,7 +50,7 @@ export const ModalTitle = styled.h2`
 export const CloseButton = styled.button`
     background: transparent;
     border: none;
-    color: #475569;
+    color: #ffffffff;
     font-size: 1rem;
     cursor: pointer;
     line-height: 1;
