@@ -1,8 +1,8 @@
 import type { Status } from 'types/task';
-import AddTaskModal from 'components/AddTaskModal';
-import { Header } from 'components/Header';
-import KanbanColumn from 'components/KanbanColumn';
-import { useTasks } from 'context/TasksContext';
+import AddTaskModal from '../../components/AddTaskModal';
+import { Header } from '../../components/Header';
+import KanbanColumn from '../../components/KanbanColumn';
+import { useTasks } from '../../context/TasksContext';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import React, { useMemo, useState } from 'react';
 

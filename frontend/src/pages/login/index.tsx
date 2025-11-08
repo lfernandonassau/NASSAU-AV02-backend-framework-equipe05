@@ -10,12 +10,12 @@ import logo from '../../assets/logo.svg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { 
-        Column, 
-        Row, 
-        TitleLogin, 
-        KanbanSubText, 
-        EsqueciSubText,    
-        LoginContainer, 
+        Column,
+        Row,
+        TitleLogin,
+        KanbanSubText,
+        EsqueciSubText,
+        LoginContainer,
         EmailEstilizado,
         PasswordEstilizado,
         PageWrapper,

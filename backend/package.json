@@ -1,21 +1,24 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "test:prisma": "ts-node-dev src/test.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "test:prisma": "ts-node-dev src/test.ts",
+
+    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=./prisma/schema.prisma"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "@prisma/client": "6.19.0",
+    "dotenv": "^17.2.3"
   },
   "devDependencies": {
+    "prisma": "6.19.0",
     "@types/express": "^5.0.5",
+    "@types/node": "^20.11.19",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
   }

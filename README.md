@@ -36,12 +36,14 @@ A aplicação oferece um ambiente de **gestão de projetos em formato Kanban**, 
 ## 🧱 Tecnologias Utilizadas
 
 ### 🔹 Backend
+
 - **Node.js + Express.js**
 - **MySQL**
 - **bcrypt** para criptografia de senhas
 - **Arquitetura MVC (Model–View–Controller)**
 
 ### 🔹 Frontend
+
 - **React.js** (Vite)
 - **Axios** para consumo da API
 - **React Router DOM** para navegação entre telas
