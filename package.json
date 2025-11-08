@@ -1,74 +1,18 @@
 {
-  "name": "dio",
-  "version": "0.1.0",
+  "name": "kodan-monorepo",
   "private": true,
-  "dependencies": {
-    "@hello-pangea/dnd": "^18.0.1",
-    "@hookform/resolvers": "^5.2.2",
-    "@prisma/client": "6.19.0",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.10.0",
-    "@types/styled-components": "^5.1.35",
-    "axios": "^1.13.1",
-    "dotenv": "^17.2.3",
-    "nanoid": "^5.1.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-hook-form": "^7.66.0",
-    "react-icons": "^5.5.0",
-    "react-router-dom": "^7.9.5",
-    "react-scripts": "^0.0.0",
-    "styled-components": "^6.1.19",
-    "web-vitals": "^2.1.4",
-    "yup": "^1.7.1"
-  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "api": "json-server --watch db.json -p 8001",
-    "dev:front": "vite",
-    "dev:back": "npm run dev --prefix backend",
-    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
-    "prisma:validate": "prisma validate --schema=prisma/schema.prisma",
-    "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --schema=prisma/schema.prisma",
-    "prisma:push": "prisma db push --schema=prisma/schema.prisma",
-    "postinstall": "prisma generate --schema=prisma/schema.prisma"
+    "dev": "concurrently \"yarn workspace frontend dev\" \"yarn workspace backend dev\"",
+    "dev:front": "yarn workspace frontend dev",
+    "dev:back": "yarn workspace backend dev",
+    "postinstall": "yarn workspace backend prisma:generate"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe05.git"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": "./",
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
     "concurrently": "^9.0.0",
-    "prisma": "6.19.0",
-    "typescript": "^4.9.5"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

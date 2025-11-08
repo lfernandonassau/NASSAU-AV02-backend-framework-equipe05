@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TasksProvider } from 'context/TasksContext';
+import { TasksProvider } from '../context/TasksContext';
 import { Home } from "../pages/home";
 import { Login } from "../pages/login";
 import PainelPage from "../pages/painel";

@@ -18,8 +18,8 @@ export const LoginContainer = styled.main`
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
     @media (max-width: 768px) {
-      max-width: 100%; 
-      border-radius: 0 0 10px 10px;
+        max-width: 100%;
+        border-radius: 0 0 10px 10px;
     }
     
 
