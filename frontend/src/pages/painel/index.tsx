@@ -5,17 +5,28 @@ import KanbanColumn from '../../components/KanbanColumn';
 import { useTasks } from '../../context/TasksContext';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import React, { useMemo, useState } from 'react';
+import ConfirmDialog from '../../components/ConfirmDialog';
+import {
+    PageWrapper,
+    BoardOuterContainer,
+    BoardHeader,
+    BoardInfoLeft,
+    BoardInfoTitle,
+    BoardInfoIcon,
+    ColumnsWrapper
+} from './styles';
 
 const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
 const PainelPage: React.FC = () => {
-    const { tasks, addTask, moveTask } = useTasks();
+    const { tasks, addTask, moveTask, removeTask } = useTasks();
     const [modal, setModal] = useState<null | { status: Status; title: string }>(null);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const columns = useMemo(() => ({
-    PENDENTE:  tasks.filter(t => t.status === 'PENDENTE'),
-    ANDAMENTO: tasks.filter(t => t.status === 'ANDAMENTO'),
-    CONCLUIDO: tasks.filter(t => t.status === 'CONCLUIDO'),
+    PENDENTE:  tasks.filter((t) => t.status === 'PENDENTE'),
+    ANDAMENTO: tasks.filter((t) => t.status === 'ANDAMENTO'),
+    CONCLUIDO: tasks.filter((t) => t.status === 'CONCLUIDO'),
     }), [tasks]);
 
     const onDragEnd = (result: DropResult) => {
@@ -28,9 +39,10 @@ const PainelPage: React.FC = () => {
     };
 
     const handleAdd = (status: Status) => {
-    setModal({ status, title: 
-        status === 'PENDENTE' ? 'Pendentes' :
-        status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
+    setModal({
+        status,
+        title: status === 'PENDENTE' ? 'Pendentes' :
+                status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
     });
     };
 
@@ -44,38 +56,56 @@ const PainelPage: React.FC = () => {
     setModal(null);
     };
 
+    const requestDelete = (id: string) => setDeleteId(id);
+    const confirmDelete = () => {
+    if (deleteId) removeTask(deleteId);
+    setDeleteId(null);
+    };
+    const cancelDelete = () => setDeleteId(null);
+
     return (
-    <>
+    <PageWrapper>
         <Header autenticado variant="secondary" />
-        <div style={{ marginTop: 64 }} />
+        <BoardOuterContainer>
+        <BoardHeader>
+            <BoardInfoLeft>
+            <BoardInfoIcon>🗂️</BoardInfoIcon>
+            <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
+            </BoardInfoLeft>
+        </BoardHeader>
+
         <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display:'flex', gap: '1rem', justifyContent:'center' }}>
+            <ColumnsWrapper>
             <KanbanColumn
-            title="Pendentes"
-            icon={<span>⏱️</span>}
-            accentColor="#25B6CF"
-            droppableId="PENDENTE"
-            tasks={columns.PENDENTE}
-            onAddTask={() => handleAdd('PENDENTE')}
+                title="Pendentes"
+                icon={<span>⏱️</span>}
+                accentColor="#25B6CF"
+                droppableId="PENDENTE"
+                tasks={columns.PENDENTE}
+                onAddTask={() => handleAdd('PENDENTE')}
+                onRequestDelete={requestDelete}
             />
             <KanbanColumn
-            title="Em andamento"
-            icon={<span>⏳</span>}
-            accentColor="#E0C02C"
-            droppableId="ANDAMENTO"
-            tasks={columns.ANDAMENTO}
-            onAddTask={() => handleAdd('ANDAMENTO')}
+                title="Em andamento"
+                icon={<span>⏳</span>}
+                accentColor="#E0C02C"
+                droppableId="ANDAMENTO"
+                tasks={columns.ANDAMENTO}
+                onAddTask={() => handleAdd('ANDAMENTO')}
+                onRequestDelete={requestDelete}
             />
             <KanbanColumn
-            title="Concluídos"
-            icon={<span>✅</span>}
-            accentColor="#24C464"
-            droppableId="CONCLUIDO"
-            tasks={columns.CONCLUIDO}
-            onAddTask={() => handleAdd('CONCLUIDO')}
+                title="Concluídos"
+                icon={<span>✅</span>}
+                accentColor="#24C464"
+                droppableId="CONCLUIDO"
+                tasks={columns.CONCLUIDO}
+                onAddTask={() => handleAdd('CONCLUIDO')}
+                onRequestDelete={requestDelete}
             />
-        </div>
+            </ColumnsWrapper>
         </DragDropContext>
+        </BoardOuterContainer>
 
         {modal && (
         <AddTaskModal
@@ -85,8 +115,19 @@ const PainelPage: React.FC = () => {
             onSave={handleSaveNew}
         />
         )}
-    </>
-    );
+
+    {deleteId && (
+    <ConfirmDialog
+        title="Apagar card"
+        message="Tem certeza que deseja apagar esta tarefa? Esta ação não pode ser desfeita."
+        confirmLabel="Apagar"
+        cancelLabel="Cancelar"
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+    />
+    )}
+</PageWrapper>
+);
 };
 
 export default PainelPage;

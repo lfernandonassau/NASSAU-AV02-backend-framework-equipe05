@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
+    position: relative;
+    overflow: visible;   /* garante que o menu pode “sair” do card */
     background-color: #f5f5f5;
     border: 1px solid #cfcfcf;
     border-radius: 6px;
@@ -11,7 +13,7 @@ export const CardContainer = styled.div`
     min-width: 240px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     transition: all 0.25s ease;
-
+    position: relative;
     &:hover {
     transform: translateY(-1px);
 
@@ -120,4 +122,34 @@ export const DateText = styled.span`
     font-size: 0.7rem;
     color: #4b5563;
     white-space: nowrap;
+`;
+
+export const OptionsMenu = styled.div`
+    position: absolute;
+    top: 8px; right: 8px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 14px 32px rgba(2, 29, 61, 0.20);
+    min-width: 180px;
+    z-index: 1000; /* acima do card */
+    overflow: hidden;
+
+    & > button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0;
+    font-size: .92rem;
+    color: #0b1b2e;
+    cursor: pointer;
+    .danger { color: #b01818; }
+    }
+
+    & > button:hover {
+    background: #f7fafc;
+    }
+
+    .danger { color: #b01818; }
 `;

@@ -1,16 +1,18 @@
+import { Draggable, Droppable } from "@hello-pangea/dnd";
 import React from "react";
-import {
-    ColumnWrapper, ColumnHeader, ColumnTitle, CardsList, AddButtonArea, AddButton,
-} from "./styles";
 import CardTask from "../CardTask";
+import {
+    AddButton,
+    AddButtonArea,
+    CardsList,
+    ColumnHeader, ColumnTitle,
+    ColumnWrapper,
+} from "./styles";
 import { IKanbanColumnProps } from "./types";
-import { Droppable, Draggable } from "@hello-pangea/dnd";
 
-import ButtonImage from '../../assets/buttonmais.svg'
+import ButtonImage from '../../assets/buttonmais.svg';
 
-const KanbanColumn: React.FC<IKanbanColumnProps> = ({
-    title, icon, accentColor, droppableId, tasks = [], onAddTask
-}) => {
+const KanbanColumn: React.FC<IKanbanColumnProps> = ({title, icon, accentColor, droppableId, tasks = [], onAddTask, onRequestDelete}) => {
     return (
     <ColumnWrapper>
         <ColumnHeader>
@@ -28,18 +30,18 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                 <Draggable key={task.id} draggableId={task.id} index={index}>
                 {(prov, snapshot) => (
                     <CardTask
-                    id={task.id}
-                    statusColor={accentColor}
-                    title={task.title}
-                    subtitle={task.subtitle}
-                    members={task.members}
-                    date={task.date}
-                    draggableProps={prov.draggableProps}
-                    innerRef={prov.innerRef}
-                    draggableStyle={prov.draggableProps.style}
-                    dragHandleProps={prov.dragHandleProps}
-                    isDragging={snapshot.isDragging}
-                    {...prov.draggableProps}
+                        id={task.id}
+                        statusColor={accentColor}
+                        title={task.title}
+                        subtitle={task.subtitle}
+                        members={task.members}
+                        date={task.date}
+                        innerRef={prov.innerRef}
+                        draggableProps={prov.draggableProps}
+                        draggableStyle={prov.draggableProps.style}
+                        dragHandleProps={prov.dragHandleProps}
+                        isDragging={snapshot.isDragging}
+                        onRequestDelete={onRequestDelete}
                     />
                 )}
                 </Draggable>
