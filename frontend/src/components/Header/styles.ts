@@ -6,7 +6,6 @@ export const HeaderContainer = styled.div`
     width: 100%;
     max-width: 90%;
     height: 47px;
-    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,7 +15,6 @@ export const HeaderContainer = styled.div`
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-
 
 `
 
@@ -35,8 +33,7 @@ export const Column = styled.div`
 `
 
 export const Wrapper = styled.div<IHeaderStyled>`
-    /*background: linear-gradient(1deg, #02416bff, #0e0d0dff); */
-    background: transparent;
+    background-color: transparent;
     width: 100%;
     height: 47px;
     display: flex;
@@ -45,6 +42,8 @@ export const Wrapper = styled.div<IHeaderStyled>`
     position: fixed;
     top: 0;
     left: 0;
+
+    z-index: 1000;
 
     ${({variant}) => variant !== 'primary' && css`
         background-color: #0063918c;
@@ -82,10 +81,17 @@ export const Menu = styled.a`
 `
 
 export const TitleBorder = styled.div`
-    background-color: #0063918c;
+    
+    color: #ffffffff;
     border-radius: 20px;
     text-align: center;
-    padding: 5px 10px 4px 10px;
+    padding: 5px 10px 4px 0;
+
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 17px;
+
+    cursor: pointer;
 
 `
 

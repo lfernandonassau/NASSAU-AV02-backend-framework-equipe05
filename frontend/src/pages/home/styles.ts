@@ -1,10 +1,57 @@
-import styled from 'styled-components'
+import { FaArrowCircleDown } from 'react-icons/fa'
+import styled, { keyframes } from 'styled-components'
+
+
+type IScrollIndicatorProps = {
+  $show: boolean;
+}
+
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-8px);
+  }
+`
+
+export const ScrollDownIndicator = styled.div<IScrollIndicatorProps>`
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: #086194ff; 
+    font-size: 2rem;
+    cursor: pointer;
+  
+    z-index: 10;
+
+    animation: ${bounce} 2.5s infinite;
+
+    /* transição suave */
+    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+
+    /* prop $show para mudar o CSS */
+    opacity: ${({ $show }) => ($show ? 1 : 0)};
+    visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
+
+
+`
+
+export const AbaixoIcon = styled(FaArrowCircleDown)`
+    margin-top: 2px;
+`
 
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-image: linear-gradient(150deg, #9fcafcff, #ffffffff);
+
 
 `
 
@@ -19,6 +66,8 @@ export const Container = styled.main`
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    position: relative; 
+    z-index: 1;
 
     @media (max-width: 768px) {
         /* Aumenta a largura em telas menores para melhor visualização */
@@ -26,20 +75,45 @@ export const Container = styled.main`
         padding: 0 15px; /* Adiciona um respiro nas laterais (espaço interno) */
         
         margin-top: 100px;
-        margin-bottom: 50px;
-    }
-    @media (max-width: 480px) {
-        /* Garante que o padding seja menor em telas muito estreitas */
-        padding: 0 10px;
+        margin-bottom: 150px;
     }
     /* Breakpoint para Laptops/Tablets Maiores na vertical (1024px para baixo) */
     @media (max-width: 1024px) {
-        max-width: 70%; /* Usa 70% da tela em tablets grandes */
+        max-width: 70%; 
     }
 
 
     
 `
+
+
+export const ParteDoisContainer = styled.footer`
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: relative; 
+    z-index: 1;
+    
+    background-color: #086194ff;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        padding: 30px;
+        flex-direction: column;
+        margin-top: 100px;
+        margin-bottom: 50px;
+        display: flex;
+    }
+
+`;
+
 
 
 export const ImageContainer = styled.img`
@@ -49,6 +123,7 @@ export const ImageContainer = styled.img`
     margin: 30px auto 0;
     border-radius: 16px;
     transition: all 0.3s ease-in-out;
+    
 
     filter: drop-shadow(0 25px 18px rgba(8, 16, 30, 0.35))
             drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
@@ -117,6 +192,24 @@ export const KanbanText = styled.p`
         max-width: 100%; /* Importante para não vazar */
         font-size: 20px; 
         line-height: 1.0;
+        
+    }
+`
+
+export const PartTwoText = styled.h2`
+    font-family: 'Lobster Two';
+    font-weight: 700;
+    color: #ffffffff;
+    font-size: 35px;
+    text-align: center;
+    width: 900px;
+    margin-bottom: 15px;
+    line-height: 75px;
+
+    @media (max-width: 768px) {
+        max-width: 100%; /* Importante para não vazar */
+        font-size: 35px; 
+        line-height: 1.2;
         
     }
 `
