@@ -1,17 +1,10 @@
 import type { Member } from "types/task";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { formatToCardDate } from "../../utils/date";
 import {
-    Avatar,
-    AvatarsRow,
-    BottomRow,
-    CardContainer,
-    DateText,
-    OptionsButton,
-    StatusBar,
-    Subtitle,
-    Title,
-    TopRow,
-    UserBlock, UserIcon
+  Avatar, AvatarsRow, BottomRow, CardContainer, DateText,
+  OptionsButton, StatusBar, Subtitle, Title, TopRow, UserBlock, UserIcon,
+  OptionsMenu,
 } from "./styles";
 
 type CardTaskProps = {
@@ -21,13 +14,14 @@ type CardTaskProps = {
   subtitle: string;
   members: Member[];
   date?: string;
-  onOptionsClick?: () => void;
-  // receber style/props se usar Draggable
+  // drag & drop
   draggableStyle?: React.CSSProperties;
   dragHandleProps?: any;
   draggableProps?: any;
   innerRef?: (el: HTMLElement | null) => void;
   isDragging?: boolean;
+  // ações
+  onRequestDelete?: (id: string) => void;
 };
 
 const CardTask: React.FC<CardTaskProps> = ({
@@ -37,25 +31,64 @@ const CardTask: React.FC<CardTaskProps> = ({
   subtitle,
   members,
   date = "12 de dez",
-  onOptionsClick,
   draggableProps,
   draggableStyle,
   dragHandleProps,
-  innerRef
+  innerRef,
+  onRequestDelete,
 }) => {
+  // ---- controle do menu
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [menuOpen]);
+
   return (
     <CardContainer ref={innerRef} style={draggableStyle} {...draggableProps}>
-      
       <StatusBar style={{ backgroundColor: statusColor }} />
-      <TopRow {...dragHandleProps}>
-        <div>
+
+      <TopRow>
+        {/* SOMENTE este bloco recebe o dragHandleProps */}
+        <div className="drag-handle" {...dragHandleProps}>
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
         </div>
-        <OptionsButton onClick={onOptionsClick} aria-label="Mais opções">
-          <span /><span /><span />
-        </OptionsButton>
+
+        <div style={{ position: "relative" }}>
+          <OptionsButton
+            aria-label="Mais opções"
+            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }} // evita iniciar drag
+            onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }}     // abre/fecha menu
+          >
+            <span /><span /><span />
+          </OptionsButton>
+
+          {menuOpen && (
+            <OptionsMenu ref={menuRef}>
+              <button onClick={() => setMenuOpen(false)}>Editar</button>
+              <button
+                className="danger"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onRequestDelete?.(id);
+                }}
+              >
+                Apagar card
+              </button>
+            </OptionsMenu>
+          )}
+        </div>
       </TopRow>
+
       <BottomRow>
         <UserBlock>
           <UserIcon>👤</UserIcon>
@@ -65,7 +98,7 @@ const CardTask: React.FC<CardTaskProps> = ({
             ))}
           </AvatarsRow>
         </UserBlock>
-        <DateText>{date}</DateText>
+        <DateText>{formatToCardDate(date ?? "")}</DateText>
       </BottomRow>
     </CardContainer>
   );

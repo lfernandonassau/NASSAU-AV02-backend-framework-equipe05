@@ -17,6 +17,13 @@ import { Button } from "../Button";
 import { IAddTaskModel } from "./types";
 
 const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }:IAddTaskModel) => {
+    const handleDateInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let v = e.target.value.replace(/\D/g, ''); // remove não numéricos
+        if (v.length >= 5) v = v.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
+        else if (v.length >= 3) v = v.replace(/(\d{2})(\d+)/, '$1/$2');
+        setDate(v.slice(0, 10)); // limita o input a 10 caracteres
+    };
+
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState(""); // tipo / área / tag
     const [date, setDate] = useState("");
@@ -65,9 +72,9 @@ const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }:IAddTaskModel)
 
             <Label>Prazo (opcional)</Label>
             <TextInput
-            placeholder="Ex: 14 de dez"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+                placeholder="Ex: 14/12/2025"
+                value={date}
+                onChange={handleDateInput}
             />
         </ModalBody>
 

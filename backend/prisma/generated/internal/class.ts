@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\Samuel\\Projetos_dev\\Kodan\\NASSAU-AV02-backend-framework-equipe05\\backend\\prisma\\generated",
+      "value": "C:\\Users\\Samuel\\Projetos_dev\\Kodan\\pendenteAdaptar\\NASSAU-AV02-backend-framework-equipe05\\backend\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -36,7 +36,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Samuel\\Projetos_dev\\Kodan\\NASSAU-AV02-backend-framework-equipe05\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Samuel\\Projetos_dev\\Kodan\\pendenteAdaptar\\NASSAU-AV02-backend-framework-equipe05\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "..",

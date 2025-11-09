@@ -25,6 +25,7 @@ export interface IKanbanColumnProps {
   droppableId: 'PENDENTE' | 'ANDAMENTO' | 'CONCLUIDO';
   tasks: Task[];
   onAddTask: () => void;
+  onRequestDelete?: (id: string) => void;
 }
 
 
