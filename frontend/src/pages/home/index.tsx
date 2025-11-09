@@ -8,7 +8,7 @@ const Home = () => {
         <Wrapper>
             <Header />
             <Container>
-            
+
                 <TitleKanban>
                     Kodan
                     <TitleColor>
