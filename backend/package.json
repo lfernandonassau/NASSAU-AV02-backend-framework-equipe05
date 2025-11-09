@@ -1,22 +1,22 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "module",
-  "devDependencies": {
-    "@types/node": "^24.9.2",
-    "prisma": "^6.18.0",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+  "scripts": {
+    "dev": "tsx --env-file=.env --watch ./index.ts",
+    "start": "tsx --env-file=./.env ./index.ts",
+    "prisma": "prisma",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:reset": "prisma migrate reset --force"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0"
+    "@prisma/client": "6.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "prisma": "6.18.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }

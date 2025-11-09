@@ -2,16 +2,35 @@ generator client {
   provider = "prisma-client"
   output   = "../prisma/generated"
 }
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   name    String?
+
+  posts   Post[]
+  profile Profile?
+}
+model Post {
+  id        Int    @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+
+  // FK -> User
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String?
+
+  // 1:1 com User (FK única)
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id])
 }
