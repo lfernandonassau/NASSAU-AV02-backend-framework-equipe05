@@ -13,6 +13,9 @@ export const ButtonContainer = styled.button<IButtonStyled>`
     margin-right: 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
+    z-index: 100;
+
     filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35))
             drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 

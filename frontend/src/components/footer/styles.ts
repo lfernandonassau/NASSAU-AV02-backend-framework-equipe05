@@ -8,7 +8,7 @@ export const FooterContainer = styled.footer`
   flex-direction: column;
   align-items: center;
   padding: 40px 20px 20px 20px;
-  border-top: 2px solid #1e1e1e;
+  border-top: 1px solid #000000ff;
 `;
 
 // Área interna com as seções
@@ -38,7 +38,7 @@ export const FooterTitle = styled.h4`
 
 // Parágrafos e textos gerais
 export const FooterText = styled.p`
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
   margin: 4px 0;
   color: #000000ff;
@@ -47,7 +47,7 @@ export const FooterText = styled.p`
 // Links do rodapé com animação de hover
 export const FooterLink = styled.a`
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   color: #000000ff;
   text-decoration: none;
   margin: 4px 0;
@@ -60,7 +60,7 @@ export const FooterLink = styled.a`
 
 // Texto de copyright
 export const Copyright = styled.p`
-  font-size: 12px;
+  font-size: 10px;
   color: #888;
   margin-top: 30px;
   text-align: center;

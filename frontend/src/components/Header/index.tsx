@@ -9,6 +9,7 @@ import {
     FeedPicture,
     HeaderContainer,
     Row,
+    TitleBorder,
     UserPicture,
     Wrapper,
 } from './styles'
@@ -33,6 +34,7 @@ const Header = ({autenticado, variant = 'primary'}:IHeader) => {
         <HeaderContainer>
             <Row>
                 <img src={logo} alt="Kodan Logo" onClick={() => navigate('/')}/>
+                <TitleBorder>kodan.</TitleBorder>
             </Row>
             <Row>
                 {autenticado ?(<>
