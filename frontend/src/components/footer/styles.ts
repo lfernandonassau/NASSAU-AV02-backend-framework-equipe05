@@ -1,3 +1,5 @@
+import { FaGithubAlt } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import styled from "styled-components";
 
 // Container principal do rodapé
@@ -27,6 +29,13 @@ export const FooterSection = styled.div`
   min-width: 200px;
 `;
 
+
+
+// Componente pai para o flex-box do footer redes sociais:
+export const FooterDad = styled.div`
+  display: flex;  
+  flex-direction: row;
+`
 // Título de cada seção
 export const FooterTitle = styled.h4`
   font-family: 'Lobster Two';
@@ -37,20 +46,14 @@ export const FooterTitle = styled.h4`
 `;
 
 // Parágrafos e textos gerais
-export const FooterText = styled.p`
+export const FooterText = styled.a`
   font-size: 12px;
   line-height: 1.5;
   margin: 4px 0;
   color: #000000ff;
-`;
 
-// Links do rodapé com animação de hover
-export const FooterLink = styled.a`
-  display: block;
-  font-size: 12px;
-  color: #000000ff;
   text-decoration: none;
-  margin: 4px 0;
+
   transition: color 0.3s ease;
 
   &:hover {
@@ -70,3 +73,19 @@ export const Copyright = styled.p`
   max-width: 1200px;
 `;
 
+export const GitHubIco = styled(FaGithubAlt)`
+  color: #000000;
+  margin-right: 8px;
+  height: 18px;
+
+`
+export const EmailIco = styled(MdEmail)`
+  margin-right: 8px;
+  height: 18px;
+`
+
+
+export const RightIcon = styled.div`
+    margin-right: 0;
+    height: 20px;
+`
