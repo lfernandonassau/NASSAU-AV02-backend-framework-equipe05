@@ -2,14 +2,15 @@ import React from 'react'
 import {  ProjectCardContainer } from './styles'
 
 type ProjectCardProps = {
-  children: React.ReactNode; 
+  children: React.ReactNode;
+  onClick?: () => void
 };
 
-const ProjectCard = ({ children }: ProjectCardProps) => {
+const ProjectCard = ({ children, onClick }: ProjectCardProps) => {
 
 
   return (
-    <ProjectCardContainer>
+    <ProjectCardContainer onClick={onClick}>
       {children}
     </ProjectCardContainer>
   )

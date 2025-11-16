@@ -11,6 +11,7 @@ export const ProjectCardContainer = styled.div`
 
     padding: 10px;
     display: flex;
+    flex-direction: column;
     
     transition: all 0.25s ease;
 
@@ -25,6 +26,4 @@ export const ProjectCardContainer = styled.div`
     }
     }
     
-`;
-
-
+`

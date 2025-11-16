@@ -16,13 +16,14 @@ export const CardContainer = styled.div`
     position: relative;
     &:hover {
     transform: translateY(-1px);
-
     background-color: #ffffff;
-    cursor: pointer;
+    cursor: grab;
     }
-    &.is-dragging { 
-    transform: none !important;  /* não empurre durante drag */
-    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    &[data-dragging="true"] {
+    cursor: grabbing;
+    transform: translateZ(0) scale(.99);
+    box-shadow: 0 8px 24px rgba(90, 181, 250, 0.25);
+    }
 `;
 
 
@@ -123,6 +124,26 @@ export const DateText = styled.span`
     color: #4b5563;
     white-space: nowrap;
 `;
+
+    export const Actions = styled.div`
+    position: relative;
+    flex: 0 0 auto;
+`;
+
+
+export const TextCol = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 2px;            /* aproxima título e subtítulo */
+    flex: 1 1 auto;      /* ocupa o espaço livre */
+    min-width: 0;        /* permite ellipsis funcionar */
+    padding-right: .5rem;/* respiro do botão à direita */
+
+    /* reforço do cursor do handle global */
+    cursor: inherit;
+`;
+
+
 
 export const OptionsMenu = styled.div`
     position: absolute;

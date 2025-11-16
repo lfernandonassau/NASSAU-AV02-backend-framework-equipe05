@@ -1,34 +1,33 @@
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { api } from '../../services/api'
 
 
-import { Button } from '../../components/Button'
-import { Input } from '../../components/Input'
-import logo from '../../assets/logo.svg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { 
-        Column,
-        Row,
-        TitleLogin,
-        KanbanSubText,
-        EsqueciSubText,
-        LoginContainer,
-        EmailEstilizado,
-        PasswordEstilizado,
-        PageWrapper,
-        LoginNewScreen,
-        WelcomeContainer,
-        TitleWelcome,
-        WelcomeSubText,
-        TitleKanban,
-        MagicEye,
-        MagicEyeOff,
-        PageLogin,
-        } 
-        from './styles'
+import logo from '../../assets/logo.svg'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import {
+    Column,
+    EmailEstilizado,
+    EsqueciSubText,
+    KanbanSubText,
+    LoginContainer,
+    LoginNewScreen,
+    MagicEye,
+    MagicEyeOff,
+    PageLogin,
+    PageWrapper,
+    PasswordEstilizado,
+    Row,
+    TitleKanban,
+    TitleLogin,
+    TitleWelcome,
+    WelcomeContainer,
+    WelcomeSubText,
+} from './styles'
 import { IFormData } from './types'
 
 const schema = yup.object({
@@ -70,10 +69,10 @@ const Login = () => {
                 <WelcomeContainer>
                     <Column>
                         
-                        <PageLogin src={logo} alt="Logo Kodan" /> 
+                        <PageLogin src={logo} alt="Logo Kodan" />
                         <TitleWelcome>Seja bem-vindo!</TitleWelcome>
                         <WelcomeSubText>
-                            Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban. 
+                            Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban.
                         </WelcomeSubText>
                         <TitleKanban> - Equipe Kodan</TitleKanban>
                         <WelcomeSubText>
@@ -108,3 +107,4 @@ const Login = () => {
 }
 
 export { Login }
+
