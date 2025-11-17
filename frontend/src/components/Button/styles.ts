@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { IButtonStyled } from './types'
 
 export const ButtonContainer = styled.button<IButtonStyled>`
-    background: #5ab4facb;
+    background: #5ab4e9cb;
     border-radius: 10px;
     position: relative;
     font-family: 'Montserrat';
@@ -10,14 +10,14 @@ export const ButtonContainer = styled.button<IButtonStyled>`
     padding: 6px 12px;
     min-width: 105px;
     border: none;
-    margin-right: 5px;
+    margin-right: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 
     z-index: 100;
 
-    filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35))
-            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
+    filter: drop-shadow(0 3px 3px rgba(8, 16, 30, 0.35))
+            drop-shadow(0 2px 2px rgba(12, 24, 40, 0.25));
 
     &:hover {
         background: #000000;
@@ -84,5 +84,25 @@ export const HomeButton = styled.button`
     margin-right: 12px;
     text-decoration: none;
     cursor: pointer;
+
+`
+
+export const PageButtons = styled.button`
+    background: none;
+    position: relative;
+    font-family: 'Montserrat';
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+
+    text-align: center;
+    margin: 0 30px;
+
+    &:hover {
+        color: #023042ff;
+    }
 
 `

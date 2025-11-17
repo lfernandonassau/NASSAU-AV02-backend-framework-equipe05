@@ -39,15 +39,15 @@ export const FooterDad = styled.div`
 // Título de cada seção
 export const FooterTitle = styled.h4`
   font-family: 'Lobster Two';
-  color: #57c2f8ff;
+  color: #000000ff;
   font-size: 20px;
   margin-bottom: 10px;
   letter-spacing: 1px;
-`;
+`
 
 // Parágrafos e textos gerais
 export const FooterText = styled.a`
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
   margin: 4px 0;
   color: #000000ff;
@@ -59,7 +59,11 @@ export const FooterText = styled.a`
   &:hover {
     color: #00aaff;
   }
-`;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+`
 
 // Texto de copyright
 export const Copyright = styled.p`

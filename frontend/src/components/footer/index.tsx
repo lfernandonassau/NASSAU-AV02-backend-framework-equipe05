@@ -34,7 +34,7 @@ const Footer: React.FC = ( ) => {
 
           <FooterText>
           
-          Kodan é uma plataforma web desenvolvida com o objetivo de aplicar conceitos de arquitetura MVC, APIs RESTful e integração entre front-end e back-end.A aplicação oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes
+          Kodan oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes
           
           </FooterText>
 
