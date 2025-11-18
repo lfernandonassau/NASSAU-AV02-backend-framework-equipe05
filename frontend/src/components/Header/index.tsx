@@ -89,7 +89,7 @@ const Header = ({autenticado, variant = 'primary'}:IHeader) => {
                     <NavContainer $isOpen={isMobileMenuOpen}>
                         <a href='#sobre'><PageButtons>Sobre</PageButtons></a>
                         <a href='#servicos'><PageButtons>Serviços</PageButtons></a>
-                        <a href='#contato'><PageButtons>Contato</PageButtons></a>
+                        <a href='#footer'><PageButtons>Contato</PageButtons></a>
                         
                         
                         
