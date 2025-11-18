@@ -28,20 +28,20 @@ export const NavContainer = styled.div<INavContainerProps>`
 
     @media (max-width: 768px) {
         
-        /* 1. Por padrão (fechado), ele some */
+        /* Por padrão (fechado), ele some */
         display: none; 
 
-        /* 2. QUANDO $isOpen FOR TRUE, ele vira a "lista" */
+        /* QUANDO $isOpen FOR TRUE, ele vira a "lista" */
         ${({ $isOpen }) => $isOpen && css`
             display: flex;
-            flex-direction: column; /* <-- A "lista" que você mencionou */
+            flex-direction: column;
             align-items: center;
-            gap: 25px; /* Espaço entre os botões na vertical */
+            gap: 25px; 
 
             /* 3. Posicionamento para flutuar sobre a página */
             position: absolute;
             z-index: 1000;
-            top: 80px; /* IMPORTANTE: Deve ser a altura do seu Header */
+            top: 50px; /* IMPORTANTE: Deve ser a altura do seu Header */
             left: 0;
             right: 0;
             
@@ -54,7 +54,7 @@ export const NavContainer = styled.div<INavContainerProps>`
                 width: 100%;
                 max-width: 300px;
                 font-size: 1rem;
-                padding: 10px;
+                padding: 5px;
                 
             }
         `}

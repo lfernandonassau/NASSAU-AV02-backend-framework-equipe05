@@ -4,14 +4,14 @@ import * as yup from 'yup'
 import { api } from '../../services/api'
 
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import {
     Column,
-    EmailEstilizado,
+    LoginIconStyled,
     EsqueciSubText,
     KanbanSubText,
     LoginContainer,
@@ -20,7 +20,7 @@ import {
     MagicEyeOff,
     PageLogin,
     PageWrapper,
-    PasswordEstilizado,
+    PasswordStyled,
     Row,
     TitleKanban,
     TitleLogin,
@@ -37,7 +37,18 @@ const schema = yup.object({
 
 const Login = () => {
     
-    
+    // Titulo visivel
+    const [estaVisivel, setEstaVisivel] = useState(false)
+    useEffect(() => {
+        // Define como visível após um pequeno atraso
+        // Isso dá tempo para o componente montar invisível
+        const timer = setTimeout(() => {
+        setEstaVisivel(true)
+        }, 200) // 200ms de atraso
+
+        // Limpa o timer se o componente for desmontado
+        return () => clearTimeout(timer)
+    }, [])
 
     //React-hook-form: Regras do formulário(Dentro do input)
     const {control, handleSubmit , formState: { errors, isValid } } = useForm<IFormData>({
@@ -65,7 +76,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     return (
         <PageWrapper>
-            <LoginNewScreen>
+            <LoginNewScreen $visivel= {estaVisivel}>
                 <WelcomeContainer>
                     <Column>
                         
@@ -90,8 +101,8 @@ const Login = () => {
                             Faça o seu login agora!
                         </KanbanSubText>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Input name='email' errorMessage={errors?.email?.message} placeholder="E-mail" control={control} leftIcon={<EmailEstilizado/>}/>
-                            <Input name='password' errorMessage={errors?.password?.message} placeholder="Senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordEstilizado/>} rightIcon={showPassword ? (<MagicEye onClick={() => setShowPassword(false)}/>) : (<MagicEyeOff onClick={() => setShowPassword(true)}/>)}/>
+                            <Input name='email' errorMessage={errors?.email?.message} placeholder="E-mail" control={control} leftIcon={<LoginIconStyled/>}/>
+                            <Input name='password' errorMessage={errors?.password?.message} placeholder="Senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordStyled/>} rightIcon={showPassword ? (<MagicEye onClick={() => setShowPassword(false)}/>) : (<MagicEyeOff onClick={() => setShowPassword(true)}/>)}/>
                             <Row>
                                 <EsqueciSubText onClick= {() => { navigate('/')}}>
                                     Esqueci minha senha

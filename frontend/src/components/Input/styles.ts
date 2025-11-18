@@ -5,7 +5,7 @@ import { IInputStyled } from './types'
 export const InputContainer = styled.div<IInputStyled>`
     max-width: 275px;
     height: 30px;
-    border-bottom: 1px solid #000000ff;
+    border-bottom: 1px solid #ffffffff;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -16,7 +16,6 @@ export const InputContainer = styled.div<IInputStyled>`
         height: 150px;
         margin-bottom: 0;
     
-    
         background: transparent;
         flex: 1;
         border: 0;
@@ -25,8 +24,9 @@ export const InputContainer = styled.div<IInputStyled>`
             background-color: transparent;
             width: 100%;
             height: 20px;
+
             &::placeholder {
-                color: #ffffff9f; /* Ex: Texto do placeholder cinza claro */
+                color: #d8d7d7ea;
             }
             
         }
@@ -44,7 +44,7 @@ export const RightIcon = styled.div`
 
 export const InputText = styled.input`
     background-color: transparent;
-    color: #000000ff;
+    color: #ffffffff;
     width: 100%;
     border: 0;
     height: 30px;

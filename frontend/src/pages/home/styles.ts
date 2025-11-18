@@ -6,8 +6,18 @@ import styled, { keyframes } from 'styled-components'
 
 
 type IScrollIndicatorProps = {
-  $show: boolean;
+    $show: boolean
 }
+
+type IAnimation = {
+    $visivel: boolean
+}
+
+type IContainerAnimationProps = {
+    $visivel: boolean
+}
+
+/* Lista dos keyframes utilizados na home */
 
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
@@ -20,6 +30,7 @@ const bounce = keyframes`
     transform: translateY(-8px);
   }
 `
+
 
 export const ScrollDownIndicator = styled.div<IScrollIndicatorProps>`
     position: absolute;
@@ -90,15 +101,15 @@ export const Container = styled.main`
 `
 
 
-export const ParteDoisContainer = styled.div`
+export const ParteDoisContainer = styled.div<IContainerAnimationProps>`
     flex: 1;
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
     margin-top: 70px;
     display: flex;
-    flex-direction: column;
-    padding: 20px;
+    flex-direction: row;
+    padding: 150px;
     justify-content: space-between;
     align-items: center;
     text-align: center;
@@ -106,9 +117,20 @@ export const ParteDoisContainer = styled.div`
     position: relative; 
     z-index: 1;
     
-    background-color: #075d96ff;
+    background-image: linear-gradient(135deg, #075d96ff, #021c2e);
+
+
+    /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
 
     @media (max-width: 768px) {
+        padding: 50px;
         flex-direction: column;
         max-width: 100%;
         
@@ -122,20 +144,28 @@ export const HomeSection = styled.div`
     
 `
 
-export const ParteTresContainer = styled.div`
+export const ParteTresContainer = styled.div<IContainerAnimationProps>`
     display: flex;
     flex-direction: row;
     flex: 1;
     position: relative; 
     z-index: 1;
-    padding: 70px;
+    padding: 150px;
 
     background-color: #ffffffff;
 
+    /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
+
     @media (max-width: 768px) {
         flex-direction: column;
-        
-
+        padding: 50px;
     }
 
 `
@@ -196,7 +226,7 @@ export const ImageContainerTwo = styled.img`
 `
 
 
-export const TitleKanban = styled.h2`
+export const TitleKanban = styled.h2<IAnimation>`
     font-family: 'Lobster Two';
     font-weight: 700;
     color: #ffffffff;
@@ -209,12 +239,32 @@ export const TitleKanban = styled.h2`
     margin-bottom: 15px;
     line-height: 75px;
 
+    /* Parte da animação */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
+
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */
         font-size: 35px; 
         line-height: 1.2;
         
     }
+`
+
+export const Animation = styled.div<IAnimation>`
+    /* Parte da animação */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
 `
 
 export const TitleColor = styled.h2`
@@ -229,12 +279,12 @@ export const TitleColor = styled.h2`
 
 `
 
-export const KanbanText = styled.p`
+export const KanbanText = styled.p<IAnimation>`
     font-family: 'Montserrat';
     font-weight: 700;
     color: #000000;
 
-    font-size: 20px;
+    font-size: 18px;
     text-align: center; 
 
     max-width: 600px;
@@ -242,6 +292,17 @@ export const KanbanText = styled.p`
     margin-bottom: 20px;
     line-height: 22px;
     margin: 0 auto 20px auto;
+
+    /* Estado inicial (antes de 'visivel' ser true) */
+    opacity: 0;
+    transform: translateY(20px);
+    
+    /* A transição que será aplicada */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
 
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */
@@ -252,21 +313,22 @@ export const KanbanText = styled.p`
 `
 
 export const PartTwoText = styled.h2`
-    font-family: 'Lobster Two';
-    font-weight: 500;
+    font-family: 'Montserrat';
+    font-weight: 700;
     color: #ffffffff;
-    font-size: 80px;
+    font-size: 30px;
     
 
-    max-width: 900px;
+    max-width: 1000px;
     width: 100%;
     
-    line-height: 90px;
+    line-height: 35px;
 
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */
-        font-size: 35px; 
-        line-height: 2.0;
+        font-size: 18px; 
+        line-height: 25px;
+        
         text-align: center;
         
     }
@@ -274,14 +336,14 @@ export const PartTwoText = styled.h2`
 export const ParagraphText = styled.p`
     font-family: 'Montserrat';
     font-weight: 500;
-    line-height: 45px;
+    line-height: 25px;
     color: #ffffffff;
-    font-size: 13px;
+    font-size: 15px;
 
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */
-        font-size: 15px;
-        line-height: 25px;
+        font-size: 12px;
+        line-height: 18px;
         text-align: center;
         
     }
@@ -331,6 +393,12 @@ export const CardsIcon = styled(MdDashboardCustomize)`
     width: 30px;
     color: #086194ff;
 
+    &:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 10px 5px rgba(12, 24, 40, 0.3));
+    }
+    
+
 `
 
 
@@ -338,6 +406,12 @@ export const VisualIcon = styled(ImEye)`
     height: 30px;
     width: 30px;
     color: #086194ff;
+    &:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 10px 5px rgba(12, 24, 40, 0.3));
+    }
+    
+
 
 `
 
@@ -345,6 +419,11 @@ export const ImpulsionIcon = styled(ImRocket)`
     height: 30px;
     width: 30px;
     color: #086194ff;
+    &:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 10px 5px rgba(12, 24, 40, 0.3));
+    }
+    
 
 `
 
@@ -352,6 +431,11 @@ export const CheckListIcon = styled(MdChecklist)`
     height: 30px;
     width: 30px;
     color: #086194ff;
+    &:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 10px 5px rgba(12, 24, 40, 0.3));
+    }
+    
 
 `
 
