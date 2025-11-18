@@ -1,3 +1,4 @@
+import { MdSms } from "react-icons/md";
 import { FaGithubAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import styled from "styled-components";
@@ -96,6 +97,12 @@ export const GitHubIco = styled(FaGithubAlt)`
 export const EmailIco = styled(MdEmail)`
   color: #000000;
   margin-right: 8px;
+  height: 18px;
+`
+
+export const SmsIco = styled(MdSms)`
+  color: #000000;
+  margin-right: 9px;
   height: 18px;
 `
 
