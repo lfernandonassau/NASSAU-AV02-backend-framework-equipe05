@@ -1,13 +1,18 @@
 import styled from 'styled-components'
 import { MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import LoginBackgroundImage from '../../assets/login-background.svg'
+import { IAnimation } from './types'
+
+
+
 
 export const LoginContainer = styled.main`
     width: 100%;
     max-width: 450px;
-    padding: 30px;
+    padding: 150px 50px 150px 50px;
+    
 
-    background-color: #ffffff9c;
+    background-color: #0000009c;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,8 +23,9 @@ export const LoginContainer = styled.main`
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
     @media (max-width: 768px) {
+        padding: 50px;
         max-width: 100%;
-        border-radius: 0 0 10px 10px;
+        border-radius: 10px;
     }
     
 
@@ -29,9 +35,9 @@ export const LoginContainer = styled.main`
 export const WelcomeContainer = styled.main`
     width: 100%;
     max-width: 450px;
-    padding: 30px;
+    padding: 100px 100px 150px 100px;
 
-    background-color: #9fcafcb9;
+    background-image: linear-gradient(135deg, #075d9688, #021c2e86);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -42,27 +48,30 @@ export const WelcomeContainer = styled.main`
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
     @media (max-width: 768px) {
-      
-        padding: 7px 10px 30px 2px;
-        max-width: 100%; 
-        border-radius: 10px 10px 0 0;
+        display: none;
     }
 
 `
 export const PageWrapper = styled.div`
     background-image: url(${LoginBackgroundImage});
+    background-color: #333;
+    background-blend-mode: multiply; /* Escurece */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
+    
     width: 100%;
-    min-height: 100vh;
+    
     box-sizing: border-box;
+
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    
     @media (max-width: 768px) {
         
-        padding: 60px 15px;
+        padding: 200px 15px;
         align-items: flex-start;
         background-attachment: scroll;
     }
@@ -77,11 +86,20 @@ export const PageLogin = styled.img`
 `
 
 
-export const LoginNewScreen = styled.div`
+export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
     align-items: stretch;
     width: 100%;
     max-width: 800px;
+
+    /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
 
     @media (max-width: 768px) {
       flex-direction: column; /* << MÁGICO: Empilha os containers */
@@ -111,7 +129,7 @@ export const TitleLogin = styled.p`
     font-family: 'Lobster two';
     font-style: normal;
     font-weight: 700;
-    color: #000000ff;
+    color: #ffffffff;
     font-size: 50px;
     text-align: center;
     margin-bottom: 15px;
@@ -122,23 +140,21 @@ export const TitleLogin = styled.p`
 export const TitleWelcome = styled.h2`
     font-family: 'Lobster Two';
     font-weight: 700;
-    color: #ffffffff;
-    font-size: 50px;
+    color: #75d3ffff;
+    font-size: 32px;
     text-align: center;
-    margin-bottom: 15px;
-    line-height: 40px;
+    line-height: 50px;
 `
 
 export const WelcomeSubText = styled.p`
     font-family: 'Montserrat', 'sans serif';
     font-style: normal;
     font-weight: 300;
-    color: #000000ff;
-    font-size: 18px;
+    color: #ffffffff;
+    font-size: 15px;
     text-align: center; 
-    max-width: 420px;
     line-height: 25px;
-    margin: 20px auto 10px auto;
+    margin: 25px auto 15px auto;
     @media (max-width: 768px) {
       font-size: 20px;
     }
@@ -148,7 +164,7 @@ export const KanbanSubText = styled.p`
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
-    color: #000000;
+    color: #ffffffff;
     font-size: 18px;
     text-align: center; 
     max-width: 420px;
@@ -161,7 +177,7 @@ export const EsqueciSubText = styled.p`
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    color: #000000ff;
+    color: #ffffffff;
     font-size: 9px; 
     text-align: center;
     margin-bottom: 20px;
@@ -181,25 +197,25 @@ export const CriarContaText = styled.p`
 
     margin-top: 0;
 `
-export const EmailEstilizado = styled(MdPerson)`
-    color: #000000ff;
+export const LoginIconStyled = styled(MdPerson)`
+    color: #ffffffff;
     margin-right: 5px;
     font-size: 15px;
 `
-export const PasswordEstilizado = styled(MdLock)`
-    color: #000000ff;
+export const PasswordStyled = styled(MdLock)`
+    color: #ffffffff;
     margin-right: 5px;
     font-size: 15px;
 `
 
 export const MagicEye = styled(MdVisibility)`
-    color: #000000ff;
+    color: #ffffffff;
     margin-right: 5px;
     font-size: 15px;
 `
 
 export const MagicEyeOff = styled(MdVisibilityOff)`
-    color: #000000ff;
+    color: #ffffffff;
     margin-right: 5px;
     font-size: 15px;
 `

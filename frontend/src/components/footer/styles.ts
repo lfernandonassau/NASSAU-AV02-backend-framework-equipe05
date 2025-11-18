@@ -9,8 +9,13 @@ export const FooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px 20px 20px;
+  padding: 100px 20px 20px 20px;
   border-top: 1px solid #000000ff;
+  @media (max-width: 768px) {
+      max-width: 100%; /* Importante para não vazar */
+      padding: 30px 10px 0 10px;
+        
+    }
 `;
 
 // Área interna com as seções
@@ -20,13 +25,16 @@ export const FooterContent = styled.div`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 100px;
+  padding-left: 100px;
 `;
 
 // Cada bloco de conteúdo dentro do rodapé
 export const FooterSection = styled.div`
   flex: 1 1 250px;
   min-width: 200px;
+  display: flex;
+  flex-direction: column;
 `;
 
 
@@ -38,7 +46,7 @@ export const FooterDad = styled.div`
 `
 // Título de cada seção
 export const FooterTitle = styled.h4`
-  font-family: 'Lobster Two';
+  font-family: 'Montserrat', sans-serif;
   color: #000000ff;
   font-size: 20px;
   margin-bottom: 10px;
@@ -47,6 +55,7 @@ export const FooterTitle = styled.h4`
 
 // Parágrafos e textos gerais
 export const FooterText = styled.a`
+  font-family: 'Montserrat', sans-serif;
   font-size: 11px;
   line-height: 1.5;
   margin: 4px 0;
@@ -59,10 +68,11 @@ export const FooterText = styled.a`
   &:hover {
     color: #00aaff;
   }
-
   @media (max-width: 768px) {
-    font-size: 11px;
-  }
+      max-width: 100%; /* Importante para não vazar */
+      font-size: 10px;
+        
+    }
 `
 
 // Texto de copyright
@@ -84,6 +94,7 @@ export const GitHubIco = styled(FaGithubAlt)`
 
 `
 export const EmailIco = styled(MdEmail)`
+  color: #000000;
   margin-right: 8px;
   height: 18px;
 `

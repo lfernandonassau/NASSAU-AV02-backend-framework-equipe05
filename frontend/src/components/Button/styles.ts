@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { IButtonStyled } from './types'
 
 export const ButtonContainer = styled.button<IButtonStyled>`
-    background: #5ab4e9cb;
+    background: #075d96ff;
     border-radius: 10px;
     position: relative;
     font-family: 'Montserrat';
@@ -32,7 +32,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         height: 40px;
         font-weight: 600;
 
-        background: #59adeec9;
+        background-image: linear-gradient(135deg, #075d96ff, #021c2e);
         filter: drop-shadow(0 15px 10px rgba(8, 16, 30, 0.35))
                 drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 

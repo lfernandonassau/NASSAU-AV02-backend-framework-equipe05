@@ -49,7 +49,7 @@ const Footer: React.FC = ( ) => {
 
         <FooterSection>
           
-          <FooterTitle>Contato</FooterTitle>
+          <FooterTitle>Redes / Suporte </FooterTitle>
           <FooterDad>
             <FooterIcos rightIcon={<EmailIco/>}/>
             <FooterText href="kodanorg@enterprise.co">KodanOrg@enterprise.co</FooterText>
