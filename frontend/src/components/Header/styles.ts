@@ -93,7 +93,7 @@ export const Wrapper = styled.div<IHeaderStyled>`
     backdrop-filter: blur(0px);
 
     ${({ $isScrolled }) => $isScrolled && css`
-        background-color: #00639170; 
+        background-color: #75caf170; 
         backdrop-filter: blur(10px); 
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     `}

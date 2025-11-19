@@ -103,7 +103,7 @@ const Footer: React.FC = ( ) => {
 
         <FooterSection>
   
-          <FooterTitle> contatos </FooterTitle>
+          <FooterTitle> Contatos </FooterTitle>
 
           <FooterDad>
             <FooterIcos rightIcon={<GitHubIco/>}/>

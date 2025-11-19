@@ -17,24 +17,23 @@ import {
     LoginNewScreen,
     MagicEye,
     MagicEyeOff,
-    PageLogin,
     PageWrapper,
     PasswordStyled,
     Row,
     TitleKanban,
-    TitleLogin,
-    TitleWelcome,
     WelcomeContainer,
     WelcomeSubText,
     CpfIconStyled,
     NameIconStyled,
     PossuiContaSubText,
     FormContainer,
+    TitleWelcome,
+    CloseButton,
 } from './styles'
 import { IFormData } from './types'
 import { cpfMask } from '../../utils/cpfMask'
 import { nameMask } from '../../utils/nameMask'
-import { KanbanText } from 'pages/home/styles'
+import { FcGoogle } from 'react-icons/fc'
 
 const schema = yup.object({
     cpf: yup.string().min(14, 'No minimo 11 caracteres').required('Campo obrigatório'),
@@ -112,7 +111,6 @@ const Register = () => {
             <LoginNewScreen $visivel= {estaVisivel}>
                 <LoginContainer>
                     <Column>
-                        <img src={logo} alt="Logo Kodan" />
                         <TitleKanban>Crie sua conta</TitleKanban>
                         <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
                         <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -174,13 +172,13 @@ const Register = () => {
                             
                             <Row>
                                 <PossuiContaSubText onClick= {() => { navigate('/login')}}>
-                                    Já possui uma conta? Clique aqui
+                                    Já possui uma conta? <a>Clique aqui</a>
                                 </PossuiContaSubText>
                             </Row>
                             <Button 
                             title='Entrar' 
                             type='submit'
-                            variant='secundary'
+                            variant='loginb'
                             disabled={!isValid}>
                             </Button>
                             <Row>
@@ -188,14 +186,16 @@ const Register = () => {
                                     ou
                                 </PossuiContaSubText>
                             </Row>
+                            <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </FormContainer>
                     </Column>
                 </LoginContainer>
                 <WelcomeContainer>
                     <Column>
-                        <TitleWelcome>kodan.</TitleWelcome>
                         <WelcomeSubText>
-                            Diga adeus à desorganização. Cadastre-se no kodan. e transforme a maneira como sua equipe trabalha
+                            <CloseButton>X</CloseButton>
+                            <TitleWelcome>✅ Seja bem-vindo!</TitleWelcome>
+                            Diga adeus à desorganização. Cadastre-se no kodan e transforme a maneira como sua equipe trabalha 
                         </WelcomeSubText>
                     </Column>
                 </WelcomeContainer>

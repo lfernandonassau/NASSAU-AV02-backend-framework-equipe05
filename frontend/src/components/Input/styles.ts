@@ -17,7 +17,7 @@ export const InputContainer = styled.div<IInputStyled>`
     input {
         
          &::placeholder {
-            color: #b1adadea;
+            color: #ffffffea;
             font-size: 15px;
         }
             
