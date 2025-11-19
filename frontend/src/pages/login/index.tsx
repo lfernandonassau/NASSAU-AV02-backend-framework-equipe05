@@ -27,8 +27,11 @@ import {
     TitleWelcome,
     WelcomeContainer,
     WelcomeSubText,
+    MainContent,
 } from './styles'
 import { IFormData } from './types'
+import { FcGoogle } from "react-icons/fc"
+import { Copyright } from '../../components/Copyright'
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
@@ -94,6 +97,12 @@ const Login = () => {
                                 </EsqueciSubText>
                             </Row>
                             <Button title='Entrar' type='submit' disabled={!isValid}></Button>
+                            <Row>
+                                <EsqueciSubText>
+                                    ou
+                                </EsqueciSubText>                           
+                            </Row>
+                            <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </form>
                     </Column>
                 </LoginContainer>
@@ -109,10 +118,11 @@ const Login = () => {
                         <WelcomeSubText>
                             Ainda não é cadastrado?
                         </WelcomeSubText>
-                        <Button title="Clique aqui!" variant="secondary"/>
+                        <Button title="Clique aqui!" variant="secondary" onClick={() => navigate('/register')}/>
                     </Column>
                 </WelcomeContainer>
             </LoginNewScreen>
+            
         </PageWrapper>
     )
 }

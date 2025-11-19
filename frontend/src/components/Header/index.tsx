@@ -87,17 +87,19 @@ const Header = ({autenticado, variant = 'primary'}:IHeader) => {
                 // 2. A Row (direita)
                 <>
                     <NavContainer $isOpen={isMobileMenuOpen}>
-                        <a href='#sobre'><PageButtons>Sobre</PageButtons></a>
-                        <a href='#servicos'><PageButtons>Serviços</PageButtons></a>
-                        <a href='#footer'><PageButtons>Contato</PageButtons></a>
-                        
-                        
-                        
+                        <a href='#sobre'>
+                            <PageButtons>Sobre</PageButtons>
+                        </a>
+                        <a href='#servicos'>
+                            <PageButtons>Serviços</PageButtons>
+                        </a>
+                        <a href='#footer'>
+                            <PageButtons>Contato</PageButtons>
+                        </a>
                     </NavContainer>
-
                     <Row>
                         <PageButtons onClick={() => navigate('/login')}>Entrar</PageButtons>
-                        <Button title="Cadastrar" onClick={() => navigate('/register')}></Button>
+                        <Button title="Cadastrar"  variant='cadastrobutton' onClick={() => navigate('/register')}></Button>
                         <HamburgerButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             <HamburguerIcon />
                         </HamburgerButton>

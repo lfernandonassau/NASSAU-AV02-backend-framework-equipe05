@@ -14,7 +14,7 @@ export const LoginContainer = styled.main`
     flex: 1;
     
 
-    background-color: #0000009c;
+    background-color: #62c4f183;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -23,6 +23,15 @@ export const LoginContainer = styled.main`
 
     border-radius: 10px 0 0 10px;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
+
+    input {
+        
+         &::placeholder {
+            color: #ffffffc0;
+            font-size: 13px;
+        }
+            
+    }
 
     @media (max-width: 1203px) {
         
@@ -57,10 +66,17 @@ export const WelcomeContainer = styled.main`
     }
 
 `
+
+
+
 export const PageWrapper = styled.div`
-    background-image: url(${LoginBackgroundImage});
-    background-color: #333;
-    background-blend-mode: multiply; /* Escurece */
+    background: radial-gradient(
+    circle at 70% 30%, /* Posição do centro da "luz" */
+    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
+    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
+    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
+    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
+    );
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -96,7 +112,7 @@ export const LoginNewScreen = styled.div<IAnimation>`
     align-items: stretch;
     width: 100%;
     max-width: 1200px;
-    min-weight: 800px;
+    min-width: 800px;
 
     /* Animação ao rolar a pagina */
     opacity: 0;

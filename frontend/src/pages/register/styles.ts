@@ -9,7 +9,7 @@ import { FaRegIdCard, FaUser } from 'react-icons/fa'
 
 export const LoginContainer = styled.main`
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     padding: 40px;
     flex: 1;
 
@@ -38,13 +38,7 @@ export const WelcomeContainer = styled.main`
     padding: 40px;
     flex: 2;
 
-    background: radial-gradient(
-    circle at 70% 30%, /* Posição do centro da "luz" */
-    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
-    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
-    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
-    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
-    );
+    background: transparent;
 
   
     display: flex;
@@ -54,7 +48,6 @@ export const WelcomeContainer = styled.main`
     text-align: center;
     
     border-radius: 20px;
-    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
     @media (max-width: 1600px) {
         display: none;
@@ -62,7 +55,14 @@ export const WelcomeContainer = styled.main`
 
 `
 export const PageWrapper = styled.div`
-    background-color: #0f2b3dff;
+    background: radial-gradient(
+    circle at 70% 30%, /* Posição do centro da "luz" */
+    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
+    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
+    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
+    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
+    );
+
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -90,22 +90,18 @@ export const FormContainer = styled.form`
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+
+   
 `;
-
-
-export const PageLogin = styled.img`
-    padding-top: 20px;
-
-`
 
 
 export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
     align-items: center;
-
+    gap: 150px;
     width: 100%;
     max-width: 1400px;
-    min-weight: 700px;
+    min-weight: 800px;
     
 
     /* Animação ao rolar a pagina */
@@ -143,6 +139,10 @@ export const TitleKanban = styled.h2`
     font-weight: 700;
     color: #ffffffff;
     font-size: 55px;
+
+    @media (max-width: 768px) {
+        font-size: 30px;
+    }
 `
 export const TitleLogin = styled.p`
     font-family: 'Lobster two';
@@ -159,21 +159,38 @@ export const TitleLogin = styled.p`
 export const TitleWelcome = styled.h2`
     font-family: 'Montserrat';
     font-weight: 700;
-    color: #ffffffff;
-    font-size: 30px;
+    color: #000000ff;
+    font-size: 19px;
     text-align: center;
+    padding-right: 500px;
 `
 
 export const WelcomeSubText = styled.p`
     font-family: 'Montserrat', 'sans serif';
-    font-style: normal;
-    font-weight: 600;
-    color: #ffffffff;
+    font-weight: 400;
+    color: #000000ff;
 
+    background: radial-gradient(
+    circle at 70% 30%,
+    #cde4facb 0%,      
+    #b7d2ebbe 20%,
+    #a1cef8ff 100%     
+    );
+
+    filter: 
+        drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
+    &:hover {
+    transform: translateY(-5px);
+    filter: 
+        drop-shadow(0 12px 10px rgba(12, 24, 40, 0.3));
+    }
+
+    border: 2px solid #ffffffff;
+    border-radius: 10px;
+    padding: 15px;
+    background-image:
     width: 100%;
-    
-
-    font-size: 25px;
+    font-size: 22px;
     text-align: center; 
     line-height: 35px;
     margin: 25px auto 15px auto;
@@ -181,6 +198,20 @@ export const WelcomeSubText = styled.p`
       font-size: 20px;
     }
 `
+
+export const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  color: #000000;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 660px;
+
+
+  &:hover {
+    color: #FFFFFF;
+  }
+`;
 
 export const KanbanSubText = styled.p`
     font-family: 'Montserrat';
@@ -202,11 +233,15 @@ export const PossuiContaSubText = styled.p`
     font-style: normal;
     font-weight: 700;
     color: #ffffffff;
-    font-size: 9px; 
+    font-size: 10px; 
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
     cursor: pointer;
+
+    a {
+        color: #56b3ffff;
+    }
 `
 
 export const CriarContaText = styled.p`
