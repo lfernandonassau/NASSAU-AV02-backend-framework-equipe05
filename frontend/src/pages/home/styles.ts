@@ -316,13 +316,14 @@ export const PartTwoText = styled.h2`
     font-family: 'Montserrat';
     font-weight: 700;
     color: #ffffffff;
-    font-size: 30px;
+    font-size: 40px;
     
+    flex: 3;
 
     max-width: 1000px;
     width: 100%;
     
-    line-height: 35px;
+    line-height: 45px;
 
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */
@@ -336,9 +337,11 @@ export const PartTwoText = styled.h2`
 export const ParagraphText = styled.p`
     font-family: 'Montserrat';
     font-weight: 500;
-    line-height: 25px;
+    line-height: 35px;
     color: #ffffffff;
-    font-size: 15px;
+    font-size: 25px;
+
+    flex: 2;
 
     @media (max-width: 768px) {
         max-width: 100%; /* Importante para não vazar */

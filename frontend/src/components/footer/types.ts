@@ -3,3 +3,6 @@ export interface IFooter{
     rightIcon?: React.ReactNode;
 }
 
+export interface IContainerAnimationProps {
+    $visivel: boolean;
+}

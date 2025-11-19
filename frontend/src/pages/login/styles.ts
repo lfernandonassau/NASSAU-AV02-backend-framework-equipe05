@@ -8,8 +8,10 @@ import { IAnimation } from './types'
 
 export const LoginContainer = styled.main`
     width: 100%;
-    max-width: 450px;
-    padding: 150px 50px 150px 50px;
+    max-width: 700px;
+    padding: 100px;
+
+    flex: 1;
     
 
     background-color: #0000009c;
@@ -19,11 +21,13 @@ export const LoginContainer = styled.main`
     align-items: center;
     text-align: center;
 
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px 0 0 10px;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
-    @media (max-width: 768px) {
-        padding: 50px;
+    @media (max-width: 1203px) {
+        
+        border-radius: 10px;
+        padding: 100px;
         max-width: 100%;
         border-radius: 10px;
     }
@@ -34,8 +38,9 @@ export const LoginContainer = styled.main`
 
 export const WelcomeContainer = styled.main`
     width: 100%;
-    max-width: 450px;
-    padding: 100px 100px 150px 100px;
+    padding: 150px;
+    flex: 2;
+
 
     background-image: linear-gradient(135deg, #075d9688, #021c2e86);
     display: flex;
@@ -44,10 +49,10 @@ export const WelcomeContainer = styled.main`
     align-items: center;
     text-align: center;
     
-    border-radius: 10px 0 0 10px;
+    border-radius: 0 10px 10px 0;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
-    @media (max-width: 768px) {
+    @media (max-width: 1203px) {
         display: none;
     }
 
@@ -90,7 +95,8 @@ export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
     align-items: stretch;
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
+    min-weight: 800px;
 
     /* Animação ao rolar a pagina */
     opacity: 0;
@@ -101,9 +107,10 @@ export const LoginNewScreen = styled.div<IAnimation>`
         transform: translateY(0);
     `}
 
-    @media (max-width: 768px) {
-      flex-direction: column; /* << MÁGICO: Empilha os containers */
-      max-width: 450px; /* Largura de 1 coluna */
+    @media (max-width: 1205px) {
+      flex-direction: column;
+      max-width: 450px;
+      
     }
 `
 
@@ -140,8 +147,8 @@ export const TitleLogin = styled.p`
 export const TitleWelcome = styled.h2`
     font-family: 'Lobster Two';
     font-weight: 700;
-    color: #75d3ffff;
-    font-size: 32px;
+    color: #ffffffff;
+    font-size: 40px;
     text-align: center;
     line-height: 50px;
 `
@@ -152,6 +159,7 @@ export const WelcomeSubText = styled.p`
     font-weight: 300;
     color: #ffffffff;
     font-size: 15px;
+    
     text-align: center; 
     line-height: 25px;
     margin: 25px auto 15px auto;

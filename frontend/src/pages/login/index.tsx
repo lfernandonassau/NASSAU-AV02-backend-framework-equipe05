@@ -77,21 +77,6 @@ const Login = () => {
     return (
         <PageWrapper>
             <LoginNewScreen $visivel= {estaVisivel}>
-                <WelcomeContainer>
-                    <Column>
-                        
-                        <PageLogin src={logo} alt="Logo Kodan" />
-                        <TitleWelcome>Seja bem-vindo!</TitleWelcome>
-                        <WelcomeSubText>
-                            Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban.
-                        </WelcomeSubText>
-                        <TitleKanban> - Equipe Kodan</TitleKanban>
-                        <WelcomeSubText>
-                            Ainda não é cadastrado?
-                        </WelcomeSubText>
-                        <Button title="Clique aqui!" variant="secondary"/>
-                    </Column>
-                </WelcomeContainer>
                 <LoginContainer>
                     <Column>
                         <TitleLogin>
@@ -112,6 +97,21 @@ const Login = () => {
                         </form>
                     </Column>
                 </LoginContainer>
+                <WelcomeContainer>
+                    <Column>
+                        
+                        <PageLogin src={logo} alt="Logo Kodan" />
+                        <TitleWelcome>Bem-vindo de volta 🤟</TitleWelcome>
+                        <WelcomeSubText>
+                            Organize projetos, acompanhe tarefas e colabore com sua equipe usando nosso intuitivo quadro Kanban.
+                        </WelcomeSubText>
+                        <TitleKanban> - Equipe Kodan</TitleKanban>
+                        <WelcomeSubText>
+                            Ainda não é cadastrado?
+                        </WelcomeSubText>
+                        <Button title="Clique aqui!" variant="secondary"/>
+                    </Column>
+                </WelcomeContainer>
             </LoginNewScreen>
         </PageWrapper>
     )
