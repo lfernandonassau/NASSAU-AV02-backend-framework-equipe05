@@ -27,7 +27,7 @@ import {
         MagicEye,
         MagicEyeOff,
         PageLogin,
-        } 
+        }
         from './styles'
 import { IFormData } from './types'
 
@@ -37,8 +37,6 @@ const schema = yup.object({
 }).required()
 
 const Login = () => {
-    
-    
 
     //React-hook-form: Regras do formulário(Dentro do input)
     const {control, handleSubmit , formState: { errors, isValid } } = useForm<IFormData>({
@@ -62,15 +60,15 @@ const Login = () => {
             alert('Houve um erro, tente novamente')
         }
     }
-    
+
     const [showPassword, setShowPassword] = useState(false)
     return (
         <PageWrapper>
             <LoginNewScreen>
                 <WelcomeContainer>
                     <Column>
-                        
-                        <PageLogin src={logo} alt="Logo Kodan" /> 
+
+                        <PageLogin src={logo} alt="Logo Kodan" />
                         <TitleWelcome>Seja bem-vindo!</TitleWelcome>
                         <WelcomeSubText>
                             Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban. 
