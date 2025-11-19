@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { IButtonStyled } from './types'
 
 export const ButtonContainer = styled.button<IButtonStyled>`
-    background: #075d96ff;
+    background: #0760b3ff;
     border-radius: 10px;
     position: relative;
     font-family: 'Montserrat';
@@ -20,7 +20,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
             drop-shadow(0 2px 2px rgba(12, 24, 40, 0.25));
 
     &:hover {
-        background: #000000;
+        background: #012044ff;
         opacity: 0.9;
         transform: translateY(-1px);
     

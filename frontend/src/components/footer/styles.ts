@@ -1,16 +1,28 @@
 import { FaGithubAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import styled from "styled-components";
+import { IContainerAnimationProps } from "./types";
+
 
 // Container principal do rodapé
-export const FooterContainer = styled.footer`
+export const FooterContainer = styled.footer<IContainerAnimationProps>`
   font-family: 'Montserrat';
-  background-color: #ffffffee;
+  background-image: linear-gradient(150deg, #9fcafcff, #ffffffff);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 100px 20px 20px 20px;
-  border-top: 1px solid #000000ff;
+
+  /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
+
+
   @media (max-width: 768px) {
       max-width: 100%; /* Importante para não vazar */
       padding: 30px 10px 0 10px;

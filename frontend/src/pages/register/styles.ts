@@ -2,27 +2,27 @@ import styled from 'styled-components'
 import { MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import RegisterBackgroundImage from '../../assets/register-background.svg'
 import { IAnimation } from './types'
+import { FaRegIdCard, FaUser } from 'react-icons/fa'
 
 
 
 
 export const LoginContainer = styled.main`
     width: 100%;
-    max-width: 450px;
-    padding: 150px 50px 150px 50px;
-    
+    max-width: 700px;
+    padding: 100px;
+    flex: 1;
 
-    background-color: #0000009c;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
 
-    border-radius: 0 10px 10px 0;
-    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
-    @media (max-width: 768px) {
+
+    @media (max-width: 1269px) {
         padding: 50px;
         max-width: 100%;
         border-radius: 10px;
@@ -34,32 +34,37 @@ export const LoginContainer = styled.main`
 
 export const WelcomeContainer = styled.main`
     width: 100%;
-    max-width: 450px;
-    padding: 100px 100px 150px 100px;
+    padding: 150px;
+    flex: 2;
 
-    background-image: linear-gradient(135deg, #075d9688, #021c2e86);
+    background: radial-gradient(
+    circle at 70% 30%, /* Posição do centro da "luz" */
+    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
+    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
+    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
+    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
+    );
+
+  
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     text-align: center;
     
-    border-radius: 10px 0 0 10px;
+    border-radius: 20px;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
-    @media (max-width: 768px) {
+    @media (max-width: 1269px) {
         display: none;
     }
 
 `
 export const PageWrapper = styled.div`
-    background-image: url(${RegisterBackgroundImage});
-    background-color: #868686ff;
-    background-blend-mode: multiply; /* Escurece */
+    background-color: #0f2b3dff;
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-    
     width: 100%;
     
     box-sizing: border-box;
@@ -89,8 +94,11 @@ export const PageLogin = styled.img`
 export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
     align-items: stretch;
+
     width: 100%;
-    max-width: 800px;
+    max-width: 1500px;
+    min-weight: 800px;
+    
 
     /* Animação ao rolar a pagina */
     opacity: 0;
@@ -102,14 +110,17 @@ export const LoginNewScreen = styled.div<IAnimation>`
     `}
 
     @media (max-width: 768px) {
-      flex-direction: column; /* << MÁGICO: Empilha os containers */
-      max-width: 450px; /* Largura de 1 coluna */
+      flex-direction: column; 
+      max-width: 450px; 
     }
 `
 
 
 export const Column = styled.div`
-    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 export const Row = styled.div`
     display: flex;
@@ -119,18 +130,18 @@ export const Row = styled.div`
     margin-top: 20px;
 `
 export const TitleKanban = styled.h2`
-    font-family: 'Montserrat';
+    font-family: 'Lobster Two', 'cursive';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     color: #ffffffff;
-    font-size: 15px;
+    font-size: 40px;
 `
 export const TitleLogin = styled.p`
     font-family: 'Lobster two';
     font-style: normal;
     font-weight: 700;
     color: #ffffffff;
-    font-size: 50px;
+    font-size: 30px;
     text-align: center;
     margin-bottom: 15px;
     line-height: 75px;
@@ -138,22 +149,25 @@ export const TitleLogin = styled.p`
 `
 
 export const TitleWelcome = styled.h2`
-    font-family: 'Lobster Two';
+    font-family: 'Montserrat';
     font-weight: 700;
-    color: #75d3ffff;
-    font-size: 32px;
+    color: #ffffffff;
+    font-size: 30px;
     text-align: center;
-    line-height: 50px;
 `
 
 export const WelcomeSubText = styled.p`
     font-family: 'Montserrat', 'sans serif';
     font-style: normal;
-    font-weight: 300;
+    font-weight: 600;
     color: #ffffffff;
-    font-size: 15px;
+
+    width: 100%;
+    
+
+    font-size: 25px;
     text-align: center; 
-    line-height: 25px;
+    line-height: 35px;
     margin: 25px auto 15px auto;
     @media (max-width: 768px) {
       font-size: 20px;
@@ -165,7 +179,7 @@ export const KanbanSubText = styled.p`
     font-style: normal;
     font-weight: 400;
     color: #ffffffff;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center; 
     max-width: 420px;
     margin-bottom: 35px;
@@ -197,6 +211,19 @@ export const CriarContaText = styled.p`
 
     margin-top: 0;
 `
+
+export const CpfIconStyled = styled(FaRegIdCard)`
+    color: #ffffffff;
+    margin-right: 5px;
+    font-size: 15px;
+`
+
+export const NameIconStyled = styled(MdPerson)`
+    color: #ffffffff;
+    margin-right: 5px;
+    font-size: 15px;
+`
+
 export const LoginIconStyled = styled(MdPerson)`
     color: #ffffffff;
     margin-right: 5px;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FooterContainer,
   FooterContent,
@@ -25,9 +25,55 @@ const FooterIcos = ( {rightIcon}:IFooter ) => {
 }
 
 const Footer: React.FC = ( ) => {
+  
+  // Animação ao rolar a página
+      const [containerVisivel, setParteDoisVisivel] = useState(false)
+      
+      //    Tipamos como HTMLDivElement porque é um <div>
+      const containerRef = useRef<HTMLDivElement>(null)
+  
+      // IntersectionObserver
+      useEffect(() => {
+          const refAtual = containerRef.current // Guarda a referência
+          
+          // Cria o observador
+          const observer = new IntersectionObserver(
+              ([entry]) => { // O callback é chamado quando a visibilidade muda
+                  if (entry.isIntersecting) {
+                      // O elemento entrou na tela
+                      setParteDoisVisivel(true)
+                      
+                      
+                      // Para de observar, pois a animação só precisa rolar 1 vez
+                      if (refAtual) {
+                          observer.unobserve(refAtual)
+                      }
+                  }
+              },
+              {
+                  threshold: 0.1 // Ativa quando 10% do elemento estiver visível
+              }
+          )
+  
+          // Manda o observador "assistir" o elemento do 'ref'
+          if (refAtual) {
+              observer.observe(refAtual)
+          }
+  
+          // Limpa o observador quando o componente for desmontado
+          return () => {
+              if (refAtual) {
+                  observer.unobserve(refAtual)
+              }
+          }
+      }, [])
+  
+  
+  
+  
   return (
     
-    <FooterContainer>
+    <FooterContainer ref={containerRef} $visivel={containerVisivel}>
       <FooterContent>
         <FooterSection>
           <FooterTitle>Sobre</FooterTitle>

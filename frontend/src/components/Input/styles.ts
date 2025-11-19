@@ -3,14 +3,21 @@ import { IInputStyled } from './types'
 
 
 export const InputContainer = styled.div<IInputStyled>`
-    max-width: 275px;
+    max-width: 350px;
     height: 30px;
     border-bottom: 1px solid #ffffffff;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     cursor: pointer;
 
+    input {
+            
+            &::placeholder {
+                color: #b1adadea;
+            }
+            
+        }
     ${({variant}) => variant !== 'primary' && css`
         max-width: 150px;
         height: 150px;
@@ -62,8 +69,11 @@ export const InputText = styled.input`
 
 export const ErrorText = styled.p`
     color: #FF0000;
-    font-size: 10px;
+    font-size: 8px;
     font-family: 'Montserrat';
+    padding-right: 100px;
+    margin-top: -15px;
+    margin-bottom: 15px;
     
 
 `
