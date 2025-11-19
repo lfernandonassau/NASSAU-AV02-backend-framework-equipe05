@@ -10,6 +10,7 @@ import {
   FooterDad,
   RightIcon,
   EmailIco,
+  SmsIco,
 } from "./styles";
 import { IFooter } from "./types";
 
@@ -80,30 +81,33 @@ const Footer: React.FC = ( ) => {
 
           <FooterText>
           
-          Kodan oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes
+          Kodan oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes;
           
           </FooterText>
 
         </FooterSection>
 
         <FooterSection>
-          <FooterTitle>Links úteis</FooterTitle>
-          <FooterText href="#">Início</FooterText>
-          <FooterText href="#">Projetos</FooterText>
-          <FooterText href="#">Contato</FooterText>
-        </FooterSection>
 
-        <FooterSection>
-          
-          <FooterTitle>Redes / Suporte </FooterTitle>
+          <FooterTitle>Suporte</FooterTitle>
           <FooterDad>
             <FooterIcos rightIcon={<EmailIco/>}/>
             <FooterText href="kodanorg@enterprise.co">KodanOrg@enterprise.co</FooterText>
           </FooterDad>
+          <FooterDad>
+            <FooterIcos rightIcon={<SmsIco />}/>
+            <FooterText href="#"> (82) 94002 - 8922 </FooterText>
+          </FooterDad>
+
+        </FooterSection>
+
+        <FooterSection>
+  
+          <FooterTitle> contatos </FooterTitle>
 
           <FooterDad>
             <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/rafxys">
+            <FooterText href="https://github.com/Ryan27r">
               Ryan Rodrigues
             </FooterText>
           </FooterDad>
@@ -115,8 +119,14 @@ const Footer: React.FC = ( ) => {
           </FooterDad>
           <FooterDad>
             <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/rafxys">
+            <FooterText href="https://github.com/Sadousan">
               Samuel Douglas
+            </FooterText>
+          </FooterDad>
+          <FooterDad>
+            <FooterIcos rightIcon={<GitHubIco/>}/>
+            <FooterText href="https://github.com/AlandersonSantos">
+              Alanderson santos
             </FooterText>
           </FooterDad>
           
@@ -125,7 +135,7 @@ const Footer: React.FC = ( ) => {
       </FooterContent>
 
       <Copyright>
-        © {new Date().getFullYear()} — Desenvolvido por Samuel Douglas Santos Sadousan
+        © {new Date().getFullYear()} — Todos os direitos reservados para a kodan corporation
       </Copyright>
     </FooterContainer>
   );
