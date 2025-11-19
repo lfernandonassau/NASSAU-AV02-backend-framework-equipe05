@@ -10,7 +10,7 @@ import { FaRegIdCard, FaUser } from 'react-icons/fa'
 export const LoginContainer = styled.main`
     width: 100%;
     max-width: 700px;
-    padding: 100px;
+    padding: 40px;
     flex: 1;
 
     background-color: transparent;
@@ -22,7 +22,7 @@ export const LoginContainer = styled.main`
 
 
 
-    @media (max-width: 1269px) {
+    @media (max-width: 1600px) {
         padding: 50px;
         max-width: 100%;
         border-radius: 10px;
@@ -34,7 +34,8 @@ export const LoginContainer = styled.main`
 
 export const WelcomeContainer = styled.main`
     width: 100%;
-    padding: 150px;
+    height: 800px;
+    padding: 40px;
     flex: 2;
 
     background: radial-gradient(
@@ -55,7 +56,7 @@ export const WelcomeContainer = styled.main`
     border-radius: 20px;
     filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
 
-    @media (max-width: 1269px) {
+    @media (max-width: 1600px) {
         display: none;
     }
 
@@ -83,6 +84,13 @@ export const PageWrapper = styled.div`
 
 `
 
+export const FormContainer = styled.form`
+    width: 100%;
+    max-width: 350px; /* Define a largura "Grande" dos seus inputs aqui */
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+`;
 
 
 export const PageLogin = styled.img`
@@ -93,11 +101,11 @@ export const PageLogin = styled.img`
 
 export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
-    align-items: stretch;
+    align-items: center;
 
     width: 100%;
-    max-width: 1500px;
-    min-weight: 800px;
+    max-width: 1400px;
+    min-weight: 700px;
     
 
     /* Animação ao rolar a pagina */
@@ -134,7 +142,7 @@ export const TitleKanban = styled.h2`
     font-style: normal;
     font-weight: 700;
     color: #ffffffff;
-    font-size: 40px;
+    font-size: 55px;
 `
 export const TitleLogin = styled.p`
     font-family: 'Lobster two';
@@ -179,15 +187,17 @@ export const KanbanSubText = styled.p`
     font-style: normal;
     font-weight: 400;
     color: #ffffffff;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center; 
     max-width: 420px;
     margin-bottom: 35px;
     line-height: 25px;
     margin: 0 auto 20px auto;
+    padding-bottom: 10px;
+
 `
 
-export const EsqueciSubText = styled.p`
+export const PossuiContaSubText = styled.p`
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
