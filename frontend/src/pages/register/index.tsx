@@ -12,7 +12,6 @@ import { Input } from '../../components/Input'
 import {
     Column,
     LoginIconStyled,
-    EsqueciSubText,
     KanbanSubText,
     LoginContainer,
     LoginNewScreen,
@@ -29,6 +28,8 @@ import {
     WelcomeSubText,
     CpfIconStyled,
     NameIconStyled,
+    PossuiContaSubText,
+    FormContainer,
 } from './styles'
 import { IFormData } from './types'
 import { cpfMask } from '../../utils/cpfMask'
@@ -103,15 +104,18 @@ const Register = () => {
     }
     
     const [showPassword, setShowPassword] = useState(false)
+    // Novo estado exclusivo para CONFIRMAR SENHA(Para não haver incongruências, como os dois olhos mágicos serem acionados)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
     return (
         <PageWrapper>
             <LoginNewScreen $visivel= {estaVisivel}>
                 <LoginContainer>
                     <Column>
                         <img src={logo} alt="Logo Kodan" />
-                        <TitleKanban>Crie sua conta 👌</TitleKanban>
-                        <KanbanSubText>Defina as informações necessárias</KanbanSubText>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <TitleKanban>Crie sua conta</TitleKanban>
+                        <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
+                        <FormContainer onSubmit={handleSubmit(onSubmit)}>
                             <Input 
                             name="cpf"
                             placeholder="Digite seu CPF"
@@ -156,32 +160,35 @@ const Register = () => {
                             />
                             <Input 
                                 name='confirmPassword' 
-                                placeholder="Repetir Senha" 
+                                placeholder="Digite novamente sua senha" 
                                 control={control} 
                                 errorMessage={errors?.confirmPassword?.message} 
-                                type={showPassword ? 'text' : 'password'} 
+                                type={showConfirmPassword ? 'text' : 'password'} 
                                 leftIcon={<PasswordStyled/>}
                                 rightIcon={
-                                    showPassword ? 
-                                    (<MagicEye onClick={() => setShowPassword(false)}/>) : 
-                                    (<MagicEyeOff onClick={() => setShowPassword(true)}/>)
+                                    showConfirmPassword ? 
+                                    (<MagicEye onClick={() => setShowConfirmPassword(false)}/>) : 
+                                    (<MagicEyeOff onClick={() => setShowConfirmPassword(true)}/>)
                                 }
                             />
                             
                             <Row>
-                                <EsqueciSubText onClick= {() => { navigate('/login')}}>
+                                <PossuiContaSubText onClick= {() => { navigate('/login')}}>
                                     Já possui uma conta? Clique aqui
-                                </EsqueciSubText>
+                                </PossuiContaSubText>
                             </Row>
                             <Button 
                             title='Entrar' 
-                            type='submit' 
+                            type='submit'
+                            variant='secundary'
                             disabled={!isValid}>
                             </Button>
                             <Row>
-                                <EsqueciSubText>ou</EsqueciSubText>
+                                <PossuiContaSubText>
+                                    ou
+                                </PossuiContaSubText>
                             </Row>
-                        </form>
+                        </FormContainer>
                     </Column>
                 </LoginContainer>
                 <WelcomeContainer>
@@ -199,7 +206,4 @@ const Register = () => {
 
 export { Register }
 
-function watch(arg0: string) {
-    throw new Error('Function not implemented.')
-}
 
