@@ -112,7 +112,10 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                             </NavContainer>
 
                             <Row>
-                                <PageButtons onClick={() => navigate('/login')}>Entrar</PageButtons>
+                                <PageButtons 
+                                onClick={() => navigate('/login')}>
+                                    Entrar
+                                </PageButtons>
                                 <Button
                                     title="Cadastrar"
                                     variant='cadastrobutton'
