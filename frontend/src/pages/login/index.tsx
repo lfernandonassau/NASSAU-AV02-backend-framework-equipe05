@@ -27,7 +27,7 @@ import {
     TitleWelcome,
     WelcomeContainer,
     WelcomeSubText,
-    MainContent,
+    TextoLivreSubText,
 } from './styles'
 import { IFormData } from './types'
 import { FcGoogle } from "react-icons/fc"
@@ -98,9 +98,9 @@ const Login = () => {
                             </Row>
                             <Button title='Entrar' type='submit' disabled={!isValid}></Button>
                             <Row>
-                                <EsqueciSubText>
+                                <TextoLivreSubText>
                                     ou
-                                </EsqueciSubText>                           
+                                </TextoLivreSubText>                           
                             </Row>
                             <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </form>

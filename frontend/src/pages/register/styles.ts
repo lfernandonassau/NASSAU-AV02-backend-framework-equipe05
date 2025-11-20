@@ -5,36 +5,76 @@ import { IAnimation } from './types'
 import { FaRegIdCard, FaUser } from 'react-icons/fa'
 
 
-
-
-export const LoginContainer = styled.main`
+export const RegisterNewScreen = styled.div<IAnimation>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
     width: 100%;
-    max-width: 800px;
+    max-width: 1400px;
+    padding: 0 20px;
+
+    
+
+    /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
+
+
+    @media (max-width: 768px) {
+      flex-direction: column; 
+      min-width: 0;
+      width: 100%;
+      max-width: 500px; 
+      gap: 10px;
+    }
+
+    @media (max-width: 1366px) {
+        gap: 50px;  */ 
+    }
+`
+
+export const RegisterContainer = styled.main`
+    width: 100%;
+    max-width: 450px;
     padding: 40px;
     flex: 1;
+    margin: 20px auto;
 
-    background-color: transparent;
+    background-color: #47b8da7c;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    border-radius: 10px;
 
 
 
     @media (max-width: 1600px) {
-        padding: 50px;
-        max-width: 100%;
-        border-radius: 10px;
+        
+        width: 90%;
+        margin: 20px auto;
     }
     
+    @media (max-width: 480px) {
+        width: 95%;
+        margin: 10px auto;
+        
+    }
 
 `
 
 
 export const WelcomeContainer = styled.main`
     width: 100%;
-    height: 800px;
+    height: 100%;
+    min-height: 600px;
     padding: 40px;
     flex: 2;
 
@@ -49,7 +89,13 @@ export const WelcomeContainer = styled.main`
     
     border-radius: 20px;
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1366px) {
+        flex: 1; 
+        padding: 20px; 
+    }
+
+    /* O verdadeiro pulo do gato para isso não QUEBRAR nunca mais!!!! */  
+    @media (max-width: 1250px) {
         display: none;
     }
 
@@ -77,9 +123,10 @@ export const PageWrapper = styled.div`
     
     @media (max-width: 768px) {
         
-        padding: 200px 15px;
-        align-items: flex-start;
-        background-attachment: scroll;
+        padding: 20px 15px;
+        align-items: center;
+        background-attachment: scroll;]
+        height: auto;
     }
 
 `
@@ -95,29 +142,7 @@ export const FormContainer = styled.form`
 `;
 
 
-export const LoginNewScreen = styled.div<IAnimation>`
-    display: flex;
-    align-items: center;
-    gap: 150px;
-    width: 100%;
-    max-width: 1400px;
-    min-weight: 800px;
-    
 
-    /* Animação ao rolar a pagina */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-    ${({ $visivel }) => $visivel && `
-        opacity: 1;
-        transform: translateY(0);
-    `}
-
-    @media (max-width: 768px) {
-      flex-direction: column; 
-      max-width: 450px; 
-    }
-`
 
 
 export const Column = styled.div`
@@ -160,9 +185,10 @@ export const TitleWelcome = styled.h2`
     font-family: 'Montserrat';
     font-weight: 700;
     color: #000000ff;
-    font-size: 19px;
+    font-size: 15px;
     text-align: center;
     padding-right: 500px;
+    margin-top: -25px;
 `
 
 export const WelcomeSubText = styled.p`
@@ -170,12 +196,7 @@ export const WelcomeSubText = styled.p`
     font-weight: 400;
     color: #000000ff;
 
-    background: radial-gradient(
-    circle at 70% 30%,
-    #cde4facb 0%,      
-    #b7d2ebbe 20%,
-    #a1cef8ff 100%     
-    );
+    background-color: #7bdcfa65;
 
     filter: 
         drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
@@ -206,6 +227,7 @@ export const CloseButton = styled.button`
   font-size: 1rem;
   cursor: pointer;
   padding-left: 660px;
+  margin-top: -10px;
 
 
   &:hover {
@@ -235,14 +257,52 @@ export const PossuiContaSubText = styled.p`
     color: #ffffffff;
     font-size: 10px; 
     text-align: center;
+    margin: 10px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: -15px;
     margin-bottom: 20px;
+
+    a {
+        color: #084e88ff;
+    }
+`
+export const TextoLivreSubText = styled.p`
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    color: #ffffffff;
+    font-size: 10px; 
+    
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    
+    margin-top: 5px;
+    margin-bottom: 25px;
     width: 100%;
     cursor: pointer;
 
-    a {
-        color: #56b3ffff;
+    /* --- Linhas --- */
+    
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #ffffff50; 
+    }
+
+    /* Espaçamento entre a linha e o texto */
+    &::before {
+        margin-right: 20px;
+    }
+
+    &::after {
+        margin-left: 20px;
     }
 `
+
 
 export const CriarContaText = styled.p`
     font-family: 'Inter';
