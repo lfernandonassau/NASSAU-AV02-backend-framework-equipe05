@@ -37,16 +37,15 @@ export const ButtonContainer = styled.button<IButtonStyled>`
 
 
     ${({ variant }) => variant !== 'primary' && css`
-        min-width: 200px;
+        min-width: 230px;
         height: 40px;
         font-weight: 600;
 
-        background: radial-gradient(
-            circle at 70% 30%,
-            #cde4facb 0%,      
-            #53acffbe 100%,
-            #a1cef8ff 20%,
-            #a1cef8ff 50%     
+        background: linear-gradient(
+            135deg,
+            #20364bff 10%,      
+            #096cc9ff 100%,
+            #a8d2faff 50%  
         );
         filter: 
             drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
@@ -56,7 +55,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         }
         &:hover {
             color: #000000ff;
-            background: #ffffffe0;
+            background: #ffffffa6;
             transform: translateY(-5px);
         }
     `}
@@ -65,13 +64,14 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         min-width: 150px;
         max-width: 250px;
         height: 35px;
-        font-weight: 600;
+        font-weight: 700;
         margin: 0 auto;
 
         background: radial-gradient(
             circle at 70% 30%,
-            #cde4facb 0%,      
-            #53acffbe 40%   
+            #cde4facb 0%,
+            #6ad2f1ff 50%,      
+            #6ad2f1ff 100%   
         );
         filter: 
             drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
@@ -103,8 +103,8 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         font-size: 12px;
         
         &:hover {
-            background: #0000005d;
-            color: #ffffffff;
+            background: #ffffffcb;
+            color: #000000ff;
             opacity: 1;
         }
     `}
@@ -112,13 +112,16 @@ export const ButtonContainer = styled.button<IButtonStyled>`
     ${({ variant }) => variant === "cadastrobutton" && css`
         background: #59adeec9;
 
+        width: 100%; 
+        min-width: 100px;
+        height: 30px; 
+        padding: 0 15px;
 
         border-radius: 10px;
         position: relative;
         font-family: 'Montserrat';
         font-weight: 400;
         color: #FFFFFF;
-        min-width: 100px;
         border: none;
         margin-right: 5px;
         cursor: pointer;
