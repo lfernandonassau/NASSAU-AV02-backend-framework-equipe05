@@ -13,8 +13,6 @@ import {
     Column,
     LoginIconStyled,
     KanbanSubText,
-    LoginContainer,
-    LoginNewScreen,
     MagicEye,
     MagicEyeOff,
     PageWrapper,
@@ -29,6 +27,9 @@ import {
     FormContainer,
     TitleWelcome,
     CloseButton,
+    RegisterContainer,
+    RegisterNewScreen,
+    TextoLivreSubText,
 } from './styles'
 import { IFormData } from './types'
 import { cpfMask } from '../../utils/cpfMask'
@@ -108,8 +109,8 @@ const Register = () => {
 
     return (
         <PageWrapper>
-            <LoginNewScreen $visivel= {estaVisivel}>
-                <LoginContainer>
+            <RegisterNewScreen $visivel= {estaVisivel}>
+                <RegisterContainer>
                     <Column>
                         <TitleKanban>Crie sua conta</TitleKanban>
                         <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
@@ -182,14 +183,14 @@ const Register = () => {
                             disabled={!isValid}>
                             </Button>
                             <Row>
-                                <PossuiContaSubText>
+                                <TextoLivreSubText>
                                     ou
-                                </PossuiContaSubText>
+                                </TextoLivreSubText>
                             </Row>
                             <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </FormContainer>
                     </Column>
-                </LoginContainer>
+                </RegisterContainer>
                 <WelcomeContainer>
                     <Column>
                         <WelcomeSubText>
@@ -199,7 +200,7 @@ const Register = () => {
                         </WelcomeSubText>
                     </Column>
                 </WelcomeContainer>
-            </LoginNewScreen>
+            </RegisterNewScreen>
         </PageWrapper>
     )
 }

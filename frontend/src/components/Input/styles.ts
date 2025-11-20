@@ -9,7 +9,7 @@ export const InputContainer = styled.div<IInputStyled>`
     border-bottom: 1px solid #ffffffff;
     display: flex;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     cursor: pointer;
 
     position: relative;

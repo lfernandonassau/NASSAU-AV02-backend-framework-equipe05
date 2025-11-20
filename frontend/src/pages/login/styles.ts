@@ -4,6 +4,30 @@ import LoginBackgroundImage from '../../assets/login-background.svg'
 import { IAnimation } from './types'
 
 
+export const LoginNewScreen = styled.div<IAnimation>`
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1200px;
+
+    /* Animação ao rolar a pagina */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
+
+    @media (max-width: 1205px) {
+      flex-direction: column;
+
+      min-width: 0;
+      width: 90%;
+      max-width: 450px;
+      
+    }
+`
 
 
 export const LoginContainer = styled.main`
@@ -36,7 +60,7 @@ export const LoginContainer = styled.main`
     @media (max-width: 1203px) {
         
         border-radius: 10px;
-        padding: 100px;
+        padding: 40px 20px;
         max-width: 100%;
         border-radius: 10px;
     }
@@ -104,30 +128,6 @@ export const PageWrapper = styled.div`
 export const PageLogin = styled.img`
     padding-top: 20px;
 
-`
-
-
-export const LoginNewScreen = styled.div<IAnimation>`
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    max-width: 1200px;
-    min-width: 800px;
-
-    /* Animação ao rolar a pagina */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-    ${({ $visivel }) => $visivel && `
-        opacity: 1;
-        transform: translateY(0);
-    `}
-
-    @media (max-width: 1205px) {
-      flex-direction: column;
-      max-width: 450px;
-      
-    }
 `
 
 
@@ -204,9 +204,46 @@ export const EsqueciSubText = styled.p`
     color: #ffffffff;
     font-size: 9px; 
     text-align: center;
+    margin-top: -10px;
+    margin-left: 110px;
     margin-bottom: 20px;
     width: 100%;
     cursor: pointer;
+`
+export const TextoLivreSubText = styled.p`
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    color: #ffffffff;
+    font-size: 10px; 
+    
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    
+    margin-top: 5px;
+    margin-bottom: 25px;
+    width: 100%;
+    cursor: pointer;
+
+    /* --- Linhas --- */
+    
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #ffffff50; 
+    }
+
+    /* Espaçamento entre a linha e o texto */
+    &::before {
+        margin-right: 20px;
+    }
+
+    &::after {
+        margin-left: 20px;
+    }
 `
 
 export const CriarContaText = styled.p`

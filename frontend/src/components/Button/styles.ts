@@ -4,15 +4,21 @@ import { IButtonStyled } from './types'
 export const ButtonContainer = styled.button<IButtonStyled>`
     background: #5cc8f3ad;
     border-radius: 10px;
-    position: relative;
     font-family: 'Montserrat';
     color: #FFFFFF;
-    padding: 7px 12px;
-    min-width: 150px;
     border: none;
-    margin-right: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
+    width: 100%; 
+    max-width: 250px; 
+    height: 35px; 
+    padding: 0 15px; 
+ 
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 13px;
     font-weight: 400;
@@ -27,7 +33,6 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         color: #000000;
         opacity: 0.9;
         transform: translateY(-1px);
-    
     }
 
 
@@ -95,7 +100,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         align-items: center;
         justify-content: center;
 
-        font-size: 10px;
+        font-size: 12px;
         
         &:hover {
             background: #0000005d;
