@@ -1,35 +1,37 @@
-import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { api } from '../../services/api'
 
 
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import logo from '../../assets/logo.svg'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
-import logo from '../../assets/logo.svg'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { 
-        Column,
-        Row,
-        TitleLogin,
-        KanbanSubText,
-        EsqueciSubText,
-        LoginContainer,
-        EmailEstilizado,
-        PasswordEstilizado,
-        PageWrapper,
-        LoginNewScreen,
-        WelcomeContainer,
-        TitleWelcome,
-        WelcomeSubText,
-        TitleKanban,
-        MagicEye,
-        MagicEyeOff,
-        PageLogin,
-        }
-        from './styles'
+import {
+    Column,
+    LoginIconStyled,
+    EsqueciSubText,
+    KanbanSubText,
+    LoginContainer,
+    LoginNewScreen,
+    MagicEye,
+    MagicEyeOff,
+    PageLogin,
+    PageWrapper,
+    PasswordStyled,
+    Row,
+    TitleKanban,
+    TitleLogin,
+    TitleWelcome,
+    WelcomeContainer,
+    WelcomeSubText,
+    TextoLivreSubText,
+} from './styles'
 import { IFormData } from './types'
+import { FcGoogle } from "react-icons/fc"
+import { Copyright } from '../../components/Copyright'
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
@@ -37,6 +39,19 @@ const schema = yup.object({
 }).required()
 
 const Login = () => {
+
+    // Titulo visivel
+    const [estaVisivel, setEstaVisivel] = useState(false)
+    useEffect(() => {
+        // Define como visível após um pequeno atraso
+        // Isso dá tempo para o componente montar invisível
+        const timer = setTimeout(() => {
+        setEstaVisivel(true)
+        }, 200) // 200ms de atraso
+
+        // Limpa o timer se o componente for desmontado
+        return () => clearTimeout(timer)
+    }, [])
 
     //React-hook-form: Regras do formulário(Dentro do input)
     const {control, handleSubmit , formState: { errors, isValid } } = useForm<IFormData>({
@@ -64,22 +79,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
     return (
         <PageWrapper>
-            <LoginNewScreen>
-                <WelcomeContainer>
-                    <Column>
-
-                        <PageLogin src={logo} alt="Logo Kodan" />
-                        <TitleWelcome>Seja bem-vindo!</TitleWelcome>
-                        <WelcomeSubText>
-                            Organize projetos ✍️, acompanhe tarefas 📋 e colabore com sua equipe 🧑‍💻 usando nosso intuitivo quadro Kanban. 
-                        </WelcomeSubText>
-                        <TitleKanban> - Equipe Kodan</TitleKanban>
-                        <WelcomeSubText>
-                            Ainda não é cadastrado?
-                        </WelcomeSubText>
-                        <Button title="Clique aqui!" variant="secondary"/>
-                    </Column>
-                </WelcomeContainer>
+            <LoginNewScreen $visivel= {estaVisivel}>
                 <LoginContainer>
                     <Column>
                         <TitleLogin>
@@ -89,20 +89,43 @@ const Login = () => {
                             Faça o seu login agora!
                         </KanbanSubText>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Input name='email' errorMessage={errors?.email?.message} placeholder="E-mail" control={control} leftIcon={<EmailEstilizado/>}/>
-                            <Input name='password' errorMessage={errors?.password?.message} placeholder="Senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordEstilizado/>} rightIcon={showPassword ? (<MagicEye onClick={() => setShowPassword(false)}/>) : (<MagicEyeOff onClick={() => setShowPassword(true)}/>)}/>
+                            <Input name='email' errorMessage={errors?.email?.message} placeholder="E-mail" control={control} leftIcon={<LoginIconStyled/>}/>
+                            <Input name='password' errorMessage={errors?.password?.message} placeholder="Senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordStyled/>} rightIcon={showPassword ? (<MagicEye onClick={() => setShowPassword(false)}/>) : (<MagicEyeOff onClick={() => setShowPassword(true)}/>)}/>
                             <Row>
                                 <EsqueciSubText onClick= {() => { navigate('/')}}>
                                     Esqueci minha senha
                                 </EsqueciSubText>
                             </Row>
                             <Button title='Entrar' type='submit' disabled={!isValid}></Button>
+                            <Row>
+                                <TextoLivreSubText>
+                                    ou
+                                </TextoLivreSubText>
+                            </Row>
+                            <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </form>
                     </Column>
                 </LoginContainer>
+                <WelcomeContainer>
+                    <Column>
+
+                        <PageLogin src={logo} alt="Logo Kodan" />
+                        <TitleWelcome>Bem-vindo de volta 🤟</TitleWelcome>
+                        <WelcomeSubText>
+                            Organize projetos, acompanhe tarefas e colabore com sua equipe usando nosso intuitivo quadro Kanban.
+                        </WelcomeSubText>
+                        <TitleKanban> - Equipe Kodan</TitleKanban>
+                        <WelcomeSubText>
+                            Ainda não é cadastrado?
+                        </WelcomeSubText>
+                        <Button title="Clique aqui!" variant="secondary" onClick={() => navigate('/register')}/>
+                    </Column>
+                </WelcomeContainer>
             </LoginNewScreen>
+
         </PageWrapper>
     )
 }
 
 export { Login }
+

@@ -4,7 +4,7 @@ import { formatToCardDate } from "../../utils/date";
 import {
   Avatar, AvatarsRow, BottomRow, CardContainer, DateText,
   OptionsButton, StatusBar, Subtitle, Title, TopRow, UserBlock, UserIcon,
-  OptionsMenu,
+  OptionsMenu, TextCol, Actions,
 } from "./styles";
 
 type CardTaskProps = {
@@ -36,6 +36,7 @@ const CardTask: React.FC<CardTaskProps> = ({
   dragHandleProps,
   innerRef,
   onRequestDelete,
+  isDragging,
 }) => {
   // ---- controle do menu
   const [menuOpen, setMenuOpen] = useState(false);
@@ -53,21 +54,27 @@ const CardTask: React.FC<CardTaskProps> = ({
   }, [menuOpen]);
 
   return (
-    <CardContainer ref={innerRef} style={draggableStyle} {...draggableProps}>
+    <CardContainer
+      ref={innerRef}
+      style={draggableStyle}
+      {...draggableProps}
+      {...dragHandleProps}
+      data-dragging={isDragging ? 'true' : 'false'}
+    >
+
       <StatusBar style={{ backgroundColor: statusColor }} />
 
       <TopRow>
-        {/* SOMENTE este bloco recebe o dragHandleProps */}
-        <div className="drag-handle" {...dragHandleProps}>
+        <TextCol>
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
-        </div>
+        </TextCol>
 
-        <div style={{ position: "relative" }}>
+        <Actions>
           <OptionsButton
             aria-label="Mais opções"
-            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }} // evita iniciar drag
-            onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }}     // abre/fecha menu
+            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+            onClick={(e) => { e.stopPropagation(); setMenuOpen(v => !v); }}
           >
             <span /><span /><span />
           </OptionsButton>
@@ -77,17 +84,15 @@ const CardTask: React.FC<CardTaskProps> = ({
               <button onClick={() => setMenuOpen(false)}>Editar</button>
               <button
                 className="danger"
-                onClick={() => {
-                  setMenuOpen(false);
-                  onRequestDelete?.(id);
-                }}
+                onClick={() => { setMenuOpen(false); onRequestDelete?.(id); }}
               >
                 Apagar card
               </button>
             </OptionsMenu>
           )}
-        </div>
+        </Actions>
       </TopRow>
+
 
       <BottomRow>
         <UserBlock>

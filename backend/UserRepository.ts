@@ -36,10 +36,10 @@ export function CadastreUser(newUser : any){
 }
 
 //Atualizar um usuário específico no banco de dados.
-export function UpadateUser(cpf : string, newData : any){
+export function UpadateUser(id_user : bigint, newData : any){
 
     return prisma.user.update({
-        where: { cpf },
+        where: { id_user },
         data: newData
     })
 }
