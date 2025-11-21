@@ -6,6 +6,7 @@ import {
   OptionsButton, StatusBar, Subtitle, Title, TopRow, UserBlock, UserIcon,
   OptionsMenu, TextCol, Actions,
 } from "./styles";
+import { MdPerson } from "react-icons/md";
 
 type CardTaskProps = {
   id: string;
@@ -96,7 +97,7 @@ const CardTask: React.FC<CardTaskProps> = ({
 
       <BottomRow>
         <UserBlock>
-          <UserIcon>👤</UserIcon>
+          <UserIcon><MdPerson/></UserIcon>
           <AvatarsRow>
             {members.map((m, index) => (
               <Avatar key={index} src={m.avatarUrl} alt={m.name} title={m.name} />

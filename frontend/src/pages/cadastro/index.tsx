@@ -48,7 +48,7 @@ const schema = yup.object({
         .required('Confirmação obrigatória'),
 }).required()
 
-const Register = () => {
+const Cadastro = () => {
     
     // Titulo visivel
     const [estaVisivel, setEstaVisivel] = useState(false)
@@ -205,6 +205,6 @@ const Register = () => {
     )
 }
 
-export { Register }
+export { Cadastro }
 
 

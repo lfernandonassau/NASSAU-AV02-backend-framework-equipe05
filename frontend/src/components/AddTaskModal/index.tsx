@@ -12,9 +12,11 @@ import {
   AvatarPreview,
   ModalFooter,
   ErrorMessage,
-  UserAssignmentText 
+  UserAssignmentText, 
+  FormGroup
 } from "./styles";
 
+import { AiFillCloseCircle } from "react-icons/ai";
 import { Button } from "../Button";
 import { IAddTaskModel, INewTaskPayload } from "./types";
 
@@ -92,64 +94,72 @@ const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }: IAddTaskModel
       >
         <ModalHeader>
           <ModalTitle>Nova tarefa em {columnName}</ModalTitle>
-          <CloseButton onClick={onClose} title="Fechar">
-            X
+          <CloseButton 
+          onClick={onClose} 
+          title="Fechar">
+            <AiFillCloseCircle />
           </CloseButton>
         </ModalHeader>
 
         <ModalBody>
           <Row>
-            <AvatarPreview src={userAvatar} alt="avatar do usuário" />
-
-            <UserAssignmentText>
-              Atribuído inicialmente
-            </UserAssignmentText>
+              <AvatarPreview src={userAvatar} alt="avatar do usuário" />
+              <UserAssignmentText>
+                  Atribuído a você
+              </UserAssignmentText>
           </Row>
 
-          <Label htmlFor="task-title">Título da tarefa</Label>
-          <TextInput
-            id="task-title" 
-            type="text"
-            ref={titleInputRef} 
-            placeholder="Ex: Ajustar API de Insights"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            hasError={!!errors.title} 
-          />
-          {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
+          <FormGroup>
+              <Label htmlFor="task-title">Título da tarefa <span style={{color: 'red'}}>*</span></Label>
+              <TextInput
+                  id="task-title" 
+                  ref={titleInputRef} 
+                  placeholder="Ex: Ajustar API de Insights"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  hasError={!!errors.title} 
+              />
+              {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
+          </FormGroup>
 
-          <Label htmlFor="task-subtitle">Categoria / Área</Label>
-          <TextInput
-            id="task-subtitle"
-            type="text"
-            placeholder="Ex: Infraestrutura, Bug, Acessibilidade..."
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-          />
+          <FormGroup>
+              <Label htmlFor="task-subtitle">Categoria / Área</Label>
+              <TextInput
+                  id="task-subtitle"
+                  placeholder="Ex: Backend, Design, Bug..."
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+              />
+          </FormGroup>
 
-          <Label htmlFor="task-date">Prazo (opcional)</Label>
-          <TextInput
-            id="task-date"
-            type="text" // Mantido como text por causa da máscara
-            placeholder="Ex: 14/12/2025"
-            value={date}
-            onChange={handleDateInput}
-          />
-        </ModalBody>
+          <FormGroup>
+              <Label htmlFor="task-date">Prazo</Label>
+              <TextInput
+                  id="task-date"
+                  placeholder="DD/MM/AAAA"
+                  value={date}
+                  onChange={handleDateInput}
+                  maxLength={10} // Limita caracteres da data
+              />
+          </FormGroup>
+      </ModalBody>
 
-        <ModalFooter>
+      <ModalFooter>
+          
           <Button
-            title="Cancelar"
-            onClick={onClose}
+              title="Cancelar"
+              onClick={onClose}
+              variant="taskbutton"
           />
           <Button
-            title="Criar tarefa"
-            onClick={handleSubmit}
+              title="Criar Tarefa"
+              onClick={handleSubmit}
+              variant="taskbutton" 
           />
-        </ModalFooter>
+      </ModalFooter>
       </ModalCard>
     </Overlay>
   );
 };
 
-export default AddTaskModal;
+export { AddTaskModal }
