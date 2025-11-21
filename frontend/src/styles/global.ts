@@ -19,6 +19,10 @@ export const GlobalStyle = createGlobalStyle`
         -moz-user-select: none;
         -ms-user-select: none;
     }
+    
+    html {
+        scroll-behavior: smooth;
+    }
 
     
 

@@ -1,11 +1,12 @@
 import React from 'react'
-import { ButtonContainer } from './styles'
+import { ButtonContainer, LeftIcon } from './styles'
 import { IButton } from './types'
 
-const Button = ({title, variant = "primary", onClick}:IButton) => {
-  return (
-    <ButtonContainer variant={variant} onClick={onClick}>{title} </ButtonContainer>
-  )
+const Button = ({title, variant = "primary", onClick, leftIcon}:IButton) => {
+  return (<>
+    <ButtonContainer variant={variant} onClick={onClick}>
+      {leftIcon ? (<LeftIcon>{leftIcon}</LeftIcon>) : null}{title} </ButtonContainer>
+  </>)
 }
 
 
