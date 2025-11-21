@@ -259,3 +259,11 @@ export const LogoImage = styled.img`
     /* O Segredo: drop-shadow para destacar o branco no fundo branco */
     filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4)); 
 `
+
+export const SidebarDivider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: #807d7dff; 
+    margin: 10px 0; 
+    opacity: 0.5; 
+`

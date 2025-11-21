@@ -40,7 +40,20 @@ export const Container = styled.div`
       transform: translateY(0);
     }
   }
-`;
+
+  @media (max-width: 768px) {
+    width: 360px; 
+    right: 20px;  
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;       
+    right: 5%;        
+    left: 5%;         
+    top: 65px;        
+    max-height: 70vh; 
+  }
+`
 
 export const Header = styled.div`
   background: ${colors.white};

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { CloseBtn, LogoImage, MobileToggleBtn, Overlay, SidebarContainer, SidebarItem, SidebarLogo, UserInfoSection } from './styles'
+import { CloseBtn, LogoImage, MobileToggleBtn, Overlay, SidebarContainer, SidebarDivider, SidebarItem, SidebarLogo, UserInfoSection } from './styles'
 import { IProfileSidebar } from './types' 
 import { MdPerson, MdLock, MdNotifications, MdHelp, MdExitToApp, MdDashboard, MdLogin, MdHome, MdMenu, MdClose, MdSettings, MdBarChart } from 'react-icons/md'
 import { LuLayoutPanelLeft, LuKanban } from "react-icons/lu"
@@ -53,7 +53,7 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                     <LogoImage src={logo} alt="Logo Kodan" />
                     <SidebarLogo>kodan.</SidebarLogo>
 
-                    <div style={{ marginTop: '20px' }}></div>
+                    <SidebarDivider/>
 
                     <SidebarItem 
                         $active={location.pathname === '/geral'} 
@@ -90,7 +90,7 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                         <MdPerson /> Minha conta
                     </SidebarItem>
 
-                    <div style={{ marginTop: '50px' }}></div>
+                    <SidebarDivider/>
 
                     <SidebarItem 
                         $active={isActive('/notificacoes')} 
