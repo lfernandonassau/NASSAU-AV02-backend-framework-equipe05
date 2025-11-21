@@ -21,15 +21,13 @@ export const ColumnWrapper = styled.div`
     -moz-user-select: none;
     -ms-user-select: none;
 
-    /* --- RESPONSIVIDADE (Acompanha o Painel) --- */
-    /* Quando a tela for menor que 1540px (onde definimos que empilha), 
-       a coluna deve ocupar toda a largura disponível */
+
     @media (max-width: 1540px) {
         width: 100%;
-        min-width: 0; /* Permite encolher se necessário */
+        min-width: 0; 
         flex-shrink: 1;
         
-        /* Opcional: Ajustar altura no mobile se achar que ficou muito alto */
+        
         /* max-height: 500px; */
     }
 `;
@@ -70,10 +68,8 @@ export const CardsList = styled.div`
     flex-direction: column;
     gap: 0.75rem;
 
-    /* --- AQUI ESTÁ O LIMITE DE CRESCIMENTO --- */
-    /* Supondo que cada card tenha +/- 100px, 5 cards = ~500px */
     max-height: 500px; 
-    /* Você pode usar vh se preferir: max-height: 55vh; */
+    
     
     overflow-y: auto; 
     scroll-behavior: smooth;
@@ -98,13 +94,12 @@ export const AddButtonArea = styled.div`
     
     border-radius: 0 0 4px 4px;
     
-    /* --- TRUQUE VISUAL --- */
     /* Cria um fundo degradê para esconder os cards passando por trás */
     background: linear-gradient(to top, #f5f5f5da 70%, #f5f5f500 100%);
     pointer-events: none; 
 `;
 
-// Estilo base compartilhado (opcional, mas ajuda a não repetir código)
+// Estilo base compartilhado
 const BaseCircleButton = styled.button`
     font-size: 1.1rem;
     font-weight: 500;
@@ -129,22 +124,21 @@ const BaseCircleButton = styled.button`
 
 export const AddButton = styled(BaseCircleButton)`
     background-color: #000000ff; 
-    color: #ffffff; /* Garante que o ícone fique branco */
+    color: #ffffff; 
 
-    /* Ajuste o tamanho do ícone aqui */
     svg {
         font-size: 20px; 
     }
 
     &:hover {
-        background-color: #575757ff; /* Opcional: escurecer um pouco no hover */
+        background-color: #575757ff; 
     }
 `;
 
 // Novo Botão de Scroll
 export const ScrollButton = styled(BaseCircleButton)`
     background-color: #000000ff; 
-    color: #ffffffff; /* Ícone azul */
+    color: #ffffffff; 
     
 
     svg {

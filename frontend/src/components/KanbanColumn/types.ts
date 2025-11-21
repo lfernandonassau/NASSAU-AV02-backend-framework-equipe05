@@ -1,12 +1,10 @@
 import type { Task } from 'types/task';
 
-// (Você já deve ter isso no seu types.ts)
 export interface IMember {
   name: string;
   avatarUrl: string;
 }
 
-// (Você já deve ter isso no seu types.ts)
 export interface ITask {
   title: string;
   subtitle: string;
@@ -15,7 +13,7 @@ export interface ITask {
 }
 
 /**
- * Props para o componente `KanbanColumn`.
+  Props para o componente `KanbanColumn`.
  */
 
 export interface IKanbanColumnProps {
@@ -30,7 +28,7 @@ export interface IKanbanColumnProps {
 
 
 /**
- * Props para o componente `CardTask` (descoberto no KanbanColumn).
+  Props para o componente `CardTask`
  */
 export interface ICardTaskProps {
   statusColor: string;
