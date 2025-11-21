@@ -15,6 +15,7 @@ import {
     ProjectActionsRow, 
     ProjectActionButton 
 } from './styles'; 
+import { HeaderProfile } from '../../components/HeaderProfile';
 
 type Project = {
     id: string;
@@ -57,6 +58,9 @@ const TelaProjetos = () => {
 
                 {/* CONTEÚDO DA DIREITA */}
                 <ContentWrapper>
+                    
+                    <HeaderProfile/>
+                    
                     <Container>
                         <TitleProject>Gerenciamento de Projetos</TitleProject>
                         

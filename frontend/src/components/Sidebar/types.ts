@@ -4,7 +4,7 @@ export interface IProfileSidebar {
     autenticado?: boolean
 }
 // Adicionamos 'logout', 'primary' (destaque) e 'secondary'
-export type MenuItemVariant = 'default' | 'logout' | 'primary' | 'highlight'
+export type MenuItemVariant = 'default' | 'logout'| 'primary' | 'highlight'
 
 export interface IMenuItemStyled {
     $active?: boolean;

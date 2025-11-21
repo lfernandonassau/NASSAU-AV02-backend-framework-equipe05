@@ -7,27 +7,47 @@ export const PageWrapper = styled.div`
     background-image: linear-gradient(150deg, #ece9e9ff, #ffffffff);
 `
 
-
+// Container Principal do Layout (Segura Sidebar + Conteúdo)
 export const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: row;
     width: 100%;
     min-height: 100vh;
-    
-    padding: 40px 40px 40px 400px;
-    
-    /* Espaçamento interno para o board não colar no teto/lados */
-    padding-top: 40px;
-    padding-right: 40px;
-    padding-bottom: 40px;
-    
+
+    padding-left: 350px;
     box-sizing: border-box;
 
-    /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
+
     @media (max-width: 1024px) {
-        padding-left: 20px; 
-        padding-right: 20px;
-        padding-top: 80px;
+        flex-direction: column;
+        padding-left: 0; 
     }
-`;
+`
+
+
+// Área de Conteúdo da Direita (Onde fica a lista branca)
+export const ContentWrapper = styled.div`
+    flex: 1; 
+    width: 100%;
+    
+    padding:30px;
+    
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    
+    min-width: 0; 
+    overflow-x: hidden; 
+    box-sizing: border-box;
+    
+    
+
+    @media (max-width: 1024px) {
+        overflow-x: visible;
+        padding-top: 10px;
+    }
+`
 
 /* Container com os projetos */
 export const BoardOuterContainer = styled.div`
