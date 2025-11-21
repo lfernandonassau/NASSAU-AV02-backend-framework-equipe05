@@ -100,7 +100,7 @@ export const AddButtonArea = styled.div`
     
     /* --- TRUQUE VISUAL --- */
     /* Cria um fundo degradê para esconder os cards passando por trás */
-    background: linear-gradient(to top, #f5f5f588 70%, #f5f5f500 100%);
+    background: linear-gradient(to top, #f5f5f5da 70%, #f5f5f500 100%);
     pointer-events: none; 
 `;
 

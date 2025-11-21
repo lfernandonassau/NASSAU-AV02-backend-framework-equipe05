@@ -20,9 +20,11 @@ import {
     BoardInfoLeft,
     BoardInfoTitle,
     BoardInfoIcon,
-    ColumnsWrapper
+    ColumnsWrapper,
+    ContentWrapper
 } from './styles';
 import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder } from 'react-icons/md';
+import { HeaderProfile } from '../../components/HeaderProfile';
 
 const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
@@ -85,77 +87,84 @@ const PainelPage: React.FC = () => {
 
     return (
         <PageWrapper>
-            <Sidebar 
+            <ContentContainer>
+                
+                <Sidebar 
                 autenticado={true} 
                 activeTab={activeTab} 
                 onChangeTab={handleTabChange}
-            />
+                />
 
-            <ContentContainer>
-                <BoardOuterContainer>
-                    <BoardHeader>
-                        <BoardInfoLeft>
-                            <BoardInfoIcon>
-                                <MdFolder />
-                            </BoardInfoIcon>
-                            <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
-                        </BoardInfoLeft>
-                    </BoardHeader>
+                <ContentWrapper>
+                    
+                    <HeaderProfile/>
 
-                    <DragDropContext onDragEnd={onDragEnd}>
-                        <ColumnsWrapper>
-                            <KanbanColumn
-                                title="Pendentes"
-                                icon={<MdAccessTime />}
-                                accentColor="#25B6CF"
-                                droppableId="PENDENTE"
-                                tasks={columns.PENDENTE}
-                                onAddTask={() => handleAdd('PENDENTE')}
-                                onRequestDelete={requestDelete}
-                            />
-                            <KanbanColumn
-                                title="Em andamento"
-                                icon={<MdAutorenew />}
-                                accentColor="#E0C02C"
-                                droppableId="ANDAMENTO"
-                                tasks={columns.ANDAMENTO}
-                                onAddTask={() => handleAdd('ANDAMENTO')}
-                                onRequestDelete={requestDelete}
-                            />
-                            <KanbanColumn
-                                title="Concluídos"
-                                icon={<MdCheckCircle />}
-                                accentColor="#24C464"
-                                droppableId="CONCLUIDO"
-                                tasks={columns.CONCLUIDO}
-                                onAddTask={() => handleAdd('CONCLUIDO')}
-                                onRequestDelete={requestDelete}
-                            />
-                        </ColumnsWrapper>
-                    </DragDropContext>
-                </BoardOuterContainer>
+                    <BoardOuterContainer>
+                        <BoardHeader>
+                            <BoardInfoLeft>
+                                <BoardInfoIcon>
+                                    <MdFolder />
+                                </BoardInfoIcon>
+                                <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
+                            </BoardInfoLeft>
+                        </BoardHeader>
+
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            <ColumnsWrapper>
+                                <KanbanColumn
+                                    title="Pendentes"
+                                    icon={<MdAccessTime />}
+                                    accentColor="#25B6CF"
+                                    droppableId="PENDENTE"
+                                    tasks={columns.PENDENTE}
+                                    onAddTask={() => handleAdd('PENDENTE')}
+                                    onRequestDelete={requestDelete}
+                                />
+                                <KanbanColumn
+                                    title="Em andamento"
+                                    icon={<MdAutorenew />}
+                                    accentColor="#E0C02C"
+                                    droppableId="ANDAMENTO"
+                                    tasks={columns.ANDAMENTO}
+                                    onAddTask={() => handleAdd('ANDAMENTO')}
+                                    onRequestDelete={requestDelete}
+                                />
+                                <KanbanColumn
+                                    title="Concluídos"
+                                    icon={<MdCheckCircle />}
+                                    accentColor="#24C464"
+                                    droppableId="CONCLUIDO"
+                                    tasks={columns.CONCLUIDO}
+                                    onAddTask={() => handleAdd('CONCLUIDO')}
+                                    onRequestDelete={requestDelete}
+                                />
+                            </ColumnsWrapper>
+                        </DragDropContext>
+                    </BoardOuterContainer>
+                </ContentWrapper>
+
+                {/* Modais */}
+                {modal && (
+                    <AddTaskModal
+                        columnName={modal.title}
+                        userAvatar={USER_AVATAR}
+                        onClose={() => setModal(null)}
+                        onSave={handleSaveNew}
+                    />
+                )}
+
+                {deleteId && (
+                    <ConfirmDialog
+                        title="Apagar card"
+                        message="Tem certeza que deseja apagar esta tarefa?"
+                        confirmLabel="Apagar"
+                        cancelLabel="Cancelar"
+                        onConfirm={confirmDelete}
+                        onCancel={cancelDelete}
+                    />
+                )}
             </ContentContainer>
-
-            {/* Modais */}
-            {modal && (
-                <AddTaskModal
-                    columnName={modal.title}
-                    userAvatar={USER_AVATAR}
-                    onClose={() => setModal(null)}
-                    onSave={handleSaveNew}
-                />
-            )}
-
-            {deleteId && (
-                <ConfirmDialog
-                    title="Apagar card"
-                    message="Tem certeza que deseja apagar esta tarefa?"
-                    confirmLabel="Apagar"
-                    cancelLabel="Cancelar"
-                    onConfirm={confirmDelete}
-                    onCancel={cancelDelete}
-                />
-            )}
+            
         </PageWrapper>
     );
 };

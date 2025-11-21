@@ -4,7 +4,7 @@ import { IMenuItemStyled, ISidebarContainerStyled } from './types';
 
 export const SidebarContainer = styled.aside<ISidebarContainerStyled>`
     width: 350px; 
-    background-color: #fff;
+    background-color: #ffffffce;
     border-right: 1px solid #e0e0e0;
     padding: 30px 20px;
     display: flex;
@@ -45,7 +45,7 @@ export const UserInfoSection = styled.div`
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        border: 2px solid #0ea5e9;
+        border: 2px solid #2e2e2eff;
         margin-bottom: 10px;
         object-fit: cover;
     }
@@ -114,23 +114,22 @@ export const SidebarItem = styled.button<IMenuItemStyled>`
     }
 
     &:hover {
-        background-color: #f0f8ff;
-        color: #006391;
-        svg { color: #006391; }
+        background-color: #e4e9eeff;
+        color: #494949ff;
+        svg { color: #494949ff; }
     }
 
-    /* --- VARIANTE: ATIVO (Aba selecionada) --- */
+    /* VARIANTE: ATIVO (Aba selecionada) */
     ${({ $active }) => $active && css`
-        background-color: #e1f0fa;
-        color: #005b8e;
+        background-color: #ebedeeff;
+        color: #39769eff;
         font-weight: 700;
-        border-left: 4px solid #005b8e;
-        svg { color: #005b8e; }
+        border-left: 10px solid #424242ff;
+        svg { color: #39769eff; }
     `}
 
-    /* --- VARIANTE: LOGOUT (Vermelho) --- */
+    /*  VARIANTE: LOGOUT */
     ${({ $variant }) => $variant === 'logout' && css`
-        margin-top: 20px; /* Separa dos outros itens */
         color: #d32f2f;
         
         svg { color: #d32f2f; }
@@ -142,13 +141,15 @@ export const SidebarItem = styled.button<IMenuItemStyled>`
         }
     `}
 
-    /* --- VARIANTE: PRIMARY/LOGIN (Azul destaque) --- */
+
+
+    /*  VARIANTE: PRIMARY/LOGIN  */
     ${({ $variant }) => $variant === 'primary' && css`
         color: #60c0f8ff;
         svg { color: #60c0f8ff; }
     `}
 
-    /* --- VARIANTE: HIGHLIGHT/CADASTRO (Negrito) --- */
+    /* VARIANTE: HIGHLIGHT/CADASTRO (Negrito)  */
     ${({ $variant }) => $variant === 'highlight' && css`
         font-weight: 700;
         color: #333;
@@ -161,7 +162,7 @@ export const SidebarItem = styled.button<IMenuItemStyled>`
         white-space: nowrap; 
         width: auto;
         border-left: none;
-        border-bottom: ${({ $active }) => $active ? '2px solid #60c0f8ff' : 'none'};
+        border-bottom: ${({ $active }) => $active ? '2px solid #3b3b3bff' : 'none'};
         
         padding: 10px 15px;
         margin-top: 0; /* Remove margem do logout no mobile */
@@ -223,3 +224,38 @@ export const CloseBtn = styled.button`
         display: block;
     }
 `;
+
+
+
+/* LOGO  */
+export const SidebarLogo = styled.h2`
+    font-family: 'Montserrat', cursive; 
+    font-weight: 700;
+    font-size: 25px;
+    color: #2b2b2bff; 
+    text-align: center;
+    
+    /* Espaçamento para separar do conteúdo */
+    margin-top: -5px;
+    margin-bottom: 30px;
+    width: 100%;
+
+    /* Previne quebra de linha indesejada */
+    white-space: nowrap;
+
+    @media (max-width: 1024px) {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+`
+
+export const LogoImage = styled.img`
+    width: 60px;  /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    display: block;
+    margin: 20px auto 0 auto; /* Centraliza horizontalmente */
+    
+    
+    /* O Segredo: drop-shadow para destacar o branco no fundo branco */
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4)); 
+`

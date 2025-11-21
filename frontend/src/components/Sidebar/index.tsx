@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { CloseBtn, MobileToggleBtn, Overlay, SidebarContainer, SidebarItem, UserInfoSection } from './styles'
+import { CloseBtn, LogoImage, MobileToggleBtn, Overlay, SidebarContainer, SidebarItem, SidebarLogo, UserInfoSection } from './styles'
 import { IProfileSidebar } from './types' 
-import { MdPerson, MdLock, MdNotifications, MdHelp, MdExitToApp, MdDashboard, MdLogin, MdHome, MdMenu, MdClose } from 'react-icons/md'
+import { MdPerson, MdLock, MdNotifications, MdHelp, MdExitToApp, MdDashboard, MdLogin, MdHome, MdMenu, MdClose, MdSettings, MdBarChart } from 'react-icons/md'
 import { LuLayoutPanelLeft, LuKanban } from "react-icons/lu"
 import { useLocation, useNavigate } from 'react-router-dom'
+import logo from '../../assets/logo.svg'
 
 const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSidebar) => { 
     
@@ -26,8 +27,8 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
     }
 
     const handleNavigation = (route: string) => {
-        navigate(route);      
-        setIsOpen(false);     
+        navigate(route)      
+        setIsOpen(false)     
     };
 
     // 1. USUÁRIO LOGADO
@@ -43,17 +44,16 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                 <Overlay $isOpen={isOpen} onClick={() => setIsOpen(false)} />
 
                 <SidebarContainer $isOpen={isOpen}>
+                    
+
                     <CloseBtn onClick={() => setIsOpen(false)}>
                         <MdClose />
                     </CloseBtn>
 
-                    <UserInfoSection>
-                        <img src="https://avatars.githubusercontent.com/u/179970243?v=4" alt="Foto de Perfil" />
-                        <div>
-                            <strong>Rafael Alexandre</strong>
-                            <span>@adminstrator</span>
-                        </div>
-                    </UserInfoSection>
+                    <LogoImage src={logo} alt="Logo Kodan" />
+                    <SidebarLogo>kodan.</SidebarLogo>
+
+                    <div style={{ marginTop: '20px' }}></div>
 
                     <SidebarItem 
                         $active={location.pathname === '/geral'} 
@@ -77,11 +77,20 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                     </SidebarItem>
 
                     <SidebarItem 
+                        $active={isActive('/estatisticas')} 
+                        onClick={() => handleNavigation('/estatisticas')}
+                    >
+                        <MdBarChart /> Estatísticas
+                    </SidebarItem>
+
+                    <SidebarItem 
                         $active={isActive('/perfil')} 
                         onClick={() => handleNavigation('/perfil')}
                     >
                         <MdPerson /> Minha conta
                     </SidebarItem>
+
+                    <div style={{ marginTop: '50px' }}></div>
 
                     <SidebarItem 
                         $active={isActive('/notificacoes')} 
@@ -94,14 +103,18 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                         $active={isActive('/configuracoes')}
                         onClick={() => handleNavigation('/configuracoes')}
                     >
-                        <MdLock /> Configurações
+                        <MdSettings /> Configurações
                     </SidebarItem>
 
-                    <SidebarItem onClick={() => alert('Abrir Ajuda')}>
+                    <SidebarItem 
+                    onClick={() => alert('Abrir Ajuda')}
+                    >
                         <MdHelp /> Ajuda e Suporte
                     </SidebarItem>
 
-                    <SidebarItem onClick={handleLogout} $variant="logout">
+                    <SidebarItem 
+                    onClick={handleLogout}
+                    $variant="logout">
                         <MdExitToApp /> Sair
                     </SidebarItem>
                 </SidebarContainer>

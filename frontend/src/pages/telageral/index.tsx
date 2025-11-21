@@ -9,8 +9,11 @@ import {
     PerfilBar,
     PerfilTextBar,
     PerfilTitleBar,
-    PerfilTextSpanBar
+    PerfilTextSpanBar,
+    UserAvatar,
+    PerfilTextContainer
 } from './styles'
+import { HeaderProfile } from '../../components/HeaderProfile';
 
 const TelaGeral = () => {
 
@@ -27,13 +30,16 @@ const TelaGeral = () => {
 
                 {/* CONTEÚDO DA DIREITA */}
                 <ContentWrapper>
+                    <HeaderProfile/>
                     <PerfilBar>
-                        <PerfilTitleBar>
-                            Bem-vindo, <PerfilTextSpanBar>Rafael</PerfilTextSpanBar>
-                        </PerfilTitleBar>
-                        <PerfilTextBar>
-                            É hora de começar a trabalhar!
-                        </PerfilTextBar>
+                        <PerfilTextContainer>
+                            <PerfilTitleBar>
+                                👋 Ei, <PerfilTextSpanBar>Rafael!</PerfilTextSpanBar>
+                            </PerfilTitleBar>
+                            <PerfilTextBar>
+                                Comece a trabalhar em um projeto agora
+                            </PerfilTextBar>
+                        </PerfilTextContainer>
                     </PerfilBar>
                     <Container>
                         

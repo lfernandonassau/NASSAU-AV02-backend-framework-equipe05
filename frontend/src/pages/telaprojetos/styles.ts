@@ -29,7 +29,7 @@ export const ContentContainer = styled.div`
 export const ContentWrapper = styled.div`
     flex: 1; 
     width: 100%;
-    padding: 30px 40px;
+    padding: 30px;
     
     min-width: 0; 
     overflow-x: hidden; 
@@ -39,38 +39,44 @@ export const ContentWrapper = styled.div`
 
     @media (max-width: 1024px) {
         overflow-x: visible;
-        padding: 20px; 
+        padding: 10px; 
     }
 `
 
 //  Container Branco da Lista de Projetos
 export const Container = styled.div`
     width: 100%;
-    max-width: 1200px; 
+    max-width: 700px; 
+    
+    /* Desktop: Alinhado à esquerda próximo à sidebar */
     margin: 0; 
-    
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 30px;
 
-    box-sizing: border-box;
-    
+    background-color: #ffffff;
+    border: 1px solid #8a8a8a60;
+    border-radius: 10px; 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    @media (max-width: 1366px) {
-        max-width: 100%; 
+    gap: 20px;
+    padding: 1.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 1540px) {
+        max-width: 700px;
     }
-        
+
+    /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
     @media (max-width: 1024px) {
+        
+        /* Centraliza o container na tela */
         margin: 0 auto;
-        max-width: 100%;
+        
+        height: auto; 
+        padding: 1.5rem;
     }
 
     @media (max-width: 768px) {
-        padding: 20px;
+        padding: 1rem;
     }
 `
 
