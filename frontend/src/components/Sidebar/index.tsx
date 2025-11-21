@@ -4,23 +4,30 @@ import { CloseBtn, MobileToggleBtn, Overlay, SidebarContainer, SidebarItem, User
 import { IProfileSidebar } from './types' 
 import { MdPerson, MdLock, MdNotifications, MdHelp, MdExitToApp, MdDashboard, MdLogin, MdHome, MdMenu, MdClose } from 'react-icons/md'
 import { LuLayoutPanelLeft, LuKanban } from "react-icons/lu"
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSidebar) => { 
     
     // Estado para controlar se o menu está aberto no mobile
-    const [isOpen, setIsOpen] = useState(false);
-    
-    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false)
+    const navigate = useNavigate()
+    const location = useLocation() // Hook para saber a rota atual
 
     const handleLogout = () => {
-        alert("Saindo...");
-        navigate('/login');
+        alert("Saindo...")
+        navigate('/login')
     }
-    // Função auxiliar para navegar e fechar o menu (UX melhor no mobile)
-    const handleTabClick = (tabName: string) => {
-        onChangeTab(tabName);
-        setIsOpen(false); // Fecha o menu ao clicar em um item
+
+    // Função auxiliar para verificar se o botão deve estar ativo baseado na URL
+    const isActive = (route: string) => {
+        // Se for a rota exata OU se for uma sub-rota (ex: /projetos/detalhes)
+        if (route === '/geral' && location.pathname === '/geral') return true
+        return location.pathname.startsWith(route) && route !== '/geral'
+    }
+
+    const handleNavigation = (route: string) => {
+        navigate(route);      
+        setIsOpen(false);     
     };
 
     // 1. USUÁRIO LOGADO
@@ -49,41 +56,44 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                     </UserInfoSection>
 
                     <SidebarItem 
-                        $active={activeTab === 'geral'} 
-                        onClick={() => handleTabClick('geral')}
+                        $active={location.pathname === '/geral'} 
+                        onClick={() => handleNavigation('/geral')}
                     >
                         <MdDashboard /> Página inicial
                     </SidebarItem>
 
                     <SidebarItem 
-                        $active={activeTab === 'projetos'} 
-                        onClick={() => handleTabClick('projetos')}
+                        $active={isActive('/projetos')} 
+                        onClick={() => handleNavigation('/projetos')}
                     >
                         <LuKanban /> Gerenciamento de Projetos
                     </SidebarItem>
 
                     <SidebarItem 
-                        $active={activeTab === 'painel'} 
-                        onClick={() => handleTabClick('painel')}
+                        $active={isActive('/painel')} 
+                        onClick={() => handleNavigation('/painel')}
                     >
                         <LuLayoutPanelLeft /> Painel
                     </SidebarItem>
 
                     <SidebarItem 
-                        $active={activeTab === 'seguranca'} 
-                        onClick={() => handleTabClick('seguranca')}
+                        $active={isActive('/perfil')} 
+                        onClick={() => handleNavigation('/perfil')}
                     >
                         <MdPerson /> Minha conta
                     </SidebarItem>
 
                     <SidebarItem 
-                        $active={activeTab === 'notificacoes'} 
-                        onClick={() => handleTabClick('notificacoes')}
+                        $active={isActive('/notificacoes')} 
+                        onClick={() => handleNavigation('/notificacoes')}
                     >
                         <MdNotifications /> Notificações
                     </SidebarItem>
                     
-                    <SidebarItem onClick={() => alert('Abrir Configurações')}>
+                    <SidebarItem 
+                        $active={isActive('/configuracoes')}
+                        onClick={() => handleNavigation('/configuracoes')}
+                    >
                         <MdLock /> Configurações
                     </SidebarItem>
 
