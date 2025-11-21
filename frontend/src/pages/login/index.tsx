@@ -39,7 +39,7 @@ const schema = yup.object({
 }).required()
 
 const Login = () => {
-    
+
     // Titulo visivel
     const [estaVisivel, setEstaVisivel] = useState(false)
     useEffect(() => {
@@ -75,7 +75,7 @@ const Login = () => {
             alert('Houve um erro, tente novamente')
         }
     }
-    
+
     const [showPassword, setShowPassword] = useState(false)
     return (
         <PageWrapper>
@@ -100,7 +100,7 @@ const Login = () => {
                             <Row>
                                 <TextoLivreSubText>
                                     ou
-                                </TextoLivreSubText>                           
+                                </TextoLivreSubText>
                             </Row>
                             <Button title='Entrar com Google' type='submit' variant="google" leftIcon={<FcGoogle/>}></Button>
                         </form>
@@ -108,7 +108,7 @@ const Login = () => {
                 </LoginContainer>
                 <WelcomeContainer>
                     <Column>
-                        
+
                         <PageLogin src={logo} alt="Logo Kodan" />
                         <TitleWelcome>Bem-vindo de volta 🤟</TitleWelcome>
                         <WelcomeSubText>
@@ -122,7 +122,7 @@ const Login = () => {
                     </Column>
                 </WelcomeContainer>
             </LoginNewScreen>
-            
+
         </PageWrapper>
     )
 }

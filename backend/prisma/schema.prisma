@@ -1,36 +1,124 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../prisma/generated"
+  provider = "prisma-client-js"
 }
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+//--Valores padrões--
 
-  posts   Post[]
-  profile Profile?
-}
-model Post {
-  id        Int    @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-
-  // FK -> User
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+enum TaskStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDO
 }
 
-model Profile {
-  id     Int    @id @default(autoincrement())
-  bio    String?
-
-  // 1:1 com User (FK única)
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+enum ClassJob {
+  MEMBERS
+  DEVELOPER
+  LEADER
 }
+
+//-----------
+
+model User{
+
+  id_user       BigInt        @id @default(autoincrement())
+  name          String        @db.VarChar(50)
+  lastname      String        @db.VarChar(100)
+  cpf           String        @db.Char(11) @unique
+  email         String        @db.VarChar(120) @unique
+  password      String        @db.VarChar(255)
+  datecreate    DateTime      @default(now())
+  dateupdate    DateTime      @updatedAt
+  positions     UserPosition[]
+
+}
+
+
+model Job{
+
+  id_job        BigInt         @id @default(autoincrement())
+  position      ClassJob       @default(MEMBERS)
+  users         UserPosition[]
+  informationdisplay Dashboard[]
+
+}
+
+model Dashboard{
+
+  id_panel      BigInt        @id @default(autoincrement())
+  jobs          Job           @relation(fields: [jobId], references: [id_job])
+  jobId         BigInt
+  relatory      Relatory?
+
+}
+
+model Relatory{
+
+  id_relat          BigInt    @id @default(autoincrement())
+  datestart         DateTime  @default(now())
+  datefinaly        DateTime
+  totaltasks        BigInt
+  tasksPending      BigInt
+  tasksonWalk       BigInt
+  tasksCompleted    BigInt
+  createstatistic   BigInt
+  managementpanel   Dashboard @relation(fields: [managementpanelId], references: [id_panel])
+  managementpanelId BigInt    @unique
+  project           Project   @relation(fields: [projectId],references: [id_project])
+  projectId         BigInt    @unique
+
+}
+
+model Project{
+
+  id_project        BigInt        @id @default(autoincrement())
+  titulo            String        @db.VarChar(50)
+  dashboardId       BigInt
+  relatory          Relatory?
+  column            Column[]
+
+}
+
+model Column{
+
+  id_column     BigInt        @id @default(autoincrement())
+  title         String        @db.VarChar(50)
+  status        TaskStatus    @default(PENDENTE) //OBS: fazer teste de criação.
+  project       Project       @relation(fields: [projectId], references: [id_project])
+  projectId     BigInt
+  cards         Card[]
+
+}
+
+model Card{
+
+  id_card       BigInt        @id @default(autoincrement())
+  qta_members   Int           @db.Int
+  title         String        @db.VarChar(25)
+  subtitle      String        @db.VarChar(25)
+  timeframe     DateTime
+  datecreate    DateTime      @default(now())
+  dateupdate    DateTime      @updatedAt
+  column        Column        @relation(fields: [columnId], references: [id_column])
+  columnId     BigInt
+
+}
+
+// Relacionamento N:N
+
+//USUÁRIO -POSSUI- CARGO
+
+model UserPosition{
+
+  user          User          @relation(fields: [userId], references: [id_user])
+  job           Job           @relation(fields: [jobId], references: [id_job])
+  jobId         BigInt
+  userId        BigInt
+
+  @@id([userId, jobId])
+
+ }
+
