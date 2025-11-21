@@ -86,6 +86,27 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         }
     `}
 
+    ${({ variant }) => variant === "taskbutton" && css`
+        min-width: 150px;
+        max-width: 250px;
+        height: 35px;
+        font-weight: 700;
+        margin: 0 auto;
+
+        background: none;
+        background-color: #2c2c2cff;
+        filter: 
+            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
+
+        &::after {
+            border-radius: 22px;
+        }
+        &:hover {
+            color: #ffffffff;
+            background: #3d3c3ccc;
+            transform: translateY(-5px);
+        }
+    `}
 
     ${({ variant }) => variant === "google" && css`
         background: #0000005d;
