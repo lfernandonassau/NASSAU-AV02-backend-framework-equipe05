@@ -9,13 +9,15 @@ import {
     Divider
 } from './styles'
 import { IHeaderProfile } from './types';
-import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md';
+import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md'
+import NotificationsModal from '../NotificationsModal'
 
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
-    
-    const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [searchText, setSearchText] = useState('');
-    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [showNotifications, setShowNotifications] = useState(false)
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const [searchText, setSearchText] = useState('')
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
@@ -35,7 +37,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
     // URL da imagem
     const userImage = "https://avatars.githubusercontent.com/u/179970243?v=4"
 
-    return (
+    return (<>
         <Container>
             
             {/* Área de Busca */}
@@ -53,7 +55,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
             </SearchContainer>
 
             {/* Notificações */}
-            <IconButton onClick={() => alert("Notificações")}>
+            <IconButton onClick={() => setShowNotifications(true)}>
                 <MdNotificationsNone />
             </IconButton>
 
@@ -66,7 +68,14 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
             </ProfileWrapper>
 
         </Container>
-    );
-};
+        {showNotifications && (
+                <NotificationsModal
+                    onClose={() => setShowNotifications(false)}
+                    notifications={[]} // Lista vazia padrão por enquanto
+                />
+            )}
+        </>
+    )
+}
 
 export { HeaderProfile };

@@ -141,7 +141,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                 />
             )}
         </>
-    );
-};
+    )
+}
 
 export { Header };
