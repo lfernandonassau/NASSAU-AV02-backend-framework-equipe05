@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const CardContainer = styled.div`
+interface ICardContainerProps {
+    $menuOpen?: boolean;
+}
+
+export const CardContainer = styled.div<ICardContainerProps>`
     position: relative;
     overflow: visible;   /* garante que o menu pode “sair” do card */
     background-color: #f5f5f5;
@@ -13,6 +17,12 @@ export const CardContainer = styled.div`
     min-width: 240px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     transition: all 0.25s ease;
+
+
+    /* Se o menu estiver aberto, este card sobe na pilha (z-index 100). 
+       Se não, fica normal (z-index 1 ou auto). */
+    z-index: ${({ $menuOpen }) => ($menuOpen ? 100 : 1)};
+
     position: relative;
     &:hover {
     transform: translateY(-1px);
@@ -147,30 +157,16 @@ export const TextCol = styled.div`
 
 export const OptionsMenu = styled.div`
     position: absolute;
-    top: 8px; right: 8px;
-    background: #fff;
+    top: 100%; /* Posiciona logo abaixo do botão */
+    right: 0;
+    background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    box-shadow: 0 14px 32px rgba(2, 29, 61, 0.20);
-    min-width: 180px;
-    z-index: 1000; /* acima do card */
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    min-width: 160px;
+    z-index: 1000;
     overflow: hidden;
-
-    & > button {
-    width: 100%;
-    text-align: left;
-    padding: 10px 12px;
-    background: transparent;
-    border: 0;
-    font-size: .92rem;
-    color: #0b1b2e;
-    cursor: pointer;
-    .danger { color: #b01818; }
-    }
-
-    & > button:hover {
-    background: #f7fafc;
-    }
-
-    .danger { color: #b01818; }
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0; /* Pequeno padding vertical interno */
 `;

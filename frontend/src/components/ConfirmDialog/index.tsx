@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { MdClose } from 'react-icons/md'
 import {
     Overlay,
     ModalCard,
@@ -8,16 +9,16 @@ import {
     ModalBody,
     ModalFooter,
 } from './styles';
-import { Button } from '../../components/Button';
+import { Button } from '../../components/Button'
 
 type ConfirmDialogProps = {
-    title?: string;
-    message: string | React.ReactNode;
-    confirmLabel?: string;
-    cancelLabel?: string;
-    onConfirm: () => void;
-    onCancel: () => void;
-};
+    title?: string
+    message: string | React.ReactNode
+    confirmLabel?: string
+    cancelLabel?: string
+    onConfirm: () => void
+    onCancel: () => void
+}
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     title = 'Confirmar ação',
@@ -28,25 +29,36 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     onCancel,
 }) => {
     return (
-    <Overlay role="dialog" aria-modal="true">
-        <ModalCard>
-        <ModalHeader>
-            <ModalTitle>{title}</ModalTitle>
-            <CloseButton onClick={onCancel} aria-label="Fechar">✕</CloseButton>
-        </ModalHeader>
+        <Overlay role="dialog" aria-modal="true" onClick={onCancel}>
+            <ModalCard onClick={(e) => e.stopPropagation()}>
+                <ModalHeader>
+                    <ModalTitle>{title}</ModalTitle>
+                    
+                    <CloseButton 
+                        onClick={onCancel} 
+                        aria-label="Fechar"
+                    >
+                        <MdClose />
+                    </CloseButton>
+                </ModalHeader>
 
-        <ModalBody>{message}</ModalBody>
+                <ModalBody>{message}</ModalBody>
 
-        <ModalFooter>
-            <Button title={cancelLabel} onClick={onCancel} />
-            <Button
-            title={confirmLabel}
-            onClick={onConfirm}
-            />
-        </ModalFooter>
-        </ModalCard>
-    </Overlay>
-    );
-};
+                <ModalFooter>
+                    <Button 
+                        title={cancelLabel} 
+                        onClick={onCancel}
+                        variant='taskbutton' 
+                    />
+                    <Button
+                        title={confirmLabel}
+                        onClick={onConfirm}
+                        variant='taskbutton' 
+                    />
+                </ModalFooter>
+            </ModalCard>
+        </Overlay>
+    )
+}
 
-export default ConfirmDialog;
+export  { ConfirmDialog }
