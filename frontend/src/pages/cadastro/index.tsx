@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { api } from '../../services/api'
 
@@ -30,6 +30,10 @@ import {
     RegisterContainer,
     RegisterNewScreen,
     TextoLivreSubText,
+    TermsText,
+    ErrorText,
+    TermsContainer,
+    CheckboxInput,
 } from './styles'
 import { IFormData } from './types'
 import { cpfMask } from '../../utils/cpfMask'
@@ -42,10 +46,13 @@ const schema = yup.object({
     lastName: yup.string().min(3, 'Digite um sobrenome válido').required('Campo obrigatório'),
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
     password: yup.string().min(8, 'No minimo 8 caracteres').required('Campo obrigatório'),
-    // Comparar com o campo 'password'
     confirmPassword: yup.string()
         .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
         .required('Confirmação obrigatória'),
+    // NOVA REGRA: Deve ser verdadeiro (true)
+    terms: yup.boolean()
+        .oneOf([true], 'Você deve aceitar os termos para continuar')
+        .required('Campo obrigatório')
 }).required()
 
 const Cadastro = () => {
@@ -76,24 +83,22 @@ const Cadastro = () => {
             cpf: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            terms: false // Valor inicial desmarcado
         }
     })
 
     const navigate = useNavigate()
     const onSubmit = async (formData: IFormData) => {
         try {
-            // Não precisa salvar isso no banco
-            const { confirmPassword, ...userData } = formData
+            // Removemos confirmPassword e terms antes de enviar para API
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { confirmPassword, terms, ...userData } = formData
 
-            // TODO: Alterar para método POST para criar o usuário
-            // Exemplo: await api.post('/users', userData);
-            
-            const { data } = await api.get(`users?email=${formData.email}`)
+            const { data } = await api.post(`users?email=${formData.email}`)
             
             if(data.length === 0){
-                // Aqui você faria o POST se o usuário não existir
-                alert(`Usuário ${formData.name} cadastrado com sucesso! (Simulação)`)
+                alert(`Usuário ${formData.name} cadastrado com sucesso!`)
                 navigate('/login')
             } else {
                 alert('Este e-mail já está cadastrado.')
@@ -170,6 +175,25 @@ const Cadastro = () => {
                                     (<MagicEyeOff onClick={() => setShowConfirmPassword(true)}/>)
                                 }
                             />
+                            <TermsContainer>
+                                <Controller
+                                    name="terms"
+                                    control={control}
+                                    render={({ field: { onChange, value } }) => (
+                                        <CheckboxInput 
+                                            id="terms-check"
+                                            checked={value}
+                                            onChange={onChange}
+                                        />
+                                    )}
+                                />
+                                <TermsText htmlFor="terms-check">
+                                    Li e aceito os <span>Termos e Condições</span> e a <span>Política de Privacidade</span>.
+                                </TermsText>
+                            </TermsContainer>
+                            {/* Mensagem de erro do Checkbox */}
+                            {errors.terms && <ErrorText>{errors.terms.message}</ErrorText>}
+                            {/* -------------------------- */}
                             
                             <Row>
                                 <PossuiContaSubText onClick= {() => { navigate('/login')}}>
