@@ -27,15 +27,15 @@ export const RegisterNewScreen = styled.div<IAnimation>`
 
 
     @media (max-width: 768px) {
-      flex-direction: column; 
+      flex-direction: column;
       min-width: 0;
       width: 100%;
-      max-width: 500px; 
+      max-width: 500px;
       gap: 10px;
     }
 
     @media (max-width: 1366px) {
-        gap: 50px;  */ 
+        gap: 50px;  */
     }
 `
 

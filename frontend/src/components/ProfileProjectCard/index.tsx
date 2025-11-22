@@ -1,6 +1,7 @@
 import React from 'react'
 import {  ProjectCardContainer } from './styles'
 
+
 type ProjectCardProps = {
   children: React.ReactNode;
   onClick?: () => void
