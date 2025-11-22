@@ -48,7 +48,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
         setIsAtBottom(atBottom)
 
         // Lógica de visibilidade do botão
-        if (hasOverflow && tasks.length > 5) {
+        if (hasOverflow && tasks.length > 4) {
             setShowScrollArrow(true);
         } else {
             setShowScrollArrow(false);
