@@ -1,20 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { 
-    Container, 
-    SearchContainer, 
-    SearchInput, 
-    IconButton, 
-    ProfileWrapper, 
+import React, { useState, useRef } from 'react';
+import {
+    Container,
+    SearchContainer,
+    SearchInput,
+    IconButton,
+    ProfileWrapper,
     Avatar,
     Divider
 } from './styles'
 import { IHeaderProfile } from './types';
+
 import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md'
 import NotificationsModal from '../NotificationsModal'
 
+// ✅ IMPORTA O CONTEXTO GLOBAL
+import { useNotifications } from '../../context/NotificationContext';
+
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
-    const [showNotifications, setShowNotifications] = useState(false)
+    // ✅ Busca
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchText, setSearchText] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
@@ -22,10 +26,9 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
         if (!isSearchOpen) {
-            // Foca no input após abrir (pequeno delay para animação)
             setTimeout(() => inputRef.current?.focus(), 100);
         } else {
-            setSearchText(''); // Limpa ao fechar se quiser
+            setSearchText('');
         }
     };
 
@@ -34,44 +37,75 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         if (onSearch) onSearch(e.target.value);
     };
 
-    // URL da imagem
+    // ✅ CONTEXTO GLOBAL DE NOTIFICAÇÕES
+    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+
+    // ✅ Modal
+    const [showNotifications, setShowNotifications] = useState(false);
+
     const userImage = "https://avatars.githubusercontent.com/u/179970243?v=4"
 
-    return (<>
-        <Container>
-            
-            {/* Área de Busca */}
-            <SearchContainer $isOpen={isSearchOpen}>
-                <SearchInput 
-                    ref={inputRef}
-                    $isOpen={isSearchOpen} 
-                    placeholder="Buscar..." 
-                    value={searchText}
-                    onChange={handleInputChange}
-                />
-                <IconButton onClick={toggleSearch}>
-                    {isSearchOpen ? <MdClose /> : <MdSearch />}
-                </IconButton>
-            </SearchContainer>
+    return (
+        <>
+            <Container>
 
-            {/* Notificações */}
-            <IconButton onClick={() => setShowNotifications(true)}>
-                <MdNotificationsNone />
-            </IconButton>
+                {/* ✅ Campo de busca */}
+                <SearchContainer $isOpen={isSearchOpen}>
+                    <SearchInput
+                        ref={inputRef}
+                        $isOpen={isSearchOpen}
+                        placeholder="Buscar..."
+                        value={searchText}
+                        onChange={handleInputChange}
+                    />
+                    <IconButton onClick={toggleSearch}>
+                        {isSearchOpen ? <MdClose /> : <MdSearch />}
+                    </IconButton>
+                </SearchContainer>
 
-            <Divider />
+                {/* ✅ Sino GLOBAL com contador */}
+                <div style={{ position: "relative", cursor: "pointer" }}>
+                    <IconButton onClick={() => setShowNotifications(true)}>
+                        <MdNotificationsNone />
+                    </IconButton>
 
-            {/* Perfil Minimalista */}
-            <ProfileWrapper onClick={() => alert("Menu de Perfil")}>
-                <Avatar src={userImage} alt="User" />
-                <MdKeyboardArrowDown size={20} color="#555" />
-            </ProfileWrapper>
+                    {unreadCount > 0 && (
+                        <span style={{
+                            position: "absolute",
+                            top: -4,
+                            right: -4,
+                            background: "#006391",
+                            color: "#fff",
+                            fontSize: "10px",
+                            borderRadius: "50%",
+                            width: "16px",
+                            height: "16px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}>
+                            {unreadCount}
+                        </span>
+                    )}
+                </div>
 
-        </Container>
-        {showNotifications && (
+                <Divider />
+
+                {/* ✅ Perfil */}
+                <ProfileWrapper onClick={() => alert("Menu de Perfil futuro")}>
+                    <Avatar src={userImage} alt="User" />
+                    <MdKeyboardArrowDown size={20} color="#555" />
+                </ProfileWrapper>
+
+            </Container>
+
+            {/* ✅ Modal usando contexto */}
+            {showNotifications && (
                 <NotificationsModal
                     onClose={() => setShowNotifications(false)}
-                    notifications={[]} // Lista vazia padrão por enquanto
+                    notifications={notifications}
+                    onRead={markAsRead}
+                    onReadAll={markAllAsRead}
                 />
             )}
         </>
