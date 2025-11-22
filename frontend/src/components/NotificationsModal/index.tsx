@@ -8,14 +8,19 @@ import {
   NotificationItem,
   NotificationTitle,
   NotificationTime,
-  EmptyState
+  EmptyState,
+  MarkAllButton,
+  CheckIcon,
+  TextWrapper,
+  Footer
 } from "./styles";
+
+import { MdDoneAll } from "react-icons/md";
 import { INotificationsModal } from "./types";
 
-const NotificationsModal = ({ onClose, notifications = [] }: INotificationsModal) => {
+const NotificationsModal = ({ onClose, notifications = [], onRead, onReadAll }: INotificationsModal) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Fechar ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -42,17 +47,34 @@ const NotificationsModal = ({ onClose, notifications = [] }: INotificationsModal
           <EmptyState>Nenhuma notificação no momento</EmptyState>
         ) : (
           notifications.map((item) => (
-            <NotificationItem key={item.id}>
-              <NotificationTitle>{item.title}</NotificationTitle>
-              <NotificationTime>{item.time}</NotificationTime>
+            <NotificationItem
+              key={item.id}
+              $read={item.read}
+              onClick={() => onRead && onRead(item.id)}
+            >
+              <TextWrapper>
+                <NotificationTitle>{item.title}</NotificationTitle>
+                <NotificationTime>{item.time}</NotificationTime>
+              </TextWrapper>
+
+              <CheckIcon $read={item.read}>
+                <MdDoneAll />
+              </CheckIcon>
             </NotificationItem>
           ))
         )}
       </Content>
+
+      {/* ✅ Botão agora no rodapé */}
+      {notifications.length > 0 && (
+        <Footer>
+          <MarkAllButton onClick={onReadAll}>
+            Marcar todas como lidas
+          </MarkAllButton>
+        </Footer>
+      )}
     </Container>
   );
 };
 
 export default NotificationsModal;
-
-
