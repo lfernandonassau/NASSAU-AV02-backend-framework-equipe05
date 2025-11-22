@@ -1,125 +1,127 @@
+import styled from "styled-components";
 import { MdSms } from "react-icons/md";
 import { FaGithubAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import styled from "styled-components";
 import { IContainerAnimationProps } from "./types";
 
-
-// Container principal do rodapé
 export const FooterContainer = styled.footer<IContainerAnimationProps>`
   font-family: 'Montserrat';
-  background-image: linear-gradient(150deg, #9fcafcff, #ffffffff);
+  background: linear-gradient(180deg, #b9d9ff 0%, #ebf4ff 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 20px 20px;
+  padding: 70px 20px 20px 20px;
 
-  /* Animação ao rolar a pagina */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-    ${({ $visivel }) => $visivel && `
-        opacity: 1;
-        transform: translateY(0);
-    `}
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
 
-
-  @media (max-width: 768px) {
-      max-width: 100%; /* Importante para não vazar */
-      padding: 30px 10px 0 10px;
-        
-    }
+  ${({ $visivel }) =>
+    $visivel &&
+    `
+      opacity: 1;
+      transform: translateY(0);
+  `}
 `;
 
-// Área interna com as seções
+export const Logo = styled.img`
+  width: 70px;
+  height: 70px;
+  margin-bottom: 15px;
+`;
+
+export const Slogan = styled.h3`
+  margin-top: 5px;
+  margin-bottom: 35px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #0b1b3a;  /* azul escuro */
+`;
+
+export const SocialRow = styled.div`
+  display: flex;
+  gap: 22px;
+  margin-bottom: 45px;
+`;
+
+export const SocialIcon = styled.a`
+  font-size: 26px;
+  color: #0b1b3a;  /* azul escuro */
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: translateY(-3px);
+    opacity: 0.7;
+  }
+`;
+
 export const FooterContent = styled.div`
   width: 100%;
   max-width: 1200px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 100px;
-  padding-left: 100px;
+  gap: 50px;
+  padding-top: 20px;
 `;
 
-// Cada bloco de conteúdo dentro do rodapé
 export const FooterSection = styled.div`
-  flex: 1 1 250px;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
+  flex: 1 1 200px;
+  min-width: 180px;
+  text-align: center;
 `;
 
-
-
-// Componente pai para o flex-box do footer redes sociais:
-export const FooterDad = styled.div`
-  display: flex;  
-  flex-direction: row;
-`
-// Título de cada seção
 export const FooterTitle = styled.h4`
-  font-family: 'Montserrat', sans-serif;
-  color: #000000ff;
-  font-size: 20px;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-`
+  color: #0b1b3a;   /* azul escuro */
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+`;
 
-// Parágrafos e textos gerais
 export const FooterText = styled.a`
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  line-height: 1.5;
+  display: block;
+  font-size: 13px;
+  color: #0b1b3a;   /* azul escuro */
   margin: 4px 0;
-  color: #000000ff;
-
   text-decoration: none;
-
-  transition: color 0.3s ease;
+  transition: 0.3s;
 
   &:hover {
-    color: #00aaff;
+    color: #1454b8; /* azul médio no hover */
   }
-  @media (max-width: 768px) {
-      max-width: 100%; /* Importante para não vazar */
-      font-size: 10px;
-        
-    }
-`
+`;
 
-// Texto de copyright
+export const ContactRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+`;
+
 export const Copyright = styled.p`
-  font-size: 10px;
-  color: #888;
-  margin-top: 30px;
-  text-align: center;
-  border-top: 1px solid #1e1e1e;
-  padding-top: 15px;
+  margin-top: 35px;
+  font-size: 11px;
+  color: #0b1b3a;  /* azul escuro */
+  border-top: 1px solid #0b1b3a33;
+  padding-top: 12px;
   width: 100%;
-  max-width: 1200px;
+  text-align: center;
 `;
 
 export const GitHubIco = styled(FaGithubAlt)`
-  color: #000000;
-  margin-right: 8px;
-  height: 18px;
+  font-size: 26px;
+  color: #0b1b3a; /* azul escuro */
+`;
 
-`
 export const EmailIco = styled(MdEmail)`
-  color: #000000;
-  margin-right: 8px;
-  height: 18px;
-`
+  font-size: 20px;
+  color: #0b1b3a; /* azul escuro */
+`;
 
 export const SmsIco = styled(MdSms)`
-  color: #000000;
-  margin-right: 9px;
-  height: 18px;
-`
-
-
-export const RightIcon = styled.div`
-    margin-right: 0;
-    height: 20px;
-`
+  font-size: 20px;
+  color: #0b1b3a; /* azul escuro */
+`;
