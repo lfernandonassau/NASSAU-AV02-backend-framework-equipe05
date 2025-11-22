@@ -1,144 +1,154 @@
 import React, { useEffect, useRef, useState } from "react";
+import Tooltip from "@mui/material/Tooltip";
+
 import {
   FooterContainer,
   FooterContent,
   FooterSection,
   FooterTitle,
   FooterText,
+  ContactRow,
   Copyright,
+  SocialRow,
+  SocialIcon,
+  Logo,
+  Slogan,
   GitHubIco,
-  FooterDad,
-  RightIcon,
   EmailIco,
   SmsIco,
 } from "./styles";
-import { IFooter } from "./types";
 
+import PrivacyModal from "./PrivacyModal";
 
-const FooterIcos = ( {rightIcon}:IFooter ) => {
+import LogoKodan from "../../assets/logo.svg";
+
+const Footer: React.FC = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [visivel, setVisivel] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const atual = ref.current;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisivel(true);
+          if (atual) obs.unobserve(atual);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (atual) obs.observe(atual);
+
+    return () => {
+      if (atual) obs.unobserve(atual);
+    };
+  }, []);
+
   return (
-    <FooterText>
-      {rightIcon ? (<RightIcon>{rightIcon}</RightIcon>) : null}
-    </FooterText>
+    <FooterContainer ref={ref} $visivel={visivel}>
 
-  )
+      {/* LOGO */}
+      <Logo src={LogoKodan} alt="Kodan Logo" />
 
-}
+      {/* SLOGAN */}
+      <Slogan>Kodan — Projetos mais claros, equipes mais fortes</Slogan>
 
-const Footer: React.FC = ( ) => {
-  
-  // Animação ao rolar a página
-      const [containerVisivel, setParteDoisVisivel] = useState(false)
-      
-      //    Tipamos como HTMLDivElement porque é um <div>
-      const containerRef = useRef<HTMLDivElement>(null)
-  
-      // IntersectionObserver
-      useEffect(() => {
-          const refAtual = containerRef.current // Guarda a referência
-          
-          // Cria o observador
-          const observer = new IntersectionObserver(
-              ([entry]) => { // O callback é chamado quando a visibilidade muda
-                  if (entry.isIntersecting) {
-                      // O elemento entrou na tela
-                      setParteDoisVisivel(true)
-                      
-                      
-                      // Para de observar, pois a animação só precisa rolar 1 vez
-                      if (refAtual) {
-                          observer.unobserve(refAtual)
-                      }
-                  }
-              },
-              {
-                  threshold: 0.1 // Ativa quando 10% do elemento estiver visível
-              }
-          )
-  
-          // Manda o observador "assistir" o elemento do 'ref'
-          if (refAtual) {
-              observer.observe(refAtual)
-          }
-  
-          // Limpa o observador quando o componente for desmontado
-          return () => {
-              if (refAtual) {
-                  observer.unobserve(refAtual)
-              }
-          }
-      }, [])
-  
-  
-  
-  
-  return (
-    
-    <FooterContainer ref={containerRef} $visivel={containerVisivel}>
+      {/* ÍCONES (GITHUBS DOS DEVs) */}
+      <SocialRow>
+
+        <Tooltip title="Ryan Rodrigues" arrow>
+          <SocialIcon href="https://github.com/Ryan27r">
+            <GitHubIco />
+          </SocialIcon>
+        </Tooltip>
+
+        <Tooltip title="Rafael Alexandre" arrow>
+          <SocialIcon href="https://github.com/rafxys">
+            <GitHubIco />
+          </SocialIcon>
+        </Tooltip>
+
+        <Tooltip title="Samuel Douglas" arrow>
+          <SocialIcon href="https://github.com/Sadousan">
+            <GitHubIco />
+          </SocialIcon>
+        </Tooltip>
+
+        <Tooltip title="Alanderson Santos" arrow>
+          <SocialIcon href="https://github.com/AlandersonSantos">
+            <GitHubIco />
+          </SocialIcon>
+        </Tooltip>
+
+      </SocialRow>
+
+      {/* COLUNAS */}
       <FooterContent>
+
+        {/* ----------------- SOBRE ----------------- */}
         <FooterSection>
           <FooterTitle>Sobre</FooterTitle>
 
           <FooterText>
-          
-          Kodan oferece um ambiente de gestão de projetos em formato Kanban, onde líderes e colaboradores podem criar projetos, organizar tarefas e acompanhar o progresso das equipes;
-          
+            Kodan oferece um ambiente de gestão de projetos em formato Kanban,
+            onde líderes e colaboradores podem criar projetos, organizar tarefas
+            e acompanhar o progresso das equipes;
           </FooterText>
-
         </FooterSection>
 
+        {/* ----------------- CONTATOS (AGORA NO MEIO) ----------------- */}
         <FooterSection>
+          <FooterTitle>Contatos</FooterTitle>
 
-          <FooterTitle>Suporte</FooterTitle>
-          <FooterDad>
-            <FooterIcos rightIcon={<EmailIco/>}/>
-            <FooterText href="kodanorg@enterprise.co">KodanOrg@enterprise.co</FooterText>
-          </FooterDad>
-          <FooterDad>
-            <FooterIcos rightIcon={<SmsIco />}/>
-            <FooterText href="#"> (82) 94002 - 8922 </FooterText>
-          </FooterDad>
+          <ContactRow>
+            <EmailIco />
+            <FooterText href="mailto:kodanorg@enterprise.co">
+              kodanorg@enterprise.co
+            </FooterText>
+          </ContactRow>
 
+          <ContactRow>
+            <SmsIco />
+            <FooterText href="#">
+              (82) 94002 - 8922
+            </FooterText>
+          </ContactRow>
         </FooterSection>
 
+        {/* ----------------- DADOS SENSÍVEIS (AGORA À DIREITA) ----------------- */}
         <FooterSection>
-  
-          <FooterTitle> Contatos </FooterTitle>
+          <FooterTitle>Dados Sensíveis</FooterTitle>
 
-          <FooterDad>
-            <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/Ryan27r">
-              Ryan Rodrigues
-            </FooterText>
-          </FooterDad>
-          <FooterDad>
-            <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/rafxys">
-              Rafael Alexandre
-            </FooterText>
-          </FooterDad>
-          <FooterDad>
-            <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/Sadousan">
-              Samuel Douglas
-            </FooterText>
-          </FooterDad>
-          <FooterDad>
-            <FooterIcos rightIcon={<GitHubIco/>}/>
-            <FooterText href="https://github.com/AlandersonSantos">
-              Alanderson santos
-            </FooterText>
-          </FooterDad>
-          
-          
+          <FooterText
+            as="button"
+            onClick={() => setOpenModal(true)}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              width: "100%",
+              textAlign: "center",   // centraliza o botão
+            }}
+          >
+            Políticas de Privacidade
+          </FooterText>
         </FooterSection>
+
       </FooterContent>
 
+      {/* COPYRIGHT */}
       <Copyright>
         © {new Date().getFullYear()} — Todos os direitos reservados para a kodan corporation
       </Copyright>
+
+      {/* MODAL */}
+      <PrivacyModal open={openModal} onClose={() => setOpenModal(false)} />
     </FooterContainer>
   );
 };
 
 export default Footer;
+

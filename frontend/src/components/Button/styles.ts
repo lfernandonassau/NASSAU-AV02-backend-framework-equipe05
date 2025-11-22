@@ -86,6 +86,32 @@ export const ButtonContainer = styled.button<IButtonStyled>`
         }
     `}
 
+    ${({ variant }) => variant === "taskbutton" && css`
+        min-width: 130px; 
+        max-width: 250px;
+        width: auto;
+        height: 35px;
+        font-weight: 700;
+        
+        
+        
+        margin: 0; 
+
+        background: none;
+        background-color: #2c2c2cff;
+        
+        filter: drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
+
+        &::after {
+            border-radius: 22px;
+        }
+        &:hover {
+            color: #ffffffff;
+            background: #3d3c3ccc;
+            transform: translateY(-3px);
+        }
+    `}
+
 
     ${({ variant }) => variant === "google" && css`
         background: #0000005d;
@@ -138,30 +164,52 @@ export const ButtonContainer = styled.button<IButtonStyled>`
     `}
 
 `
+export const DelTaskButton = styled.button`
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #334155; 
+    
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    filter: none;
+    box-shadow: none;
+    border-radius: 0;
 
+    /* Efeito Hover simples de menu */
+    &:hover {
+        background-color: #f1f5f9; /* Slate-100 */
+        color: #0f172a;
+    }
+
+    
+    &:last-child {
+        color: #ef4444; 
+    }
+    &:last-child:hover {
+        background-color: #fef2f2; 
+    }
+`
 
 export const LoginButton = styled.button`
-    background: #59adeec9;
-    border-radius: 10px;
+    background: none;
     position: relative;
     font-family: 'Montserrat';
-    font-weight: 600;
-    color: #FFFFFF;
-    padding: 6px 12px;
-    min-width: 105px;
     border: none;
-    margin-right: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 25px;
+    color: #FFFFFF;
+    margin-right: 12px;
+    text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35))
-            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
-
-    &:hover {
-        background: #000000;
-        opacity: 0.9;
-        transform: translateY(-1px);
-    
-    }
 `
 
 export const HomeButton = styled.button`

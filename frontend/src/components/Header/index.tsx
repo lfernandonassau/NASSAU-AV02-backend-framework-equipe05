@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import logo from '../../assets/logo.svg';
 
 import { useForm } from 'react-hook-form';
-
 import {
     BuscarInputContainer,
     FeedPicture,
@@ -23,18 +21,24 @@ import { Input } from '../Input';
 import { IHeader } from './types';
 import { Button } from '../Button';
 
-// IMPORTA O MODAL DE NOTIFICAÇÕES
 import NotificationsModal from '../NotificationsModal';
+import { useEffect, useState } from 'react';
+
+// ✅ IMPORTA O CONTEXTO GLOBAL
+import { useNotifications } from '../../context/NotificationContext';
 
 const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
 
-    // Menu Hamburguer
+    // ✅ Menu Hamburguer
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Estado do modal de notificações
+    // ✅ Modal
     const [showNotifications, setShowNotifications] = useState(false);
 
-    // Fecha modal no ESC
+    // ✅ Dados vindos do Contexto
+    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+
+    // ✅ Fecha modal no ESC
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -45,7 +49,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    // Controle do scroll do header
+    // ✅ Controle do scroll
     const [isScrolled, setIsScrolled] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -55,7 +59,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // react-hook-form
+    // ✅ Formulário
     const { control } = useForm({
         mode: 'onChange',
         defaultValues: {
@@ -74,7 +78,6 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                         <TitleBorder onClick={() => navigate('/')}>kodan.</TitleBorder>
                     </Row>
 
-                    {/* SE ESTIVER AUTENTICADO */}
                     {autenticado ? (
                         <Row>
                             <HomeButton onClick={() => navigate('/')}>Home</HomeButton>
@@ -89,37 +92,48 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                                 />
                             </BuscarInputContainer>
 
-                            {/* Botão de notificações */}
-                            <FeedPicture
-                                onClick={() => setShowNotifications(true)}
-                                style={{ cursor: 'pointer' }}
-                            />
+                            {/* ✅ Sino com contador global */}
+                            <div style={{ position: "relative", cursor: "pointer" }}>
+                                <FeedPicture onClick={() => setShowNotifications(true)} />
+
+                                {unreadCount > 0 && (
+                                    <span style={{
+                                        position: "absolute",
+                                        top: -6,
+                                        right: -4,
+                                        background: "#006391",
+                                        color: "#fff",
+                                        fontSize: "10px",
+                                        borderRadius: "50%",
+                                        width: "16px",
+                                        height: "16px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        {unreadCount}
+                                    </span>
+                                )}
+                            </div>
 
                             <UserPicture src="https://avatars.githubusercontent.com/u/179970243?v=4" />
                         </Row>
                     ) : (
                         <>
                             <NavContainer $isOpen={isMobileMenuOpen}>
-                                <a href="#sobre">
-                                    <PageButtons>Sobre</PageButtons>
-                                </a>
-                                <a href="#servicos">
-                                    <PageButtons>Serviços</PageButtons>
-                                </a>
-                                <a href="#footer">
-                                    <PageButtons>Contato</PageButtons>
-                                </a>
+                                <a href="#sobre"><PageButtons>Sobre</PageButtons></a>
+                                <a href="#servicos"><PageButtons>Serviços</PageButtons></a>
+                                <a href="#footer"><PageButtons>Contato</PageButtons></a>
                             </NavContainer>
 
                             <Row>
-                                <PageButtons 
-                                onClick={() => navigate('/login')}>
+                                <PageButtons onClick={() => navigate('/login')}>
                                     Entrar
                                 </PageButtons>
                                 <Button
                                     title="Cadastrar"
                                     variant='cadastrobutton'
-                                    onClick={() => navigate('/register')}
+                                    onClick={() => navigate('/cadastro')}
                                 />
 
                                 <HamburgerButton
@@ -133,15 +147,17 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                 </HeaderContainer>
             </Wrapper>
 
-            {/* Modal de Notificações */}
+            {/* ✅ Modal usando contexto */}
             {showNotifications && (
                 <NotificationsModal
                     onClose={() => setShowNotifications(false)}
-                    notifications={[]}   // Lista vazia padrão
+                    notifications={notifications}
+                    onRead={markAsRead}
+                    onReadAll={markAllAsRead}
                 />
             )}
         </>
-    );
-};
+    )
+}
 
 export { Header };

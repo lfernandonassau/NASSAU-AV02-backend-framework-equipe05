@@ -1,95 +1,63 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ProjectCard } from '../../components/ProfileProjectCard'
-import { Header } from '../../components/Header'
-import { MdSearch } from 'react-icons/md'
+import { Sidebar } from '../../components/Sidebar' 
 
-import {
-    Wrapper,
-    Container,
-    TitleProject,
-    CardHeader,
-    NameProject,
-    ProjectActionsRow,
-    ProjectActionButton,
-} from './styles'
+
+import { 
+    Wrapper,           
+    ContentContainer,  
+    ContentWrapper,    
+    Container,         
+    TitleProject, 
+    CardHeader, 
+    NameProject, 
+    ProjectActionsRow, 
+    ProjectActionButton 
+} from './styles'; 
+import { HeaderProfile } from '../../components/HeaderProfile';
 
 type Project = {
-    id: string
-    name: string
+    id: string;
+    name: string;
 }
 
 const mockProjects: Project[] = [
     { id: '1', name: 'Kodan - Board da Faculdade' },
-    { id: '2', name: 'TaskLock - O sucesso em meio ao nosso mundo capitalista e cercado de hiperestímulos' },
-]
+    { id: '2', name: 'TaskLock - O sucesso em meio ao nosso mundo capitalista' },
+];
 
-const TelaPerfil = ({ variant = 'secondary' }) => {
+const TelaPerfil = () => {
     const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null)
+    const [activeTab, setActiveTab] = useState('projetos') // Estado necessário para a Sidebar funcionar visualmente
+    const navigate = useNavigate()
 
-    function handleToggleProject(projectId: string) {
-        setExpandedProjectId((current) =>
-            current === projectId ? null : projectId
-        )
-    }
-
-    function handleOpenKanban(project: Project) {
-        console.log('Abrir Kanban do projeto:', project)
-        // navigate(`/projects/${project.id}/board`)
-    }
-
-    function handleOpenStats(project: Project) {
-        console.log('Abrir Estatísticas do projeto:', project)
-        // navigate(`/projects/${project.id}/stats`)
-    }
+    
 
     return (
-    <Wrapper>
-        <Header autenticado={true} variant={variant} />
-        <Container>
-        <TitleProject>Gerenciamento de Times</TitleProject>
+        <Wrapper>
+            <ContentContainer>
+                <Sidebar 
+                    autenticado={true}
+                    activeTab={activeTab} 
+                    onChangeTab={setActiveTab} 
+                />
 
-        {mockProjects.map((project) => {
-            const isExpanded = expandedProjectId === project.id
+                {/* CONTEÚDO DA DIREITA */}
+                <ContentWrapper>
+                    
+                    <HeaderProfile/>
+                    
+                    <Container>
+                        <TitleProject>Perfil do usuário</TitleProject>
+                        
+                        
+                    </Container>
+                </ContentWrapper>
 
-            return (
-            <ProjectCard
-                key={project.id}
-                onClick={() => handleToggleProject(project.id)}
-                >
-                <CardHeader>
-                    <NameProject>{project.name}</NameProject>
-
-                    {/* aqui depois entram as bolinhas de status e o ícone de pessoas */}
-                </CardHeader>
-
-                {isExpanded && (
-                    <ProjectActionsRow>
-                    <ProjectActionButton
-                        onClick={(event) => {
-                        event.stopPropagation()
-                        handleOpenKanban(project)
-                        }}
-                    >
-                        Painel
-                    </ProjectActionButton>
-
-                    <ProjectActionButton
-                        onClick={(event) => {
-                        event.stopPropagation()
-                        handleOpenStats(project)
-                        }}
-                    >
-                        Estatísticas
-                    </ProjectActionButton>
-                    </ProjectActionsRow>
-                )}
-                </ProjectCard>
-
-            )
-        })}
-        </Container>
-    </Wrapper>
-    )
+            </ContentContainer>
+        </Wrapper>
+    );
 }
 
 export { TelaPerfil }

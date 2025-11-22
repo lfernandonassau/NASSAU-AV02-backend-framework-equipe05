@@ -81,12 +81,13 @@ export const InputText = styled.input`
 `
 
 export const ErrorText = styled.p`
-    color: #FF0000;
-    font-size: 12px;
+    color: #c00707ff;
+    font-size: 11px;
+    font-weight: 400;
     font-family: 'Montserrat';
-    padding-right: 100px;
-    margin-top: -15px;
-    margin-bottom: 15px;
-    
+    margin-top: -10px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
 
 `

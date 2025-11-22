@@ -8,11 +8,11 @@ export const ProjectCardContainer = styled.div`
     border-radius: 6px;
 
     
-
+    position: relative;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    
+    overflow: visible;
     transition: all 0.25s ease;
 
     &:hover {
@@ -24,7 +24,7 @@ export const ProjectCardContainer = styled.div`
     #b1ddf7ff 100%     /* Finaliza com o azul/cinza mais suave */
     );
     color: #FFFFFF;
-    transform: translateY(-1px);
+    transform: translateY(-1px);  /* como contornar o cross dessa propriedade ? ela faz o card do projeto sobrepor o menu */
     cursor: pointer;
     p {
         color: #000000ff;

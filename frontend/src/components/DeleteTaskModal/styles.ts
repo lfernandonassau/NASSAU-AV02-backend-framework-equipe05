@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const Overlay = styled.div`
     position: fixed;
@@ -13,7 +13,7 @@ export const Overlay = styled.div`
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-`;
+`
 
 export const ModalCard = styled.div`
     font-family: 'Montserrat';
@@ -26,16 +26,16 @@ export const ModalCard = styled.div`
     flex-direction: column;
     overflow: hidden;
     border: 1px solid #cbd5e1;
-`;
+`
 
 export const ModalHeader = styled.div`
-    background-color: #0063918c;
+    background-color: #3d3d3dff;
     border-bottom: 1px solid #ffffffff;
     padding: 1rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-`;
+`
 
 export const ModalTitle = styled.h2`
     font-family: 'Montserrat';
@@ -45,21 +45,28 @@ export const ModalTitle = styled.h2`
     display: flex;
     flex-direction: column;
     line-height: 1.4;
-`;
+`
 
 export const CloseButton = styled.button`
     background: transparent;
     border: none;
-    color: #ffffffff;
-    font-size: 1rem;
+    color: #ffffff;
+    font-size: 1.2rem;
     cursor: pointer;
-    line-height: 1;
-    padding: 0.25rem 0.5rem;
+    padding: 4px;
+    border-radius: 50%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    transition: background-color 0.2s;
 
     &:hover {
-    color: #0f172a;
+        background-color: rgba(255,255,255,0.2);
+        color: #ffffff;
     }
-`;
+`
 
 export const ModalBody = styled.div`
     padding: 1rem;
@@ -67,25 +74,21 @@ export const ModalBody = styled.div`
     flex-direction: column;
     gap: 0.75rem;
 
-    /* texto padrão do confirm */
     font-size: .95rem;
     color: #223;
-`;
+`
 
 export const ModalFooter = styled.div`
     border-top: 1px solid #cbd5e1;
     background-color: #f8fafc;
     padding: 0.75rem 1rem;
+    
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    gap: 1rem;
 
-    /* garantir mesma “pegada” dos botões do AddTaskModal */
-    & > button {
-    height: 44px;
-    padding: 0 18px;
-    border-radius: 999px;
-    box-shadow: 0 6px 14px rgba(8,16,30,.12);
-    font-weight: 600;
-    }
-`;
+`
