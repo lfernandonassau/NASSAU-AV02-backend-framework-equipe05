@@ -38,7 +38,7 @@ A aplicação oferece um ambiente de **gestão de projetos em formato Kanban**, 
 ### 🔹 Backend
 
 - **Node.js + Express.js**
-- **MySQL**
+- **Prisma com MySQL**
 - **bcrypt** para criptografia de senhas
 - **Arquitetura MVC (Model–View–Controller)**
 
@@ -55,15 +55,14 @@ A aplicação oferece um ambiente de **gestão de projetos em formato Kanban**, 
 
 | Entidade | Campos Principais |
 |-----------|------------------|
-| **Usuário** | id, nome, email (unique), CPF (unique opcional), senha, papel (líder/colaborador) |
-| **Projeto** | id, nome, descrição, líder_id |
-| **Time** | id, nome, projeto_id |
-| **Membro** | id, usuário_id, time_id, função |
-| **Quadro (Kanban)** | id, projeto_id |
-| **Coluna** | id, nome, posição, quadro_id |
-| **Card (Tarefa)** | id, título, descrição, prioridade, status, responsável_id |
-| **Comentário** | id, texto, autor_id, card_id |
-| **Notificação** | id, mensagem, tipo, destino_id |
+| **Usuário** | id_usuário, foto perfil, nome, sobrenome, cpf, e-mail, senha, data de criação, data de atualização|
+| **Cargo**  | id_usuário,  id_função|
+| **Função** | id_cargo, cargo, id_painel|
+| **Painel** | id_painel , id_relatório|
+| **Relatório** | id_relatório, data de começo, data de fim, total de tarefas, tarefas pendentes, tarefas em andamento, tarefas concluidas, criação de estatística, id_painel, id_projetos|
+| **Projetos** | id_projetos, título, subtítulo, id_relatório, id_coluna|
+| **Coluna** | id_coluna, título, subtítulo, id_projetos, id_cartões|
+| **Cartões (Tarefa)** | id_cartões,qta_menbros, título, subtítulo, prazo, data de criação, data de atualização, id_coluna|
 
 > Total de **8 entidades principais**, conforme exigência da disciplina.
 

@@ -3,7 +3,6 @@ generator client {
 }
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 //--Valores padrões--
@@ -20,11 +19,12 @@ enum ClassJob {
   LEADER
 }
 
-//-----------
+//------------------
 
 model User{
 
   id_user       BigInt        @id @default(autoincrement())
+  imagemUrl     String?       @db.VarChar(255)
   name          String        @db.VarChar(50)
   lastname      String        @db.VarChar(100)
   cpf           String        @db.Char(11) @unique
@@ -75,8 +75,9 @@ model Relatory{
 model Project{
 
   id_project        BigInt        @id @default(autoincrement())
-  titulo            String        @db.VarChar(50)
-  dashboardId       BigInt
+  titulo            String        @db.VarChar(40)
+  subtitle          String        @db.VarChar(120)
+  dashboardId       BigInt        //OBS: não lembro disso.
   relatory          Relatory?
   column            Column[]
 
@@ -85,7 +86,8 @@ model Project{
 model Column{
 
   id_column     BigInt        @id @default(autoincrement())
-  title         String        @db.VarChar(50)
+  title         String        @db.VarChar(40)
+  subtitle      String        @db.VarChar(120)
   status        TaskStatus    @default(PENDENTE) //OBS: fazer teste de criação.
   project       Project       @relation(fields: [projectId], references: [id_project])
   projectId     BigInt
@@ -97,8 +99,8 @@ model Card{
 
   id_card       BigInt        @id @default(autoincrement())
   qta_members   Int           @db.Int
-  title         String        @db.VarChar(25)
-  subtitle      String        @db.VarChar(25)
+  title         String        @db.VarChar(40)
+  subtitle      String        @db.VarChar(120)
   timeframe     DateTime
   datecreate    DateTime      @default(now())
   dateupdate    DateTime      @updatedAt
