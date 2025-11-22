@@ -33,7 +33,7 @@ import {
 import { IFormData } from './types'
 import { FcGoogle } from "react-icons/fc"
 
-// Importa Firebase:
+// Firebase
 import { auth, googleProvider } from '../../services/firebase'
 
 const schema = yup.object({
@@ -73,10 +73,8 @@ const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false)
 
-    //  LOGIN COM GOOGLE:
+    // LOGIN COM GOOGLE
     const handleGoogleLogin = async () => {
-        console.log("Função Google chamada!") 
-
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
@@ -128,20 +126,20 @@ const Login = () => {
                             </Row>
 
                             <Button title='Entrar' type='submit' disabled={!isValid} />
-
-                            <Row>
-                                <TextoLivreSubText>ou</TextoLivreSubText>
-                            </Row>
-
-                            {/* Botão Google*/}
-                            <Button
-                                title='Entrar com Google'
-                                type='button'
-                                variant="google"
-                                leftIcon={<FcGoogle/>}
-                                onClick={handleGoogleLogin}
-                            />
                         </form>
+
+                        <Row>
+                            <TextoLivreSubText>ou</TextoLivreSubText>
+                        </Row>
+
+                        {/*  BOTÃO GOOGLE  */}
+                        <Button
+                            title='Entrar com Google'
+                            type='button'
+                            variant="google"
+                            leftIcon={<FcGoogle/>}
+                            onClick={handleGoogleLogin}
+                        />
                     </Column>
                 </LoginContainer>
 
