@@ -41,7 +41,10 @@ import { cpfMask } from '../../utils/cpfMask'
 import { nameMask } from '../../utils/nameMask'
 import { FcGoogle } from 'react-icons/fc'
 
-// IMPORTA SOMENTE DO ARQUIVO CORRETO (services/firebase.ts)
+// IMPORTA O MODAL
+import PrivacyModal from '../../components/footer/PrivacyModal'
+
+// Firebase
 import { auth, googleProvider } from '../../services/firebase'
 
 const schema = yup.object({
@@ -53,7 +56,6 @@ const schema = yup.object({
     confirmPassword: yup.string()
         .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
         .required('Confirmação obrigatória'),
-    // NOVA REGRA: Deve ser verdadeiro (true)
     terms: yup.boolean()
         .oneOf([true], 'Você deve aceitar os termos para continuar')
         .required('Campo obrigatório')
@@ -63,6 +65,9 @@ const Cadastro = () => {
 
     const [estaVisivel, setEstaVisivel] = useState(false)
 
+    // ESTADO DO MODAL
+    const [isPrivacyOpen, setIsPrivacyOpen] = useState(false)
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setEstaVisivel(true)
@@ -71,31 +76,25 @@ const Cadastro = () => {
         return () => clearTimeout(timer)
     }, [])
 
-    const { control, handleSubmit, formState: { errors, isValid } } = useForm<IFormData>({
+    const {
+        control,
+        handleSubmit,
+        formState: { errors, touchedFields, isSubmitted },
+    } = useForm<IFormData>({
         resolver: yupResolver(schema),
-        mode: 'onChange',
-        defaultValues: {
-            name: '',
-            lastName: '',
-            cpf: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            terms: false // Valor inicial desmarcado
-        }
+        mode: 'onSubmit',
+        reValidateMode: 'onSubmit'
     })
 
     const navigate = useNavigate()
 
     const onSubmit = async (formData: IFormData) => {
         try {
-            // Removemos confirmPassword e terms antes de enviar para API
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { confirmPassword, terms, ...userData } = formData
 
             const { data } = await api.post(`users?email=${formData.email}`)
             
-            if(data.length === 0){
+            if (data.length === 0) {
                 alert(`Usuário ${formData.name} cadastrado com sucesso!`)
                 navigate('/login')
             } else {
@@ -109,19 +108,12 @@ const Cadastro = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    // FUNÇÃO DE LOGIN COM GOOGLE
+    //  LOGIN GOOGLE 
     const handleGoogleLogin = async () => {
-        console.log("Função chamada!") // DEBUG
-
         try {
             const result = await signInWithPopup(auth, googleProvider)
-            const user = result.user
-
-            console.log("Usuário logado:", user)
             navigate('/perfil')
-
-        } catch (error) {
-            console.error("Erro ao logar com Google:", error)
+        } catch {
             alert("Erro ao entrar com Google.")
         }
     }
@@ -135,11 +127,14 @@ const Cadastro = () => {
                         <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
 
                         <FormContainer onSubmit={handleSubmit(onSubmit)}>
+                            
                             <Input
                                 name="cpf"
                                 placeholder="Digite seu CPF"
                                 control={control}
-                                errorMessage={errors?.cpf?.message}
+                                errorMessage={
+                                    (touchedFields.cpf || isSubmitted) ? errors?.cpf?.message : ''
+                                }
                                 leftIcon={<CpfIconStyled />}
                                 mask={cpfMask}
                             />
@@ -148,7 +143,9 @@ const Cadastro = () => {
                                 name="name"
                                 placeholder="Digite seu nome"
                                 control={control}
-                                errorMessage={errors?.name?.message}
+                                errorMessage={
+                                    (touchedFields.name || isSubmitted) ? errors?.name?.message : ''
+                                }
                                 leftIcon={<NameIconStyled />}
                                 mask={nameMask}
                             />
@@ -157,14 +154,18 @@ const Cadastro = () => {
                                 name="lastName"
                                 placeholder="Digite seu sobrenome"
                                 control={control}
-                                errorMessage={errors?.lastName?.message}
+                                errorMessage={
+                                    (touchedFields.lastName || isSubmitted) ? errors?.lastName?.message : ''
+                                }
                                 leftIcon={<NameIconStyled />}
                                 mask={nameMask}
                             />
 
                             <Input
                                 name='email'
-                                errorMessage={errors?.email?.message}
+                                errorMessage={
+                                    (touchedFields.email || isSubmitted) ? errors?.email?.message : ''
+                                }
                                 placeholder="Digite um e-mail"
                                 control={control}
                                 leftIcon={<LoginIconStyled />}
@@ -172,7 +173,9 @@ const Cadastro = () => {
 
                             <Input
                                 name='password'
-                                errorMessage={errors?.password?.message}
+                                errorMessage={
+                                    (touchedFields.password || isSubmitted) ? errors?.password?.message : ''
+                                }
                                 placeholder="Digite uma senha"
                                 control={control}
                                 type={showPassword ? 'text' : 'password'}
@@ -183,64 +186,86 @@ const Cadastro = () => {
                                         : <MagicEyeOff onClick={() => setShowPassword(true)} />
                                 }
                             />
-                            <Input 
-                                name='confirmPassword' 
-                                placeholder="Digite novamente sua senha" 
-                                control={control} 
-                                errorMessage={errors?.confirmPassword?.message} 
-                                type={showConfirmPassword ? 'text' : 'password'} 
-                                leftIcon={<PasswordStyled/>}
+
+                            <Input
+                                name='confirmPassword'
+                                placeholder="Digite novamente sua senha"
+                                control={control}
+                                errorMessage={
+                                    (touchedFields.confirmPassword || isSubmitted) ? errors?.confirmPassword?.message : ''
+                                }
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                leftIcon={<PasswordStyled />}
                                 rightIcon={
-                                    showConfirmPassword ? 
-                                    (<MagicEye onClick={() => setShowConfirmPassword(false)}/>) : 
-                                    (<MagicEyeOff onClick={() => setShowConfirmPassword(true)}/>)
+                                    showConfirmPassword
+                                        ? <MagicEye onClick={() => setShowConfirmPassword(false)} />
+                                        : <MagicEyeOff onClick={() => setShowConfirmPassword(true)} />
                                 }
                             />
+
+                            {/*  TERMOS E POLÍTICA */}
                             <TermsContainer>
                                 <Controller
                                     name="terms"
                                     control={control}
                                     render={({ field: { onChange, value } }) => (
-                                        <CheckboxInput 
+                                        <CheckboxInput
                                             id="terms-check"
                                             checked={value}
                                             onChange={onChange}
                                         />
                                     )}
                                 />
-                                <TermsText htmlFor="terms-check">
-                                    Li e aceito os <span>Termos e Condições</span> e a <span>Política de Privacidade</span>.
+                                
+                                <TermsText>
+                                    Li e aceito os 
+                                    <span
+                                        onClick={() => setIsPrivacyOpen(true)}
+                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                    >
+                                        {' '}Termos e Condições
+                                    </span>
+                                    {' '}e a
+                                    <span
+                                        onClick={() => setIsPrivacyOpen(true)}
+                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                    >
+                                        {' '}Política de Privacidade
+                                    </span>.
                                 </TermsText>
                             </TermsContainer>
-                            {errors.terms && <ErrorText>{errors.terms.message}</ErrorText>}
-                            
-                            
+
+                            {(touchedFields.terms || isSubmitted) && errors.terms && (
+                                <ErrorText>{errors.terms.message}</ErrorText>
+                            )}
+
                             <Row>
                                 <PossuiContaSubText onClick={() => navigate('/login')}>
                                     Já possui uma conta? <a>Clique aqui</a>
                                 </PossuiContaSubText>
                             </Row>
 
+                            {/*  BOTÃO DE CADASTRO */}
                             <Button
                                 title='Entrar'
                                 type='submit'
                                 variant='loginb'
-                                disabled={!isValid}
                             />
-
-                            <Row>
-                                <TextoLivreSubText>ou</TextoLivreSubText>
-                            </Row>
-
-                            <Button
-                                title='Entrar com Google'
-                                type='button'
-                                variant="google"
-                                leftIcon={<FcGoogle />}
-                                onClick={handleGoogleLogin}
-                            />
-
                         </FormContainer>
+
+                        {/* BOTÃO GOOGLE */}
+                        <Row>
+                            <TextoLivreSubText>ou</TextoLivreSubText>
+                        </Row>
+
+                        <Button
+                            title='Entrar com Google'
+                            type='button'
+                            variant="google"
+                            leftIcon={<FcGoogle />}
+                            onClick={handleGoogleLogin}
+                        />
+
                     </Column>
                 </RegisterContainer>
 
@@ -254,6 +279,12 @@ const Cadastro = () => {
                     </Column>
                 </WelcomeContainer>
             </RegisterNewScreen>
+
+            <PrivacyModal
+                open={isPrivacyOpen}
+                onClose={() => setIsPrivacyOpen(false)}
+            />
+
         </PageWrapper>
     )
 }
