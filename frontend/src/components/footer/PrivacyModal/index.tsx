@@ -10,7 +10,6 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import logo from "../../../assets/logo.svg";
 
-/* IMPORTA OS ESTILOS */
 import {
   TitleRow,
   LogoIcon,
@@ -22,9 +21,21 @@ import {
 interface PrivacyModalProps {
   open: boolean;
   onClose: () => void;
+  onAcceptTerms?: () => void;
 }
 
-const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
+const PrivacyModal: React.FC<PrivacyModalProps> = ({
+  open,
+  onClose,
+  onAcceptTerms,
+}) => {
+  const handleAccept = () => {
+    if (onAcceptTerms) {
+      onAcceptTerms();
+    }
+    onClose();
+  };
+
   return (
     <Dialog
       open={open}
@@ -33,9 +44,15 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
       fullWidth
       PaperProps={{ sx: PaperStyled }}
     >
-      {/* HEADER */}
       <TitleRow>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flex: 1,
+            minWidth: 0,
+          }}
+        >
           <LogoIcon src={logo} alt="Kodan" />
           <TitleStyled>
             Políticas de Privacidade & Termos de Uso
@@ -47,7 +64,7 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
         </CloseButton>
       </TitleRow>
 
-      <DialogContent dividers>
+      <DialogContent dividers sx={{ overflowY: "auto", flex: 1 }}>
         <Typography paragraph>
           Este site utiliza dados fornecidos pelos usuários exclusivamente para
           fins de funcionamento da plataforma Kodan. As informações não são
@@ -67,9 +84,9 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
         </Typography>
       </DialogContent>
 
-      <DialogActions>
+      <DialogActions sx={{ padding: "12px 20px" }}>
         <Button
-          onClick={onClose}
+          onClick={handleAccept}
           variant="contained"
           sx={{
             backgroundColor: "#b9d9ff",
@@ -81,7 +98,7 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
             },
           }}
         >
-          Fechar
+          Aceito os Termos
         </Button>
       </DialogActions>
     </Dialog>
@@ -89,3 +106,4 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ open, onClose }) => {
 };
 
 export default PrivacyModal;
+
