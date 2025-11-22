@@ -48,11 +48,11 @@ import PrivacyModal from '../../components/footer/PrivacyModal'
 import { auth, googleProvider } from '../../services/firebase'
 
 const schema = yup.object({
-    cpf: yup.string().min(14, 'No minimo 11 caracteres').required('Campo obrigatório'),
+    cpf: yup.string().min(14, 'No mínimo 11 caracteres').required('Campo obrigatório'),
     name: yup.string().min(3, 'Digite um nome válido').required('Campo obrigatório'),
     lastName: yup.string().min(3, 'Digite um sobrenome válido').required('Campo obrigatório'),
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
-    password: yup.string().min(8, 'No minimo 8 caracteres').required('Campo obrigatório'),
+    password: yup.string().min(8, 'No mínimo 8 caracteres').required('Campo obrigatório'),
     confirmPassword: yup.string()
         .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
         .required('Confirmação obrigatória'),
@@ -79,6 +79,8 @@ const Cadastro = () => {
     const {
         control,
         handleSubmit,
+        setValue,        
+        clearErrors,     
         formState: { errors, touchedFields, isSubmitted },
     } = useForm<IFormData>({
         resolver: yupResolver(schema),
@@ -280,9 +282,14 @@ const Cadastro = () => {
                 </WelcomeContainer>
             </RegisterNewScreen>
 
+            {/*  MODAL ATUALIZADO */}
             <PrivacyModal
                 open={isPrivacyOpen}
                 onClose={() => setIsPrivacyOpen(false)}
+                onAcceptTerms={() => {
+                    setValue("terms", true)  
+                    clearErrors("terms")      
+                }}
             />
 
         </PageWrapper>
@@ -290,3 +297,4 @@ const Cadastro = () => {
 }
 
 export { Cadastro }
+
