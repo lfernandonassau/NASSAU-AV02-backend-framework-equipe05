@@ -183,6 +183,19 @@ const Cadastro = () => {
                                         : <MagicEyeOff onClick={() => setShowPassword(true)} />
                                 }
                             />
+                            <Input 
+                                name='confirmPassword' 
+                                placeholder="Digite novamente sua senha" 
+                                control={control} 
+                                errorMessage={errors?.confirmPassword?.message} 
+                                type={showConfirmPassword ? 'text' : 'password'} 
+                                leftIcon={<PasswordStyled/>}
+                                rightIcon={
+                                    showConfirmPassword ? 
+                                    (<MagicEye onClick={() => setShowConfirmPassword(false)}/>) : 
+                                    (<MagicEyeOff onClick={() => setShowConfirmPassword(true)}/>)
+                                }
+                            />
                             <TermsContainer>
                                 <Controller
                                     name="terms"
