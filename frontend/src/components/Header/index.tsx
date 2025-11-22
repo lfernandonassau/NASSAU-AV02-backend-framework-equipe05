@@ -119,7 +119,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                                 <Button
                                     title="Cadastrar"
                                     variant='cadastrobutton'
-                                    onClick={() => navigate('/register')}
+                                    onClick={() => navigate('/cadastro')}
                                 />
 
                                 <HamburgerButton

@@ -89,14 +89,16 @@ export const AddButtonArea = styled.div`
     position: absolute;
     bottom: 0; 
     left: 0;
-    padding-bottom: 10px;
-    padding-top: 15px; 
     
+    padding-bottom: 10px;
+    padding-top: 20px;
     border-radius: 0 0 4px 4px;
     
-    /* Cria um fundo degradê para esconder os cards passando por trás */
-    background: linear-gradient(to top, #f5f5f5da 70%, #f5f5f500 100%);
-    pointer-events: none; 
+    background: linear-gradient(to top, #f5f5f5c4 80%, rgba(245, 245, 245, 0) 100%);
+    
+    pointer-events: none;
+
+    z-index: 200; 
 `;
 
 // Estilo base compartilhado

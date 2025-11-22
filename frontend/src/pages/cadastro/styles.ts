@@ -351,3 +351,61 @@ export const MagicEyeOff = styled(MdVisibilityOff)`
     margin-right: 5px;
     font-size: 15px;
 `
+
+
+/*  ESTILIZAÇÃO DO TERMOS E CONDIÇÕES*/
+
+export const TermsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: flex-start; 
+    justify-content: flex-start;
+    
+    margin-top: 15px;
+    margin-bottom: 20px;
+    gap: 10px; 
+`;
+
+export const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
+    cursor: pointer;
+    
+    /* Tamanho Fixo */
+    width: 16px;
+    height: 16px;
+    
+    min-width: 16px; 
+    min-height: 16px;
+    flex-shrink: 0;
+    
+    margin-top: 2px; 
+    
+    accent-color: #276da3c9;
+`;
+
+export const TermsText = styled.label`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    
+    line-height: 1.4; 
+    text-align: left;
+
+    span {
+        font-weight: 700;
+        text-decoration: underline;
+        color: #05416bff;
+         
+    }
+`;
+
+export const ErrorText = styled.p`
+    color: #c00707ff;
+    font-size: 10px;
+    font-family: 'Montserrat';
+    margin-top: -10px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
+`
