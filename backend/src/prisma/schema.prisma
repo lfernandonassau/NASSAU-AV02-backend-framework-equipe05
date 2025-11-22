@@ -120,5 +120,5 @@ model UserPosition{
 
   @@id([userId, jobId])
 
- }
+}
 
