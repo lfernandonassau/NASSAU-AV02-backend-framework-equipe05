@@ -3,11 +3,10 @@ import styled from "styled-components";
 export const ColumnWrapper = styled.div`
     font-family: 'Montserrat';
 
-    background-color: #f5f5f5;
-    border: 1px solid #8a8a8a;
+    background-color: transparent;
     border-radius: 4px;
 
-    width: 320px;
+    width: 330px;
     min-width: 320px; 
     flex-shrink: 0; 
 
@@ -42,13 +41,9 @@ export const ColumnHeader = styled.div`
 
 export const ColumnTitle = styled.div`
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 0.5rem;
-
-    .icon {
-        font-size: 1rem;
-        line-height: 1;
-    }
 
     .text {
         font-weight: 600;
@@ -60,7 +55,9 @@ export const ColumnTitle = styled.div`
         font-size: 0.8rem;
         color: #ffffffcc;
     }
-`;
+`
+
+
 
 export const CardsList = styled.div`
     padding: 0.75rem 1rem 3.5rem; 
@@ -94,7 +91,7 @@ export const AddButtonArea = styled.div`
     padding-top: 20px;
     border-radius: 0 0 4px 4px;
     
-    background: linear-gradient(to top, #f5f5f5c4 80%, rgba(245, 245, 245, 0) 100%);
+    background: linear-gradient(to top, #f5f5f557 80%, rgba(245, 245, 245, 0) 100%);
     
     pointer-events: none;
 
@@ -108,7 +105,6 @@ const BaseCircleButton = styled.button`
     border-radius: 999px;
     width: 32px;
     height: 32px;
-    border: 2px solid #fff;
     box-shadow: 0 1px 7px rgba(0,0,0,0.4);
     display: flex;
     align-items: center;

@@ -92,12 +92,6 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
 
                     <SidebarDivider/>
 
-                    <SidebarItem 
-                        $active={isActive('/notificacoes')} 
-                        onClick={() => handleNavigation('/notificacoes')}
-                    >
-                        <MdNotifications /> Notificações
-                    </SidebarItem>
                     
                     <SidebarItem 
                         $active={isActive('/configuracoes')}
