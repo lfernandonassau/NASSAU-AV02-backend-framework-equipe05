@@ -12,8 +12,7 @@ import {
 } from "./styles";
 import { IKanbanColumnProps } from "./types";
 
-import ButtonImage from '../../assets/buttonmais.svg';
-import { MdAdd, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdAdd } from "react-icons/md"; 
 
 const KanbanColumn: React.FC<IKanbanColumnProps> = ({
     title, 
@@ -22,57 +21,43 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
     droppableId, 
     tasks = [], 
     onAddTask, 
-    onRequestDelete
+    onRequestDelete,
+    onRequestEdit // <--- 1. RECEBE A FUNÇÃO DA PÁGINA AQUI
 }) => {
 
-    // Referência para a lista de cards
     const listRef = useRef<HTMLDivElement>(null);
-    
-    // Controla se o botão aparece
     const [showScrollArrow, setShowScrollArrow] = useState(false);
-    
-    // Controla se chegou ao final para mudar a direção da seta
     const [isAtBottom, setIsAtBottom] = useState(false);
 
     const checkScroll = () => {
         if (!listRef.current) return;
-        
         const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-        
-        // Margem de erro pequena (5px) para garantir detecção
-        const atBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 5
-        const atTop = scrollTop === 0
-        const hasOverflow = scrollHeight > clientHeight
+        const atBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 5;
+        const hasOverflow = scrollHeight > clientHeight;
+        setIsAtBottom(atBottom);
 
-        // Atualiza o estado
-        setIsAtBottom(atBottom)
-
-        // Lógica de visibilidade do botão
-        if (hasOverflow && tasks.length > 4) {
+        if (hasOverflow && tasks.length > 3) {
             setShowScrollArrow(true);
         } else {
             setShowScrollArrow(false);
         }
-    }
+    };
 
     useEffect(() => {
         checkScroll();
-        // Adiciona listener de resize caso a janela mude
         window.addEventListener('resize', checkScroll);
         return () => window.removeEventListener('resize', checkScroll);
-    }, [tasks])
+    }, [tasks]);
 
     const handleScrollClick = () => {
         if (listRef.current) {
             if (isAtBottom) {
-                // Se está no fundo, sobe tudo
                 listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                // Se não está, desce mais um pouco
                 listRef.current.scrollBy({ top: 200, behavior: 'smooth' });
             }
         }
-    }
+    };
 
     return (
         <ColumnWrapper>
@@ -92,7 +77,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                             listRef.current = element;
                         }}
                         {...provided.droppableProps}
-                        onScroll={checkScroll} // Monitora o scroll
+                        onScroll={checkScroll}
                     >
                         {tasks.map((task, index) => (
                             <Draggable key={task.id} draggableId={task.id} index={index}>
@@ -102,13 +87,16 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                                         statusColor={accentColor}
                                         title={task.title}
                                         subtitle={task.subtitle}
-                                        members={task.members}
+                                        members={task.members || []}
                                         date={task.date}
                                         innerRef={prov.innerRef}
                                         draggableProps={prov.draggableProps}
                                         dragHandleProps={prov.dragHandleProps}
                                         isDragging={snapshot.isDragging}
+                                        
+                                        // AÇÕES
                                         onRequestDelete={onRequestDelete}
+                                        onRequestEdit={onRequestEdit} // <--- REPASSA PARA O CARD AQUI
                                     />
                                 )}
                             </Draggable>
@@ -133,7 +121,6 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                         aria-label={isAtBottom ? "Voltar ao topo" : "Ver mais tarefas"}
                         title={isAtBottom ? "Voltar ao topo" : "Ver mais tarefas"}
                     >
-                        {/* Ícone dinâmico */}
                         {isAtBottom ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
                     </ScrollButton>
                 )}

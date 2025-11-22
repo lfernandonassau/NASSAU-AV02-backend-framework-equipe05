@@ -12,5 +12,24 @@ export interface Task {
     subtitle: string;
     status: Status;
     date?: string;
-    members: Member[];
+    members?: Member[];
 }
+
+
+
+// DTO (Data Transfer Object) para criar nova tarefa
+export interface NewTaskData {
+    title: string;
+    subtitle: string;
+    status: Status;
+    date?: string;
+    members?: Member[];
+}
+
+// DTO para atualizar tarefa
+export interface UpdateTaskData {
+    title: string;
+    subtitle: string;
+    date?: string;
+}
+

@@ -9,7 +9,7 @@ import {
     ModalBody,
     ModalFooter,
 } from './styles';
-import { Button } from '../../components/Button'
+import { Button } from '../Button'
 
 type ConfirmDialogProps = {
     title?: string
@@ -20,7 +20,7 @@ type ConfirmDialogProps = {
     onCancel: () => void
 }
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
+const DeleteTaskModal: React.FC<ConfirmDialogProps> = ({
     title = 'Confirmar ação',
     message,
     confirmLabel = 'Confirmar',
@@ -61,4 +61,4 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     )
 }
 
-export  { ConfirmDialog }
+export  { DeleteTaskModal }

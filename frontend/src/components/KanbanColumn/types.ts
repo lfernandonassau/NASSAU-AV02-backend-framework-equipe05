@@ -1,4 +1,4 @@
-import type { Task } from 'types/task';
+import type { Status, Task } from 'types/task';
 
 export interface IMember {
   name: string;
@@ -17,13 +17,17 @@ export interface ITask {
  */
 
 export interface IKanbanColumnProps {
-  title: string;
-  icon: React.ReactNode;
-  accentColor: string;
-  droppableId: 'PENDENTE' | 'ANDAMENTO' | 'CONCLUIDO';
-  tasks: Task[];
-  onAddTask: () => void;
-  onRequestDelete?: (id: string) => void;
+    title: string;
+    icon: React.ReactNode;
+    accentColor: string;
+    // Agora usamos o tipo Status para garantir que seja apenas um dos valores válidos
+    droppableId: Status; 
+    tasks: Task[];
+    onAddTask: () => void;
+    // Agora opcional, pois pode haver colunas onde não se pode deletar
+    onRequestDelete?: (id: string) => void;
+    // Opcional para edição
+    onRequestEdit?: (id: string, data: { title: string; subtitle: string; date: string }) => void;
 }
 
 
