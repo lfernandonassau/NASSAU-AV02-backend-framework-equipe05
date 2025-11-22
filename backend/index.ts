@@ -4,14 +4,13 @@ import {CadastreUser, UpadateUser, GetUser, DeleteUser} from "./UserRepository.j
 
 async function start(){
 
-  const user = await UpadateUser(1n,{
+  const user = await CadastreUser({
 
-    name:"Julia",
-    lastname:"Terezinhão",
+    name:"Julinha",
+    lastname:"Santos",
     email:"julia@gmail.com",
-    password:"9990",
+    password:"9909",
     cpf:"88899966689"
-
 
   });
 
