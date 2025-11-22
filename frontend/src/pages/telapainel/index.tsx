@@ -7,7 +7,7 @@ import type { Status } from 'types/task';
 import { useTasks } from '../../context/TasksContext';
 import { AddTaskModal } from '../../components/AddTaskModal';
 import { KanbanColumn } from '../../components/KanbanColumn';
-import ConfirmDialog from '../../components/ConfirmDialog';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 
 // --- MUDANÇA 1: IMPORTAR A SIDEBAR ---
 import { Sidebar } from '../../components/Sidebar'; 
@@ -88,7 +88,7 @@ const PainelPage: React.FC = () => {
     return (
         <PageWrapper>
             <ContentContainer>
-                
+
                 <Sidebar 
                 autenticado={true} 
                 activeTab={activeTab} 

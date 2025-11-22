@@ -7,6 +7,7 @@ import {
   OptionsMenu, TextCol, Actions,
 } from "./styles";
 import { MdPerson } from "react-icons/md";
+import { DelTaskButton } from "../../components/Button/styles";
 
 type CardTaskProps = {
   id: string;
@@ -57,6 +58,7 @@ const CardTask: React.FC<CardTaskProps> = ({
   return (
     <CardContainer
       ref={innerRef}
+      $menuOpen={menuOpen}
       style={draggableStyle}
       {...draggableProps}
       {...dragHandleProps}
@@ -82,13 +84,15 @@ const CardTask: React.FC<CardTaskProps> = ({
 
           {menuOpen && (
             <OptionsMenu ref={menuRef}>
-              <button onClick={() => setMenuOpen(false)}>Editar</button>
-              <button
-                className="danger"
+              <DelTaskButton 
+                title="Editar"
+                onClick={() => setMenuOpen(false)}
+              >Editar tarefa</DelTaskButton>
+              <DelTaskButton
+                title="Excluir tarefa"
                 onClick={() => { setMenuOpen(false); onRequestDelete?.(id); }}
-              >
-                Apagar card
-              </button>
+              >Excluir tarefa</DelTaskButton>
+                
             </OptionsMenu>
           )}
         </Actions>
