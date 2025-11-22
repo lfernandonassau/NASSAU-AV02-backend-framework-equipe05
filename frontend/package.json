@@ -12,6 +12,7 @@
         "@emotion/styled": "^11.14.1",
         "@hello-pangea/dnd": "^18.0.1",
         "@hookform/resolvers": "^5.2.2",
+        "@mui/icons-material": "^7.3.5",
         "@mui/material": "^7.3.5",
         "axios": "^1.13.2",
         "nanoid": "^5.1.6",

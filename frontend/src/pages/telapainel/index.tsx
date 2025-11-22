@@ -58,7 +58,7 @@ const PainelPage: React.FC = () => {
         setModal({
             status,
             title: status === 'PENDENTE' ? 'Pendentes' :
-                   status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
+                status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
         });
     };
 
