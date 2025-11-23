@@ -13,13 +13,10 @@ import {  DeleteTaskModal } from '../../components/DeleteTaskModal'; // Seu moda
 import { Sidebar } from '../../components/Sidebar'; 
 import { HeaderProfile } from '../../components/HeaderProfile';
 import MembersModal from '../../components/MembersModal';
-
-// --- 1. IMPORTAR O MODAL DE EDIÇÃO ---
-// (Certifique-se de que o export no arquivo do modal seja EditTaskModal ou EditConfirmModal conforme você criou)
 import { EditTaskModal } from '../../components/EditTaskModal'; 
 
 // Ícones
-import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder } from 'react-icons/md';
+import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder, MdPerson } from 'react-icons/md';
 
 // Estilos
 import {
@@ -33,16 +30,23 @@ import {
     ColumnsWrapper,
     ContentWrapper,
     AddMemberButton,
-    IconWrapper
+    IconWrapper,
+    PerfilBar,
+    UserAvatar,
+    PerfilTextContainer,
+    PerfilTitleBar,
+    PerfilTextSpanBar,
+    PerfilTextBar
 } from './styles';
 
 
 
-const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
+const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
 
 const PainelPage: React.FC = () => {
 
-    // ... no seu componente pai ...
+    
+
     const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
 
 
@@ -53,7 +57,7 @@ const PainelPage: React.FC = () => {
     // Lógica de Delete 
     const [deleteId, setDeleteId] = useState<string | null>(null);
 
-    // --- 3. LÓGICA DE EDIÇÃO (NOVA) ---
+    // --- LÓGICA DE EDIÇÃO ---
     // Estado para guardar a tarefa que está sendo editada (ID + Dados atuais)
     const [editingTask, setEditingTask] = useState<null | { id: string, title: string, subtitle: string, date: string }>(null);
 
@@ -143,13 +147,24 @@ const PainelPage: React.FC = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
 
+                    <PerfilBar>
+                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
+                        <PerfilTextContainer>
+                            <PerfilTitleBar>
+                                👋 Rafael, <PerfilTextSpanBar>você está no painel!</PerfilTextSpanBar>
+                            </PerfilTitleBar>
+                            <PerfilTextBar>
+                                Aqui você trabalhará com o nosso modelo Kodan, baseado no modelo Kanban.
+                            </PerfilTextBar>
+                        </PerfilTextContainer>
+                    </PerfilBar>
+
                     <BoardOuterContainer>
                         <BoardHeader>
                             <BoardInfoLeft>
-                                <BoardInfoIcon><MdFolder /></BoardInfoIcon>
                                 <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
                                 <AddMemberButton
-                                 onClick={() => setIsMembersModalOpen(true)}>Gerenciar Colaboradores
+                                 onClick={() => setIsMembersModalOpen(true)}> <MdPerson/>Gerenciar Colaboradores
                                  </AddMemberButton>
                                 <MembersModal 
                                 isOpen={isMembersModalOpen} 
@@ -209,7 +224,7 @@ const PainelPage: React.FC = () => {
                     />
                 )}
 
-                {/* --- 5. RENDERIZAÇÃO DO MODAL DE EDIÇÃO --- */}
+                {/*  RENDERIZAÇÃO DO MODAL DE EDIÇÃO  */}
                 {/* Segue a mesma lógica do deleteId: só aparece se editingTask existir */}
                 {editingTask && (
                     <EditTaskModal
