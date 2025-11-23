@@ -154,4 +154,4 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
     );
 };
 
-export { Sidebar }
+export{Sidebar} ;
