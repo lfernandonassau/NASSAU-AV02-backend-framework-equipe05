@@ -1,45 +1,50 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+/* ✅ Mesmo layout-base das outras telas */
+export const PageWrapper = styled.div`
+  display: flex;
   width: 100%;
   min-height: 100vh;
   background: #f5f7fa;
-  padding: 32px;
-  padding-left: 385px; 
-  box-sizing: border-box;
 `;
+
+export const Container = styled.div`
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-left: 385px; 
+`;
+
 
 export const Title = styled.h2`
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 32px;
-  color: #0b1b3a;
+  color: #232323;
+  margin: 0;
+  text-align: left;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  width: 100%;
 `;
 
 export const ChartsRow = styled.div`
   display: flex;
   gap: 24px;
-  width: 100%;
 
   > div {
     flex: 1;
-    height: 260px;
+    height: 240px;
   }
 `;
 
 export const BottomRow = styled.div`
   width: 100%;
-  height: 320px;
+  height: 260px;
+  margin-top: 32px; 
 `;
 
-export const CollaboratorSection = styled.div`
-  width: 100%;
-  margin-top: 32px;
-`;
