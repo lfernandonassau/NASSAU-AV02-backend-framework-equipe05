@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     background-image: linear-gradient(150deg, #ece9e9ff, #ffffffff);
 `
 
+
 // Container Principal do Layout (Segura Sidebar + Conteúdo)
 export const ContentContainer = styled.div`
     display: flex;
@@ -25,12 +26,19 @@ export const ContentContainer = styled.div`
     }
 `
 
-// Área de Conteúdo da Direita
+
+// Área de Conteúdo da Direita (Onde fica a lista branca)
 export const ContentWrapper = styled.div`
     flex: 1; 
     width: 100%;
+    
     padding: 30px;
     padding-top: 100px;
+    
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
     
     min-width: 0; 
     overflow-x: hidden; 
@@ -40,7 +48,7 @@ export const ContentWrapper = styled.div`
 
     @media (max-width: 1024px) {
         overflow-x: visible;
-        padding: 10px; 
+        padding-top: 10px;
         padding-top: 100px;
     }
 `
@@ -48,9 +56,9 @@ export const ContentWrapper = styled.div`
 //  Container Branco da Lista de Projetos
 export const Container = styled.div`
     width: 100%;
-    max-width: 700px; 
+    max-width: 1150px; 
     
-    /* Desktop: Alinhado à esquerda próximo à sidebar */
+    
     margin: 0; 
 
     background-color: #ffffff;
@@ -58,7 +66,6 @@ export const Container = styled.div`
     border-radius: 10px; 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    gap: 20px;
     padding: 1.5rem 2rem 2rem 2rem;
     display: flex;
     flex-direction: column;
@@ -69,6 +76,8 @@ export const Container = styled.div`
 
     /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
     @media (max-width: 1024px) {
+        /* Destrava a largura para preencher o espaço disponível */
+        max-width: 100%;
         
         /* Centraliza o container na tela */
         margin: 0 auto;
@@ -81,7 +90,6 @@ export const Container = styled.div`
         padding: 1rem;
     }
 `
-
 // --- Estilos dos Cards de Projeto ---
 
 export const TitleProject = styled.p`

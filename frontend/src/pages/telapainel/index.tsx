@@ -16,7 +16,7 @@ import MembersModal from '../../components/MembersModal';
 import { EditTaskModal } from '../../components/EditTaskModal'; 
 
 // Ícones
-import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder } from 'react-icons/md';
+import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder, MdPerson } from 'react-icons/md';
 
 // Estilos
 import {
@@ -162,10 +162,9 @@ const PainelPage: React.FC = () => {
                     <BoardOuterContainer>
                         <BoardHeader>
                             <BoardInfoLeft>
-                                <BoardInfoIcon><MdFolder /></BoardInfoIcon>
                                 <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
                                 <AddMemberButton
-                                 onClick={() => setIsMembersModalOpen(true)}>Gerenciar Colaboradores
+                                 onClick={() => setIsMembersModalOpen(true)}> <MdPerson/>Gerenciar Colaboradores
                                  </AddMemberButton>
                                 <MembersModal 
                                 isOpen={isMembersModalOpen} 
