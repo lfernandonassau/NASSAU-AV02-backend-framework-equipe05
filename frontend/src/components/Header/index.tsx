@@ -1,4 +1,4 @@
-import { MdSearch } from 'react-icons/md';
+import { MdSearch, MdKeyboardArrowDown } from 'react-icons/md';
 import logo from '../../assets/logo.svg';
 
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,12 @@ import {
     TitleBorder,
     UserPicture,
     Wrapper,
+    ProfileMenuContainer,
+    ProfileMenuItem,
+    NotificationWrapper,
+    NotificationBadge,
+    ProfileMenuWrapper,
+    ProfileToggle
 } from './styles';
 
 import { HomeButton, PageButtons } from '../Button/styles';
@@ -23,33 +29,38 @@ import { Button } from '../Button';
 
 import NotificationsModal from '../NotificationsModal';
 import { useEffect, useState } from 'react';
-
-// ✅ IMPORTA O CONTEXTO GLOBAL
 import { useNotifications } from '../../context/NotificationContext';
 
 const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
-
-    // ✅ Menu Hamburguer
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    // ✅ Modal
     const [showNotifications, setShowNotifications] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
-    // ✅ Dados vindos do Contexto
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const navigate = useNavigate();
 
-    // ✅ Fecha modal no ESC
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setShowNotifications(false);
+                setIsProfileMenuOpen(false);
             }
         };
         window.addEventListener('keydown', handleEsc);
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    // ✅ Controle do scroll
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (!target.closest('.profile-menu')) {
+                setIsProfileMenuOpen(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
     const [isScrolled, setIsScrolled] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -59,7 +70,6 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // ✅ Formulário
     const { control } = useForm({
         mode: 'onChange',
         defaultValues: {
@@ -67,14 +77,16 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
         }
     });
 
-    const navigate = useNavigate();
+    const handleLogout = () => {
+        navigate('/login');
+    };
 
     return (
         <>
             <Wrapper $isScrolled={isScrolled} variant={variant}>
                 <HeaderContainer>
                     <Row>
-                        <img src={logo} alt="Kodan Logo" onClick={() => navigate('/')} />
+                        <img src={logo} onClick={() => navigate('/')} />
                         <TitleBorder onClick={() => navigate('/')}>kodan.</TitleBorder>
                     </Row>
 
@@ -92,31 +104,32 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                                 />
                             </BuscarInputContainer>
 
-                            {/* ✅ Sino com contador global */}
-                            <div style={{ position: "relative", cursor: "pointer" }}>
-                                <FeedPicture onClick={() => setShowNotifications(true)} />
-
+                            <NotificationWrapper onClick={() => setShowNotifications(true)}>
+                                <FeedPicture />
                                 {unreadCount > 0 && (
-                                    <span style={{
-                                        position: "absolute",
-                                        top: -6,
-                                        right: -4,
-                                        background: "#006391",
-                                        color: "#fff",
-                                        fontSize: "10px",
-                                        borderRadius: "50%",
-                                        width: "16px",
-                                        height: "16px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center"
-                                    }}>
-                                        {unreadCount}
-                                    </span>
+                                    <NotificationBadge>{unreadCount}</NotificationBadge>
                                 )}
-                            </div>
+                            </NotificationWrapper>
 
-                            <UserPicture src="https://avatars.githubusercontent.com/u/179970243?v=4" />
+                            <ProfileMenuWrapper className="profile-menu">
+                                <ProfileToggle onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
+                                    <UserPicture src="https://avatars.githubusercontent.com/u/179970243?v=4" />
+                                    <MdKeyboardArrowDown size={20} />
+                                </ProfileToggle>
+
+                                {isProfileMenuOpen && (
+                                    <ProfileMenuContainer>
+                                        <ProfileMenuItem onClick={() => navigate('/perfil')}>
+                                            Meu Perfil
+                                        </ProfileMenuItem>
+
+                                        <ProfileMenuItem onClick={handleLogout}>
+                                            Logout
+                                        </ProfileMenuItem>
+                                    </ProfileMenuContainer>
+                                )}
+                            </ProfileMenuWrapper>
+
                         </Row>
                     ) : (
                         <>
@@ -147,7 +160,6 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
                 </HeaderContainer>
             </Wrapper>
 
-            {/* ✅ Modal usando contexto */}
             {showNotifications && (
                 <NotificationsModal
                     onClose={() => setShowNotifications(false)}

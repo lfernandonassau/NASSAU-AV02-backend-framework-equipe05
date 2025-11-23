@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Container,
     SearchContainer,
@@ -6,20 +6,31 @@ import {
     IconButton,
     ProfileWrapper,
     Avatar,
-    Divider
-} from './styles'
+    Divider,
+    NotificationWrapper,
+    NotificationBadge,
+    ProfileMenuContainer,
+    LogoutMenuItem,
+    ProfileToggle
+} from './styles';
+
 import { IHeaderProfile } from './types';
-
-import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md'
-import NotificationsModal from '../NotificationsModal'
-
+import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md';
+import { TbLogout2 } from 'react-icons/tb';
+import NotificationsModal from '../NotificationsModal';
 import { useNotifications } from '../../context/NotificationContext';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
-    const [isSearchOpen, setIsSearchOpen] = useState(false)
-    const [searchText, setSearchText] = useState('')
-    const inputRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+
+    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
@@ -35,17 +46,26 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         if (onSearch) onSearch(e.target.value);
     };
 
-    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const handleLogout = () => {
+        navigate('/login');
+    };
 
-    const [showNotifications, setShowNotifications] = useState(false);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (!target.closest('.profile-menu')) {
+                setIsProfileMenuOpen(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
 
-    const userImage = "https://avatars.githubusercontent.com/u/179970243?v=4"
+    const userImage = 'https://avatars.githubusercontent.com/u/179970243?v=4';
 
     return (
         <>
             <Container>
-
-                {/* Campo de busca */}
                 <SearchContainer $isOpen={isSearchOpen}>
                     <SearchInput
                         ref={inputRef}
@@ -59,43 +79,35 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                     </IconButton>
                 </SearchContainer>
 
-                {/* Sino GLOBAL com contador */}
-                <div style={{ position: "relative", cursor: "pointer" }}>
-                    <IconButton onClick={() => setShowNotifications(true)}>
+                <NotificationWrapper onClick={() => setShowNotifications(true)}>
+                    <IconButton>
                         <MdNotificationsNone />
                     </IconButton>
 
                     {unreadCount > 0 && (
-                        <span style={{
-                            position: "absolute",
-                            top: -4,
-                            right: -4,
-                            background: "#006391",
-                            color: "#fff",
-                            fontSize: "10px",
-                            borderRadius: "50%",
-                            width: "16px",
-                            height: "16px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
-                        }}>
-                            {unreadCount}
-                        </span>
+                        <NotificationBadge>{unreadCount}</NotificationBadge>
                     )}
-                </div>
+                </NotificationWrapper>
 
                 <Divider />
 
-                {/* Perfil */}
-                <ProfileWrapper onClick={() => alert("Menu de Perfil futuro")}>
-                    <Avatar src={userImage} alt="User" />
-                    <MdKeyboardArrowDown size={20} color="#555" />
-                </ProfileWrapper>
+                <ProfileWrapper className="profile-menu">
+                    <ProfileToggle onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
+                        <Avatar src={userImage} alt="User" />
+                        <MdKeyboardArrowDown size={20} color="#555" />
+                    </ProfileToggle>
 
+                    {isProfileMenuOpen && (
+                        <ProfileMenuContainer>
+                            <LogoutMenuItem onClick={handleLogout}>
+                                <TbLogout2 size={18} />
+                                Logout
+                            </LogoutMenuItem>
+                        </ProfileMenuContainer>
+                    )}
+                </ProfileWrapper>
             </Container>
 
-            {/* Modal usando contexto */}
             {showNotifications && (
                 <NotificationsModal
                     onClose={() => setShowNotifications(false)}
@@ -105,7 +117,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                 />
             )}
         </>
-    )
-}
+    );
+};
 
 export { HeaderProfile };
