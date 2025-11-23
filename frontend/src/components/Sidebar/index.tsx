@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { CloseBtn, LogoImage, MobileToggleBtn, Overlay, SidebarContainer, SidebarDivider, SidebarItem, SidebarLogo, UserInfoSection } from './styles'
 import { IProfileSidebar } from './types' 
