@@ -120,11 +120,14 @@ export const BoardInfoLeft = styled.div`
 `;
 
 export const BoardInfoTitle = styled.h1`
-    font-size: 1.5rem; 
-    font-weight: 700;
     font-family: 'Montserrat', sans-serif;
-    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
     margin: 0;
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 `;
 
 export const BoardInfoIcon = styled.span`
@@ -189,7 +192,7 @@ export const AddMemberButton = styled.button`
     box-shadow: 0 2px 5px rgba(0, 99, 145, 0.2);
 
     svg {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     &:hover {

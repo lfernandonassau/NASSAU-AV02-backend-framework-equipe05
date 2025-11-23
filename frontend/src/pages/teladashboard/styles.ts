@@ -296,11 +296,12 @@ export const ViewMoreButton = styled.button`
 export const ProjectIcon = styled.span`
     width: 20px;
     height: 20px;
-    margin-right: 10px;
+    margin-right: 15px;
+    
     vertical-align: middle;
 
     svg {
-        font-size: 15px;
+        font-size: 20px;
         color: #000000;
     }
 `;

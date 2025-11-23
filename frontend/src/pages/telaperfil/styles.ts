@@ -48,24 +48,39 @@ export const ContentWrapper = styled.div`
 
 export const Container = styled.div`
     width: 100%;
-    max-width: 750px; 
+    max-width: 1150px; 
     
-    /* Desktop: Alinhado à esquerda próximo à sidebar */
+    gap: 20px;
+    
     margin: 0; 
-    
+
     background-color: #ffffff;
     border: 1px solid #8a8a8a60;
     border-radius: 10px; 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    padding: 40px;
+    padding: 1.5rem 2rem 2rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 30px;
 
+    @media (max-width: 1540px) {
+        max-width: 700px;
+    }
+
+    /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
     @media (max-width: 1024px) {
-        margin: 0 auto; /* Centraliza no mobile */
-        padding: 20px;
+        /* Destrava a largura para preencher o espaço disponível */
+        max-width: 100%;
+        
+        /* Centraliza o container na tela */
+        margin: 0 auto;
+        
+        height: auto; 
+        padding: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        padding: 1rem;
     }
 `
 
@@ -252,5 +267,7 @@ export const FormGrid = styled.div`
     }
 `
 
-
-
+/*  INPUT INVISÍVEL PARA UPLOAD  */
+export const HiddenInput = styled.input`
+    display: none;
+`;

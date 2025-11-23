@@ -31,7 +31,7 @@ import {
     ViewMoreButton
 } from './styles'
 
-import { FaRocket } from 'react-icons/fa'; 
+import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { MdMoreVert } from 'react-icons/md';
 
 // Interface para projetos
@@ -183,7 +183,7 @@ const TelaDashboard = () => {
                                         <Td>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <ProjectIcon>
-                                                    <FaRocket />
+                                                    <LiaProjectDiagramSolid />
                                                 </ProjectIcon>
                                                 <ProjectName>{proj.name}</ProjectName>
                                             </div>

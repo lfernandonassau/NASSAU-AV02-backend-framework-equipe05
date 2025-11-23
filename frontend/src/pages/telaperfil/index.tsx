@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react' // Importe useRef
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form' 
 
@@ -7,8 +7,8 @@ import { HeaderProfile } from '../../components/HeaderProfile'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 
-import { MdBuild } from 'react-icons/md'; 
-import { FaBoxOpen, FaInfoCircle } from 'react-icons/fa'; 
+import { MdBuild, MdGroup, MdPublic } from 'react-icons/md'; 
+import { FaBoxOpen } from 'react-icons/fa'; 
 
 import { 
     Wrapper,           
@@ -24,18 +24,20 @@ import {
     ProfileNavLink,   
     FormGrid,
     SectionTitle,
+    HiddenInput // Importe o input invisível
 } from './styles'; 
+import { LiaProjectDiagramSolid } from 'react-icons/lia'
 
-
-
-
-const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
+// Imagem inicial padrão
+const DEFAULT_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
 const TelaPerfil = () => {
     const [activeTab, setActiveTab] = useState('perfil');
-    
-    // Controla qual conteúdo aparece (Overview ou Projects)
     const [profileSubTab, setProfileSubTab] = useState('overview'); 
+    
+    // --- LÓGICA DA FOTO ---
+    const [avatarUrl, setAvatarUrl] = useState(DEFAULT_AVATAR);
+    const fileInputRef = useRef<HTMLInputElement>(null); // Referência ao input oculto
 
     const navigate = useNavigate();
 
@@ -43,7 +45,7 @@ const TelaPerfil = () => {
         defaultValues: {
             nome: "Rafael Alexandre",
             email: "rafael@kodan.com",
-            telefone: "",
+            cpf: "",
             bio: ""
         }
     });
@@ -52,6 +54,24 @@ const TelaPerfil = () => {
         setActiveTab(tab);
         if (tab === 'projetos') navigate('/home');
         if (tab === 'painel') navigate('/painel');
+    };
+
+    // Ao clicar no botão "Alterar foto", simula um clique no input file
+    const handleChangeAvatarClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    // Quando o usuário seleciona um arquivo
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            // Cria uma URL temporária para exibir a imagem imediatamente
+            const previewUrl = URL.createObjectURL(file);
+            setAvatarUrl(previewUrl);
+            
+            // Aqui você também faria o upload para o backend se necessário
+            console.log("Arquivo selecionado:", file);
+        }
     };
 
     const handleSearch = (val: string) => console.log("Buscar:", val);
@@ -67,45 +87,56 @@ const TelaPerfil = () => {
                 />
 
                 <ContentWrapper>
-                    <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
+                    <HeaderProfile userImage={avatarUrl} onSearch={handleSearch} />
                     
                     <Container>
                         <TitleProject>Perfil do usuário</TitleProject>
                         
                         <ProfileHeader>
                             <ProfileLeftGroup>
-                                <ProfileAvatar src={USER_AVATAR} alt="Foto de perfil" />
+                                {/* Usa o estado avatarUrl */}
+                                <ProfileAvatar src={avatarUrl} alt="Foto de perfil" />
+                                
                                 <ProfileInfo>
                                     <h2>Rafael Alexandre</h2>
                                     <span>rafael@kodan.com</span>
+                                    
+                                    {/* Input invisível conectado via ref */}
+                                    <HiddenInput 
+                                        type="file" 
+                                        ref={fileInputRef} 
+                                        accept="image/*" // Aceita apenas imagens
+                                        onChange={handleFileChange}
+                                    />
+                                    
+                                    {/* Botão que aciona o input */}
+                                    <button type="button" onClick={handleChangeAvatarClick}>
+                                        Alterar foto
+                                    </button>
                                 </ProfileInfo>
                             </ProfileLeftGroup>
 
                             <ProfileNav>
-                                {/* 1. Botão para voltar para Informações Pessoais */}
                                 <ProfileNavLink 
                                     $active={profileSubTab === 'overview'} 
                                     onClick={() => setProfileSubTab('overview')}
-                                    
                                 >
-                                    <FaInfoCircle />
-                                    INFORMAÇÕES
+                                    <MdBuild /> INFORMAÇÕES
                                 </ProfileNavLink>
 
-                                {/* 2. Botão para ver Projetos */}
                                 <ProfileNavLink 
                                     $active={profileSubTab === 'projects'} 
                                     onClick={() => setProfileSubTab('projects')}
                                 >
-                                    <MdBuild /> PROJETOS
+                                    <LiaProjectDiagramSolid /> PROJETOS
                                 </ProfileNavLink>
                             </ProfileNav>
                         </ProfileHeader>
 
-                        {/* CONTEÚDO: OVERVIEW (Formulário) */}
+                        {/* CONTEÚDO: INFORMAÇÕES */}
                         {profileSubTab === 'overview' && (
                             <>
-                                <SectionTitle>Informações pessoais</SectionTitle>
+                                <SectionTitle>Informações Pessoais</SectionTitle>
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <FormGrid>
                                         <div className="full-width">
@@ -115,7 +146,7 @@ const TelaPerfil = () => {
                                             <Input name="email" placeholder="E-mail" control={control} />
                                         </div>
                                         <div>
-                                            <Input name="telefone" placeholder="Telefone" control={control} />
+                                            <Input name="CPF" placeholder="CPF" control={control} />
                                         </div>
                                         <div className="full-width">
                                             <Input name="bio" placeholder="Bio / Descrição" control={control} />
@@ -128,14 +159,14 @@ const TelaPerfil = () => {
                             </>
                         )}
 
-                        {/* CONTEÚDO: PROJECTS (Lista ou Placeholder) */}
+
+                        {/* CONTEÚDO: PROJETOS */}
                         {profileSubTab === 'projects' && (
                             <div>
                                 <SectionTitle>Meus Projetos</SectionTitle>
                                 <p style={{ color: '#666' }}>
-                                    Aqui você pode listar os projetos específicos deste usuário ou configurações de projetos.
+                                    Lista de projetos específicos deste usuário.
                                 </p>
-                                {/* Você pode importar o componente de lista de projetos aqui se quiser */}
                             </div>
                         )}
                         

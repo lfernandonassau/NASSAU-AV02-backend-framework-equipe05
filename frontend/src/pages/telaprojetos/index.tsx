@@ -13,6 +13,9 @@ import {
     TitleRow,
     IconButton,
     CardHeader,
+    ProjectInfoGroup, // <--- Novo Container agrupador
+    ProjectIconBox,   // <--- Novo Ícone
+    ProjectTexts,     // <--- Novo container de texto
     HeaderRight,
     NameProject,
     SubtitleProject,
@@ -34,11 +37,12 @@ import {
     ProjectMenu,
     ProjectMenuItem,
     PerfilBar,
-    UserAvatar,
     PerfilTextContainer,
-    PerfilTextBar,
     PerfilTitleBar,
+    UserAvatar,
+    PerfilTextBar,
     PerfilTextSpanBar,
+    CreateButton,
 } from './styles'
 
 import {
@@ -48,7 +52,8 @@ import {
     MdMoreVert,
 } from 'react-icons/md'
 
-import { LuX } from "react-icons/lu";
+import { FaRocket } from 'react-icons/fa' // Ícone genérico de projeto
+import { LuKanban, LuX } from "react-icons/lu";
 
 type Project = {
     id: string
@@ -77,22 +82,18 @@ const TelaProjetos = () => {
 
     const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
     
-
-    // de mock Projetos
     const [projects, setProjects] = useState<Project[]>(mockProjects)
 
-    // Modal de criar
+    // Modais States
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
     const [newProjectTitle, setNewProjectTitle] = useState('')
     const [newProjectSubtitle, setNewProjectSubtitle] = useState('')
 
-    // Modal de editar
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [projectToEdit, setProjectToEdit] = useState<Project | null>(null)
     const [editProjectTitle, setEditProjectTitle] = useState('')
     const [editProjectSubtitle, setEditProjectSubtitle] = useState('')
 
-    // Modal de deletar
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
 
@@ -102,64 +103,50 @@ const TelaProjetos = () => {
 
     const navigate = useNavigate()
 
-    // -------- helpers de texto com limite --------
+    // helpers de texto
     function handleChangeNewTitle(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value.slice(0, PROJECT_TITLE_MAX)
         setNewProjectTitle(value)
     }
-
     function handleChangeNewSubtitle(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const value = e.target.value.slice(0, PROJECT_SUBTITLE_MAX)
         setNewProjectSubtitle(value)
     }
-
     function handleChangeEditTitle(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value.slice(0, PROJECT_TITLE_MAX)
         setEditProjectTitle(value)
     }
-
     function handleChangeEditSubtitle(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const value = e.target.value.slice(0, PROJECT_SUBTITLE_MAX)
         setEditProjectSubtitle(value)
     }
-
     function formatTitle(title: string) {
         if (title.length <= PROJECT_TITLE_MAX) return title
         return title.slice(0, PROJECT_TITLE_MAX - 3) + '...'
     }
 
-    // -------- criar projeto --------
+    // Create
     function openCreateModal() {
         setNewProjectTitle('')
         setNewProjectSubtitle('')
         setIsCreateModalOpen(true)
     }
-
     function closeCreateModal() {
         setIsCreateModalOpen(false)
         setNewProjectTitle('')
         setNewProjectSubtitle('')
     }
-
     function handleCreateProject(e: React.FormEvent) {
         e.preventDefault()
-
         const title = newProjectTitle.trim()
         const subtitle = newProjectSubtitle.trim()
-
         if (!title) return
-
-        const newProject: Project = {
-            id: String(Date.now()),
-            title,
-            subtitle,
-        }
-
+        const newProject: Project = { id: String(Date.now()), title, subtitle }
         setProjects(prev => [...prev, newProject])
         closeCreateModal()
     }
 
-    // -------- editar projeto --------
+    // Edit
     function openEditModal(project: Project) {
         setProjectToEdit(project)
         setEditProjectTitle(project.title)
@@ -167,78 +154,49 @@ const TelaProjetos = () => {
         setIsEditModalOpen(true)
         setMenuProjectId(null)
     }
-
     function closeEditModal() {
         setIsEditModalOpen(false)
         setProjectToEdit(null)
         setEditProjectTitle('')
         setEditProjectSubtitle('')
     }
-
     function handleEditProject(e: React.FormEvent) {
         e.preventDefault()
         if (!projectToEdit) return
-
         const title = editProjectTitle.trim()
         const subtitle = editProjectSubtitle.trim()
-
         if (!title) return
-
-        const updated = projects.map(p =>
-            p.id === projectToEdit.id
-                ? { ...p, title, subtitle }
-                : p
-        )
-
+        const updated = projects.map(p => p.id === projectToEdit.id ? { ...p, title, subtitle } : p)
         setProjects(updated)
         closeEditModal()
     }
 
-    // -------- deletar projeto --------
+    // Delete
     function openDeleteModal(project: Project) {
         setProjectToDelete(project)
         setIsDeleteModalOpen(true)
         setMenuProjectId(null)
     }
-
     function closeDeleteModal() {
         setIsDeleteModalOpen(false)
         setProjectToDelete(null)
     }
-
     function handleDeleteProject() {
         if (!projectToDelete) return
-
         setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
-
-        setExpandedProjectId(current =>
-            current === projectToDelete.id ? null : current
-        )
-
+        setExpandedProjectId(current => current === projectToDelete.id ? null : current)
         closeDeleteModal()
     }
 
-    // -------- expandir / recolher --------
     function handleToggleProject(projectId: string) {
         setExpandedProjectId(current => (current === projectId ? null : projectId))
     }
-
-    // -------- menu 3 pontos --------
-    function handleToggleMenu(
-        projectId: string,
-        e: React.MouseEvent<HTMLButtonElement>
-    ) {
+    function handleToggleMenu(projectId: string, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
         setMenuProjectId(current => current === projectId ? null : projectId)
     }
 
-    function handleOpenKanban(project: Project) {
-        navigate(`/projects/${project.id}/board`)
-    }
-
-    function handleOpenStats(project: Project) {
-        console.log('Abrir Estatísticas:', project)
-    }
+    const handleSearch = (val: string) => console.log("Buscar:", val);
 
     return (
         <Wrapper>
@@ -250,100 +208,74 @@ const TelaProjetos = () => {
                 />
 
                 <ContentWrapper>
-                    <HeaderProfile />
-
+                    <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
+                    
                     <PerfilBar>
                         <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
                         <PerfilTextContainer>
                             <PerfilTitleBar>
-                                👋 Rafael, <PerfilTextSpanBar>você está olhando para os projetos!</PerfilTextSpanBar>
+                                👋 Rafael, <PerfilTextSpanBar>você está vendo os projetos!</PerfilTextSpanBar>
                             </PerfilTitleBar>
                             <PerfilTextBar>
-                                Essa é a lista de projetos que você está colaborando. Clique em um projeto para ver mais detalhes.
+                                É aqui que ficam os projetos em que você está colaborando
                             </PerfilTextBar>
                         </PerfilTextContainer>
                     </PerfilBar>
-
                     <Container>
                         <TitleRow>
                             <TitleProject>Gerenciamento de Projetos</TitleProject>
-
-                            <IconButton
-                                type="button"
-                                aria-label="Adicionar projeto"
-                                onClick={openCreateModal}
-                            >
-                                <MdAdd size={30} />
-                            </IconButton>
+                            <CreateButton type="button" aria-label="Adicionar projeto" onClick={openCreateModal}>
+                                <MdAdd/> Adicionar projeto
+                            </CreateButton>
                         </TitleRow>
 
                         {projects.map(project => {
                             const isExpanded = expandedProjectId === project.id
-                            // Verifica se este projeto específico está com o menu aberto
                             const menuOpen = menuProjectId === project.id
 
                             return (
                                 <ProjectCard
                                     key={project.id}
                                     onClick={() => handleToggleProject(project.id)}
-                                    
-                                    // Aplicado z-index alto se o menu estiver aberto, senão 1
-                                    style={{ 
-                                        zIndex: menuOpen ? 50 : 1, 
-                                        position: 'relative' 
-                                    }}
-                                    // -----------------------------
+                                    style={{ zIndex: menuOpen ? 50 : 1, position: 'relative' }}
                                 >
                                     <CardHeader>
-                                        <div>
-                                            <NameProject>{formatTitle(project.title)}</NameProject>
-                                            {isExpanded && project.subtitle && (
-                                                <SubtitleProject>{project.subtitle}</SubtitleProject>
-                                            )}
-                                        </div>
+                                        {/* GRUPO ESQUERDA: ÍCONE + TEXTOS */}
+                                        <ProjectInfoGroup>
+                                            <ProjectIconBox>
+                                                <LuKanban /> {/* Icone dos projetos */}
+                                            </ProjectIconBox>
+                                            
+                                            <ProjectTexts>
+                                                <NameProject>{formatTitle(project.title)}</NameProject>
+                                                {project.subtitle && (
+                                                    <SubtitleProject>{project.subtitle}</SubtitleProject>
+                                                )}
+                                            </ProjectTexts>
+                                        </ProjectInfoGroup>
 
+                                        {/* GRUPO DIREITA: AÇÕES */}
                                         <HeaderRight>
-                                            {/* seta de expandir/recolher */}
                                             <IconButton
                                                 type="button"
-                                                aria-label={isExpanded ? 'Recolher' : 'Expandir'}
-                                                onClick={e => {
-                                                    e.stopPropagation()
-                                                    handleToggleProject(project.id)
-                                                }}
+                                                onClick={e => { e.stopPropagation(); handleToggleProject(project.id); }}
                                             >
-                                                {isExpanded ? (
-                                                    <MdExpandLess size={20} />
-                                                ) : (
-                                                    <MdExpandMore size={20} />
-                                                )}
+                                                {isExpanded ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}
                                             </IconButton>
 
-                                            {/* três pontinhos */}
                                             <IconButton
                                                 type="button"
-                                                aria-label="Opções do projeto"
                                                 onClick={e => handleToggleMenu(project.id, e)}
                                             >
-                                                <MdMoreVert size={20} />
+                                                <MdMoreVert size={22} />
                                             </IconButton>
 
                                             {menuOpen && (
-                                                <ProjectMenu
-                                                    onClick={e => {
-                                                        e.stopPropagation()
-                                                    }}
-                                                >
-                                                    <ProjectMenuItem
-                                                        type="button"
-                                                        onClick={() => openEditModal(project)}
-                                                    >
+                                                <ProjectMenu onClick={e => e.stopPropagation()}>
+                                                    <ProjectMenuItem type="button" onClick={() => openEditModal(project)}>
                                                         Editar
                                                     </ProjectMenuItem>
-                                                    <ProjectMenuItem
-                                                        type="button"
-                                                        onClick={() => openDeleteModal(project)}
-                                                    >
+                                                    <ProjectMenuItem type="button" onClick={() => openDeleteModal(project)}>
                                                         Excluir
                                                     </ProjectMenuItem>
                                                 </ProjectMenu>
@@ -351,26 +283,14 @@ const TelaProjetos = () => {
                                         </HeaderRight>
                                     </CardHeader>
 
+                                    {/* RODAPÉ DO CARD (EXPANDIDO) */}
                                     {isExpanded && (
-                                        <ProjectActionsRow>
-                                            <ProjectActionButton
-                                                type="button"
-                                                onClick={e => {
-                                                    e.stopPropagation()
-                                                    handleOpenKanban(project)
-                                                }}
-                                            >
-                                                Painel
+                                        <ProjectActionsRow onClick={(e) => e.stopPropagation()}>
+                                            <ProjectActionButton type="button" onClick={() => navigate(`/projects/${project.id}/board`)}>
+                                                Abrir Painel
                                             </ProjectActionButton>
-
-                                            <ProjectActionButton
-                                                type="button"
-                                                onClick={e => {
-                                                    e.stopPropagation()
-                                                    handleOpenStats(project)
-                                                }}
-                                            >
-                                                Estatísticas
+                                            <ProjectActionButton type="button" onClick={() => console.log("Stats")}>
+                                                Ver Estatísticas
                                             </ProjectActionButton>
                                         </ProjectActionsRow>
                                     )}
@@ -387,40 +307,17 @@ const TelaProjetos = () => {
                     <ModalCard onClick={e => e.stopPropagation()}>
                         <ModalHeader>
                             <ModalTitle>Novo projeto</ModalTitle>
-                            <ModalCloseButton type="button" onClick={closeCreateModal}>
-                                <LuX/>
-                            </ModalCloseButton>
+                            <ModalCloseButton onClick={closeCreateModal}><LuX/></ModalCloseButton>
                         </ModalHeader>
-
                         <ModalBody>
                             <form onSubmit={handleCreateProject}>
-                                <ModalInput
-                                    type="text"
-                                    placeholder="Título do projeto"
-                                    value={newProjectTitle}
-                                    onChange={handleChangeNewTitle}
-                                />
-                                <ModalCharCounter>
-                                    {newProjectTitle.length}/{PROJECT_TITLE_MAX}
-                                </ModalCharCounter>
-
-                                <ModalTextArea
-                                    placeholder="Subtítulo / descrição curta (opcional)"
-                                    value={newProjectSubtitle}
-                                    onChange={handleChangeNewSubtitle}
-                                    rows={3}
-                                />
-                                <ModalCharCounter>
-                                    {newProjectSubtitle.length}/{PROJECT_SUBTITLE_MAX}
-                                </ModalCharCounter>
-
+                                <ModalInput type="text" placeholder="Título" value={newProjectTitle} onChange={handleChangeNewTitle} />
+                                <ModalCharCounter>{newProjectTitle.length}/{PROJECT_TITLE_MAX}</ModalCharCounter>
+                                <ModalTextArea placeholder="Descrição" value={newProjectSubtitle} onChange={handleChangeNewSubtitle} rows={3} />
+                                <ModalCharCounter>{newProjectSubtitle.length}/{PROJECT_SUBTITLE_MAX}</ModalCharCounter>
                                 <ModalActions>
-                                    <ModalSecondaryButton type="button" onClick={closeCreateModal}>
-                                        Cancelar
-                                    </ModalSecondaryButton>
-                                    <ModalPrimaryButton type="submit">
-                                        Criar
-                                    </ModalPrimaryButton>
+                                    <ModalSecondaryButton type="button" onClick={closeCreateModal}>Cancelar</ModalSecondaryButton>
+                                    <ModalPrimaryButton type="submit">Criar</ModalPrimaryButton>
                                 </ModalActions>
                             </form>
                         </ModalBody>
@@ -434,38 +331,17 @@ const TelaProjetos = () => {
                     <ModalCard onClick={e => e.stopPropagation()}>
                         <ModalHeader>
                             <ModalTitle>Editar projeto</ModalTitle>
-                            <ModalCloseButton type="button" onClick={closeEditModal}>
-                                <LuX/>
-                            </ModalCloseButton>
+                            <ModalCloseButton onClick={closeEditModal}><LuX/></ModalCloseButton>
                         </ModalHeader>
-
                         <ModalBody>
                             <form onSubmit={handleEditProject}>
-                                <ModalInput
-                                    type="text"
-                                    value={editProjectTitle}
-                                    onChange={handleChangeEditTitle}
-                                />
-                                <ModalCharCounter>
-                                    {editProjectTitle.length}/{PROJECT_TITLE_MAX}
-                                </ModalCharCounter>
-
-                                <ModalTextArea
-                                    value={editProjectSubtitle}
-                                    onChange={handleChangeEditSubtitle}
-                                    rows={3}
-                                />
-                                <ModalCharCounter>
-                                    {editProjectSubtitle.length}/{PROJECT_SUBTITLE_MAX}
-                                </ModalCharCounter>
-
+                                <ModalInput type="text" value={editProjectTitle} onChange={handleChangeEditTitle} />
+                                <ModalCharCounter>{editProjectTitle.length}/{PROJECT_TITLE_MAX}</ModalCharCounter>
+                                <ModalTextArea value={editProjectSubtitle} onChange={handleChangeEditSubtitle} rows={3} />
+                                <ModalCharCounter>{editProjectSubtitle.length}/{PROJECT_SUBTITLE_MAX}</ModalCharCounter>
                                 <ModalActions>
-                                    <ModalSecondaryButton type="button" onClick={closeEditModal}>
-                                        Cancelar
-                                    </ModalSecondaryButton>
-                                    <ModalPrimaryButton type="submit">
-                                        Salvar
-                                    </ModalPrimaryButton>
+                                    <ModalSecondaryButton type="button" onClick={closeEditModal}>Cancelar</ModalSecondaryButton>
+                                    <ModalPrimaryButton type="submit">Salvar</ModalPrimaryButton>
                                 </ModalActions>
                             </form>
                         </ModalBody>
@@ -479,24 +355,13 @@ const TelaProjetos = () => {
                     <ModalCard onClick={e => e.stopPropagation()}>
                         <ModalHeader>
                             <ModalTitle>Excluir projeto</ModalTitle>
-                            <ModalCloseButton type="button" onClick={closeDeleteModal}>
-                                <LuX/>
-                            </ModalCloseButton>
+                            <ModalCloseButton onClick={closeDeleteModal}><LuX/></ModalCloseButton>
                         </ModalHeader>
-
                         <ModalBody>
-                            <p>
-                                Tem certeza que deseja excluir o projeto{' '}
-                                <strong>{projectToDelete.title}</strong>?
-                            </p>
-
+                            <p>Tem certeza que deseja excluir <strong>{projectToDelete.title}</strong>?</p>
                             <ModalActions>
-                                <ModalSecondaryButton type="button" onClick={closeDeleteModal}>
-                                    Cancelar
-                                </ModalSecondaryButton>
-                                <ModalDangerButton type="button" onClick={handleDeleteProject}>
-                                    Excluir
-                                </ModalDangerButton>
+                                <ModalSecondaryButton onClick={closeDeleteModal}>Cancelar</ModalSecondaryButton>
+                                <ModalDangerButton onClick={handleDeleteProject}>Excluir</ModalDangerButton>
                             </ModalActions>
                         </ModalBody>
                     </ModalCard>
