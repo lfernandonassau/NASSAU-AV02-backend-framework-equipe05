@@ -3,11 +3,13 @@ import ProjectRepository from '../repositories/ProjectRepository.js'
 //
 interface CreateProjectDTO {
     titulo: string
+    subtitle?: string
     dashboardId: bigint | number
 }
 
 interface UpdateProjectDTO {
     titulo?: string
+    subtitle?: string
     dashboardId?: number
 }
 
@@ -28,7 +30,7 @@ export default {
 
     async update(id: number, data: UpdateProjectDTO){
         if(!data.titulo && !data.dashboardId){
-            throw new Error('Oq sobra pro betinha?')
+            throw new Error('Oq sobrou para betinha')
         }
         const updated = await ProjectRepository.update(id, data)
             return updated
