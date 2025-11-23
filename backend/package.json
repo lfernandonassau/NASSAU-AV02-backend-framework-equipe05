@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx --env-file=.env --watch ./index.ts",
+    "dev": "tsx --env-file=.env --watch ./src/server.ts",
     "start": "tsx --env-file=./.env ./index.ts",
     "prisma": "prisma",
     "prisma:generate": "prisma generate",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.9.2",
+    "@types/express": "5.0.5",
     "prisma": "6.18.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"

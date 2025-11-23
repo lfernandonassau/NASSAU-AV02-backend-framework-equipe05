@@ -18,13 +18,14 @@ export function GetUsers(){
 }
 
 //Consultar um usuário específico no banco de dados.
-export function GetUser(cpf : string){
+//Consulta com a chave principal e unica que é o email do usuário
+export function GetUser(id_user: bigint){
 
-    return prisma.user.findUnique({
-        where: {cpf}
+    return prisma.user.findFirst({
+
+        where:{id_user}
 
     });
-
 }
 
 //Criar um novo usuário no banco de dados.
@@ -36,19 +37,20 @@ export function CadastreUser(newUser : any){
 }
 
 //Atualizar um usuário específico no banco de dados.
-export function UpadateUser(id_user : bigint, newData : any){
+export function UpadateUser(id_user: bigint, newData : any){
 
     return prisma.user.update({
-        where: { id_user },
+        where: {id_user},
         data: newData
     })
 }
 
 
 //Deletar um usuário específico no banco de dados.
-export function DeleteUser(cpf : string){
+export function DeleteUser(id_user : bigint){
 
     return prisma.user.delete({
-        where: {cpf}
+    where: {id_user}
     })
+
 }
