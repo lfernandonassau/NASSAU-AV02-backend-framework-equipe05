@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import { CardContainer } from "../CardContainer";
+import { AreaContainer } from "./styles";
 
 const data = [
   {
@@ -16,49 +17,50 @@ const data = [
 
 const AreaOverview = () => {
   return (
-    <CardContainer style={{ height: 300 }}>
-      <h3>Evolução Geral</h3>
+    <CardContainer>
+      <AreaContainer>
+        <h3>Evolução Geral</h3>
 
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 20, right: 20, bottom: 40, left: 50 }}
-        xScale={{ type: "point" }}
-        yScale={{ type: "linear" }}
-        enableArea={true}
-        areaOpacity={0.35}
-        colors={["#1454B8"]}
-        lineWidth={3}
-        pointSize={10}
-        pointBorderWidth={2}
-        pointBorderColor="#ffffff"
-        enableGridX={false}
-        enableGridY={true}
-        gridYValues={5}
-        theme={{
-          grid: {
-            line: {
-              stroke: "rgba(46, 46, 46, 0.2)",
-              strokeWidth: 1,
-            },
-          },
-          axis: {
-            ticks: {
-              text: {
-                fill: "#2E2E2E",
+        <ResponsiveLine
+          data={data}
+          margin={{ top: 20, right: 10, bottom: 30, left: 35 }}
+          xScale={{ type: "point" }}
+          yScale={{ type: "linear" }}
+          enableArea={true}
+          areaOpacity={0.35}
+          colors={["#1454B8"]}
+          lineWidth={3}
+          pointSize={10}
+          pointBorderWidth={2}
+          pointBorderColor="#ffffff"
+          enableGridX={false}
+          enableGridY={true}
+          gridYValues={5}
+          theme={{
+            grid: {
+              line: {
+                stroke: "rgba(46, 46, 46, 0.2)",
+                strokeWidth: 1,
               },
             },
-            legend: {
-              text: {
-                fill: "#2E2E2E",
+            axis: {
+              ticks: {
+                text: {
+                  fill: "#2E2E2E",
+                },
+              },
+              legend: {
+                text: {
+                  fill: "#2E2E2E",
+                },
               },
             },
-          },
-        }}
-        useMesh={true}
-      />
+          }}
+          useMesh={true}
+        />
+      </AreaContainer>
     </CardContainer>
   );
 };
 
 export default AreaOverview;
-

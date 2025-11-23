@@ -1,5 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import { CardContainer } from "../CardContainer";
+import { ChartWrapper } from "./styles";
 
 const data = [
   {
@@ -30,35 +31,38 @@ const data = [
 
 const WeeklyEvolutionChart = () => {
   return (
-    <CardContainer style={{ height: 300 }}>
-      <h3>Evolução Semanal</h3>
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 20, right: 30, bottom: 65, left: 45 }}
-        xScale={{ type: "point" }}
-        yScale={{ type: "linear" }}
-        colors={["#1454b8", "#0b1b3a", "#2e2e2e"]} 
-        lineWidth={3}
-        pointSize={9}
-        enableGridX={false}
-        enableGridY={true}
-        pointBorderWidth={2}
-        pointBorderColor="#ffffff"
-        useMesh={true}
-        axisBottom={{
-          legend: "Semana",
-          legendOffset: 35,
-          tickPadding: 8,
-        }}
-        axisLeft={{
-          legend: "Tarefas",
-          legendOffset: -38,
-          tickPadding: 6,
-        }}
-      />
+    <CardContainer>
+      <ChartWrapper>
+        <h3>Evolução Semanal</h3>
 
+        <ResponsiveLine
+          data={data}
+          margin={{ top: 20, right: 30, bottom: 65, left: 45 }}
+          xScale={{ type: "point" }}
+          yScale={{ type: "linear" }}
+          colors={["#1454B8", "#0B1B3A", "#2E2E2E"]}
+          lineWidth={3}
+          pointSize={9}
+          enableGridX={false}
+          enableGridY={true}
+          pointBorderWidth={2}
+          pointBorderColor="#ffffff"
+          useMesh={true}
+          axisBottom={{
+            legend: "Semana",
+            legendOffset: 35,
+            tickPadding: 8,
+          }}
+          axisLeft={{
+            legend: "Tarefas",
+            legendOffset: -38,
+            tickPadding: 6,
+          }}
+        />
+      </ChartWrapper>
     </CardContainer>
   );
 };
 
 export default WeeklyEvolutionChart;
+
