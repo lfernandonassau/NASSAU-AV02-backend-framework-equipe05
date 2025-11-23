@@ -30,7 +30,25 @@ export const Container = styled.div`
   flex-direction: column;
   overflow: hidden;
   z-index: 999;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    right: 5%;
+    left: 5%;
+    top: 64px;
+    max-height: 70vh;
+  }
+
+  @media (max-width: 480px) {
+    width: 92%;
+    right: 4%;
+    left: 4%;
+    top: 60px;
+    max-height: 70vh;
+    border-radius: 10px;
+  }
 `;
+
 
 export const Header = styled.div`
   padding: 1rem 1.25rem;
@@ -67,9 +85,13 @@ export const Content = styled.div`
   flex-direction: column;
   gap: 1rem;
   overflow-y: auto;
-  scroll-behavior: smooth;
   flex: 1;
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+  }
 `;
+
 
 export const NotificationItem = styled.div<{ $read?: boolean }>`
   background: ${colors.white};

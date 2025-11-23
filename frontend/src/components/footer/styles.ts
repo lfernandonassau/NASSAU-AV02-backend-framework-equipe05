@@ -64,12 +64,28 @@ export const FooterContent = styled.div`
   flex-wrap: wrap;
   gap: 50px;
   padding-top: 20px;
+
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    padding-top: 10px;
+  }
 `;
 
 export const FooterSection = styled.div`
   flex: 1 1 200px;
   min-width: 180px;
   text-align: center;
+
+  @media (max-width: 600px) {
+    min-width: 0;
+
+    /* "Sobre" ocupa toda a linha sozinho */
+    &:first-child {
+      grid-column: 1 / 3;
+    }
+  }
 `;
 
 export const FooterTitle = styled.h4`
