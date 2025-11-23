@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { CloseBtn, LogoImage, MobileToggleBtn, Overlay, SidebarContainer, SidebarDivider, SidebarItem, SidebarLogo, UserInfoSection } from './styles'
 import { IProfileSidebar } from './types' 
 import { MdPerson, MdLock, MdNotifications, MdHelp, MdExitToApp, MdDashboard, MdLogin, MdHome, MdMenu, MdClose, MdSettings, MdBarChart } from 'react-icons/md'
-import { LuLayoutPanelLeft, LuKanban } from "react-icons/lu"
+import { LuLayoutPanelLeft } from "react-icons/lu"
+import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 
@@ -56,17 +57,17 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                     <SidebarDivider/>
 
                     <SidebarItem 
-                        $active={location.pathname === '/geral'} 
-                        onClick={() => handleNavigation('/geral')}
+                        $active={location.pathname === '/dashboard'} 
+                        onClick={() => handleNavigation('/dashboard')}
                     >
-                        <MdDashboard /> Página inicial
+                        <MdDashboard /> Dashboard
                     </SidebarItem>
 
                     <SidebarItem 
                         $active={isActive('/projetos')} 
                         onClick={() => handleNavigation('/projetos')}
                     >
-                        <LuKanban /> Gerenciamento de Projetos
+                        <LiaProjectDiagramSolid /> Gerenciamento de Projetos
                     </SidebarItem>
 
                     <SidebarItem 

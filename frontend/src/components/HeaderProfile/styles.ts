@@ -1,25 +1,43 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.header`
-    width: 100%;
     height: 60px; 
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 20px; /* Espaço entre os grupos de ícones */
+    justify-content: flex-end; 
+    gap: 20px; 
     
-    background-color: transparent; 
-    margin-bottom: 20px;
-    margin-top: -20px; 
+    /* POSITION FIXED  */
+    position: fixed; 
+    top: 0; 
+    right: 0;
     
+    /* No desktop, o header começa depois da Sidebar (350px) */
+    left: 350px; 
+    
+    z-index: 999; /* Alto z-index para flutuar sobre tudo */
+    
+    /* Efeito de vidro */
+    background: transparent; 
+    backdrop-filter: blur(2px);
+    
+    /* Padding interno para alinhar com o conteúdo da página */
+    padding: 0 40px; 
+
     @media (max-width: 1050px) {
         justify-content: flex-end;
-        
-        margin-top: 0;
     }
-    @media (max-width: 768px) {
+
+    @media (max-width: 1024px) {
+        /* No mobile/tablet, a sidebar vira menu hambúrguer, então o header ocupa tudo */
+        left: 0; 
+        padding: 0 20px;
         justify-content: flex-end;
-        margin-top: 0;
+    }
+
+    @media (max-width: 768px) {
+        gap: 12px; 
+        padding: 0 15px;
     }
 `;
 
@@ -42,7 +60,6 @@ export const SearchInput = styled.input<{ $isOpen: boolean }>`
     font-size: 14px;
     color: #333;
     
-    /* Animação de abrir/fechar */
     width: ${({ $isOpen }) => $isOpen ? '200px' : '0px'};
     opacity: ${({ $isOpen }) => $isOpen ? 1 : 0};
     padding: ${({ $isOpen }) => $isOpen ? '0 10px' : '0'};
@@ -52,15 +69,13 @@ export const SearchInput = styled.input<{ $isOpen: boolean }>`
         color: #aaa;
     }
 
-     /* CONTROLE DE TAMANHO */
-
     @media (max-width: 768px) {
         width: ${({ $isOpen }) => $isOpen ? '160px' : '0px'};
     }
 
     @media (max-width: 480px) {
         width: ${({ $isOpen }) => $isOpen ? '120px' : '0px'};
-        font-size: 13px; /* Fonte levemente menor */
+        font-size: 13px; 
     }
 `;
 
@@ -72,9 +87,11 @@ export const IconButton = styled.button`
     align-items: center;
     justify-content: center;
     color: #555;
-    padding: 0; /* Sem espaço interno */
+    padding: 0; 
     border-radius: 50%;
     transition: background 0.2s;
+    
+    flex-shrink: 0; 
 
     svg {
         font-size: 22px;
@@ -94,9 +111,11 @@ export const ProfileWrapper = styled.div`
     padding: 5px 0;
     border-radius: 30px;
     transition: background 0.2s;
+    
+    flex-shrink: 0; 
 
     &:hover {
-        background-color: rgba(255,255,255,0.5); /* Fundo sutil ao passar o mouse */
+        background-color: rgba(255,255,255,0.5); 
     }
 `;
 

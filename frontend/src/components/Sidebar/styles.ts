@@ -173,7 +173,7 @@ export const SidebarItem = styled.button<IMenuItemStyled>`
 export const MobileToggleBtn = styled.button`
     display: none;
     position: fixed;
-    top: 15px;
+    top: 10px;
     left: 15px;
     z-index: 1100; /* Acima de tudo, menos da sidebar aberta */
     background-color: #ffffff6e;
