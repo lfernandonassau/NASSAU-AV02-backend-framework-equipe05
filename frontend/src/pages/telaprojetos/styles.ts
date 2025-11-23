@@ -132,7 +132,7 @@ export const ProjectActionButton = styled.button`
     font-weight: 600;
     font-family: 'Montserrat';
     cursor: pointer;
-    background: #0ea5e9;
+    background: #578ca5ff;
     color: #ffffff;
     display: inline-flex;
     align-items: center;
@@ -147,7 +147,6 @@ export const ProjectActionButton = styled.button`
     }
 `
 
-/* ...seus estilos existentes... */
 
 /* Título + botão de adicionar */
 export const TitleRow = styled.div`
@@ -178,7 +177,7 @@ export const IconButton = styled.button`
     transition: background 0.15s ease;
 
     &:hover {
-    background: #e2e8f0;
+    background: #78797aff;
     }
 `
 

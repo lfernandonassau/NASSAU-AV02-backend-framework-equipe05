@@ -6,8 +6,10 @@ import { Login } from "../pages/login";
 import { Cadastro } from "../pages/cadastro";
 import { PainelPage } from "../pages/telapainel";
 import { TelaProjetos } from "../pages/telaprojetos";
-import { TelaGeral } from "../pages/telageral";
+import { TelaDashboard } from "../pages/teladashboard";
 import { TelaPerfil } from "../pages/telaperfil";
+import { TelaEstatisticas } from "../pages/telaestatisticas";
+import { TelaConfig } from "../pages/telaconfiguracoes";
 
 const AppRoutes = () => {
     return (
@@ -19,8 +21,10 @@ const AppRoutes = () => {
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/painel" element={<PainelPage />} />
                 <Route path="/projetos" element={<TelaProjetos />} />
-                <Route path="/geral" element={<TelaGeral />} />
+                <Route path="/dashboard" element={<TelaDashboard />} />
                 <Route path="/perfil" element={<TelaPerfil />} />
+                <Route path="/estatisticas" element={<TelaEstatisticas />} />
+                <Route path="/configuracoes" element={<TelaConfig />} />
             </Routes>
         </TasksProvider>
     </BrowserRouter>
