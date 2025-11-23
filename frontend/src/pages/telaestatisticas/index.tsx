@@ -1,63 +1,55 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ProjectCard } from '../../components/TelaProjectCard'
-import { Sidebar } from '../../components/Sidebar' 
+import { useState } from "react";
+import { Sidebar } from "../../components/Sidebar";
+import { HeaderProfile } from "../../components/HeaderProfile";
+import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
+import ProjectOverviewPie from "../../components/Statistics/Overview";
+import CollaboratorStats from "../../components/Statistics/CollaboratorStats";
+import AreaOverview from "../../components/Statistics/AreaOverview";
 
+import {
+  Container,
+  Title,
+  Content,
+  ChartsRow,
+  BottomRow,
+  CollaboratorSection,
+} from "./styles";
 
-import { 
-    Wrapper,           
-    ContentContainer,  
-    ContentWrapper,    
-    Container,         
-    TitleProject, 
-    CardHeader, 
-    NameProject, 
-    ProjectActionsRow, 
-    ProjectActionButton 
-} from './styles'; 
-import { HeaderProfile } from '../../components/HeaderProfile';
+const USER_AVATAR =
+  "https://avatars.githubusercontent.com/u/179970243?v=4";
 
-type Project = {
-    id: string;
-    name: string;
-}
+const Estatisticas = () => {
+  const [activeTab, setActiveTab] = useState("estatisticas");
 
-const mockProjects: Project[] = [
-    { id: '1', name: 'Kodan - Board da Faculdade' },
-    { id: '2', name: 'TaskLock - O sucesso em meio ao nosso mundo capitalista' },
-];
+  return (
+    <Container>
+      <Sidebar
+        autenticado={true}
+        activeTab={activeTab}
+        onChangeTab={setActiveTab}
+      />
 
-const TelaEstatisticas = () => {
-    const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null)
-    const [activeTab, setActiveTab] = useState('projetos') // Estado necessário para a Sidebar funcionar visualmente
-    const navigate = useNavigate()
+      <HeaderProfile
+        userImage={USER_AVATAR}
+        onSearch={(v: string) => console.log("Buscar:", v)}
+      />
 
-    
+      <Content>
+        <ChartsRow>
+          <WeeklyEvolutionChart />
+          <ProjectOverviewPie />
+        </ChartsRow>
 
-    return (
-        <Wrapper>
-            <ContentContainer>
-                <Sidebar 
-                    autenticado={true}
-                    activeTab={activeTab} 
-                    onChangeTab={setActiveTab} 
-                />
+        <BottomRow>
+          <AreaOverview />
+        </BottomRow>
 
-                {/* CONTEÚDO DA DIREITA */}
-                <ContentWrapper>
-                    
-                    <HeaderProfile/>
-                    
-                    <Container>
-                        <TitleProject>Estatisticas</TitleProject>
-                        
-                        
-                    </Container>
-                </ContentWrapper>
+        <CollaboratorSection>
+          <CollaboratorStats />
+        </CollaboratorSection>
+      </Content>
+    </Container>
+  );
+};
 
-            </ContentContainer>
-        </Wrapper>
-    );
-}
-
-export { TelaEstatisticas }
+export default Estatisticas;
