@@ -1,7 +1,7 @@
 import prisma from '../database/prismaClient.js'
 
 export default {
-    
+
     async create(data:any) {
         return prisma.project.create({ data })
     },
@@ -18,7 +18,9 @@ export default {
     },
 
     async delete(id: number) {
-        return prisma.project.delete({where: {id_project: Number(id) }})
+        return prisma.project.delete({
+            where: {id_project: Number(id)}
+        })
     }
 
 }

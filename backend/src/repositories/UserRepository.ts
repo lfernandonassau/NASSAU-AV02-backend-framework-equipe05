@@ -1,7 +1,9 @@
 // src/repositories/UserRepository.ts
 import prisma from '../database/prismaClient.js'
 
+//Vai fazer uma exportação de obejetos para o banco de dados.
 export default {
+    
     async createUser(data: {
         name: string
         lastname: string
@@ -20,6 +22,7 @@ export default {
         })
         return user
     },
+    
         async listUsers() {
         return prisma.user.findMany()
     },

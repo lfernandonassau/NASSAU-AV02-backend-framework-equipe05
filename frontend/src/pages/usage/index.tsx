@@ -1,5 +1,5 @@
 
-import { ProjectCard } from '../../components/ProfileProjectCard'
+import { ProjectCard } from '../../components/TelaProjectCard'
 import { Header } from '../../components/Header'
 import { Container, NameProject, TitleProject } from './styles'
 import {  Wrapper } from './styles'

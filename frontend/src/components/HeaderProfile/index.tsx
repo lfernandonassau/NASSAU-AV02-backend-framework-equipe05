@@ -13,12 +13,10 @@ import { IHeaderProfile } from './types';
 import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md'
 import NotificationsModal from '../NotificationsModal'
 
-// ✅ IMPORTA O CONTEXTO GLOBAL
 import { useNotifications } from '../../context/NotificationContext';
 
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
-    // ✅ Busca
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchText, setSearchText] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
@@ -37,10 +35,8 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         if (onSearch) onSearch(e.target.value);
     };
 
-    // ✅ CONTEXTO GLOBAL DE NOTIFICAÇÕES
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
-    // ✅ Modal
     const [showNotifications, setShowNotifications] = useState(false);
 
     const userImage = "https://avatars.githubusercontent.com/u/179970243?v=4"
@@ -49,7 +45,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         <>
             <Container>
 
-                {/* ✅ Campo de busca */}
+                {/* Campo de busca */}
                 <SearchContainer $isOpen={isSearchOpen}>
                     <SearchInput
                         ref={inputRef}
@@ -63,7 +59,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                     </IconButton>
                 </SearchContainer>
 
-                {/* ✅ Sino GLOBAL com contador */}
+                {/* Sino GLOBAL com contador */}
                 <div style={{ position: "relative", cursor: "pointer" }}>
                     <IconButton onClick={() => setShowNotifications(true)}>
                         <MdNotificationsNone />
@@ -91,7 +87,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
                 <Divider />
 
-                {/* ✅ Perfil */}
+                {/* Perfil */}
                 <ProfileWrapper onClick={() => alert("Menu de Perfil futuro")}>
                     <Avatar src={userImage} alt="User" />
                     <MdKeyboardArrowDown size={20} color="#555" />
@@ -99,7 +95,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
             </Container>
 
-            {/* ✅ Modal usando contexto */}
+            {/* Modal usando contexto */}
             {showNotifications && (
                 <NotificationsModal
                     onClose={() => setShowNotifications(false)}
