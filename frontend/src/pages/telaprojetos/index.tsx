@@ -33,6 +33,12 @@ import {
     ModalDangerButton,
     ProjectMenu,
     ProjectMenuItem,
+    PerfilBar,
+    UserAvatar,
+    PerfilTextContainer,
+    PerfilTextBar,
+    PerfilTitleBar,
+    PerfilTextSpanBar,
 } from './styles'
 
 import {
@@ -68,6 +74,11 @@ const mockProjects: Project[] = [
 ]
 
 const TelaProjetos = () => {
+
+    const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
+    
+
+    // de mock Projetos
     const [projects, setProjects] = useState<Project[]>(mockProjects)
 
     // Modal de criar
@@ -240,6 +251,18 @@ const TelaProjetos = () => {
 
                 <ContentWrapper>
                     <HeaderProfile />
+
+                    <PerfilBar>
+                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
+                        <PerfilTextContainer>
+                            <PerfilTitleBar>
+                                👋 Rafael, <PerfilTextSpanBar>você está olhando para os projetos!</PerfilTextSpanBar>
+                            </PerfilTitleBar>
+                            <PerfilTextBar>
+                                Essa é a lista de projetos que você está colaborando. Clique em um projeto para ver mais detalhes.
+                            </PerfilTextBar>
+                        </PerfilTextContainer>
+                    </PerfilBar>
 
                     <Container>
                         <TitleRow>

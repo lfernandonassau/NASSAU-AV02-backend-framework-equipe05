@@ -29,6 +29,7 @@ export const ContentWrapper = styled.div`
     flex: 1; 
     width: 100%;
     padding: 30px;
+    padding-top: 100px;
     
     min-width: 0; 
     overflow-x: hidden; 
@@ -39,6 +40,7 @@ export const ContentWrapper = styled.div`
     @media (max-width: 1024px) {
         overflow-x: visible;
         padding: 10px; 
+        padding-top: 100px;
     }
 `
 
