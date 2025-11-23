@@ -6,7 +6,7 @@ const CollaboratorStats = () => {
   return (
     <CardContainer style={{ padding: "20px" }}>
       <h3 style={{ color: "#1f1f1f", marginBottom: "16px" }}>
-        Acompanhamento por colaborador
+        Acompanhamento por equipe
       </h3>
 
       <ul style={{ 
