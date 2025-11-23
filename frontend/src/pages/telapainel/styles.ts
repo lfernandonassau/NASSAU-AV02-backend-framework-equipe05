@@ -30,7 +30,8 @@ export const ContentWrapper = styled.div`
     flex: 1; 
     width: 100%;
     
-    padding:30px;
+    padding: 30px;
+    padding-top: 100px;
     
 
     display: flex;
@@ -46,6 +47,7 @@ export const ContentWrapper = styled.div`
     @media (max-width: 1024px) {
         overflow-x: visible;
         padding-top: 10px;
+        padding-top: 100px;
     }
 `
 
@@ -118,11 +120,14 @@ export const BoardInfoLeft = styled.div`
 `;
 
 export const BoardInfoTitle = styled.h1`
-    font-size: 1.5rem; 
-    font-weight: 700;
     font-family: 'Montserrat', sans-serif;
-    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
     margin: 0;
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 `;
 
 export const BoardInfoIcon = styled.span`
@@ -187,7 +192,7 @@ export const AddMemberButton = styled.button`
     box-shadow: 0 2px 5px rgba(0, 99, 145, 0.2);
 
     svg {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     &:hover {
@@ -223,5 +228,90 @@ export const IconWrapper = styled.span<{ $accentColor: string }>`
     
     svg {
         font-size: 1.2rem; 
+    }
+`
+
+
+// --- PERFIL BAR (Inicial do Painel) ---
+export const PerfilBar = styled.div`
+    width: 100%;
+    max-width: 100%; 
+    margin: 0; 
+    
+    background-color: transparent; 
+    
+    border-radius: 10px;
+    display: flex;
+    
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+    
+    padding: 0 20px 0 0;
+    
+
+
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        margin: 0 auto;
+        padding: 10px 20px;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+    }
+`
+
+export const PerfilTextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`
+
+export const UserAvatar = styled.img`
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #ffffff; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    object-fit: cover;
+
+    @media (max-width: 768px) {
+        width: 60px;
+        height: 60px;
+    }
+`
+
+export const PerfilTitleBar = styled.h1`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #444444ff;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 1024px) {
+        font-size: 15px;
+    }
+`
+
+export const PerfilTextSpanBar = styled.span`
+    font-weight: 500;
+    color: #4d4d4dff;
+`
+
+export const PerfilTextBar = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #494949ff;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 1024px) {
+        font-size: 15px;
     }
 `

@@ -3,7 +3,7 @@ import UserController from '../controllers/UserController.js'
 
 const router = Router()
 
-//Projects
+//User
 router.post('/', UserController.create)
 router.get('/', UserController.list)
 
