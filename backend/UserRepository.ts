@@ -50,5 +50,6 @@ export function DeleteUser(cpf : string){
 
     return prisma.user.delete({
         where: {cpf}
+        
     })
 }
