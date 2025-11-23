@@ -16,20 +16,17 @@ export const ProjectCardContainer = styled.div`
     transition: all 0.25s ease;
 
     &:hover {
-    background: radial-gradient(
-    circle at 70% 30%, /* Posição do centro da "luz" */
-    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
-    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
-    #80cff3ff 70%,     /* Azul/Cinza aparece aqui */
-    #b1ddf7ff 100%     /* Finaliza com o azul/cinza mais suave */
-    );
+    background: #414040ff ;
     color: #FFFFFF;
     transform: translateY(-1px);  /* como contornar o cross dessa propriedade ? ela faz o card do projeto sobrepor o menu */
     cursor: pointer;
-    p {
-        color: #000000ff;
-        font-weight: 700;
-    }
+        p {
+            color: #eceaeaff;
+            font-weight: 700;
+        }
+        svg {
+            color: #eceaeaff;
+        }
     }
     
 `

@@ -56,10 +56,10 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                     <SidebarDivider/>
 
                     <SidebarItem 
-                        $active={location.pathname === '/geral'} 
-                        onClick={() => handleNavigation('/geral')}
+                        $active={location.pathname === '/dashboard'} 
+                        onClick={() => handleNavigation('/dashboard')}
                     >
-                        <MdDashboard /> Página inicial
+                        <MdDashboard /> Dashboard
                     </SidebarItem>
 
                     <SidebarItem 
