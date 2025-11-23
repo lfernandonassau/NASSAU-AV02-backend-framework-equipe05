@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id_user` BIGINT NOT NULL AUTO_INCREMENT,
+    `imagemUrl` VARCHAR(255) NULL,
     `name` VARCHAR(50) NOT NULL,
     `lastname` VARCHAR(100) NOT NULL,
     `cpf` CHAR(11) NOT NULL,
@@ -51,7 +52,8 @@ CREATE TABLE `Relatory` (
 -- CreateTable
 CREATE TABLE `Project` (
     `id_project` BIGINT NOT NULL AUTO_INCREMENT,
-    `titulo` VARCHAR(50) NOT NULL,
+    `titulo` VARCHAR(40) NOT NULL,
+    `subtitle` VARCHAR(120) NULL,
     `dashboardId` BIGINT NOT NULL,
 
     PRIMARY KEY (`id_project`)
@@ -60,7 +62,8 @@ CREATE TABLE `Project` (
 -- CreateTable
 CREATE TABLE `Column` (
     `id_column` BIGINT NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(50) NOT NULL,
+    `title` VARCHAR(40) NOT NULL,
+    `subtitle` VARCHAR(120) NOT NULL,
     `status` ENUM('PENDENTE', 'EM_ANDAMENTO', 'CONCLUIDO') NOT NULL DEFAULT 'PENDENTE',
     `projectId` BIGINT NOT NULL,
 
@@ -71,8 +74,8 @@ CREATE TABLE `Column` (
 CREATE TABLE `Card` (
     `id_card` BIGINT NOT NULL AUTO_INCREMENT,
     `qta_members` INTEGER NOT NULL,
-    `title` VARCHAR(25) NOT NULL,
-    `subtitle` VARCHAR(25) NOT NULL,
+    `title` VARCHAR(40) NOT NULL,
+    `subtitle` VARCHAR(120) NOT NULL,
     `timeframe` DATETIME(3) NOT NULL,
     `datecreate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dateupdate` DATETIME(3) NOT NULL,
