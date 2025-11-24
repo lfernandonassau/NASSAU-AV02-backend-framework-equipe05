@@ -9,7 +9,7 @@ export const CardContainer = styled.div`
   border: 1px solid #f1f1f1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 
   h3 {
     font-size: 16px;

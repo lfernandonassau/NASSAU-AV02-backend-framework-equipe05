@@ -12,9 +12,10 @@ import {
 interface PrivacyModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAcceptTerms?: () => void;
 }
 
-const PrivacyModal = ({ isOpen, onClose }: PrivacyModalProps) => {
+const PrivacyModal = ({ isOpen, onClose, onAcceptTerms }: PrivacyModalProps) => {
   
   const overlayVariants: Variants = {
     hidden: { opacity: 0 },

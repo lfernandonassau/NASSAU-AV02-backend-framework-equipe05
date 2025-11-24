@@ -35,6 +35,7 @@ import { FcGoogle } from "react-icons/fc"
 
 // Firebase
 import { auth, googleProvider } from '../../services/firebase'
+import { Copyright } from '../../components/Copyright';
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
@@ -164,6 +165,8 @@ const Login = () => {
                     </Column>
                 </WelcomeContainer>
             </LoginNewScreen>
+            {/* AQUI ENTRA O COPYRIGHT */}
+            <Copyright/>
         </PageWrapper>
     )
 }
