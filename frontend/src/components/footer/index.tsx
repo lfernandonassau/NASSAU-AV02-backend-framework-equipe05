@@ -83,6 +83,12 @@ const Footer: React.FC = () => {
           </SocialIcon>
         </Tooltip>
 
+        <Tooltip title="Daniel Manuel" arrow>
+          <SocialIcon href="https://github.com/daniel2311x">
+            <GitHubIco />
+          </SocialIcon>
+        </Tooltip>
+
       </SocialRow>
 
       {/* COLUNAS */}
@@ -99,14 +105,14 @@ const Footer: React.FC = () => {
           </FooterText>
         </FooterSection>
 
-        {/* ----------------- CONTATOS (AGORA NO MEIO) ----------------- */}
+        {/* ----------------- CONTATOS  ----------------- */}
         <FooterSection>
           <FooterTitle>Contatos</FooterTitle>
 
           <ContactRow>
             <EmailIco />
-            <FooterText href="mailto:kodanorg@enterprise.co">
-              kodanorg@enterprise.co
+            <FooterText href="mailto:projetokodan@gmail.com">
+              projetokodan@gmail.com
             </FooterText>
           </ContactRow>
 
@@ -118,7 +124,7 @@ const Footer: React.FC = () => {
           </ContactRow>
         </FooterSection>
 
-        {/* ----------------- DADOS SENSÍVEIS (AGORA À DIREITA) ----------------- */}
+        {/* ----------------- DADOS SENSÍVEIS  ----------------- */}
         <FooterSection>
           <FooterTitle>Dados Sensíveis</FooterTitle>
 
@@ -130,7 +136,7 @@ const Footer: React.FC = () => {
               border: "none",
               cursor: "pointer",
               width: "100%",
-              textAlign: "center",   // centraliza o botão
+              textAlign: "center",  
             }}
           >
             Políticas de Privacidade

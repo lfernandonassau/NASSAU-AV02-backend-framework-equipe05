@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Sidebar } from "../../components/Sidebar";
+import {Sidebar} from "../../components/Sidebar";
 import { HeaderProfile } from "../../components/HeaderProfile";
+
 import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
 import ProjectOverviewPie from "../../components/Statistics/Overview";
 import CollaboratorStats from "../../components/Statistics/CollaboratorStats";
@@ -8,11 +9,15 @@ import AreaOverview from "../../components/Statistics/AreaOverview";
 
 import {
   Container,
-  Title,
   Content,
   ChartsRow,
   BottomRow,
   CollaboratorSection,
+  GreetingContainer,
+  GreetingImage,
+  GreetingTextWrapper,
+  GreetingTitle,
+  GreetingSubtitle,
 } from "./styles";
 
 const USER_AVATAR =
@@ -35,6 +40,7 @@ const Estatisticas = () => {
       />
 
       <Content>
+
         <ChartsRow>
           <WeeklyEvolutionChart />
           <ProjectOverviewPie />
@@ -53,3 +59,4 @@ const Estatisticas = () => {
 };
 
 export default Estatisticas;
+
