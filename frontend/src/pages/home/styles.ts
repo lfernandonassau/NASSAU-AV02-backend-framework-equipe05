@@ -73,6 +73,7 @@ export const SectionContainer = styled.section`
     z-index: 1;
 
     p {
+        font-family: 'Montserrat', sans-serif;
         font-size: 1.2rem;
         line-height: 1.5;
         text-align: center;
@@ -87,15 +88,14 @@ export const SectionContainer = styled.section`
 
 /* Exemplo de título para seções novas */
 export const SectionTitle = styled.h2`
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Lobster two', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 10px;
     
-    background: linear-gradient(to right, #ffffffff, #ddddddff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
+    color: #ffffff;
 `;
 /* --- NAVBAR (CABEÇALHO DA LANDING PAGE) --- */
 export const NavBar = styled.nav`
@@ -174,7 +174,6 @@ export const HeroTitle = styled.h1`
     margin-bottom: 20px;
     letter-spacing: -1px;
     
-    /* Sombra sutil no texto */
     text-shadow: 0 4px 5px rgba(0,0,0,0.3);
 
     @media (max-width: 1024px) {
@@ -195,6 +194,8 @@ export const HeroSubtitle = styled.p`
     line-height: 1.6;
     margin-bottom: 40px;
     font-weight: 600;
+
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
 
     @media (max-width: 768px) {
         font-size: 1.5rem;
@@ -225,9 +226,11 @@ export const PrimaryButton = styled.button`
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.3);
 
     &:hover {
-        background-color: #7bc1ffff;
+        background-color: #ffffffff;
+        color: #353535ff;
         transform: scale(1.05);
     }
 
@@ -239,8 +242,8 @@ export const PrimaryButton = styled.button`
 // Botão Transparente (Contact Sales)
 export const OutlineButton = styled.button`
     background-color: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: #fffefeff;
+    border: 1px solid rgba(24, 24, 24, 0.6);
     padding: 13px 32px; /* -1px da borda para alinhar */
     border-radius: 30px;
     font-weight: 600;
@@ -248,8 +251,10 @@ export const OutlineButton = styled.button`
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
 
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     &:hover {
         border-color: #ffffff;
+        color: #3b3b3bff;
         background-color: rgba(255, 255, 255, 0.1);
     }
 
@@ -257,6 +262,86 @@ export const OutlineButton = styled.button`
         width: 100%;
     }
 `;
+
+/* --- NOVOS ESTILOS PARA OS CARDS GRID --- */
+
+export const FeaturesGrid = styled.div`
+    display: grid;
+    /* Cria 4 colunas de tamanho igual */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px;
+    width: 100%;
+
+    /* Responsividade: vira 2 colunas em tablets */
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Responsividade: vira 1 coluna em celulares */
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+`;
+
+export const FeatureCard = styled.div`
+    /* Efeito de Vidro (Glassmorphism) */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    border-radius: 20px;
+    padding: 30px 20px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o ícone e título horizontalmente */
+    
+    transition: transform 0.3s ease, background 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px); /* Sobe um pouco ao passar o mouse */
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+`;
+
+export const IconWrapper = styled.div`
+    font-size: 3rem; /* Tamanho do ícone */
+    color: #ffffff;
+    margin-bottom: 20px;
+    
+    /* Um brilho suave atrás do ícone */
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+`;
+
+export const FeatureTitle = styled.h3`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-align: center;
+
+
+`;
+
+export const FeatureText = styled.p`
+    font-size: 0.95rem !important; /* Força o override do estilo global se houver */
+    line-height: 1.6;
+    color: #e0e0e0;
+    
+    /* O que você pediu: Justificado */
+    text-align: justify;
+    /* Hack para navegadores que suportam: centraliza a última linha para ficar mais bonito */
+    text-align-last: center; 
+    
+    width: 100%;
+    @media (max-width: 768px) {
+        color: #525151ff;
+    }
+`;
+
+
 
 /* --- SCROLL INDICATOR --- */
 export const ScrollArea = styled.div`
