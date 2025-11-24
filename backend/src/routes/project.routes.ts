@@ -3,7 +3,6 @@ import ProjectController from '../controllers/ProjectController.js'
 
 const router = Router()
 
-//Projects
 router.post('/', ProjectController.create)
 router.get('/', ProjectController.list)
 router.patch('/:id', ProjectController.update)

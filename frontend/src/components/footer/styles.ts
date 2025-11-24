@@ -38,7 +38,7 @@ export const Slogan = styled.h3`
   margin-bottom: 35px;
   font-size: 17px;
   font-weight: 600;
-  color: #0b1b3a;  /* azul escuro */
+  color: #0b1b3a;  
 `;
 
 export const SocialRow = styled.div`
@@ -49,7 +49,7 @@ export const SocialRow = styled.div`
 
 export const SocialIcon = styled.a`
   font-size: 26px;
-  color: #0b1b3a;  /* azul escuro */
+  color: #0b1b3a;  
   cursor: pointer;
   transition: 0.3s;
 
@@ -84,7 +84,6 @@ export const FooterSection = styled.div`
   @media (max-width: 600px) {
     min-width: 0;
 
-    /* "Sobre" ocupa toda a linha sozinho */
     &:first-child {
       grid-column: 1 / 3;
     }
@@ -92,7 +91,7 @@ export const FooterSection = styled.div`
 `;
 
 export const FooterTitle = styled.h4`
-  color: #0b1b3a;   /* azul escuro */
+  color: #0b1b3a;   
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -102,13 +101,13 @@ export const FooterTitle = styled.h4`
 export const FooterText = styled.a`
   display: block;
   font-size: 13px;
-  color: #0b1b3a;   /* azul escuro */
+  color: #0b1b3a;   
   margin: 4px 0;
   text-decoration: none;
   transition: 0.3s;
 
   &:hover {
-    color: #1454b8; /* azul médio no hover */
+    color: #1454b8; 
   }
 `;
 
@@ -123,7 +122,7 @@ export const ContactRow = styled.div`
 export const Copyright = styled.p`
   margin-top: 35px;
   font-size: 11px;
-  color: #0b1b3a;  /* azul escuro */
+  color: #0b1b3a;  
   border-top: 1px solid #0b1b3a33;
   padding-top: 12px;
   width: 100%;
@@ -132,15 +131,15 @@ export const Copyright = styled.p`
 
 export const GitHubIco = styled(FaGithubAlt)`
   font-size: 26px;
-  color: #0b1b3a; /* azul escuro */
+  color: #0b1b3a; 
 `;
 
 export const EmailIco = styled(MdEmail)`
   font-size: 20px;
-  color: #0b1b3a; /* azul escuro */
+  color: #0b1b3a; 
 `;
 
 export const SmsIco = styled(MdSms)`
   font-size: 20px;
-  color: #0b1b3a; /* azul escuro */
+  color: #0b1b3a; 
 `;
