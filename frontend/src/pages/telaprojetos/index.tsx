@@ -13,9 +13,9 @@ import {
     TitleRow,
     IconButton,
     CardHeader,
-    ProjectInfoGroup, // <--- Novo Container agrupador
-    ProjectIconBox,   // <--- Novo Ícone
-    ProjectTexts,     // <--- Novo container de texto
+    ProjectInfoGroup, 
+    ProjectIconBox,   
+    ProjectTexts,     
     HeaderRight,
     NameProject,
     SubtitleProject,
@@ -43,6 +43,7 @@ import {
     PerfilTextBar,
     PerfilTextSpanBar,
     CreateButton,
+    EmptyStateMessage,
 } from './styles'
 
 import {
@@ -52,8 +53,10 @@ import {
     MdMoreVert,
 } from 'react-icons/md'
 
-import { FaRocket } from 'react-icons/fa' // Ícone genérico de projeto
+
 import { LuKanban, LuX } from "react-icons/lu";
+import { BsEmojiSmileUpsideDown } from "react-icons/bs";
+
 
 
 type Project = {
@@ -312,74 +315,92 @@ const TelaProjetos = () => {
                             </CreateButton>
                         </TitleRow>
 
-                        {projects.map(project => {
-                            const isExpanded = expandedProjectId === project.id
-                            const menuOpen = menuProjectId === project.id
+                        {/* --------------------------------------------------------- */}
+                        {/* <--- LÓGICA PARA EMPTY MESSAGE ---> */}
+                        {/* --------------------------------------------------------- */}
 
-                            return (
-                                <ProjectCard
-                                    key={project.id}
-                                    onClick={() => handleToggleProject(project.id)}
-                                    style={{ zIndex: menuOpen ? 50 : 1, position: 'relative' }}
-                                >
-                                    <CardHeader>
-                                        {/* GRUPO ESQUERDA: ÍCONE + TEXTOS */}
-                                        <ProjectInfoGroup>
-                                            <ProjectIconBox>
-                                                <LuKanban /> {/* Icone dos projetos */}
-                                            </ProjectIconBox>
-                                            
-                                            <ProjectTexts>
-                                                <NameProject>{formatTitle(project.title)}</NameProject>
-                                                {project.subtitle && (
-                                                    <SubtitleProject>{project.subtitle}</SubtitleProject>
+                        {projects.length === 0 ? (
+                            // 1. SE NÃO TIVER PROJETOS, MOSTRA ISSO:
+                            <EmptyStateMessage>
+                                <BsEmojiSmileUpsideDown/>
+                                <p>Você ainda não criou um projeto</p>
+                            </EmptyStateMessage>
+                        ) : (
+                            // 2. SE TIVER PROJETOS, MOSTRA A LISTA DE CARDS:
+                            projects.map(project => {
+                                const isExpanded = expandedProjectId === project.id
+                                const menuOpen = menuProjectId === project.id
+
+                                return (
+                                    <ProjectCard
+                                        key={project.id}
+                                        onClick={() => handleToggleProject(project.id)}
+                                        style={{ zIndex: menuOpen ? 50 : 1, position: 'relative' }}
+                                    >
+                                        <CardHeader>
+                                            {/* GRUPO ESQUERDA: ÍCONE + TEXTOS */}
+                                            <ProjectInfoGroup>
+                                                <ProjectIconBox>
+                                                    <LuKanban /> 
+                                                </ProjectIconBox>
+                                                
+                                                <ProjectTexts>
+                                                    <NameProject>{formatTitle(project.title)}</NameProject>
+                                                    {project.subtitle && (
+                                                        <SubtitleProject>{project.subtitle}</SubtitleProject>
+                                                    )}
+                                                </ProjectTexts>
+                                            </ProjectInfoGroup>
+
+                                            {/* GRUPO DIREITA: AÇÕES */}
+                                            <HeaderRight>
+                                                <IconButton
+                                                    type="button"
+                                                    onClick={e => { e.stopPropagation(); handleToggleProject(project.id); }}
+                                                >
+                                                    {isExpanded ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}
+                                                </IconButton>
+
+                                                <IconButton
+                                                    type="button"
+                                                    onClick={e => handleToggleMenu(project.id, e)}
+                                                >
+                                                    <MdMoreVert size={22} />
+                                                </IconButton>
+
+                                                {menuOpen && (
+                                                    <ProjectMenu onClick={e => e.stopPropagation()}>
+                                                        <ProjectMenuItem type="button" onClick={() => openEditModal(project)}>
+                                                            Editar
+                                                        </ProjectMenuItem>
+                                                        <ProjectMenuItem type="button" onClick={() => openDeleteModal(project)}>
+                                                            Excluir
+                                                        </ProjectMenuItem>
+                                                    </ProjectMenu>
                                                 )}
-                                            </ProjectTexts>
-                                        </ProjectInfoGroup>
+                                            </HeaderRight>
+                                        </CardHeader>
 
-                                        {/* GRUPO DIREITA: AÇÕES */}
-                                        <HeaderRight>
-                                            <IconButton
-                                                type="button"
-                                                onClick={e => { e.stopPropagation(); handleToggleProject(project.id); }}
-                                            >
-                                                {isExpanded ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}
-                                            </IconButton>
+                                        {/* RODAPÉ DO CARD */}
+                                        {isExpanded && (
+                                            <ProjectActionsRow onClick={(e) => e.stopPropagation()}>
+                                                <ProjectActionButton type="button" onClick={() => navigate(`/projects/${project.id}/board`)}>
+                                                    Abrir Painel
+                                                </ProjectActionButton>
+                                                <ProjectActionButton type="button" onClick={() => console.log("Stats")}>
+                                                    Ver Estatísticas
+                                                </ProjectActionButton>
+                                            </ProjectActionsRow>
+                                        )}
+                                    </ProjectCard>
+                                )
+                            })
+                        )}
+                        
+                        {/* --------------------------------------------------------- */}
+                        {/* <--- FIM DA NOVA LÓGICA ---> */}
+                        {/* --------------------------------------------------------- */}
 
-                                            <IconButton
-                                                type="button"
-                                                onClick={e => handleToggleMenu(project.id, e)}
-                                            >
-                                                <MdMoreVert size={22} />
-                                            </IconButton>
-
-                                            {menuOpen && (
-                                                <ProjectMenu onClick={e => e.stopPropagation()}>
-                                                    <ProjectMenuItem type="button" onClick={() => openEditModal(project)}>
-                                                        Editar
-                                                    </ProjectMenuItem>
-                                                    <ProjectMenuItem type="button" onClick={() => openDeleteModal(project)}>
-                                                        Excluir
-                                                    </ProjectMenuItem>
-                                                </ProjectMenu>
-                                            )}
-                                        </HeaderRight>
-                                    </CardHeader>
-
-                                    {/* RODAPÉ DO CARD (EXPANDIDO) */}
-                                    {isExpanded && (
-                                        <ProjectActionsRow onClick={(e) => e.stopPropagation()}>
-                                            <ProjectActionButton type="button" onClick={() => navigate(`/projects/${project.id}/board`)}>
-                                                Abrir Painel
-                                            </ProjectActionButton>
-                                            <ProjectActionButton type="button" onClick={() => console.log("Stats")}>
-                                                Ver Estatísticas
-                                            </ProjectActionButton>
-                                        </ProjectActionsRow>
-                                    )}
-                                </ProjectCard>
-                            )
-                        })}
                     </Container>
                 </ContentWrapper>
             </ContentContainer>

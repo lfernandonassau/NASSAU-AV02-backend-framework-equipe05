@@ -33,6 +33,7 @@ import {
 
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { MdMoreVert } from 'react-icons/md';
+import { Copyright } from '../../components/Copyright';
 
 // Interface para projetos
 interface Project {
@@ -239,6 +240,7 @@ const TelaDashboard = () => {
                 project={selectedProject}
                 onClose={() => setSelectedProject(null)}
             />
+        
 
         </Wrapper>
     )

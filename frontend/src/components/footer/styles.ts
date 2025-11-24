@@ -68,6 +68,13 @@ export const SectionColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  p {
+    font-family: 'Montserrat', sans-serif;
+  }
+  span {
+    font-family: 'Montserrat', sans-serif;
+  }
   
   @media (max-width: 900px) {
     align-items: center;
@@ -144,6 +151,7 @@ export const CopyrightBar = styled.div`
   background: rgba(0, 0, 0, 0.2);
   text-align: center;
   
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
   border-top: 1px solid rgba(255, 255, 255, 0.05);

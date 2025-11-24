@@ -618,3 +618,31 @@ export const PerfilTextBar = styled.p`
         font-size: 15px;
     }
 `
+
+// State de mensagem vazia
+export const EmptyStateMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    text-align: center;
+    gap: 15px;
+    width: 100%;
+    
+    /* Estilização do Texto */
+    p {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #94a3b8; /* Um cinza suave para indicar vazio */
+        margin: 0;
+    }
+
+    /* Opcional: Estilo para um ícone se quiser colocar junto */
+    svg {
+        font-size: 3rem;
+        color: #cbd5e1;
+        margin-bottom: 10px;
+    }
+`;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Sidebar} from "../../components/Sidebar";
+import { Sidebar } from "../../components/Sidebar";
 import { HeaderProfile } from "../../components/HeaderProfile";
 
 import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
@@ -13,11 +13,12 @@ import {
   ChartsRow,
   BottomRow,
   CollaboratorSection,
-  GreetingContainer,
-  GreetingImage,
-  GreetingTextWrapper,
-  GreetingTitle,
-  GreetingSubtitle,
+  PerfilBar,
+  UserAvatar,
+  PerfilTextContainer,
+  PerfilTitleBar,
+  PerfilTextBar,
+  PerfilTextSpanBar,
 } from "./styles";
 
 const USER_AVATAR =
@@ -39,8 +40,22 @@ const Estatisticas = () => {
         onSearch={(v: string) => console.log("Buscar:", v)}
       />
 
+      
       <Content>
+        {/* PERFIL BAR */}
+        <PerfilBar>
+            <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
+            <PerfilTextContainer>
+                <PerfilTitleBar>
+                    👋 Rafael, <PerfilTextSpanBar>você está visualizando as estatisticas!</PerfilTextSpanBar>
+                </PerfilTitleBar>
+                <PerfilTextBar>
+                    Essa é a parte em que você acompanhará a evolução geral dos seus projetos.
+                </PerfilTextBar>
+            </PerfilTextContainer>
+        </PerfilBar>
 
+        {/* Daqui para baixo continua os gráficos */}
         <ChartsRow>
           <WeeklyEvolutionChart />
           <ProjectOverviewPie />
@@ -59,4 +74,3 @@ const Estatisticas = () => {
 };
 
 export default Estatisticas;
-

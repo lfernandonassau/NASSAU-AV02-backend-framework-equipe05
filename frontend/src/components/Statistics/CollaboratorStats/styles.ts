@@ -4,6 +4,7 @@ export const StatsContainer = styled.div`
   padding: 20px;
 
   h3 {
+    font-family: "Montserrat", "sans serif";
     font-size: 16px;
     font-weight: 600;
     color: #1f1f1f;
@@ -12,6 +13,7 @@ export const StatsContainer = styled.div`
 `;
 
 export const StatsList = styled.ul`
+  font-family: "Montserrat", "sans serif";
   list-style: none;
   padding: 0;
   margin: 0;
