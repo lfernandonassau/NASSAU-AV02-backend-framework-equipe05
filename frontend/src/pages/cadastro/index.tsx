@@ -284,7 +284,7 @@ const Cadastro = () => {
 
             {/*  MODAL ATUALIZADO */}
             <PrivacyModal
-                open={isPrivacyOpen}
+                isOpen={isPrivacyOpen}
                 onClose={() => setIsPrivacyOpen(false)}
                 onAcceptTerms={() => {
                     setValue("terms", true)  

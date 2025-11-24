@@ -1,16 +1,14 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TasksProvider } from "../context/TasksContext";
 
+import { Cadastro } from "../pages/cadastro";
 import { Home } from "../pages/home";
 import { Login } from "../pages/login";
-import { Cadastro } from "../pages/cadastro";
-import { PainelPage } from "../pages/telapainel";
-import { TelaProjetos } from "../pages/telaprojetos";
 import { TelaDashboard } from "../pages/teladashboard";
+import { PainelPage } from "../pages/telapainel";
 import { TelaPerfil } from "../pages/telaperfil";
-
-import Estatisticas from "../pages/telaEstatisticas"; 
+import { TelaProjetos } from "../pages/telaprojetos";
+import {Estatisticas} from "../pages/telaEstatisticas";
 
 const AppRoutes = () => {
   return (

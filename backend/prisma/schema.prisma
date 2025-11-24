@@ -35,6 +35,9 @@ model User{
   dateupdate    DateTime      @updatedAt
   positions     UserPosition[]
 
+  // relação com tokens de reset de senha
+  passwordResetTokens PasswordResetToken[]
+
 }
 
 
@@ -124,3 +127,16 @@ model UserPosition{
 
 }
 
+// Conceito de tabela PasswordResetToken resetar com o token enviado por email
+model PasswordResetToken {
+  id          BigInt   @id @default(autoincrement())
+  token       String   @db.VarChar(255)
+  expires_at  DateTime
+  used_at     DateTime?
+  created_at  DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id_user])
+  userId      BigInt
+
+  @@index([token])
+}
