@@ -1,32 +1,25 @@
-import { MdSearch, MdKeyboardArrowDown } from 'react-icons/md';
 import logo from '../../assets/logo.svg';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { IHeader } from './types';
 import { useEffect, useState } from 'react';
 
 // CONTEXTO GLOBAL
 import { useNotifications } from '../../context/NotificationContext';
 import { LogoArea, NavBar, NavLink, NavLinks, SignInButton, MobileMenuButton, MobileMenu, MobileLink, AuthButtons, RightSide } from './styles';
 
-const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
+const HeaderHome = () => {
 
     // Menu Hamburguer
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Modal
-    const [showNotifications, setShowNotifications] = useState(false);
-    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
     // Dados do contexto
-    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
     const navigate = useNavigate();
 
     // Fecha modal no ESC
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                setShowNotifications(false);
                 setIsMobileMenuOpen(false);
             }
         };
@@ -65,7 +58,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
 
             {/* Links desktop */}
             <NavLinks>
-                <NavLink href="#">Sobre nós</NavLink>
+                <NavLink href="#sobre">Sobre nós</NavLink>
                 <NavLink href="#">Contato</NavLink>
                 <NavLink href="#">Nossa equipe</NavLink>
             </NavLinks>
@@ -96,7 +89,7 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
 
             {/* Menu Mobile */}
             <MobileMenu isOpen={isMobileMenuOpen}>
-                <MobileLink href="#">Sobre nós</MobileLink>
+                <MobileLink href="#sobre">Sobre nós</MobileLink>
                 <MobileLink href="#">Contato</MobileLink>
                 <MobileLink href="#">Nossa equipe</MobileLink>
             </MobileMenu>
@@ -105,4 +98,4 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
     );
 };
 
-export { Header };
+export { HeaderHome };

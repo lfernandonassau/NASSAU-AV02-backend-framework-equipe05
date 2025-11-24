@@ -12,13 +12,19 @@ import {
     MouseIcon,
     ScrollText,
     SectionContainer,
-    SectionTitle
+    SectionTitle,
+    FeatureCard,
+    IconWrapper,
+    FeatureTitle,
+    FeatureText,
+    FeaturesGrid
 } from './styles'
 
 // Importação do Footer
-import Footer from '../../components/footer';
-import { Header } from '../../components/Header';
-import { useEffect, useState } from 'react';
+import { Footer } from '../../components/footer'
+import { HeaderHome } from '../../components/HeaderHome'
+import { useEffect, useState } from 'react'
+import { FaChartPie, FaColumns, FaTasks, FaUsers } from 'react-icons/fa'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -51,7 +57,7 @@ const Home = () => {
 
     return (
         <Wrapper>
-            <Header/>
+            <HeaderHome/>
             
             <HeroContainer>
                 <HeroTitle>
@@ -85,16 +91,59 @@ const Home = () => {
             
 
             {/* Segundo Container com conteúdo (ID 'features' é usado pelo scroll) */}
-            <SectionContainer id="features">
-                <SectionTitle>Nossos Recursos</SectionTitle>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium vitae similique, cupiditate non dignissimos nesciunt, eveniet debitis doloremque voluptatum voluptas perferendis quisquam nisi deserunt rerum sequi dicta temporibus voluptatem autem?
-                </p>
-                {/* Exemplo de grid ou cards aqui */}
+            <SectionContainer id='features'>
+                <SectionTitle id='sobre' >Por que escolher o Kodan?</SectionTitle>
+                
+                <FeaturesGrid>
+                    {/* Card 1: Dashboard Geral */}
+                    <FeatureCard>
+                        <IconWrapper>
+                            <FaColumns />
+                        </IconWrapper>
+                        <FeatureTitle>Dashboard Kanban</FeatureTitle>
+                        <FeatureText>
+                            Visualize todo o fluxo de trabalho em um único quadro. Mova tarefas entre colunas intuitivas, garanta transparência total e acompanhe o progresso em tempo real sem perder nenhum detalhe.
+                        </FeatureText>
+                    </FeatureCard>
+
+                    {/* Card 2: Estatísticas */}
+                    <FeatureCard>
+                        <IconWrapper>
+                            <FaChartPie />
+                        </IconWrapper>
+                        <FeatureTitle>Métricas e Estatísticas</FeatureTitle>
+                        <FeatureText>
+                            Tome decisões baseadas em dados. Tenha acesso a gráficos de produtividade, tempo médio de entrega (Lead Time) e gargalos do processo para otimizar continuamente o desempenho.
+                        </FeatureText>
+                    </FeatureCard>
+
+                    {/* Card 3: Alinhamento */}
+                    <FeatureCard>
+                        <IconWrapper>
+                            <FaTasks />
+                        </IconWrapper>
+                        <FeatureTitle>Gestão de Projetos</FeatureTitle>
+                        <FeatureText>
+                            Centralize múltiplos projetos em um só lugar. Defina prioridades, prazos e dependências, garantindo que o alinhamento estratégico da empresa seja cumprido do início ao fim.
+                        </FeatureText>
+                    </FeatureCard>
+
+                    {/* Card 4: Equipes */}
+                    <FeatureCard>
+                        <IconWrapper>
+                            <FaUsers />
+                        </IconWrapper>
+                        <FeatureTitle>Colaboração de Equipes</FeatureTitle>
+                        <FeatureText>
+                            Conecte seu time de forma eficiente. Atribua responsáveis, comente em tarefas e receba atualizações instantâneas, promovendo um ambiente de trabalho ágil e integrado.
+                        </FeatureText>
+                    </FeatureCard>
+
+                </FeaturesGrid>
             </SectionContainer>
 
             {/* FOOTER  */}
-            
+            <Footer />
         </Wrapper>
     )
 }

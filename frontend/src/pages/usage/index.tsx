@@ -1,6 +1,6 @@
 
 import { ProjectCard } from '../../components/TelaProjectCard'
-import { Header } from '../../components/Header'
+import { Header } from '../../components/HeaderHome'
 import { Container, NameProject, TitleProject } from './styles'
 import {  Wrapper } from './styles'
 

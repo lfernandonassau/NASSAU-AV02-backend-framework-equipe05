@@ -96,6 +96,8 @@ export const SignInButton = styled.button`
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
+
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -165,14 +167,13 @@ export const MobileMenu = styled.div<{ isOpen: boolean }>`
     right: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
     height: 100vh;
     width: 50%;
-    background: rgba(36, 36, 36, 0.51);
+    background: rgba(36, 36, 36, 0.41);
     backdrop-filter: blur(12px);
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.35);
 
     display: flex;
     flex-direction: column;
-    justify-content: center;    /* ⭐ CENTRALIZA VERTICAL */
-    align-items: center;        /* ⭐ CENTRALIZA HORIZONTAL */
+    justify-content: center;    
+    align-items: center;        
 
     gap: 2.5rem;                 /* espaçamento entre links */
     transition: right 0.35s ease-in-out;
