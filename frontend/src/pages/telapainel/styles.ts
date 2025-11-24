@@ -141,31 +141,58 @@ export const ColumnsWrapper = styled.div`
     align-items: flex-start;
     gap: 1.5rem;
     
+    /* Comportamento de Scroll */
     overflow-x: auto; 
-    padding-bottom: 10px; 
+    overflow-y: hidden; /* Evita scroll vertical desnecessário no wrapper */
+    scroll-behavior: smooth;
     
+    /* Scroll Snap: Melhora a experiência de rolagem horizontal */
+    scroll-snap-type: x mandatory;
+    
+    /* Espaçamento para a barra de rolagem e para não cortar sombras laterais */
+    padding: 4px 4px 12px 4px; 
+    
+    /* --- SCROLLBAR ESTILIZADA --- */
     &::-webkit-scrollbar {
-        height: 8px;
+        height: 8px; /* Altura da barra horizontal */
     }
-    &::-webkit-scrollbar-thumb {
-        background-color: #ccc;
+
+    &::-webkit-scrollbar-track {
+        background: transparent; /* Fundo transparente para parecer flutuante */
         border-radius: 4px;
     }
 
-    /* Configuração para empilhar */
+    &::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1; /* Cinza suave (Slate-300) */
+        border-radius: 10px;       /* Borda totalmente redonda */
+        border: 2px solid #ffffff; /* Borda branca cria um respiro interno */
+        
+        &:hover {
+            background-color: #94a3b8; /* Escurece ao passar o mouse */
+        }
+    }
+
+    /* Configuração para empilhar (Mobile/Tablet) */
     @media (max-width: 1540px) {
         flex-direction: column; 
         overflow-x: visible;    /* Remove scroll horizontal */
         align-items: stretch;   
+        
+        gap: 24px; /* Aumenta um pouco o espaço vertical entre as colunas */
         padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+        
+        /* Desativa o snap no modo vertical */
+        scroll-snap-type: none;
         
         & > div {
             width: 100%;
             max-width: 100%;
+            scroll-snap-align: start; /* Garante alinhamento se voltar para row */
         }
     }
 `;
-
 // Botão único para adicionar colaboradores
 export const AddMemberButton = styled.button`
     display: flex;

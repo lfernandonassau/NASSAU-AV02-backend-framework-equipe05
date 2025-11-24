@@ -30,12 +30,14 @@ export const ModalCard = styled.div`
 `;
 
 export const Header = styled.div`
-  background-color: #006391;
+  background-color: transparent;
+  border-bottom: 1px solid #e2e8f0;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #fff;
+  color: #363636ff;
+  font-weight: 600;
 `;
 
 export const HeaderTitle = styled.h3`
@@ -47,7 +49,7 @@ export const HeaderTitle = styled.h3`
 export const CloseButton = styled.button`
   background: rgba(255,255,255,0.2);
   border: none;
-  color: #fff;
+  color: #363636ff;
   width: 30px;
   height: 30px;
   border-radius: 50%;

@@ -3,10 +3,8 @@ export interface IHeader {
     variant?: string;
 }
 
-export interface IHeaderStyled {
-    variant?: string;
-    $isScrolled: boolean;
-    
+export interface INavBarProps {
+    isScrolled: boolean;
 }
 
 export interface INavContainerProps {

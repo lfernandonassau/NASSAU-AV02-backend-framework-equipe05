@@ -103,7 +103,7 @@ const TelaDashboard = () => {
 
                     {/* TABELA 1: Painel de atividades */}
                     <CardTable>
-                        <TableTitle>Painel de atividades entre projetos</TableTitle>
+                        <TableTitle>Painel de atividades</TableTitle>
                         
                         <Table>
                             <thead>

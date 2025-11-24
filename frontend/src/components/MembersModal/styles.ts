@@ -12,6 +12,9 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1100;
+
+  padding: 20px; 
+  box-sizing: border-box;
 `;
 
 export const ModalContainer = styled.div`
@@ -28,6 +31,9 @@ export const ModalContainer = styled.div`
   gap: 20px;
   
   font-family: 'Montserrat', sans-serif; 
+ 
+  
+  max-height: 90vh; 
 `;
 
 export const Header = styled.div`
