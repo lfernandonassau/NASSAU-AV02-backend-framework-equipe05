@@ -33,19 +33,20 @@ export const ModalCard = styled.div`
 
 export const ModalHeader = styled.div`
     /* Mantendo o padrão azul do seu sistema, ou use #3d3d3dff se quiser diferenciar edição */
-    background-color: #0063918c; 
+    background-color: transparent; 
     border-bottom: 1px solid #ffffff;
     padding: 1rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #cbd5e1;
 `;
 
 export const ModalTitle = styled.h2`
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #2c2c2cff;
     margin: 0;
     line-height: 1.4;
 `;
@@ -53,7 +54,7 @@ export const ModalTitle = styled.h2`
 export const CloseButton = styled.button`
     background: transparent;
     border: none;
-    color: #ffffff;
+    color: #292929ff;
     font-size: 1.2rem;
     cursor: pointer;
     padding: 4px;
@@ -67,7 +68,7 @@ export const CloseButton = styled.button`
 
     &:hover {
         background-color: rgba(255,255,255,0.2);
-        color: #ffffff;
+        color: #474747ff;
     }
 `;
 

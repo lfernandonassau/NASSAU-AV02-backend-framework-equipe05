@@ -8,7 +8,19 @@ import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 
+
+// IMPORTAR HOOK DE IDIOMA 
+import { useLanguage } from '../../context/LanguageContext';
+
 const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSidebar) => { 
+
+    // Se não estiver autenticado, não mostra nada (retorna null)
+    // Isso substitui aquele return gigante de "Visitante"
+    if (!autenticado) return null;
+
+
+    // --- 2. USAR TRADUÇÃO ---
+    const { t } = useLanguage()
     
     // Estado para controlar se o menu está aberto no mobile
     const [isOpen, setIsOpen] = useState(false)
@@ -67,28 +79,28 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                         $active={isActive('/projetos')} 
                         onClick={() => handleNavigation('/projetos')}
                     >
-                        <LiaProjectDiagramSolid /> Gerenciamento de Projetos
+                        <LiaProjectDiagramSolid /> {t('sidebar.projects')}
                     </SidebarItem>
 
                     <SidebarItem 
                         $active={isActive('/painel')} 
                         onClick={() => handleNavigation('/painel')}
                     >
-                        <LuLayoutPanelLeft /> Painel
+                        <LuLayoutPanelLeft /> {t('sidebar.board')}
                     </SidebarItem>
 
                     <SidebarItem 
                         $active={isActive('/estatisticas')} 
                         onClick={() => handleNavigation('/estatisticas')}
                     >
-                        <MdBarChart /> Estatísticas
+                        <MdBarChart /> {t('sidebar.stats')}
                     </SidebarItem>
 
                     <SidebarItem 
                         $active={isActive('/perfil')} 
                         onClick={() => handleNavigation('/perfil')}
                     >
-                        <MdPerson /> Minha conta
+                        <MdPerson /> {t('sidebar.account')}
                     </SidebarItem>
 
                     <SidebarDivider/>
@@ -98,61 +110,26 @@ const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSideba
                         $active={isActive('/configuracoes')}
                         onClick={() => handleNavigation('/configuracoes')}
                     >
-                        <MdSettings /> Configurações
+                        <MdSettings /> {t('sidebar.settings')}
                     </SidebarItem>
 
                     <SidebarItem 
                     onClick={() => alert('Abrir Ajuda')}
                     >
-                        <MdHelp /> Ajuda e Suporte
+                        <MdHelp /> {t('sidebar.help')}
                     </SidebarItem>
 
                     <SidebarItem 
                     onClick={handleLogout}
                     $variant="logout">
-                        <MdExitToApp /> Sair
+                        <MdExitToApp /> {t('sidebar.logout')}
                     </SidebarItem>
                 </SidebarContainer>
             </>
         );
     }
 
-    // 2. USUÁRIO VISITANTE
-    return (
-        <>
-            <MobileToggleBtn onClick={() => setIsOpen(true)}>
-                <MdMenu />
-            </MobileToggleBtn>
-
-            <Overlay $isOpen={isOpen} onClick={() => setIsOpen(false)} />
-
-            <SidebarContainer $isOpen={isOpen}>
-                <CloseBtn onClick={() => setIsOpen(false)}>
-                    <MdClose />
-                </CloseBtn>
-
-                <UserInfoSection>
-                    <img src="https://via.placeholder.com/60" alt="Guest" /> 
-                    <div>
-                        <strong>Visitante</strong>
-                        <span>Bem-vindo ao Kodan</span>
-                    </div>
-                </UserInfoSection>
-
-                <SidebarItem onClick={() => navigate('/')}>
-                    <MdHome /> Ir para Home
-                </SidebarItem>
-
-                <SidebarItem onClick={() => navigate('/login')} $variant="primary">
-                    <MdLogin /> Fazer Login
-                </SidebarItem>
-
-                <SidebarItem onClick={() => navigate('/cadastro')} $variant="highlight">
-                    <MdPerson /> Cadastre-se
-                </SidebarItem>
-            </SidebarContainer>
-        </>
-    );
+    
 };
 
 export { Sidebar }

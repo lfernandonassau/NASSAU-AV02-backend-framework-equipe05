@@ -12,6 +12,9 @@ export const FooterContainer = styled.footer<IContainerAnimationProps>`
   align-items: center;
   padding: 70px 20px 20px 20px;
 
+  box-sizing: border-box;
+  width: 100%;
+
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 1s ease-out, transform 1s ease-out;

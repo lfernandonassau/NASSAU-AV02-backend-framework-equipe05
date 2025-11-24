@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react'
 import {
     Container,
     SearchContainer,
@@ -8,36 +8,41 @@ import {
     Avatar,
     Divider
 } from './styles'
-import { IHeaderProfile } from './types';
+import { IHeaderProfile } from './types'
 
 import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md'
 import NotificationsModal from '../NotificationsModal'
 
-import { useNotifications } from '../../context/NotificationContext';
+import { useNotifications } from '../../context/NotificationContext'
+
+// 1. Importar useLanguage
+import { useLanguage } from '../../context/LanguageContext'
 
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
+    // 2. Usar t para traduzir
+    const { t } = useLanguage()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchText, setSearchText] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
 
     const toggleSearch = () => {
-        setIsSearchOpen(!isSearchOpen);
+        setIsSearchOpen(!isSearchOpen)
         if (!isSearchOpen) {
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => inputRef.current?.focus(), 100)
         } else {
-            setSearchText('');
+            setSearchText('')
         }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(e.target.value);
-        if (onSearch) onSearch(e.target.value);
+        setSearchText(e.target.value)
+        if (onSearch) onSearch(e.target.value)
     };
 
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
-    const [showNotifications, setShowNotifications] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false)
 
     const userImage = "https://avatars.githubusercontent.com/u/179970243?v=4"
 
@@ -50,7 +55,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                     <SearchInput
                         ref={inputRef}
                         $isOpen={isSearchOpen}
-                        placeholder="Buscar..."
+                        placeholder="t('header.search')"
                         value={searchText}
                         onChange={handleInputChange}
                     />

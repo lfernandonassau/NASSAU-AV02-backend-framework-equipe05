@@ -21,8 +21,9 @@ import {
 interface Member {
   id: number;
   name: string;
-  role: string;
-  avatarUrl: string;
+  email: string;
+  funcao: string; 
+  img: string;
 }
 
 interface MembersModalProps {
@@ -32,11 +33,11 @@ interface MembersModalProps {
 
 // Dados fictícios para replicar a imagem
 const mockMembers: Member[] = [
-  { id: 1, name: 'Ogunsanya Oyeleye', role: 'Head of Design', avatarUrl: 'https://i.pravatar.cc/150?img=11' },
-  { id: 2, name: 'Emmanuel Ikechukwu', role: 'Lead Product Designer', avatarUrl: 'https://i.pravatar.cc/150?img=3' },
-  { id: 3, name: 'Ufot Ubon', role: 'Illustrator', avatarUrl: 'https://i.pravatar.cc/150?img=7' },
-  { id: 4, name: 'Joboson Chisa', role: 'Head of Brand & Communications', avatarUrl: 'https://i.pravatar.cc/150?img=8' },
-  { id: 5, name: 'Chukwu Adaeze Victoria', role: 'Lead Media & Marketing Design', avatarUrl: 'https://i.pravatar.cc/150?img=5' },
+  { id: 1, name: "Rafael Alexandre", email: "rafael@kodan.com", funcao: "Fullstack Dev", img: "https://avatars.githubusercontent.com/u/179970243?v=4" },
+  { id: 2, name: "Ryan", email: "ryan@kodan.com", funcao: " Frontend Dev", img: "https://avatars.githubusercontent.com/u/162740474?v=4" },
+  { id: 3, name: "Samuel", email: "sadosan@kodan.com", funcao: "Backend Dev", img: "https://avatars.githubusercontent.com/u/122215538?v=4" },
+  { id: 4, name: "Alandelon", email: "alandelon@kodan.com", funcao: "Fullstack Dev", img: "https://avatars.githubusercontent.com/u/173320062?v=4" },
+  { id: 5, name: "Daniel", email: "daniel@kodan.com", funcao: " Frontend Dev", img: "https://avatars.githubusercontent.com/u/211064470?v=4" },
 ];
 
 const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
@@ -70,9 +71,6 @@ const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
                 <Role>Nome/Função</Role>
               </Texts>
             </UserInfo>
-            <ActionButton $variant="add">
-              + Label
-            </ActionButton>
           </ListItem>
 
           {/* Lista de Membros Existentes */}
@@ -80,11 +78,11 @@ const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
             <ListItem key={member.id}>
               <UserInfo>
                 <AvatarCircle>
-                  <img src={member.avatarUrl} alt={member.name} />
+                  <img src={member.img} alt={member.name} />
                 </AvatarCircle>
                 <Texts>
                   <Name>{member.name}</Name>
-                  <Role>{member.role}</Role>
+                  <Role>{member.funcao}</Role>
                 </Texts>
               </UserInfo>
               <ActionButton $variant="remove" onClick={() => alert(`Remover ${member.name}?`)}>

@@ -1,202 +1,197 @@
-import { MdNotifications } from 'react-icons/md'
-import { css, styled } from 'styled-components'
-import { IHeaderStyled, INavContainerProps } from './types'
-import { PageButtons } from '../Button/styles'
-import { FaB, FaBars } from 'react-icons/fa6'
+import styled from "styled-components";
+import { INavBarProps } from "./types";
 
-export const HeaderContainer = styled.div`
-    width: 100%;
-    max-width: 90%;
-    height: 55px;
+/* --- NAVBAR (CABEÇALHO DA LANDING PAGE) --- */
+export const NavBar = styled.nav<INavBarProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    margin: 0 auto;
-
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-
-`
-
-export const NavContainer = styled.div<INavContainerProps>`
-    display: flex;
-    align-items: center;
-    padding-left: 100px;
-
-    @media (max-width: 768px) {
-        
-        /* Por padrão (fechado), ele some */
-        display: none; 
-
-        /* QUANDO $isOpen FOR TRUE, ele vira a "lista" */
-        ${({ $isOpen }) => $isOpen && css`
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px; 
-
-            /* 3. Posicionamento para flutuar sobre a página */
-            position: absolute;
-            z-index: 1000;
-            top: 50px; /* IMPORTANTE: Deve ser a altura do seu Header */
-            left: 0;
-            right: 0;
-            
-            /* 4. Estilo do container mobile */
-            background: #4eb2ecbe; 
-            padding: 20px;
-            
-            /* 5. (Opcional) Estilo dos botões dentro do menu mobile */
-            & > ${PageButtons} {
-                width: 100%;
-                max-width: 300px;
-                font-size: 1rem;
-                padding: 5px;
-                
-            }
-        `}
-`
-
-export const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-`
-
-
-
-export const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-`
-
-export const Wrapper = styled.div<IHeaderStyled>`
-    background-color: transparent;
+    padding: 1rem 4rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
+
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
 
-    z-index: 1000;
+    background: ${({ isScrolled }) =>
+        isScrolled ? "rgba(51, 51, 51, 0.26)" : "rgba(255, 255, 255, 0)"};
 
-    transition: background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
-    background-color: transparent; /* Totalmente transparente no topo */
-    backdrop-filter: blur(0px);
+    backdrop-filter: ${({ isScrolled }) =>
+        isScrolled ? "blur(14px)" : "blur(6px)"};
 
-    ${({ $isScrolled }) => $isScrolled && css`
-        background-color: #75caf170; 
-        backdrop-filter: blur(10px); 
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    `}
+    z-index: 999;
 
-    ${({variant}) => variant !== 'primary' && css`
-        background-color: #0063918c;
-    `}
-
-`
-
-export const BuscarInputContainer = styled.div`
-    width: 170px;
-    height: 30px;
-    background: #0000001a;
-    border-radius: 8px;
-    padding: 2px 5px;
-    margin: 0 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: 420px) {
-        /* Oculta a barra de pesquisa em telas de smartphone */
-        display: none;
-    }
-`
-
-export const Menu = styled.a`
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-size: 12px;
-    line-height: 25px;
-    color: #FFFFFF;
-    margin-right: 12px;
-    text-decoration: none;
-
-`
-
-export const TitleBorder = styled.div`
-    
-    color: #ffffffff;
-    border-radius: 20px;
-    text-align: center;
-    padding: 5px 10px 4px 0;
-
-    font-family: 'Montserrat';
-    font-weight: 700;
-    font-size: 17px;
-
-    cursor: pointer;
-
-`
-
-
-
-export const MenuRight = styled.a`
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-size: 12px;
-    line-height: 25px;
-    color: #FFFFFF;
-    margin-right: 12px;
-    text-decoration: none;
-
-`
-
-export const UserPicture = styled.img`
-    width: 32px;
-    height: 32px;
-    border-radius: 22px;
-    border: 2px solid #FFFFFF;
-    margin-right: 20px;
-
-`
-export const FeedPicture = styled(MdNotifications)`
-    width: 25px;
-    height: 20px;
-    border-radius: 22px;
-    margin-right: 10px;
-
-`
-
-
-/* Menu de Hamburguer */
-
-export const HamburguerIcon = styled(FaBars)`
-    color: #FFFFFF;
-    
-`
-
-export const HamburgerButton = styled.button`
-    display: none;
-    background: none;
-    border: none;
-    color: #FFFFFF; 
-    font-size: 1.6rem; 
-    cursor: pointer;
-    z-index: 1001;
-    padding: 5px;
-    height: 35px;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease, padding 0.3s ease;
 
     @media (max-width: 768px) {
-        display: block; /* Aparece no mobile */
+        padding: 1rem 1.5rem;
     }
-`
+`;
+
+/* LOGO */
+export const LogoArea = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    gap: 6px;
+    cursor: pointer;
+
+    img {
+        height: 33px;
+        margin-right: 4px;
+    }
+
+    span {
+        font-family: "Montserrat", sans-serif;
+        color: rgba(255, 255, 255, 0.85);
+    }
+`;
+
+/* DESKTOP LINKS */
+export const NavLinks = styled.div`
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    gap: 50px;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+`;
+
+export const NavLink = styled.a`
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+        color: #ffffff;
+    }
+`;
+
+export const RightSide = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    /* ⭐ TELAS PEQUENAS */
+    @media (max-width: 768px) {
+        gap: 10px;
+    }
+`;
+
+/* BOTÃO ENTRAR */
+export const SignInButton = styled.button`
+    background-color: #353535ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        padding: 8px 14px;   /* diminui */
+        font-size: 0.8rem;
+    }
+`;
+
+export const AuthButtons = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @media (max-width: 850px) {
+        gap: 8px;
+        margin-right: 0;  /* remove o espaço extra */
+    }
+
+    @media (max-width: 768px) {
+        gap: 6px;
+    }
+`;
+
+/* BOTÃO HAMBÚRGUER */
+export const MobileMenuButton = styled.button<{ isOpen: boolean }>`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 9999; /* <<< AQUI */
+
+    span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: white;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    /* Transformar em X */
+    ${({ isOpen }) =>
+      isOpen &&
+      `
+        span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        span:nth-child(2) { opacity: 0; }
+        span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+      `}
+  }
+`;
+
+/* MENU MOBILE ABERTO */
+export const MobileMenu = styled.div<{ isOpen: boolean }>`
+    position: fixed;
+    top: 0;
+    right: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+    height: 100vh;
+    width: 50%;
+    background: rgba(36, 36, 36, 0.51);
+    backdrop-filter: blur(12px);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* ⭐ CENTRALIZA VERTICAL */
+    align-items: center;        /* ⭐ CENTRALIZA HORIZONTAL */
+
+    gap: 2.5rem;                 /* espaçamento entre links */
+    transition: right 0.35s ease-in-out;
+    z-index: 1000;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+`;
+
+export const MobileLink = styled.a`
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.7;
+    }
+`;

@@ -3,26 +3,37 @@ import styled from "styled-components";
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6); /* Fundo um pouco mais escuro e azulado */
-  backdrop-filter: blur(4px); /* Efeito de vidro fosco no fundo */
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000; /* Z-index alto para ficar acima de tudo */
+  z-index: 2000;
+  
+  /* Adiciona um respiro. O modal vai ocupar 100% DO ESPAÇO INTERNO deste padding */
+  padding: 20px; 
+  box-sizing: border-box;
 `;
 
 export const ModalCard = styled.div`
   font-family: 'Montserrat', sans-serif;
   background: #ffffff;
+  
   width: 100%;
-  max-width: 450px; /* Um pouco mais largo para respirar */
-  border-radius: 12px; /* Bordas mais arredondadas */
+  max-width: 450px; /* Largura máxima no desktop */
+  
+  /* Importante para mobile landscape (celular deitado) */
+  max-height: 90vh; 
+  
+  border-radius: 12px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
   display: flex;
   flex-direction: column;
   overflow: hidden;
   
-  /* Animação de entrada suave */
+  border: 1px solid #e2e8f0;
+  
   animation: modalFadeIn 0.2s ease-out;
   
   @keyframes modalFadeIn {
@@ -32,11 +43,13 @@ export const ModalCard = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-  background-color: #2c2c2cff;
-  padding: 1.25rem 1.5rem; /* Mais padding */
+  background-color: #363636ff;
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* Header fixo, não encolhe */
+  flex-shrink: 0; 
 `;
 
 export const ModalTitle = styled.h2`
@@ -58,7 +71,7 @@ export const ModalTitle = styled.h2`
 `;
 
 export const CloseButton = styled.button`
-  background: none;
+  background: rgba(255,255,255,0.1);
   border: none;
   color: #ffffff;
   width: 28px;
@@ -69,11 +82,11 @@ export const CloseButton = styled.button`
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-
-  font-size: 1.5rem;
+  font-size: 18px;
 
   &:hover {
     background: rgba(255,255,255,0.2);
+    transform: rotate(90deg);
   }
 `;
 
@@ -81,7 +94,10 @@ export const ModalBody = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* Maior espaçamento entre campos */
+  gap: 1.25rem;
+  
+  /* Permite scroll se o conteúdo for maior que a tela do celular */
+  overflow-y: auto; 
 `;
 
 export const Row = styled.div`
@@ -107,14 +123,12 @@ export const UserAssignmentText = styled.span`
   color: #1e293b;
   font-weight: 500;
   
-  /* Dica visual de que é atribuído a ele */
   &::before {
     content: '👤 ';
     margin-right: 4px;
   }
 `;
 
-/* Agrupador de Label + Input para melhor organização */
 export const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -134,10 +148,11 @@ export const TextInput = styled.input<{ hasError?: boolean }>`
   border: 1.5px solid ${({ hasError }) => (hasError ? '#ef4444' : '#e2e8f0')};
   border-radius: 8px;
   font-size: 0.95rem;
-  padding: 0.75rem 1rem; /* Input mais alto e confortável */
+  padding: 0.75rem 1rem;
   color: #1e293b;
   outline: none;
   transition: all 0.2s ease;
+  box-sizing: border-box; /* Garante que padding não estoure a largura */
 
   &::placeholder {
     color: #94a3b8;
@@ -145,7 +160,7 @@ export const TextInput = styled.input<{ hasError?: boolean }>`
 
   &:focus {
     border-color: #006391;
-    box-shadow: 0 0 0 3px rgba(0, 99, 145, 0.1); /* Ring focus sutil */
+    box-shadow: 0 0 0 3px rgba(0, 99, 145, 0.1);
   }
 `;
 
@@ -168,7 +183,8 @@ export const ModalFooter = styled.div`
   background-color: #f8fafc;
   padding: 1.25rem 1.5rem;
   display: flex;
-  justify-content: flex-end; /* Alinha botões à direita (padrão UX) */
+  justify-content: flex-end;
   gap: 1rem;
   border-top: 1px solid #e2e8f0;
+  flex-shrink: 0; /* Footer fixo, não encolhe */
 `;
