@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ProjectCard } from '../../components/TelaProjectCard'
 import { Sidebar } from '../../components/Sidebar'
@@ -55,6 +55,7 @@ import {
 import { FaRocket } from 'react-icons/fa' // Ícone genérico de projeto
 import { LuKanban, LuX } from "react-icons/lu";
 
+
 type Project = {
     id: string
     title: string
@@ -65,24 +66,12 @@ type Project = {
 const PROJECT_TITLE_MAX = 40
 const PROJECT_SUBTITLE_MAX = 120
 
-const mockProjects: Project[] = [
-    {
-        id: '1',
-        title: 'Kodan - Board da Faculdade',
-        subtitle: 'Kanban para organizar as tarefas do grupo da disciplina de backend.',
-    },
-    {
-        id: '2',
-        title: 'TaskLock',
-        subtitle: 'App de foco para limitar uso de apps e trocar tempo por tarefas concluídas.',
-    },
-]
-
 const TelaProjetos = () => {
 
     const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
     
-    const [projects, setProjects] = useState<Project[]>(mockProjects)
+    const [projects, setProjects] = useState<Project[]>([])
+
 
     // Modais States
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -102,6 +91,27 @@ const TelaProjetos = () => {
     const [menuProjectId, setMenuProjectId] = useState<string | null>(null)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+    async function loadProjects() {
+        try {
+            const res = await fetch('http://localhost:3000/projects')
+            const data = await res.json()
+
+            const mapped = data.map((p: any) => ({
+                id: String(p.id_project ?? p.id),
+                title: p.title,
+                subtitle: p.subtitle ?? '',
+            }))
+
+            setProjects(mapped)
+        } catch (err) {
+            console.error("Erro ao carregar projetos:", err)
+        }
+    }
+
+    loadProjects()
+}, [])
 
     // helpers de texto
     function handleChangeNewTitle(e: React.ChangeEvent<HTMLInputElement>) {
@@ -136,15 +146,42 @@ const TelaProjetos = () => {
         setNewProjectTitle('')
         setNewProjectSubtitle('')
     }
-    function handleCreateProject(e: React.FormEvent) {
+    async function handleCreateProject(e: React.FormEvent) {
         e.preventDefault()
+
         const title = newProjectTitle.trim()
         const subtitle = newProjectSubtitle.trim()
+
         if (!title) return
-        const newProject: Project = { id: String(Date.now()), title, subtitle }
-        setProjects(prev => [...prev, newProject])
-        closeCreateModal()
+
+        try {
+            const res = await fetch('http://localhost:3000/projects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, subtitle }),
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao criar projeto:', await res.json())
+                return
+            }
+
+            const created = await res.json()
+
+            const newProject: Project = {
+                id: String(created.id_project),
+                title: created.title,
+                subtitle: created.subtitle ?? '',
+            }
+
+            setProjects(prev => [...prev, newProject])
+            closeCreateModal()
+        } catch (err) {
+            console.error("Erro ao criar projeto:", err)
+        }
     }
+
+
 
     // Edit
     function openEditModal(project: Project) {
@@ -160,16 +197,44 @@ const TelaProjetos = () => {
         setEditProjectTitle('')
         setEditProjectSubtitle('')
     }
-    function handleEditProject(e: React.FormEvent) {
+    async function handleEditProject(e: React.FormEvent) {
         e.preventDefault()
         if (!projectToEdit) return
+
         const title = editProjectTitle.trim()
         const subtitle = editProjectSubtitle.trim()
+
         if (!title) return
-        const updated = projects.map(p => p.id === projectToEdit.id ? { ...p, title, subtitle } : p)
-        setProjects(updated)
-        closeEditModal()
+
+        try {
+            const res = await fetch(`http://localhost:3000/projects/${projectToEdit.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, subtitle }),
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao editar:', await res.json())
+                return
+            }
+
+            const updated = await res.json()
+
+            setProjects(prev =>
+                prev.map(p =>
+                    p.id === projectToEdit.id
+                        ? { ...p, title: updated.title, subtitle: updated.subtitle ?? '' }
+                        : p
+                )
+            )
+
+            closeEditModal()
+        } catch (err) {
+            console.error("Erro ao editar:", err)
+        }
     }
+
+
 
     // Delete
     function openDeleteModal(project: Project) {
@@ -181,12 +246,30 @@ const TelaProjetos = () => {
         setIsDeleteModalOpen(false)
         setProjectToDelete(null)
     }
-    function handleDeleteProject() {
+    async function handleDeleteProject() {
         if (!projectToDelete) return
-        setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
-        setExpandedProjectId(current => current === projectToDelete.id ? null : current)
-        closeDeleteModal()
+
+        try {
+            const res = await fetch(`http://localhost:3000/projects/${projectToDelete.id}`, {
+                method: 'DELETE',
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao excluir:', await res.json())
+                return
+            }
+
+            setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
+            setExpandedProjectId(current =>
+                current === projectToDelete.id ? null : current
+            )
+
+            closeDeleteModal()
+        } catch (err) {
+            console.error("Erro ao excluir:", err)
+        }
     }
+
 
     function handleToggleProject(projectId: string) {
         setExpandedProjectId(current => (current === projectId ? null : projectId))
