@@ -162,7 +162,7 @@ export const SidebarItem = styled.button<IMenuItemStyled>`
         white-space: nowrap; 
         width: auto;
         border-left: none;
-        border-bottom: ${({ $active }) => $active ? '2px solid #3b3b3bff' : 'none'};
+        background-image: #000000b9;
         
         padding: 10px 15px;
         margin-top: 0; /* Remove margem do logout no mobile */
@@ -229,15 +229,16 @@ export const CloseBtn = styled.button`
 
 /* LOGO  */
 export const SidebarLogo = styled.h2`
-    font-family: 'Montserrat', cursive; 
+    font-family: 'Lobster Two', cursive; 
     font-weight: 700;
-    font-size: 25px;
+    font-size: 35px;
     color: #2b2b2bff; 
     text-align: center;
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     
     /* Espaçamento para separar do conteúdo */
     margin-top: -5px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     width: 100%;
 
     /* Previne quebra de linha indesejada */
@@ -257,7 +258,7 @@ export const LogoImage = styled.img`
     
     
     /* O Segredo: drop-shadow para destacar o branco no fundo branco */
-    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.4)); 
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3));
 `
 
 export const SidebarDivider = styled.div`

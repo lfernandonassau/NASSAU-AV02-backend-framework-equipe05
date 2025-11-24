@@ -7,6 +7,7 @@ export const AreaContainer = styled.div`
   height: 300px;
 
   h3 {
+    font-family: "Montserrat", sans-serif;
     font-size: 1rem;
     margin-bottom: 10px;
     color: #021c2e;

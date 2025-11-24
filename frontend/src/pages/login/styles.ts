@@ -104,9 +104,13 @@ export const PageWrapper = styled.div`
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-    
+
+    display: flex;
+    flex-direction: column; /* Coloca um item abaixo do outro */
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    
+    gap: 30px;
     box-sizing: border-box;
 
     min-height: 100vh;
@@ -116,8 +120,7 @@ export const PageWrapper = styled.div`
     
     @media (max-width: 768px) {
         
-        padding: 200px 15px;
-        align-items: flex-start;
+    
         background-attachment: scroll;
     }
 

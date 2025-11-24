@@ -11,6 +11,7 @@ import { TelaDashboard } from "../pages/teladashboard";
 import { TelaPerfil } from "../pages/telaperfil";
 
 import Estatisticas from "../pages/telaEstatisticas"; 
+import { TelaConfig } from "../pages/telaconfiguracoes";
 
 const AppRoutes = () => {
   return (
@@ -25,6 +26,7 @@ const AppRoutes = () => {
           <Route path="/dashboard" element={<TelaDashboard />} />
           <Route path="/perfil" element={<TelaPerfil />} />
           <Route path="/estatisticas" element={<Estatisticas />} /> 
+          <Route path="/configuracoes" element={<TelaConfig />} /> 
         </Routes>
       </TasksProvider>
     </BrowserRouter>
