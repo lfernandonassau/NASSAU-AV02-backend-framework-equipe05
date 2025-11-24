@@ -21,7 +21,7 @@ const ProjectOverviewPie = () => {
           cornerRadius={5}
           activeOuterRadiusOffset={10}
           colors={["#47B0F7", "#1454B8", "#0B1B3A"]}
-          margin={{ top: 20, right: 40, bottom: 40, left: 40 }}
+          margin={{ top: 20, right: 90, bottom: 40, left: 40 }}
           enableArcLabels={false}
           arcLinkLabelsSkipAngle={10}
           arcLinkLabelsTextColor="#2E2E2E"
@@ -29,10 +29,10 @@ const ProjectOverviewPie = () => {
           arcLinkLabelsColor={{ from: "color" }}
           legends={[]}
         />
+
       </ChartWrapper>
     </CardContainer>
   );
 };
 
 export default ProjectOverviewPie;
-
