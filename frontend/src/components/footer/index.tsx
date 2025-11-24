@@ -60,7 +60,7 @@ const Footer = () => {
             </ContactItem>
 
             <p style={{ color: '#fff', fontSize: '0.9rem', marginTop: '15px', marginBottom: '8px' }}>
-              Nossos Repositórios:
+              Repositórios:
             </p>
             
             <GithubGrid>

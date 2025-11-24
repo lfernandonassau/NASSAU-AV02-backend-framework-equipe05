@@ -4,6 +4,7 @@ export const ChartWrapper = styled.div`
   height: 300px;
 
   h3 {
+    font-family: 'Montserrat', 'sans serif';
     font-size: 16px;
     font-weight: 600;
     color: #1f1f1f;
