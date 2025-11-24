@@ -1,42 +1,60 @@
+// ProjectService.ts
 import ProjectRepository from '../repositories/ProjectRepository.js'
 
-//
 interface CreateProjectDTO {
-    titulo: string
+    title: string
     subtitle?: string
-    dashboardId: bigint | number
 }
 
 interface UpdateProjectDTO {
-    titulo?: string
+    title?: string
     subtitle?: string
-    dashboardId?: number
 }
 
 export default {
     async create(data: CreateProjectDTO) {
-        // Regra de negócios
-        if (!data.titulo) {
-            throw new Error("Título obrigatório")
+        if (!data.title || !data.title.trim()) {
+            throw new Error('Título obrigatório')
         }
 
-        const project = await ProjectRepository.create(data)
-            return project
+        const payload: { title: string; subtitle?: string } = {
+            title: data.title.trim(),
+        }
+
+        // Só adiciona subtitle se realmente existir
+        if (data.subtitle && data.subtitle.trim()) {
+            payload.subtitle = data.subtitle.trim()
+        }
+
+        const project = await ProjectRepository.create(payload)
+        return project
     },
 
     async list() {
-        return await ProjectRepository.list()
+        return ProjectRepository.list()
     },
 
-    async update(id: number, data: UpdateProjectDTO){
-        if(!data.titulo && !data.dashboardId){
-            throw new Error('Oq sobrou para betinha')
+    async update(id: number, data: UpdateProjectDTO) {
+        if (!data.title && !data.subtitle) {
+            throw new Error('Nenhum campo fornecido para atualização')
         }
-        const updated = await ProjectRepository.update(id, data)
-            return updated
+
+        const updateData: UpdateProjectDTO = {}
+
+        if (data.title) {
+            updateData.title = data.title.trim()
+        }
+
+        if (data.subtitle) {
+            updateData.subtitle = data.subtitle.trim()
+        }
+
+        const project = await ProjectRepository.update(id, updateData)
+        return project
     },
 
-    async delete(id: number){
-        return await ProjectRepository.delete(id)
-    }
+    async delete(id: number) {
+        const deleted = await ProjectRepository.delete(id)
+        return deleted
+    },
 }

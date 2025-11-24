@@ -128,9 +128,11 @@ const PainelPage: React.FC = () => {
     
     const cancelDelete = () => setDeleteId(null);
 
-    const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-        if(tab === 'projetos') navigate('/home');
+    const handleTabChange = (tab: string) => { setActiveTab(tab);
+
+        if (tab === 'projetos') navigate('/home');
+        if (tab === 'painel') navigate('/painel');
+        if (tab === 'estatisticas') navigate('/estatisticas'); 
     };
 
     const handleSearch = (val: string) => console.log("Buscar no painel:", val);

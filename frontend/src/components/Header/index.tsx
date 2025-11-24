@@ -1,4 +1,4 @@
-import { MdSearch } from 'react-icons/md';
+import { MdSearch, MdKeyboardArrowDown } from 'react-icons/md';
 import logo from '../../assets/logo.svg';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -16,9 +16,11 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
 
     // Modal
     const [showNotifications, setShowNotifications] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
     // Dados do contexto
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const navigate = useNavigate();
 
     // Fecha modal no ESC
     useEffect(() => {
@@ -46,7 +48,9 @@ const Header = ({ autenticado, variant = 'primary' }: IHeader) => {
         defaultValues: { campoDeBusca: '' }
     });
 
-    const navigate = useNavigate();
+    const handleLogout = () => {
+        navigate('/login');
+    };
 
     const handleNavigate = (path: string) => {
         navigate(path);

@@ -76,9 +76,8 @@ model Relatory{
 model Project{
 
   id_project        BigInt        @id @default(autoincrement())
-  titulo            String        @db.VarChar(40)
+  title            String        @db.VarChar(40)
   subtitle          String?        @db.VarChar(120)
-  dashboardId       BigInt        //OBS: não lembro disso.
   relatory          Relatory?
   column            Column[]
 
