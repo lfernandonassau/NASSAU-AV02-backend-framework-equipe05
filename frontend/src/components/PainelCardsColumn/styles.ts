@@ -10,15 +10,23 @@ export const ColumnWrapper = styled.div`
     min-width: 320px; 
     flex-shrink: 0; 
 
-
     display: flex;
     flex-direction: column;
     position: relative;
 
+    /* --- CORREÇÃO DO CURSOR --- */
+    cursor: default; 
+
+    /* Bloqueia seleção de texto */
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    
+    /* Bloqueia arrastar imagens nativas do navegador (ghost image) */
+    img {
+        -webkit-user-drag: none;
+        user-drag: none;
+        pointer-events: none; /* Imagens não devem roubar o evento do Card */
+    }
 
     scroll-snap-align: start;
 
@@ -26,18 +34,15 @@ export const ColumnWrapper = styled.div`
         width: 100%;
         min-width: 0; 
         flex-shrink: 1;
-        
-        
-        /* max-height: 500px; */
     }
 `;
-
 
 export const ColumnHeader = styled.div`
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #c4bfbfff;
     background-color: transparent;
     border-radius: 4px 4px 0 0;
+    cursor: default;
 `;
 
 export const ColumnTitle = styled.div`
@@ -59,8 +64,6 @@ export const ColumnTitle = styled.div`
     }
 `
 
-
-
 export const CardsList = styled.div`
     padding: 0.75rem 1rem 3.5rem; 
     display: flex;
@@ -69,10 +72,13 @@ export const CardsList = styled.div`
 
     max-height: 500px; 
     
-    
     overflow-y: auto; 
     scroll-behavior: smooth;
     
+    /* Garante que a lista receba eventos corretamente */
+    pointer-events: auto; 
+    cursor: default;
+
     /* Esconde a barra de rolagem */
     &::-webkit-scrollbar { display: none; }
     scrollbar-width: none; 
@@ -95,9 +101,14 @@ export const AddButtonArea = styled.div`
     
     background: linear-gradient(to top, #f5f5f557 80%, rgba(245, 245, 245, 0) 100%);
     
+    /* Isso permite clicar nos CARDS que estão visualmente "embaixo" do gradiente */
     pointer-events: none;
 
-    z-index: 10; 
+    /* --- CORREÇÃO PRINCIPAL --- */
+    /* Removemos o z-index. Como este elemento vem DEPOIS da CardsList no HTML, 
+       ele já fica visualmente por cima (position: absolute). 
+       Z-index alto aqui causa o bug do cursor piscando. */
+    /* z-index: 10; */ 
 `;
 
 // Estilo base compartilhado
@@ -113,7 +124,10 @@ const BaseCircleButton = styled.button`
     justify-content: center;
     cursor: pointer;
     outline: none;
-    pointer-events: auto; /* Reativa o clique no botão */
+    
+    /* Reativa o clique e o cursor de "mãozinha" apenas no botão */
+    pointer-events: auto; 
+    
     transition: transform 0.2s ease, filter 0.2s ease;
 
     &:hover {
@@ -135,17 +149,15 @@ export const AddButton = styled(BaseCircleButton)`
     }
 `;
 
-// Novo Botão de Scroll
 export const ScrollButton = styled(BaseCircleButton)`
     background-color: #000000ff; 
     color: #ffffffff; 
     
-
     svg {
         font-size: 16px;
     }
     
     &:hover {
-        background-color: #575757ff;
+        background-color: #575757ff; 
     }
 `;
