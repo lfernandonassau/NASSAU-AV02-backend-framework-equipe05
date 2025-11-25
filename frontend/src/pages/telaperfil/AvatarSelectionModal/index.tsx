@@ -18,14 +18,10 @@ import {
 
 // Lista de Avatares Pré-definidos (Exemplo)
 const PRESET_AVATARS = [
-  "https://avatars.githubusercontent.com/u/179970243?v=4", // Rafael
   "https://avatars.githubusercontent.com/u/162740474?v=4", // Ryan
   "https://avatars.githubusercontent.com/u/122215538?v=4", // Samuel
   "https://avatars.githubusercontent.com/u/173320062?v=4", // Alandelon
   "https://avatars.githubusercontent.com/u/211064470?v=4", // Daniel
-  "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg",
-  "https://img.freepik.com/free-psd/3d-illustration-person-with-pink-hair_23-2149436186.jpg",
-  "https://img.freepik.com/free-psd/3d-illustration-business-man-with-glasses_23-2149436194.jpg"
 ];
 
 interface AvatarSelectionModalProps {
