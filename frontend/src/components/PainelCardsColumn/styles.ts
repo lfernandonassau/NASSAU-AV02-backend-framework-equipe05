@@ -104,11 +104,7 @@ export const AddButtonArea = styled.div`
     /* Isso permite clicar nos CARDS que estão visualmente "embaixo" do gradiente */
     pointer-events: none;
 
-    /* --- CORREÇÃO PRINCIPAL --- */
-    /* Removemos o z-index. Como este elemento vem DEPOIS da CardsList no HTML, 
-       ele já fica visualmente por cima (position: absolute). 
-       Z-index alto aqui causa o bug do cursor piscando. */
-    /* z-index: 10; */ 
+    z-index: 10;
 `;
 
 // Estilo base compartilhado

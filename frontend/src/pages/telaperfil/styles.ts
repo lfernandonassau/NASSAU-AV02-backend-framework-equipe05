@@ -267,7 +267,3 @@ export const FormGrid = styled.div`
     }
 `
 
-/*  INPUT INVISÍVEL PARA UPLOAD  */
-export const HiddenInput = styled.input`
-    display: none;
-`;

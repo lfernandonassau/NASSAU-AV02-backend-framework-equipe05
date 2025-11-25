@@ -214,11 +214,13 @@ export const DangerZone = styled.div`
         color: #991b1b;
         margin: 0 0 5px 0;
         font-size: 15px;
+        font-family: 'Montserrat', sans-serif;
     }
     p {
         color: #b91c1c;
         font-size: 12px;
         margin: 0;
+        font-family: 'Montserrat', sans-serif;
     }
 `;
 
