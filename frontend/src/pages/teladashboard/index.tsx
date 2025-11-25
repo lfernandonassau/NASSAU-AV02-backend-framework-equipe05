@@ -173,7 +173,7 @@ const TelaDashboard = () => {
                                     {/* 3. Esconder Tarefas, Status e Andamento no Mobile */}
                                     <Th $hideOnMobile>TAREFAS</Th>
                                     <Th $hideOnMobile>STATUS</Th>
-                                    <Th $hideOnMobile>ANDAMENTO</Th>
+                                    <Th $hideOnMobile>ANDAMENTO(Em breve)</Th>
                                     
                                     <Th></Th>
                                 </tr>

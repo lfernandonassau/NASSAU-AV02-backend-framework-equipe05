@@ -289,9 +289,9 @@ export const ViewMoreButton = styled.button`
         display: inline-block; 
     }
 `;
-// ------------------------------------
 
-// --- ESTILOS ESPECÍFICOS PARA A TABELA DE PROJETOS ---
+
+// ESTILOS ESPECÍFICOS PARA A TABELA DE PROJETOS
 
 export const ProjectIcon = styled.span`
     width: 20px;
@@ -323,13 +323,13 @@ export const ProgressContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 120px;
+    width: 100px;
 `;
 
 export const ProgressText = styled.span`
     font-size: 12px;
     font-weight: 600;
-    color: #006391; /* Azul do tema */
+    color: #006391; 
 `;
 
 export const ProgressBarBg = styled.div`
@@ -343,6 +343,6 @@ export const ProgressBarBg = styled.div`
 export const ProgressBarFill = styled.div<{ $width: number }>`
     width: ${({ $width }) => $width}%;
     height: 100%;
-    background-color: #006391; /* Azul do tema */
+    background-color: #006391; 
     border-radius: 2px;
 `;
