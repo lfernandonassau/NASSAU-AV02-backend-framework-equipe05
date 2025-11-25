@@ -1,154 +1,103 @@
-import React, { useEffect, useRef, useState } from "react";
-import Tooltip from "@mui/material/Tooltip";
+import { useState } from "react"
+import { FaGithubAlt, FaEnvelope } from "react-icons/fa"
+import LogoKodan from "../../assets/logo.svg"
+
+import PrivacyModal  from "./PrivacyModal"
 
 import {
   FooterContainer,
   FooterContent,
-  FooterSection,
-  FooterTitle,
-  FooterText,
-  ContactRow,
-  Copyright,
-  SocialRow,
-  SocialIcon,
-  Logo,
+  BrandSection,
+  LogoImage,
   Slogan,
-  GitHubIco,
-  EmailIco,
-  SmsIco,
-} from "./styles";
+  SectionColumn,
+  SectionTitle,
+  AboutText,
+  ContactItem,
+  GithubGrid,
+  GithubLink,
+  CopyrightBar,
+  PrivacyTrigger 
+} from "./styles"
 
-import PrivacyModal from "./PrivacyModal";
+const Footer = () => {
+  // hook para controlar se o modal está aberto ou fechado
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-import LogoKodan from "../../assets/logo.svg";
-
-const Footer: React.FC = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [visivel, setVisivel] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const atual = ref.current;
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisivel(true);
-          if (atual) obs.unobserve(atual);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (atual) obs.observe(atual);
-
-    return () => {
-      if (atual) obs.unobserve(atual);
-    };
-  }, []);
+  const developers = [
+    { name: "Samuel", url: "https://github.com/usuario1" },
+    { name: "Ryan", url: "https://github.com/usuario2" },
+    { name: "Rafael", url: "https://github.com/usuario3" },
+    { name: "Alanderson", url: "https://github.com/usuario4" },
+  ];
 
   return (
-    <FooterContainer ref={ref} $visivel={visivel}>
+    <> 
+      {/* Fragment (<>...</>) para agrupar o Footer e o Modal */}
+      
+      <FooterContainer>
+        <FooterContent>
+          <BrandSection>
+            <LogoImage src={LogoKodan} alt="Logo Kodan" />
+            <Slogan>Kodan — Projetos mais claros, equipes mais fortes.</Slogan>
+          </BrandSection>
 
-      {/* LOGO */}
-      <Logo src={LogoKodan} alt="Kodan Logo" />
+          <SectionColumn>
+            <SectionTitle>Sobre o Projeto</SectionTitle>
+            <AboutText>
+              Kodan oferece um ambiente de gestão de projetos em formato Kanban,
+              onde líderes e colaboradores podem criar projetos, organizar tarefas
+              e acompanhar o progresso das equipes de forma intuitiva e eficaz.
+            </AboutText>
+          </SectionColumn>
 
-      {/* SLOGAN */}
-      <Slogan>Kodan — Projetos mais claros, equipes mais fortes</Slogan>
+          <SectionColumn>
+            <SectionTitle>Contato & Time</SectionTitle>
+            
+            <ContactItem>
+              <FaEnvelope />
+              <span>projetokodan@gmail.com</span>
+            </ContactItem>
 
-      {/* ÍCONES (GITHUBS DOS DEVs) */}
-      <SocialRow>
+            <p style={{ color: '#fff', fontSize: '0.9rem', marginTop: '15px', marginBottom: '8px' }}>
+              Repositórios:
+            </p>
+            
+            <GithubGrid>
+              {developers.map((dev, index) => (
+                <GithubLink 
+                  key={index} 
+                  href={dev.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  title={`GitHub de ${dev.name}`}
+                >
+                  <FaGithubAlt />
+                </GithubLink>
+              ))}
+            </GithubGrid>
+          </SectionColumn>
+        </FooterContent>
 
-        <Tooltip title="Ryan Rodrigues" arrow>
-          <SocialIcon href="https://github.com/Ryan27r">
-            <GitHubIco />
-          </SocialIcon>
-        </Tooltip>
+        <CopyrightBar>
+          © {new Date().getFullYear()} Kodan. Todos os direitos reservados.
+          <br />
+          
+          {/*  Botão que ativa o modal */}
+          <PrivacyTrigger onClick={() => setIsModalOpen(true)}>
+            Políticas de Privacidade & Termos de Uso
+          </PrivacyTrigger>
+          
+        </CopyrightBar>
+      </FooterContainer>
 
-        <Tooltip title="Rafael Alexandre" arrow>
-          <SocialIcon href="https://github.com/rafxys">
-            <GitHubIco />
-          </SocialIcon>
-        </Tooltip>
-
-        <Tooltip title="Samuel Douglas" arrow>
-          <SocialIcon href="https://github.com/Sadousan">
-            <GitHubIco />
-          </SocialIcon>
-        </Tooltip>
-
-        <Tooltip title="Alanderson Santos" arrow>
-          <SocialIcon href="https://github.com/AlandersonSantos">
-            <GitHubIco />
-          </SocialIcon>
-        </Tooltip>
-
-      </SocialRow>
-
-      {/* COLUNAS */}
-      <FooterContent>
-
-        {/* ----------------- SOBRE ----------------- */}
-        <FooterSection>
-          <FooterTitle>Sobre</FooterTitle>
-
-          <FooterText>
-            Kodan oferece um ambiente de gestão de projetos em formato Kanban,
-            onde líderes e colaboradores podem criar projetos, organizar tarefas
-            e acompanhar o progresso das equipes;
-          </FooterText>
-        </FooterSection>
-
-        {/* ----------------- CONTATOS (AGORA NO MEIO) ----------------- */}
-        <FooterSection>
-          <FooterTitle>Contatos</FooterTitle>
-
-          <ContactRow>
-            <EmailIco />
-            <FooterText href="mailto:kodanorg@enterprise.co">
-              kodanorg@enterprise.co
-            </FooterText>
-          </ContactRow>
-
-          <ContactRow>
-            <SmsIco />
-            <FooterText href="#">
-              (82) 94002 - 8922
-            </FooterText>
-          </ContactRow>
-        </FooterSection>
-
-        {/* ----------------- DADOS SENSÍVEIS (AGORA À DIREITA) ----------------- */}
-        <FooterSection>
-          <FooterTitle>Dados Sensíveis</FooterTitle>
-
-          <FooterText
-            as="button"
-            onClick={() => setOpenModal(true)}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              width: "100%",
-              textAlign: "center",   // centraliza o botão
-            }}
-          >
-            Políticas de Privacidade
-          </FooterText>
-        </FooterSection>
-
-      </FooterContent>
-
-      {/* COPYRIGHT */}
-      <Copyright>
-        © {new Date().getFullYear()} — Todos os direitos reservados para a kodan corporation
-      </Copyright>
-
-      {/* MODAL */}
-      <PrivacyModal open={openModal} onClose={() => setOpenModal(false)} />
-    </FooterContainer>
+      {/* Modal fica aqui fora do container visual do footer, mas dentro do componente */}
+      <PrivacyModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </>
   );
 };
 
-export default Footer;
-
+export  { Footer }

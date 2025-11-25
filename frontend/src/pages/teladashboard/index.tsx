@@ -33,6 +33,7 @@ import {
 
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { MdMoreVert } from 'react-icons/md';
+import { Copyright } from '../../components/Copyright';
 
 // Interface para projetos
 interface Project {
@@ -103,7 +104,7 @@ const TelaDashboard = () => {
 
                     {/* TABELA 1: Painel de atividades */}
                     <CardTable>
-                        <TableTitle>Painel de atividades entre projetos</TableTitle>
+                        <TableTitle>Painel de atividades</TableTitle>
                         
                         <Table>
                             <thead>
@@ -239,6 +240,7 @@ const TelaDashboard = () => {
                 project={selectedProject}
                 onClose={() => setSelectedProject(null)}
             />
+        
 
         </Wrapper>
     )

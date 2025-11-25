@@ -102,33 +102,32 @@ export const WelcomeContainer = styled.main`
 `
 export const PageWrapper = styled.div`
     background: radial-gradient(
-    circle at 70% 30%, /* Posição do centro da "luz" */
-    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
-    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
-    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
-    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
+        circle at 70% 30%, 
+        #cde4faff 0%,      
+        #b7d2ebff 20%,     
+        #216b99ff 70%,     
+        #0191daff 100%     
     );
 
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     width: 100%;
-    
     box-sizing: border-box;
-
     min-height: 100vh;
+    
     display: flex;
+    flex-direction: column; /* Coloca um item abaixo do outro */
     justify-content: center;
     align-items: center;
     
+    padding-bottom: 20px; 
+
     @media (max-width: 768px) {
-        
         padding: 20px 15px;
-        align-items: center;
-        background-attachment: scroll;]
+        background-attachment: scroll;
         height: auto;
     }
-
 `
 
 export const FormContainer = styled.form`

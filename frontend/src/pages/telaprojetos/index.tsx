@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ProjectCard } from '../../components/TelaProjectCard'
 import { Sidebar } from '../../components/Sidebar'
@@ -13,9 +13,9 @@ import {
     TitleRow,
     IconButton,
     CardHeader,
-    ProjectInfoGroup, // <--- Novo Container agrupador
-    ProjectIconBox,   // <--- Novo Ícone
-    ProjectTexts,     // <--- Novo container de texto
+    ProjectInfoGroup, 
+    ProjectIconBox,   
+    ProjectTexts,     
     HeaderRight,
     NameProject,
     SubtitleProject,
@@ -43,6 +43,7 @@ import {
     PerfilTextBar,
     PerfilTextSpanBar,
     CreateButton,
+    EmptyStateMessage,
 } from './styles'
 
 import {
@@ -52,8 +53,11 @@ import {
     MdMoreVert,
 } from 'react-icons/md'
 
-import { FaRocket } from 'react-icons/fa' // Ícone genérico de projeto
+
 import { LuKanban, LuX } from "react-icons/lu";
+import { BsEmojiSmileUpsideDown } from "react-icons/bs";
+
+
 
 type Project = {
     id: string
@@ -65,24 +69,12 @@ type Project = {
 const PROJECT_TITLE_MAX = 40
 const PROJECT_SUBTITLE_MAX = 120
 
-const mockProjects: Project[] = [
-    {
-        id: '1',
-        title: 'Kodan - Board da Faculdade',
-        subtitle: 'Kanban para organizar as tarefas do grupo da disciplina de backend.',
-    },
-    {
-        id: '2',
-        title: 'TaskLock',
-        subtitle: 'App de foco para limitar uso de apps e trocar tempo por tarefas concluídas.',
-    },
-]
-
 const TelaProjetos = () => {
 
     const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
     
-    const [projects, setProjects] = useState<Project[]>(mockProjects)
+    const [projects, setProjects] = useState<Project[]>([])
+
 
     // Modais States
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -102,6 +94,27 @@ const TelaProjetos = () => {
     const [menuProjectId, setMenuProjectId] = useState<string | null>(null)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+    async function loadProjects() {
+        try {
+            const res = await fetch('http://localhost:3000/projects')
+            const data = await res.json()
+
+            const mapped = data.map((p: any) => ({
+                id: String(p.id_project ?? p.id),
+                title: p.title,
+                subtitle: p.subtitle ?? '',
+            }))
+
+            setProjects(mapped)
+        } catch (err) {
+            console.error("Erro ao carregar projetos:", err)
+        }
+    }
+
+    loadProjects()
+}, [])
 
     // helpers de texto
     function handleChangeNewTitle(e: React.ChangeEvent<HTMLInputElement>) {
@@ -136,15 +149,42 @@ const TelaProjetos = () => {
         setNewProjectTitle('')
         setNewProjectSubtitle('')
     }
-    function handleCreateProject(e: React.FormEvent) {
+    async function handleCreateProject(e: React.FormEvent) {
         e.preventDefault()
+
         const title = newProjectTitle.trim()
         const subtitle = newProjectSubtitle.trim()
+
         if (!title) return
-        const newProject: Project = { id: String(Date.now()), title, subtitle }
-        setProjects(prev => [...prev, newProject])
-        closeCreateModal()
+
+        try {
+            const res = await fetch('http://localhost:3000/projects', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, subtitle }),
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao criar projeto:', await res.json())
+                return
+            }
+
+            const created = await res.json()
+
+            const newProject: Project = {
+                id: String(created.id_project),
+                title: created.title,
+                subtitle: created.subtitle ?? '',
+            }
+
+            setProjects(prev => [...prev, newProject])
+            closeCreateModal()
+        } catch (err) {
+            console.error("Erro ao criar projeto:", err)
+        }
     }
+
+
 
     // Edit
     function openEditModal(project: Project) {
@@ -160,16 +200,44 @@ const TelaProjetos = () => {
         setEditProjectTitle('')
         setEditProjectSubtitle('')
     }
-    function handleEditProject(e: React.FormEvent) {
+    async function handleEditProject(e: React.FormEvent) {
         e.preventDefault()
         if (!projectToEdit) return
+
         const title = editProjectTitle.trim()
         const subtitle = editProjectSubtitle.trim()
+
         if (!title) return
-        const updated = projects.map(p => p.id === projectToEdit.id ? { ...p, title, subtitle } : p)
-        setProjects(updated)
-        closeEditModal()
+
+        try {
+            const res = await fetch(`http://localhost:3000/projects/${projectToEdit.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, subtitle }),
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao editar:', await res.json())
+                return
+            }
+
+            const updated = await res.json()
+
+            setProjects(prev =>
+                prev.map(p =>
+                    p.id === projectToEdit.id
+                        ? { ...p, title: updated.title, subtitle: updated.subtitle ?? '' }
+                        : p
+                )
+            )
+
+            closeEditModal()
+        } catch (err) {
+            console.error("Erro ao editar:", err)
+        }
     }
+
+
 
     // Delete
     function openDeleteModal(project: Project) {
@@ -181,12 +249,30 @@ const TelaProjetos = () => {
         setIsDeleteModalOpen(false)
         setProjectToDelete(null)
     }
-    function handleDeleteProject() {
+    async function handleDeleteProject() {
         if (!projectToDelete) return
-        setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
-        setExpandedProjectId(current => current === projectToDelete.id ? null : current)
-        closeDeleteModal()
+
+        try {
+            const res = await fetch(`http://localhost:3000/projects/${projectToDelete.id}`, {
+                method: 'DELETE',
+            })
+
+            if (!res.ok) {
+                console.error('Erro ao excluir:', await res.json())
+                return
+            }
+
+            setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
+            setExpandedProjectId(current =>
+                current === projectToDelete.id ? null : current
+            )
+
+            closeDeleteModal()
+        } catch (err) {
+            console.error("Erro ao excluir:", err)
+        }
     }
+
 
     function handleToggleProject(projectId: string) {
         setExpandedProjectId(current => (current === projectId ? null : projectId))
@@ -229,74 +315,92 @@ const TelaProjetos = () => {
                             </CreateButton>
                         </TitleRow>
 
-                        {projects.map(project => {
-                            const isExpanded = expandedProjectId === project.id
-                            const menuOpen = menuProjectId === project.id
+                        {/* --------------------------------------------------------- */}
+                        {/* <--- LÓGICA PARA EMPTY MESSAGE ---> */}
+                        {/* --------------------------------------------------------- */}
 
-                            return (
-                                <ProjectCard
-                                    key={project.id}
-                                    onClick={() => handleToggleProject(project.id)}
-                                    style={{ zIndex: menuOpen ? 50 : 1, position: 'relative' }}
-                                >
-                                    <CardHeader>
-                                        {/* GRUPO ESQUERDA: ÍCONE + TEXTOS */}
-                                        <ProjectInfoGroup>
-                                            <ProjectIconBox>
-                                                <LuKanban /> {/* Icone dos projetos */}
-                                            </ProjectIconBox>
-                                            
-                                            <ProjectTexts>
-                                                <NameProject>{formatTitle(project.title)}</NameProject>
-                                                {project.subtitle && (
-                                                    <SubtitleProject>{project.subtitle}</SubtitleProject>
+                        {projects.length === 0 ? (
+                            // 1. SE NÃO TIVER PROJETOS, MOSTRA ISSO:
+                            <EmptyStateMessage>
+                                <BsEmojiSmileUpsideDown/>
+                                <p>Você ainda não criou um projeto</p>
+                            </EmptyStateMessage>
+                        ) : (
+                            // 2. SE TIVER PROJETOS, MOSTRA A LISTA DE CARDS:
+                            projects.map(project => {
+                                const isExpanded = expandedProjectId === project.id
+                                const menuOpen = menuProjectId === project.id
+
+                                return (
+                                    <ProjectCard
+                                        key={project.id}
+                                        onClick={() => handleToggleProject(project.id)}
+                                        style={{ zIndex: menuOpen ? 50 : 1, position: 'relative' }}
+                                    >
+                                        <CardHeader>
+                                            {/* GRUPO ESQUERDA: ÍCONE + TEXTOS */}
+                                            <ProjectInfoGroup>
+                                                <ProjectIconBox>
+                                                    <LuKanban /> 
+                                                </ProjectIconBox>
+                                                
+                                                <ProjectTexts>
+                                                    <NameProject>{formatTitle(project.title)}</NameProject>
+                                                    {project.subtitle && (
+                                                        <SubtitleProject>{project.subtitle}</SubtitleProject>
+                                                    )}
+                                                </ProjectTexts>
+                                            </ProjectInfoGroup>
+
+                                            {/* GRUPO DIREITA: AÇÕES */}
+                                            <HeaderRight>
+                                                <IconButton
+                                                    type="button"
+                                                    onClick={e => { e.stopPropagation(); handleToggleProject(project.id); }}
+                                                >
+                                                    {isExpanded ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}
+                                                </IconButton>
+
+                                                <IconButton
+                                                    type="button"
+                                                    onClick={e => handleToggleMenu(project.id, e)}
+                                                >
+                                                    <MdMoreVert size={22} />
+                                                </IconButton>
+
+                                                {menuOpen && (
+                                                    <ProjectMenu onClick={e => e.stopPropagation()}>
+                                                        <ProjectMenuItem type="button" onClick={() => openEditModal(project)}>
+                                                            Editar
+                                                        </ProjectMenuItem>
+                                                        <ProjectMenuItem type="button" onClick={() => openDeleteModal(project)}>
+                                                            Excluir
+                                                        </ProjectMenuItem>
+                                                    </ProjectMenu>
                                                 )}
-                                            </ProjectTexts>
-                                        </ProjectInfoGroup>
+                                            </HeaderRight>
+                                        </CardHeader>
 
-                                        {/* GRUPO DIREITA: AÇÕES */}
-                                        <HeaderRight>
-                                            <IconButton
-                                                type="button"
-                                                onClick={e => { e.stopPropagation(); handleToggleProject(project.id); }}
-                                            >
-                                                {isExpanded ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}
-                                            </IconButton>
+                                        {/* RODAPÉ DO CARD */}
+                                        {isExpanded && (
+                                            <ProjectActionsRow onClick={(e) => e.stopPropagation()}>
+                                                <ProjectActionButton type="button" onClick={() => navigate(`/projects/${project.id}/board`)}>
+                                                    Abrir Painel
+                                                </ProjectActionButton>
+                                                <ProjectActionButton type="button" onClick={() => console.log("Stats")}>
+                                                    Ver Estatísticas
+                                                </ProjectActionButton>
+                                            </ProjectActionsRow>
+                                        )}
+                                    </ProjectCard>
+                                )
+                            })
+                        )}
+                        
+                        {/* --------------------------------------------------------- */}
+                        {/* <--- FIM DA NOVA LÓGICA ---> */}
+                        {/* --------------------------------------------------------- */}
 
-                                            <IconButton
-                                                type="button"
-                                                onClick={e => handleToggleMenu(project.id, e)}
-                                            >
-                                                <MdMoreVert size={22} />
-                                            </IconButton>
-
-                                            {menuOpen && (
-                                                <ProjectMenu onClick={e => e.stopPropagation()}>
-                                                    <ProjectMenuItem type="button" onClick={() => openEditModal(project)}>
-                                                        Editar
-                                                    </ProjectMenuItem>
-                                                    <ProjectMenuItem type="button" onClick={() => openDeleteModal(project)}>
-                                                        Excluir
-                                                    </ProjectMenuItem>
-                                                </ProjectMenu>
-                                            )}
-                                        </HeaderRight>
-                                    </CardHeader>
-
-                                    {/* RODAPÉ DO CARD (EXPANDIDO) */}
-                                    {isExpanded && (
-                                        <ProjectActionsRow onClick={(e) => e.stopPropagation()}>
-                                            <ProjectActionButton type="button" onClick={() => navigate(`/projects/${project.id}/board`)}>
-                                                Abrir Painel
-                                            </ProjectActionButton>
-                                            <ProjectActionButton type="button" onClick={() => console.log("Stats")}>
-                                                Ver Estatísticas
-                                            </ProjectActionButton>
-                                        </ProjectActionsRow>
-                                    )}
-                                </ProjectCard>
-                            )
-                        })}
                     </Container>
                 </ContentWrapper>
             </ContentContainer>

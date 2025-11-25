@@ -87,6 +87,8 @@ export const Content = styled.div`
   overflow-y: auto;
   flex: 1;
 
+  font-family: "Montserrat", sans-serif;
+
   @media (max-width: 480px) {
     padding: 0.8rem 1rem;
   }
@@ -149,6 +151,8 @@ export const MarkAllButton = styled.button`
   font-size: 0.85rem;
   cursor: pointer;
   font-weight: 600;
+
+  font-family: "Montserrat", sans-serif;
 
   &:hover {
     text-decoration: underline;

@@ -35,6 +35,9 @@ model User{
   dateupdate    DateTime      @updatedAt
   positions     UserPosition[]
 
+  // relação com tokens de reset de senha
+  passwordResetTokens PasswordResetToken[]
+
 }
 
 
@@ -76,9 +79,8 @@ model Relatory{
 model Project{
 
   id_project        BigInt        @id @default(autoincrement())
-  titulo            String        @db.VarChar(40)
+  title            String        @db.VarChar(40)
   subtitle          String?        @db.VarChar(120)
-  dashboardId       BigInt        //OBS: não lembro disso.
   relatory          Relatory?
   column            Column[]
 
@@ -102,11 +104,11 @@ model Card{
   qta_members   Int           @db.Int
   title         String        @db.VarChar(40)
   subtitle      String?       @db.VarChar(120)
-  timeframe     DateTime
+  timeframe     DateTime?
   datecreate    DateTime      @default(now())
   dateupdate    DateTime      @updatedAt
   column        Column        @relation(fields: [columnId], references: [id_column])
-  columnId     BigInt
+  columnId      BigInt
 
 }
 
@@ -125,3 +127,16 @@ model UserPosition{
 
 }
 
+// Conceito de tabela PasswordResetToken resetar com o token enviado por email
+model PasswordResetToken {
+  id          BigInt   @id @default(autoincrement())
+  token       String   @db.VarChar(255)
+  expires_at  DateTime
+  used_at     DateTime?
+  created_at  DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id_user])
+  userId      BigInt
+
+  @@index([token])
+}
