@@ -1,26 +1,29 @@
 import styled from "styled-components";
 
 export const ChartWrapper = styled.div`
-  height: 300px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
   h3 {
-    font-family: 'Montserrat', 'sans serif';
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: #1f1f1f;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
-  @media (max-width: 900px) {
-    height: 260px;
+  svg,
+  canvas {
+    margin: auto;
   }
 
-  @media (max-width: 600px) {
-    height: 230px;
-
+  @media (max-width: 768px) {
     h3 {
       font-size: 14px;
-      margin-bottom: 8px;
+      text-align: center;
     }
   }
 `;
