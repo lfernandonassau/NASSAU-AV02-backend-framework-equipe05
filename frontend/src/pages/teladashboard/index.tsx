@@ -28,7 +28,8 @@ import {
     ProjectIcon, ProjectName, BudgetText,
     ProgressContainer, ProgressText, ProgressBarBg, ProgressBarFill,
     CardHeader,
-    ViewMoreButton
+    ViewMoreButton,
+    EmptyStateMessage // <--- 1. IMPORTE AQUI O NOVO ESTILO
 } from './styles'
 
 import { LiaProjectDiagramSolid } from "react-icons/lia";
@@ -62,6 +63,7 @@ const TelaDashboard = () => {
     const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null)
     const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
+    //  testar esvaziando esses arrays: const authors = []
     const authors = [
         { id: 1, name: "Rafael Alexandre", email: "rafael@kodan.com", funcao: "Fullstack Dev",  date: "14/06/21", img: "https://avatars.githubusercontent.com/u/179970243?v=4" },
         { id: 2, name: "Ryan", email: "ryan@kodan.com", funcao: " Frontend Dev", date: "14/06/21", img: "https://avatars.githubusercontent.com/u/162740474?v=4" },
@@ -106,57 +108,52 @@ const TelaDashboard = () => {
                     <CardTable>
                         <TableTitle>Painel de atividades</TableTitle>
                         
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <Th>COLABORADORES</Th>
-                                    
-                                    {/* Colunas que somem no mobile (< 740px) */}
-                                    <Th $hideOnMobile>FUNÇÃO</Th>
-                                    <Th $hideOnMobile>ÚLTIMO REVIEW</Th>
-                                    
-                                    <Th>PROJETO</Th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {authors.map((author) => (
-                                    <Tr key={author.id}>
-                                        <Td>
-                                            <AuthorCell>
-                                                <AuthorImg src={author.img} alt={author.name} />
-                                                <AuthorInfo>
-                                                    <strong>{author.name}</strong>
-                                                    <span>{author.email}</span>
-                                                </AuthorInfo>
-                                            </AuthorCell>
-                                        </Td>
-                                        
-                                        {/* Células que somem junto com o Header */}
-                                        <Td $hideOnMobile>
-                                            <FunctionInfo>
-                                                <span>{author.funcao}</span>
-                                            </FunctionInfo>
-                                        </Td>
-                                        
-                                        
-                                        <Td $hideOnMobile>
-                                            <DateText>{author.date}</DateText>
-                                        </Td>
-                                        
-                                        {/* Célula de Ação: Alterna entre "TaskLock" e "Ver mais" */}
-                                        <Td>
-                                            {/* Visível apenas em Desktop */}
-                                            <ActionButton>TaskLock</ActionButton>
-                                            
-                                            {/* Visível apenas em Mobile */}
-                                            <ViewMoreButton onClick={() => setSelectedAuthor(author)}>
-                                                Ver mais
-                                            </ViewMoreButton>
-                                        </Td>
-                                    </Tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                        {/* LÓGICA: Se array vazio, mostra mensagem. Senão, mostra tabela */}
+                        {authors.length === 0 ? (
+                            <EmptyStateMessage>
+                                Sem atividades no momento
+                            </EmptyStateMessage>
+                        ) : (
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <Th>COLABORADORES</Th>
+                                        <Th $hideOnMobile>FUNÇÃO</Th>
+                                        <Th $hideOnMobile>ÚLTIMO REVIEW</Th>
+                                        <Th>PROJETO</Th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {authors.map((author) => (
+                                        <Tr key={author.id}>
+                                            <Td>
+                                                <AuthorCell>
+                                                    <AuthorImg src={author.img} alt={author.name} />
+                                                    <AuthorInfo>
+                                                        <strong>{author.name}</strong>
+                                                        <span>{author.email}</span>
+                                                    </AuthorInfo>
+                                                </AuthorCell>
+                                            </Td>
+                                            <Td $hideOnMobile>
+                                                <FunctionInfo>
+                                                    <span>{author.funcao}</span>
+                                                </FunctionInfo>
+                                            </Td>
+                                            <Td $hideOnMobile>
+                                                <DateText>{author.date}</DateText>
+                                            </Td>
+                                            <Td>
+                                                <ActionButton>TaskLock</ActionButton>
+                                                <ViewMoreButton onClick={() => setSelectedAuthor(author)}>
+                                                    Ver mais
+                                                </ViewMoreButton>
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        )}
                     </CardTable>
 
                     {/* TABELA 2: PROJETOS */}
@@ -165,64 +162,60 @@ const TelaDashboard = () => {
                             <TableTitle>Projetos em andamento</TableTitle>
                         </CardHeader>
                         
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <Th>TÍTULO DO PROJETO</Th>
-                                    
-                                    {/* 3. Esconder Tarefas, Status e Andamento no Mobile */}
-                                    <Th $hideOnMobile>TAREFAS</Th>
-                                    <Th $hideOnMobile>STATUS</Th>
-                                    <Th $hideOnMobile>ANDAMENTO(Em breve)</Th>
-                                    
-                                    <Th></Th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {projects.map((proj) => (
-                                    <Tr key={proj.id}>
-                                        <Td>
-                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                <ProjectIcon>
-                                                    <LiaProjectDiagramSolid />
-                                                </ProjectIcon>
-                                                <ProjectName>{proj.name}</ProjectName>
-                                            </div>
-                                        </Td>
-                                        
-                                        <Td $hideOnMobile>
-                                            <BudgetText>{proj.tasks}</BudgetText>
-                                        </Td>
-                                        
-                                        <Td $hideOnMobile>
-                                            <DateText style={{ fontSize: 12 }}>{proj.status}</DateText>
-                                        </Td>
-                                        
-                                        <Td $hideOnMobile>
-                                            <ProgressContainer>
-                                                <ProgressText>{proj.completion}%</ProgressText>
-                                                <ProgressBarBg>
-                                                    <ProgressBarFill $width={proj.completion} />
-                                                </ProgressBarBg>
-                                            </ProgressContainer>
-                                        </Td>
-                                        
-                                        <Td>
-                                            {/*  Botão de Ação Alternativo */}
-                                            {/* Desktop: 3 pontos */}
-                                            <ActionButton>
-                                                <MdMoreVert size={20} />
-                                            </ActionButton>
-                                            
-                                            {/* Mobile: Ver mais */}
-                                            <ViewMoreButton onClick={() => setSelectedProject(proj)}>
-                                                Ver mais
-                                            </ViewMoreButton>
-                                        </Td>
-                                    </Tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                        {/* LÓGICA: Se array vazio, mostra mensagem. Senão, mostra tabela */}
+                        {projects.length === 0 ? (
+                            <EmptyStateMessage>
+                                Sem projetos registrados ainda
+                            </EmptyStateMessage>
+                        ) : (
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <Th>TÍTULO DO PROJETO</Th>
+                                        <Th $hideOnMobile>TAREFAS</Th>
+                                        <Th $hideOnMobile>STATUS</Th>
+                                        <Th $hideOnMobile>ANDAMENTO(Em breve)</Th>
+                                        <Th></Th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {projects.map((proj) => (
+                                        <Tr key={proj.id}>
+                                            <Td>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <ProjectIcon>
+                                                        <LiaProjectDiagramSolid />
+                                                    </ProjectIcon>
+                                                    <ProjectName>{proj.name}</ProjectName>
+                                                </div>
+                                            </Td>
+                                            <Td $hideOnMobile>
+                                                <BudgetText>{proj.tasks}</BudgetText>
+                                            </Td>
+                                            <Td $hideOnMobile>
+                                                <DateText style={{ fontSize: 12 }}>{proj.status}</DateText>
+                                            </Td>
+                                            <Td $hideOnMobile>
+                                                <ProgressContainer>
+                                                    <ProgressText>{proj.completion}%</ProgressText>
+                                                    <ProgressBarBg>
+                                                        <ProgressBarFill $width={proj.completion} />
+                                                    </ProgressBarBg>
+                                                </ProgressContainer>
+                                            </Td>
+                                            <Td>
+                                                <ActionButton>
+                                                    <MdMoreVert size={20} />
+                                                </ActionButton>
+                                                <ViewMoreButton onClick={() => setSelectedProject(proj)}>
+                                                    Ver mais
+                                                </ViewMoreButton>
+                                            </Td>
+                                        </Tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        )}
                     </CardTable>
 
                 </ContentWrapper>

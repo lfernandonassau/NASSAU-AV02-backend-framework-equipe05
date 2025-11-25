@@ -346,3 +346,28 @@ export const ProgressBarFill = styled.div<{ $width: number }>`
     background-color: #006391; 
     border-radius: 2px;
 `;
+
+
+// componente para mensagens de vazio ---
+export const EmptyStateMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+    
+    /* Texto */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #9ca3af; /* Cinza suave */
+    font-weight: 500;
+
+    /* Se quiser adicionar um ícone no futuro, já fica preparado */
+    svg {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #cbd5e1;
+    }
+`;

@@ -14,7 +14,6 @@ export const ColumnWrapper = styled.div`
     flex-direction: column;
     position: relative;
 
-    /* --- CORREÇÃO DO CURSOR --- */
     cursor: default; 
 
     /* Bloqueia seleção de texto */
@@ -121,7 +120,7 @@ const BaseCircleButton = styled.button`
     cursor: pointer;
     outline: none;
     
-    /* Reativa o clique e o cursor de "mãozinha" apenas no botão */
+    
     pointer-events: auto; 
     
     transition: transform 0.2s ease, filter 0.2s ease;
