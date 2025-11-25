@@ -101,11 +101,11 @@ model Card{
   qta_members   Int           @db.Int
   title         String        @db.VarChar(40)
   subtitle      String?       @db.VarChar(120)
-  timeframe     DateTime
+  timeframe     DateTime?
   datecreate    DateTime      @default(now())
   dateupdate    DateTime      @updatedAt
   column        Column        @relation(fields: [columnId], references: [id_column])
-  columnId     BigInt
+  columnId      BigInt
 
 }
 
