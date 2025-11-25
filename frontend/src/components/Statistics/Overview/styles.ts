@@ -1,26 +1,26 @@
 import styled from "styled-components";
 
-export const ChartWrapper = styled.div`
-  height: 300px;
+export const PieWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   h3 {
-    font-family: 'Montserrat', 'sans serif';
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
     font-size: 16px;
     font-weight: 600;
-    color: #1f1f1f;
-    margin-bottom: 12px;
   }
 
-  @media (max-width: 900px) {
-    height: 260px;
+  @media (max-width: 1024px) {
+    height: 230px;
   }
 
-  @media (max-width: 600px) {
-    height: 220px;
-
-    h3 {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+  @media (max-width: 768px) {
+    height: 210px;
   }
 `;

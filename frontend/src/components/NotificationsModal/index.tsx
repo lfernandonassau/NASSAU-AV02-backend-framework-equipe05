@@ -65,7 +65,6 @@ const NotificationsModal = ({ onClose, notifications = [], onRead, onReadAll }: 
         )}
       </Content>
 
-      {/* ✅ Botão agora no rodapé */}
       {notifications.length > 0 && (
         <Footer>
           <MarkAllButton onClick={onReadAll}>

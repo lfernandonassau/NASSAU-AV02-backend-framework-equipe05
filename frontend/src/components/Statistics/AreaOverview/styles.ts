@@ -4,7 +4,7 @@ export const AreaContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 300px;
+  height: 100%;
 
   h3 {
     font-family: "Montserrat", sans-serif;
@@ -13,28 +13,15 @@ export const AreaContainer = styled.div`
     color: #021c2e;
   }
 
-  @media (max-width: 1024px) {
-    height: 280px;
-
-    h3 {
-      font-size: 0.95rem;
-    }
+  svg,
+  canvas {
+    margin: auto;
   }
 
   @media (max-width: 768px) {
-    height: 260px;
-
     h3 {
-      font-size: 0.9rem;
       text-align: center;
     }
   }
-
-  @media (max-width: 480px) {
-    height: 240px;
-
-    h3 {
-      font-size: 0.85rem;
-    }
-  }
 `;
+

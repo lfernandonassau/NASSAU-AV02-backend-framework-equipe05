@@ -23,7 +23,7 @@ const AreaOverview = () => {
 
         <ResponsiveLine
           data={data}
-          margin={{ top: 20, right: 10, bottom: 30, left: 35 }}
+          margin={{ top: 20, right: 10, bottom: 45, left: 35 }} 
           xScale={{ type: "point" }}
           yScale={{ type: "linear" }}
           enableArea={true}

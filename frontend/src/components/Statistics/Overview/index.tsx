@@ -1,6 +1,5 @@
 import { ResponsivePie } from "@nivo/pie";
 import { CardContainer } from "../CardContainer";
-import { ChartWrapper } from "./styles";
 
 const data = [
   { id: "Pendentes", value: 59 },
@@ -10,31 +9,39 @@ const data = [
 
 const ProjectOverviewPie = () => {
   return (
-    <CardContainer>
-      <ChartWrapper>
-        <h3>Visão Geral</h3>
+    <CardContainer style={{ height: 330 }}>
+      <h3>Visão Geral</h3>
 
+      <div style={{ width: "100%", height: "260px" }}>
         <ResponsivePie
           data={data}
-          innerRadius={0.65}
-          padAngle={1.5}
+          innerRadius={0.55}
+          padAngle={1.2}
           cornerRadius={5}
-          activeOuterRadiusOffset={10}
+          activeOuterRadiusOffset={8}
           colors={["#47B0F7", "#1454B8", "#0B1B3A"]}
-          margin={{ top: 20, right: 80, bottom: 58, left: 80 }}
+          margin={{ top: 20, right: 140, bottom: 20, left: 20 }}
+
           enableArcLabels={false}
-          arcLinkLabelsSkipAngle={8}
-          arcLinkLabelsTextColor="#2E2E2E"
-          arcLinkLabelsThickness={2}
-          arcLinkLabelsColor={{ from: "color" }}
-          arcLinkLabelsDiagonalLength={14}
-          arcLinkLabelsStraightLength={14}
-          legends={[]}
+          arcLinkLabelsSkipAngle={999}
+
+          legends={[
+            {
+              anchor: "right",
+              direction: "column",
+              translateX: 40,
+              itemWidth: 20,
+              itemHeight: 20,
+              symbolSize: 12,
+              symbolShape: "circle",
+            },
+          ]}
         />
-      </ChartWrapper>
+
+
+      </div>
     </CardContainer>
   );
 };
 
 export default ProjectOverviewPie;
-

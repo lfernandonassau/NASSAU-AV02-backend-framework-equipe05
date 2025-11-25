@@ -1,48 +1,49 @@
 import styled from "styled-components";
 
 export const StatsContainer = styled.div`
-  padding: 20px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  box-sizing: border-box;
 
   h3 {
-    font-family: "Montserrat", "sans serif";
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    color: #1f1f1f;
-    margin-bottom: 16px;
+    color: #0B1B3A;
+    margin: 0;
   }
 `;
 
 export const StatsList = styled.ul`
-  font-family: "Montserrat", "sans serif";
   list-style: none;
   padding: 0;
   margin: 0;
-  color: #1f1f1f;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
+  color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  justify-content: flex-start;
 `;
 
 export const StatItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
 
   span {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   strong {
-    font-weight: 600;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 13px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2e2e2e;
   }
 `;

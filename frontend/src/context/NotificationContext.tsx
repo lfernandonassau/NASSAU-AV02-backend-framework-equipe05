@@ -12,7 +12,7 @@ interface INotificationContext {
 const NotificationContext = createContext<INotificationContext | null>(null);
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
-  const [notifications, setNotifications] = useState<INotification[]>([
+  const [notifications, setNotifications] = useState<INotification[]> ([
     { id: 1, title: "Nova tarefa atribuída", time: "Há 2 horas", type: "task", read: false },
     { id: 2, title: "Projeto atualizado", time: "Ontem", type: "update", read: false },
     { id: 3, title: "Você recebeu acesso", time: "Há 3 dias", type: "access", read: true },

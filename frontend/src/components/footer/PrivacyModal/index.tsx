@@ -1,6 +1,5 @@
 import { IoClose } from "react-icons/io5";
 import { AnimatePresence, Variants } from "framer-motion";
-
 import { 
   Overlay, 
   ModalContainer, 
