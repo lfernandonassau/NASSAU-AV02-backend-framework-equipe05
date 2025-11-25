@@ -336,120 +336,204 @@ export const TitleProject = styled.h1`
 
 `
 
-// --- MODAL STYLES (Mantidos do seu código) ---
+// Estilização do Modal Editar e Excluir dos Projetos
+
 export const Overlay = styled.div`
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  
+  padding: 20px; 
+  box-sizing: border-box;
+`;
+
 export const ModalCard = styled.div`
-    font-family: 'Montserrat';
-    background: #ffffff;
-    width: 100%;
-    max-width: 420px;
-    border-radius: 10px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-`
+  font-family: 'Montserrat', sans-serif;
+  background: #fff;
+  
+  /* --- AJUSTE DE TAMANHO --- */
+  width: 100%;        
+  max-width: 480px;   
+  
+  max-height: 90vh;   
+  
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  animation: fadeIn 0.2s ease-out;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+`;
+
 export const ModalHeader = styled.div`
-    background-color: #006391;
-    padding: 1rem 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`
+  background-color: transparent;
+  padding: 1.25rem 1.5rem; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #2b2b2bff;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0; 
+`;
+
 export const ModalTitle = styled.h2`
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #ffffff;
-`
+  margin: 0;
+  font-size: 1rem; /* Ajustado para 1rem (aprox 16px) para consistência */
+  font-weight: 600;
+  color: #363535ff;
+`;
+
 export const ModalCloseButton = styled.button`
-    border: none;
-    background: transparent;
-    font-size: 1.4rem;
-    line-height: 1;
-    cursor: pointer;
-    color: #ffffff;
-`
+  border: none;
+  background: rgba(255,255,255,0.2); /* Fundo sutil no botão de fechar */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  
+  font-size: 1.2rem;
+  line-height: 1;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  color: #302e2eff;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255,255,255,0.3);
+  }
+`;
+
 export const ModalBody = styled.div`
     padding: 1.5rem;
-`
-export const ModalInput = styled.input`
-    width: 100%;
-    padding: 0.7rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    font-size: 0.95rem;
-    outline: none;
-    box-sizing: border-box;
-    &:focus {
-        border-color: #006391;
-        box-shadow: 0 0 0 2px rgba(0, 99, 145, 0.2);
-    }
-`
-export const ModalTextArea = styled.textarea`
-    width: 100%;
-    padding: 0.7rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    font-size: 0.95rem;
-    outline: none;
-    resize: vertical;
-    min-height: 80px;
-    box-sizing: border-box;
-    font-family: 'Montserrat';
-    &:focus {
-        border-color: #006391;
-        box-shadow: 0 0 0 2px rgba(0, 99, 145, 0.2);
-    }
-`
-export const ModalCharCounter = styled.p`
-    margin-top: 4px;
-    margin-bottom: 1rem;
-    font-size: 11px;
-    text-align: right;
-    color: #64748b;
-`
-export const ModalActions = styled.div`
     display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-    margin-top: 10px;
-`
-export const ModalSecondaryButton = styled.button`
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    background: #f1f5f9;
-    color: #0f172a;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    &:hover { background: #e2e8f0; }
-`
-export const ModalPrimaryButton = styled.button`
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    border: none;
-    background: #006391;
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    &:hover { background: #005075; }
-`
-export const ModalDangerButton = styled(ModalPrimaryButton)`
-    background: #ef4444;
-    &:hover { background: #dc2626; }
-`
+    flex-direction: column;
+    gap: 1.25rem;
+    
+    overflow-y: auto; 
+    color: #1e293b; 
 
+    p {
+      color: #1e293b;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+  
+`;
+
+export const ModalInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #0f172a; 
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+
+  &:focus {
+    border-color: #006391;
+    box-shadow: 0 0 0 3px rgba(0, 99, 145, 0.1);
+  }
+  
+  &::placeholder {
+    color: #94a3b8;
+  }
+`;
+
+export const ModalTextArea = styled.textarea`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  color: #0f172a;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #006391;
+    box-shadow: 0 0 0 3px rgba(0, 99, 145, 0.1);
+  }
+  
+  &::placeholder {
+    color: #94a3b8;
+  }
+`;
+
+export const ModalCharCounter = styled.p`
+  margin-top: 4px;
+  margin-bottom: 0;
+  font-size: 11px;
+  text-align: right;
+  color: #123d7aff;
+`;
+
+export const ModalActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 10px;
+  
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9; 
+`;
+
+export const ModalSecondaryButton = styled.button`
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  
+  &:hover { background: #e2e8f0; }
+`;
+
+export const ModalPrimaryButton = styled.button`
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  background: #363636ff;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  
+  &:hover { background: #141414ff; }
+`;
+
+export const ModalDangerButton = styled(ModalPrimaryButton)`
+  background: #ef4444;
+  &:hover { background: #dc2626; }
+`;
 
 // --- PERFIL BAR (Inicial do Painel) ---
 export const PerfilBar = styled.div`
@@ -534,3 +618,31 @@ export const PerfilTextBar = styled.p`
         font-size: 15px;
     }
 `
+
+// State de mensagem vazia
+export const EmptyStateMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    text-align: center;
+    gap: 15px;
+    width: 100%;
+    
+    /* Estilização do Texto */
+    p {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #94a3b8; /* Um cinza suave para indicar vazio */
+        margin: 0;
+    }
+
+    /* Opcional: Estilo para um ícone se quiser colocar junto */
+    svg {
+        font-size: 3rem;
+        color: #cbd5e1;
+        margin-bottom: 10px;
+    }
+`;

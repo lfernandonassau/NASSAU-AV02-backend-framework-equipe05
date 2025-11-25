@@ -20,6 +20,7 @@ export const ColumnWrapper = styled.div`
     -moz-user-select: none;
     -ms-user-select: none;
 
+    scroll-snap-align: start;
 
     @media (max-width: 1540px) {
         width: 100%;
@@ -34,8 +35,8 @@ export const ColumnWrapper = styled.div`
 
 export const ColumnHeader = styled.div`
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid #8a8a8a;
-    background-color: #424242ff;
+    border-bottom: 1px solid #c4bfbfff;
+    background-color: transparent;
     border-radius: 4px 4px 0 0;
 `;
 
@@ -48,7 +49,8 @@ export const ColumnTitle = styled.div`
     .text {
         font-weight: 600;
         font-size: 1rem;
-        color: #ffffffff;
+        color: #272727ff;
+        text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     }
     
     .count {

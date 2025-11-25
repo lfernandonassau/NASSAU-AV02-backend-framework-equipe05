@@ -1,71 +1,90 @@
-import { styled } from "@mui/material/styles";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
-/* HEADER WRAPPER */
-export const TitleRow = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "flex-start",
-  justifyContent: "space-between",
-  padding: theme.spacing(1.5, 2),
-  gap: "10px",
-  flexWrap: "wrap",
-}));
+export const Overlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+`;
 
-/* LOGO */
-export const LogoIcon = styled("img")({
-  width: 32,
-  height: 32,
-  filter:
-    "invert(87%) sepia(12%) saturate(747%) hue-rotate(184deg) brightness(104%) contrast(97%)",
-});
+export const ModalContainer = styled(motion.div)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+`;
 
-/* TÍTULO */
-export const TitleStyled = styled(DialogTitle)(({ theme }) => ({
-  fontSize: "1rem",
-  fontWeight: 700,
-  color: "#0b1b3a",
-  padding: 0,
-  marginLeft: theme.spacing(1),
-  lineHeight: 1.3,
-  whiteSpace: "normal",
-  wordBreak: "break-word",
-  flex: 1,
-}));
+export const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
 
+  h2 {
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+`;
 
-/* BOTÃO DE FECHAR  */
-export const CloseButton = styled(IconButton)(({ theme }) => ({
-  color: "#0b1b3a",
-  backgroundColor: "#b9d9ff",
-  borderRadius: "8px",
-  width: 32,
-  height: 32,
-  flexShrink: 0,
-  "&:hover": {
-    backgroundColor: "#a8c5f0",
-  },
-}));
+export const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
 
+  &:hover {
+    color: #fff;
+  }
+`;
 
-export const PaperStyled = {
-  borderRadius: "18px",
-  paddingBottom: "10px",
-  boxShadow: "0px 8px 24px rgba(0,0,0,0.1)",
+export const ModalContent = styled.div`
+  overflow-y: auto;
+  padding-right: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  text-align: justify;
 
-  maxHeight: "80vh",
-  display: "flex",
-  flexDirection: "column",
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
 
-  "@media (max-width: 768px)": {
-    width: "90% !important",
-    margin: "0 auto",
-    maxHeight: "85vh",
-  },
-
-  "@media (max-width: 480px)": {
-    width: "92% !important",
-    maxHeight: "88vh",
-    borderRadius: "14px",
-  },
-};
+  h3 {
+    color: #fff;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+`;

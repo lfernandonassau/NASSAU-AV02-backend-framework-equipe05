@@ -1,6 +1,5 @@
 import React from 'react'
 import { MdClose } from 'react-icons/md'
-import { FaRocket } from 'react-icons/fa'
 import {
   Overlay,
   ModalCard,
@@ -17,6 +16,7 @@ import {
   ModalProgressBarBg,
   ModalProgressBarFill
 } from './styles'
+import { LiaProjectDiagramSolid } from 'react-icons/lia';
 
 // Interface do Projeto (mesma do Dashboard)
 interface Project {
@@ -49,7 +49,7 @@ const ProjetosModal: React.FC<ProjetosDetailsModalProps> = ({ project, onClose }
         <Body>
           <ProjectHeader>
             <ProjectIconWrapper>
-               <FaRocket />
+               <LiaProjectDiagramSolid />
             </ProjectIconWrapper>
             <strong>{project.name}</strong>
           </ProjectHeader>

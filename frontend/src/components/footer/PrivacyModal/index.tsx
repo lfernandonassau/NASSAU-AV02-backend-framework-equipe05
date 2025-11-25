@@ -1,109 +1,88 @@
-import * as React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Button,
-  Typography,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { IoClose } from "react-icons/io5";
+import { AnimatePresence, Variants } from "framer-motion";
 
-import logo from "../../../assets/logo.svg";
-
-import {
-  TitleRow,
-  LogoIcon,
-  TitleStyled,
-  CloseButton,
-  PaperStyled,
+import { 
+  Overlay, 
+  ModalContainer, 
+  ModalHeader, 
+  CloseButton, 
+  ModalContent 
 } from "./styles";
 
 interface PrivacyModalProps {
-  open: boolean;
+  isOpen: boolean;
   onClose: () => void;
   onAcceptTerms?: () => void;
 }
 
-const PrivacyModal: React.FC<PrivacyModalProps> = ({
-  open,
-  onClose,
-  onAcceptTerms,
-}) => {
-  const handleAccept = () => {
-    if (onAcceptTerms) {
-      onAcceptTerms();
+const PrivacyModal = ({ isOpen, onClose, onAcceptTerms }: PrivacyModalProps) => {
+  
+  const overlayVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
+  const modalVariants: Variants = {
+    hidden: { 
+      y: "-40%", 
+      x: "-50%", 
+      opacity: 0 
+    },
+    visible: { 
+      y: "-50%", 
+      x: "-50%", 
+      opacity: 1,
+      transition: { type: "spring", damping: 25, stiffness: 500 }
+    },
+    exit: { 
+      y: "-40%", 
+      opacity: 0 
     }
-    onClose();
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="md"
-      fullWidth
-      PaperProps={{ sx: PaperStyled }}
-    >
-      <TitleRow>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flex: 1,
-            minWidth: 0,
-          }}
-        >
-          <LogoIcon src={logo} alt="Kodan" />
-          <TitleStyled>
-            Políticas de Privacidade & Termos de Uso
-          </TitleStyled>
-        </div>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          
+          <Overlay
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={overlayVariants}
+            onClick={onClose}
+          />
 
-        <CloseButton onClick={onClose}>
-          <CloseIcon fontSize="small" />
-        </CloseButton>
-      </TitleRow>
+          <ModalContainer
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={modalVariants}
+          >
+            <ModalHeader>
+              <h2>Legal</h2>
+              <CloseButton onClick={onClose}>
+                <IoClose />
+              </CloseButton>
+            </ModalHeader>
+            
+            <ModalContent>
+              <h3>Políticas de Privacidade</h3>
+              <p>
+                No Kodan, levamos sua privacidade a sério. Coletamos apenas os dados essenciais para o gerenciamento de seus projetos e equipes. Seus dados são criptografados e nunca serão vendidos a terceiros. Ao utilizar nossa plataforma, você concorda com o processamento de suas informações para fins de melhoria de serviço e funcionalidade do sistema Kanban.
+              </p>
 
-      <DialogContent dividers sx={{ overflowY: "auto", flex: 1 }}>
-        <Typography paragraph>
-          Este site utiliza dados fornecidos pelos usuários exclusivamente para
-          fins de funcionamento da plataforma Kodan. As informações não são
-          compartilhadas com terceiros e permanecem protegidas conforme as leis
-          vigentes.
-        </Typography>
-
-        <Typography paragraph>
-          Ao utilizar nossa plataforma, você concorda com o uso de cookies,
-          armazenamento de dados essenciais e procedimentos de segurança para
-          garantir a integridade das informações.
-        </Typography>
-
-        <Typography paragraph>
-          Para solicitações de remoção de dados, dúvidas ou demais informações,
-          entre em contato com nossa equipe de suporte pelo e-mail informado.
-        </Typography>
-      </DialogContent>
-
-      <DialogActions sx={{ padding: "12px 20px" }}>
-        <Button
-          onClick={handleAccept}
-          variant="contained"
-          sx={{
-            backgroundColor: "#b9d9ff",
-            color: "#0b1b3a",
-            fontWeight: 700,
-            borderRadius: "10px",
-            "&:hover": {
-              backgroundColor: "#a8c5f0",
-            },
-          }}
-        >
-          Aceito os Termos
-        </Button>
-      </DialogActions>
-    </Dialog>
+              <h3>Termos de Uso</h3>
+              <p>
+                O Kodan é uma ferramenta destinada à produtividade e gestão ágil. É proibido utilizar a plataforma para armazenar conteúdo ilícito ou que viole direitos autorais. Nos reservamos o direito de suspender contas que violem estas diretrizes. O serviço é fornecido "como está", visando a estabilidade e segurança contínua de seus dados.
+              </p>
+            </ModalContent>
+          </ModalContainer>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 
 export default PrivacyModal;
-

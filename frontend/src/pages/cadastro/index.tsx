@@ -6,9 +6,9 @@ import { signInWithPopup } from "firebase/auth";
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../assets/logo.svg'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
+// ... imports dos estilos (mantém igual) ...
 import {
     Column,
     LoginIconStyled,
@@ -41,11 +41,12 @@ import { cpfMask } from '../../utils/cpfMask'
 import { nameMask } from '../../utils/nameMask'
 import { FcGoogle } from 'react-icons/fc'
 
-// IMPORTA O MODAL
-import PrivacyModal from '../../components/footer/PrivacyModal'
 
-// Firebase
+// IMPORTA O COPYRIGHT
+import { Copyright } from '../../components/Copyright';
+
 import { auth, googleProvider } from '../../services/firebase'
+
 
 const schema = yup.object({
     cpf: yup.string().min(14, 'No mínimo 11 caracteres').required('Campo obrigatório'),
@@ -64,9 +65,7 @@ const schema = yup.object({
 const Cadastro = () => {
 
     const [estaVisivel, setEstaVisivel] = useState(false)
-
-    // ESTADO DO MODAL
-    const [isPrivacyOpen, setIsPrivacyOpen] = useState(false)
+    
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -92,6 +91,7 @@ const Cadastro = () => {
 
     const onSubmit = async (formData: IFormData) => {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { confirmPassword, terms, ...userData } = formData
 
             const { data } = await api.post(`users?email=${formData.email}`)
@@ -110,10 +110,9 @@ const Cadastro = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-    //  LOGIN GOOGLE 
     const handleGoogleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, googleProvider)
+            await signInWithPopup(auth, googleProvider)
             navigate('/perfil')
         } catch {
             alert("Erro ao entrar com Google.")
@@ -129,83 +128,26 @@ const Cadastro = () => {
                         <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
 
                         <FormContainer onSubmit={handleSubmit(onSubmit)}>
+                            {/* ... Inputs (CPF, Name, etc) */}
                             
                             <Input
                                 name="cpf"
                                 placeholder="Digite seu CPF"
                                 control={control}
-                                errorMessage={
-                                    (touchedFields.cpf || isSubmitted) ? errors?.cpf?.message : ''
-                                }
+                                errorMessage={(touchedFields.cpf || isSubmitted) ? errors?.cpf?.message : ''}
                                 leftIcon={<CpfIconStyled />}
                                 mask={cpfMask}
                             />
+                            
+                            {/* ... Outros Inputs ... */}
+                            <Input name="name" placeholder="Digite seu nome" control={control} errorMessage={(touchedFields.name || isSubmitted) ? errors?.name?.message : ''} leftIcon={<NameIconStyled />} mask={nameMask} />
+                            <Input name="lastName" placeholder="Digite seu sobrenome" control={control} errorMessage={(touchedFields.lastName || isSubmitted) ? errors?.lastName?.message : ''} leftIcon={<NameIconStyled />} mask={nameMask} />
+                            <Input name='email' errorMessage={(touchedFields.email || isSubmitted) ? errors?.email?.message : ''} placeholder="Digite um e-mail" control={control} leftIcon={<LoginIconStyled />} />
+                            <Input name='password' errorMessage={(touchedFields.password || isSubmitted) ? errors?.password?.message : ''} placeholder="Digite uma senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordStyled />} rightIcon={showPassword ? <MagicEye onClick={() => setShowPassword(false)} /> : <MagicEyeOff onClick={() => setShowPassword(true)} />} />
+                            <Input name='confirmPassword' placeholder="Digite novamente sua senha" control={control} errorMessage={(touchedFields.confirmPassword || isSubmitted) ? errors?.confirmPassword?.message : ''} type={showConfirmPassword ? 'text' : 'password'} leftIcon={<PasswordStyled />} rightIcon={showConfirmPassword ? <MagicEye onClick={() => setShowConfirmPassword(false)} /> : <MagicEyeOff onClick={() => setShowConfirmPassword(true)} />} />
 
-                            <Input
-                                name="name"
-                                placeholder="Digite seu nome"
-                                control={control}
-                                errorMessage={
-                                    (touchedFields.name || isSubmitted) ? errors?.name?.message : ''
-                                }
-                                leftIcon={<NameIconStyled />}
-                                mask={nameMask}
-                            />
 
-                            <Input
-                                name="lastName"
-                                placeholder="Digite seu sobrenome"
-                                control={control}
-                                errorMessage={
-                                    (touchedFields.lastName || isSubmitted) ? errors?.lastName?.message : ''
-                                }
-                                leftIcon={<NameIconStyled />}
-                                mask={nameMask}
-                            />
-
-                            <Input
-                                name='email'
-                                errorMessage={
-                                    (touchedFields.email || isSubmitted) ? errors?.email?.message : ''
-                                }
-                                placeholder="Digite um e-mail"
-                                control={control}
-                                leftIcon={<LoginIconStyled />}
-                            />
-
-                            <Input
-                                name='password'
-                                errorMessage={
-                                    (touchedFields.password || isSubmitted) ? errors?.password?.message : ''
-                                }
-                                placeholder="Digite uma senha"
-                                control={control}
-                                type={showPassword ? 'text' : 'password'}
-                                leftIcon={<PasswordStyled />}
-                                rightIcon={
-                                    showPassword
-                                        ? <MagicEye onClick={() => setShowPassword(false)} />
-                                        : <MagicEyeOff onClick={() => setShowPassword(true)} />
-                                }
-                            />
-
-                            <Input
-                                name='confirmPassword'
-                                placeholder="Digite novamente sua senha"
-                                control={control}
-                                errorMessage={
-                                    (touchedFields.confirmPassword || isSubmitted) ? errors?.confirmPassword?.message : ''
-                                }
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                leftIcon={<PasswordStyled />}
-                                rightIcon={
-                                    showConfirmPassword
-                                        ? <MagicEye onClick={() => setShowConfirmPassword(false)} />
-                                        : <MagicEyeOff onClick={() => setShowConfirmPassword(true)} />
-                                }
-                            />
-
-                            {/*  TERMOS E POLÍTICA */}
+                            {/* TERMOS E POLÍTICA  */}
                             <TermsContainer>
                                 <Controller
                                     name="terms"
@@ -221,19 +163,8 @@ const Cadastro = () => {
                                 
                                 <TermsText>
                                     Li e aceito os 
-                                    <span
-                                        onClick={() => setIsPrivacyOpen(true)}
-                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        {' '}Termos e Condições
-                                    </span>
-                                    {' '}e a
-                                    <span
-                                        onClick={() => setIsPrivacyOpen(true)}
-                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        {' '}Política de Privacidade
-                                    </span>.
+                                    {/* Removemos os onClicks aqui, pois o Copyright lá embaixo que cuida disso agora, ou mantemos apenas visualmente */}
+                                    <span> Termos e Condições</span> e a <span> Política de Privacidade</span>.
                                 </TermsText>
                             </TermsContainer>
 
@@ -247,26 +178,12 @@ const Cadastro = () => {
                                 </PossuiContaSubText>
                             </Row>
 
-                            {/*  BOTÃO DE CADASTRO */}
-                            <Button
-                                title='Entrar'
-                                type='submit'
-                                variant='loginb'
-                            />
+                            <Button title='Entrar' type='submit' variant='loginb' />
                         </FormContainer>
 
-                        {/* BOTÃO GOOGLE */}
-                        <Row>
-                            <TextoLivreSubText>ou</TextoLivreSubText>
-                        </Row>
+                        <Row><TextoLivreSubText>ou</TextoLivreSubText></Row>
 
-                        <Button
-                            title='Entrar com Google'
-                            type='button'
-                            variant="google"
-                            leftIcon={<FcGoogle />}
-                            onClick={handleGoogleLogin}
-                        />
+                        <Button title='Entrar com Google' type='button' variant="google" leftIcon={<FcGoogle />} onClick={handleGoogleLogin} />
 
                     </Column>
                 </RegisterContainer>
@@ -282,19 +199,16 @@ const Cadastro = () => {
                 </WelcomeContainer>
             </RegisterNewScreen>
 
-            {/*  MODAL ATUALIZADO */}
-            <PrivacyModal
-                open={isPrivacyOpen}
-                onClose={() => setIsPrivacyOpen(false)}
+            {/* AQUI ENTRA O COPYRIGHT (Que contém o Modal) */}
+            <Copyright 
                 onAcceptTerms={() => {
                     setValue("terms", true)  
                     clearErrors("terms")      
                 }}
             />
-
+            
         </PageWrapper>
     )
 }
 
 export { Cadastro }
-
