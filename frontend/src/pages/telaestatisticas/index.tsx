@@ -22,23 +22,23 @@ import {
 } from "./styles";
 
 const USER_AVATAR =
-  "https://avatars.githubusercontent.com/u/179970243?v=4";
+    "https://avatars.githubusercontent.com/u/179970243?v=4";
 
 const Estatisticas = () => {
-  const [activeTab, setActiveTab] = useState("estatisticas");
+    const [activeTab, setActiveTab] = useState("estatisticas");
 
-  return (
+    return (
     <Container>
-      <Sidebar
+        <Sidebar
         autenticado={true}
         activeTab={activeTab}
         onChangeTab={setActiveTab}
-      />
+        />
 
-      <HeaderProfile
+        <HeaderProfile
         userImage={USER_AVATAR}
         onSearch={(v: string) => console.log("Buscar:", v)}
-      />
+        />
 
       
       <Content>
@@ -57,20 +57,20 @@ const Estatisticas = () => {
 
         {/* Daqui para baixo continua os gráficos */}
         <ChartsRow>
-          <WeeklyEvolutionChart />
-          <ProjectOverviewPie />
+            <WeeklyEvolutionChart />
+            <ProjectOverviewPie />
         </ChartsRow>
 
         <BottomRow>
-          <AreaOverview />
+            <AreaOverview />
         </BottomRow>
 
         <CollaboratorSection>
-          <CollaboratorStats />
+            <CollaboratorStats />
         </CollaboratorSection>
-      </Content>
+        </Content>
     </Container>
-  );
+    );
 };
 
-export default Estatisticas;
+export { Estatisticas };
