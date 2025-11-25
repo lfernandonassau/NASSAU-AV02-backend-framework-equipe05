@@ -3,7 +3,7 @@ import { Sidebar } from "../../components/Sidebar";
 import { HeaderProfile } from "../../components/HeaderProfile";
 
 import AreaOverview from "../../components/Statistics/AreaOverview";
-import ProjectOverviewPie from "../../components/Statistics/Overview";
+import ProjectOverviewPie from "../../components/Statistics/OverviewChart";
 import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
 import CollaboratorStats from "../../components/Statistics/CollaboratorStats";
 
@@ -74,4 +74,4 @@ const Estatisticas = () => {
     );
 };
 
-export default Estatisticas;
+export { Estatisticas};

@@ -35,7 +35,6 @@ export const Content = styled.div`
 /* LINHA 1: Evolução Geral (maior) + Visão Geral (menor) */
 export const ChartsRow = styled.div`
   display: grid;
-<<<<<<< HEAD
   grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
   gap: 32px;
   align-items: stretch;
@@ -53,11 +52,6 @@ export const BottomRow = styled.div`
   width: 100%;
   align-items: stretch;
   margin-top: 4px;
-=======
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  width: 100%;
->>>>>>> 705d4b7087ea4dda80022ce9a37452329cf1bbd5
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;

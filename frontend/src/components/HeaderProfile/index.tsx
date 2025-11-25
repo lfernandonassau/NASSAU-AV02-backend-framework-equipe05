@@ -30,7 +30,13 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
-    const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const {
+      notifications,
+      unreadCount,
+      markAsRead,
+      markAllAsRead,
+      clearNotifications,
+    } = useNotifications();
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen)
@@ -74,25 +80,38 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                         value={searchText}
                         onChange={handleInputChange}
                     />
-                    <IconButton onClick={toggleSearch}>
+                    <IconButton onClick={toggleSearch} aria-label={isSearchOpen ? "Fechar busca" : "Abrir busca"}>
                         {isSearchOpen ? <MdClose /> : <MdSearch />}
                     </IconButton>
                 </SearchContainer>
 
-                <NotificationWrapper onClick={() => setShowNotifications(true)}>
-                    <IconButton>
+                {/* Toggle no clique para abrir/fechar o modal */}
+                <NotificationWrapper
+                  onClick={() => setShowNotifications(prev => !prev)}
+                  role="button"
+                  aria-haspopup="dialog"
+                  aria-expanded={showNotifications}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowNotifications(prev => !prev);
+                    }
+                  }}
+                >
+                    <IconButton aria-label="Notificações">
                         <MdNotificationsNone />
                     </IconButton>
 
                     {unreadCount > 0 && (
-                        <NotificationBadge>{unreadCount}</NotificationBadge>
+                        <NotificationBadge aria-label={`${unreadCount} notificações não lidas`}>{unreadCount}</NotificationBadge>
                     )}
                 </NotificationWrapper>
 
                 <Divider />
 
                 <ProfileWrapper className="profile-menu">
-                    <ProfileToggle onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
+                    <ProfileToggle onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} aria-haspopup="menu" aria-expanded={isProfileMenuOpen}>
                         <Avatar src={userImage} alt="User" />
                         <MdKeyboardArrowDown size={20} color="#555" />
                     </ProfileToggle>
@@ -114,6 +133,7 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
                     notifications={notifications}
                     onRead={markAsRead}
                     onReadAll={markAllAsRead}
+                    onClearAll={clearNotifications} 
                 />
             )}
         </>
