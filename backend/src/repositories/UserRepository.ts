@@ -5,6 +5,7 @@ import prisma from '../database/prismaClient.js'
 export default {
     
     async createUser(data: {
+        id_user: bigint
         name: string
         lastname: string
         cpf: string
@@ -13,6 +14,7 @@ export default {
     }) {
         const user = await prisma.user.create({
             data: {
+                id_user: data.id_user,
                 name: data.name,
                 lastname: data.lastname,
                 cpf: data.cpf,
@@ -22,9 +24,22 @@ export default {
         })
         return user
     },
-    
+
         async listUsers() {
         return prisma.user.findMany()
     },
+
+    async update(id: number | bigint, data: any) {
+        return prisma.user.update({
+            where: { id_user: Number(id) },
+            data,
+        })
+    },
+
+    async delete(id: number) {
+        return prisma.user.delete({
+            where: {id_user: Number(id)}
+        })
+    }
 
 }
