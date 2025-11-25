@@ -97,7 +97,7 @@ export const AddButtonArea = styled.div`
     
     pointer-events: none;
 
-    z-index: 200; 
+    z-index: 10; 
 `;
 
 // Estilo base compartilhado

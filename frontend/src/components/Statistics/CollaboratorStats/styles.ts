@@ -8,6 +8,8 @@ export const StatsContainer = styled.div`
   height: 100%;
   box-sizing: border-box;
 
+  font-family: 'Montserrat', sans-serif;
+
   h3 {
     font-size: 18px;
     font-weight: 600;

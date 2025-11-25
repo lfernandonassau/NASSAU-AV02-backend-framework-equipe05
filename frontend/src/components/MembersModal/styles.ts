@@ -11,7 +11,7 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1100;
+  z-index: 9999;
 
   padding: 20px; 
   box-sizing: border-box;

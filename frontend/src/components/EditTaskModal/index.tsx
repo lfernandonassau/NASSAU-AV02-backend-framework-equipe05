@@ -25,12 +25,10 @@ interface EditTaskModalProps {
 }
 
 const EditTaskModal: React.FC<EditTaskModalProps> = ({ initialData, onClose, onSave }) => {
-    // Estados locais para controlar os inputs
     const [title, setTitle] = useState(initialData.title);
     const [subtitle, setSubtitle] = useState(initialData.subtitle);
     const [date, setDate] = useState(initialData.date || '');
 
-    // Formatação simples de data ao digitar (DD/MM/AAAA)
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let v = e.target.value.replace(/\D/g, '');
         if (v.length >= 5) v = v.replace(/(\d{2})(\d{2})(\d+)/, '$1/$2/$3');
@@ -44,9 +42,9 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ initialData, onClose, onS
     };
 
     return (
-        <Overlay role="dialog" aria-modal="true" onClick={onClose}>
-            {/* stopPropagation impede que clicar no card feche o modal */}
-            <ModalCard onClick={(e) => e.stopPropagation()}>
+        <Overlay role="dialog" aria-modal="true">
+            
+            <ModalCard>
                 
                 <ModalHeader>
                     <ModalTitle>Editar Tarefa</ModalTitle>
@@ -90,11 +88,13 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ initialData, onClose, onS
                 </ModalBody>
 
                 <ModalFooter>
+                    {/* Botão Cancelar fecha o modal */}
                     <Button 
                         title="Cancelar" 
                         onClick={onClose} 
                         variant="taskbutton"
                     />
+                    {/* Botão Salvar executa a lógica e deve fechar via componente pai */}
                     <Button 
                         title="Salvar" 
                         onClick={handleSave} 

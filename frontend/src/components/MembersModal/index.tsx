@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom'; // <--- Importação do Portal
 import { MdClose, MdPersonAdd } from 'react-icons/md';
 import {
   Overlay,
@@ -31,7 +32,6 @@ interface MembersModalProps {
   onClose: () => void;
 }
 
-// Dados fictícios para replicar a imagem
 const mockMembers: Member[] = [
   { id: 1, name: "Rafael Alexandre", email: "rafael@kodan.com", funcao: "Fullstack Dev", img: "https://avatars.githubusercontent.com/u/179970243?v=4" },
   { id: 2, name: "Ryan", email: "ryan@kodan.com", funcao: " Frontend Dev", img: "https://avatars.githubusercontent.com/u/162740474?v=4" },
@@ -43,7 +43,8 @@ const mockMembers: Member[] = [
 const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  return (
+  // A mágica acontece aqui: createPortal renderiza o filho dentro do document.body
+  return createPortal(
     <Overlay onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         
@@ -62,7 +63,6 @@ const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
           {/* Item Fixo: Adicionar Novo Membro */}
           <ListItem>
             <UserInfo>
-              {/* Círculo de Adicionar  */}
               <AvatarCircle $bgColor="#363636ff" $isIcon>
                 <MdPersonAdd />
               </AvatarCircle>
@@ -71,6 +71,10 @@ const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
                 <Role>Nome/Função</Role>
               </Texts>
             </UserInfo>
+            {/* Botão de Ação (Adicionar) */}
+            <ActionButton $variant="add" onClick={() => alert("Adicionar novo!")}>
+               Convidar
+            </ActionButton>
           </ListItem>
 
           {/* Lista de Membros Existentes */}
@@ -93,7 +97,8 @@ const MembersModal: React.FC<MembersModalProps> = ({ isOpen, onClose }) => {
         </ListContainer>
 
       </ModalContainer>
-    </Overlay>
+    </Overlay>,
+    document.body // <--- Onde o modal será injetado no DOM (fora da hierarquia da página)
   );
 };
 

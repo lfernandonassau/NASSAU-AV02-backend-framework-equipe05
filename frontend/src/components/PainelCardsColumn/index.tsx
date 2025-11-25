@@ -22,7 +22,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
     tasks = [], 
     onAddTask, 
     onRequestDelete,
-    onRequestEdit // <--- 1. RECEBE A FUNÇÃO DA PÁGINA AQUI
+    onRequestEdit 
 }) => {
 
     const listRef = useRef<HTMLDivElement>(null);
@@ -96,7 +96,7 @@ const KanbanColumn: React.FC<IKanbanColumnProps> = ({
                                         
                                         // AÇÕES
                                         onRequestDelete={onRequestDelete}
-                                        onRequestEdit={onRequestEdit} // <--- REPASSA PARA O CARD AQUI
+                                        onRequestEdit={onRequestEdit} 
                                     />
                                 )}
                             </Draggable>

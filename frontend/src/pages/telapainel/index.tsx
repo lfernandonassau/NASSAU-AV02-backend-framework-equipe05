@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { useTasks } from '../../context/TasksContext';
 
 // Componentes
 import { AddTaskModal } from '../../components/AddTaskModal';
-import { KanbanColumn } from '../../components/KanbanColumn';
+import { KanbanColumn } from '../../components/PainelCardsColumn';
 import {  DeleteTaskModal } from '../../components/DeleteTaskModal'; // Seu modal renomeado
 import { Sidebar } from '../../components/Sidebar'; 
 import { HeaderProfile } from '../../components/HeaderProfile';
@@ -16,7 +16,7 @@ import MembersModal from '../../components/MembersModal';
 import { EditTaskModal } from '../../components/EditTaskModal'; 
 
 // Ícones
-import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder, MdPerson } from 'react-icons/md';
+import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder, MdKeyboardArrowDown, MdPerson } from 'react-icons/md';
 
 // Estilos
 import {
@@ -36,8 +36,11 @@ import {
     PerfilTextContainer,
     PerfilTitleBar,
     PerfilTextSpanBar,
-    PerfilTextBar
+    PerfilTextBar,
+    BoardInfoTitleWrapper
 } from './styles';
+import { SelectProjectModal } from '../../components/SelectProjectModal';
+import { Project } from '../../components/SelectProjectModal/types';
 
 
 
@@ -63,6 +66,27 @@ const PainelPage: React.FC = () => {
 
     const [activeTab, setActiveTab] = useState('projetos'); 
     const navigate = useNavigate();
+
+
+    // ESTADOS PARA O SELECT PROJECT MODAL
+    const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+    const [currentProject, setCurrentProject] = useState<Project>({ id: '1', title: 'Nome do Projeto' }); // Projeto inicial
+    const projectTitleRef = useRef<HTMLDivElement>(null); // Referência para o botão do título
+
+    // Dados "mockados" de projetos (substituir pela lógica real depois)
+    const userProjects: Project[] = [
+        { id: '1', title: 'Nome do Projeto' },
+        { id: '2', title: 'Desenvolvimento App Mobile' },
+        { id: '3', title: 'Campanha de Marketing' },
+        { id: '4', title: 'Refatoração do Backend' },
+    ];
+
+    // Função para trocar o projeto
+    const handleSelectProject = (project: Project) => {
+        setCurrentProject(project);
+        setIsProjectModalOpen(false);
+        console.log("Projeto trocado para:", project.title);
+    };
 
     const columns = useMemo(() => ({
         PENDENTE:  tasks.filter((t) => t.status === 'PENDENTE'),
@@ -117,7 +141,7 @@ const PainelPage: React.FC = () => {
     const cancelEdit = () => {
         setEditingTask(null);
     };
-    // -------------------------------------
+    
 
     const requestDelete = (id: string) => setDeleteId(id);
     
@@ -164,7 +188,23 @@ const PainelPage: React.FC = () => {
                     <BoardOuterContainer>
                         <BoardHeader>
                             <BoardInfoLeft>
-                                <BoardInfoTitle>Nome do Projeto</BoardInfoTitle>
+                                <BoardInfoTitleWrapper 
+                                    ref={projectTitleRef}
+                                    onClick={() => setIsProjectModalOpen(!isProjectModalOpen)}
+                                    $isOpen={isProjectModalOpen}
+                                >
+                                    <BoardInfoTitle>{currentProject.title}</BoardInfoTitle>
+                                    <MdKeyboardArrowDown size={24} className="arrow-icon" />
+                                    
+                                    <SelectProjectModal
+                                        isOpen={isProjectModalOpen}
+                                        onClose={() => setIsProjectModalOpen(false)}
+                                        projects={userProjects}
+                                        onSelectProject={handleSelectProject}
+                                        activeProjectId={currentProject.id}
+                                        triggerRef={projectTitleRef as React.RefObject<HTMLElement>}
+                                    />
+                                </BoardInfoTitleWrapper>
                                 <AddMemberButton
                                  onClick={() => setIsMembersModalOpen(true)}> <MdPerson/>Gerenciar Colaboradores
                                  </AddMemberButton>
@@ -185,7 +225,7 @@ const PainelPage: React.FC = () => {
                                     tasks={columns.PENDENTE}
                                     onAddTask={() => handleAdd('PENDENTE')}
                                     onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit} // <--- Passa a função aqui
+                                    onRequestEdit={requestEdit}
                                 />
                                 
                                 {/* Coluna Em Andamento */}
@@ -197,7 +237,7 @@ const PainelPage: React.FC = () => {
                                     tasks={columns.ANDAMENTO}
                                     onAddTask={() => handleAdd('ANDAMENTO')}
                                     onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit} // <--- Passa a função aqui
+                                    onRequestEdit={requestEdit}
                                 />
                                 
                                 {/* Coluna Concluídos */}
@@ -209,7 +249,7 @@ const PainelPage: React.FC = () => {
                                     tasks={columns.CONCLUIDO}
                                     onAddTask={() => handleAdd('CONCLUIDO')}
                                     onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit} // <--- Passa a função aqui
+                                    onRequestEdit={requestEdit} 
                                 />
                             </ColumnsWrapper>
                         </DragDropContext>
@@ -227,7 +267,6 @@ const PainelPage: React.FC = () => {
                 )}
 
                 {/*  RENDERIZAÇÃO DO MODAL DE EDIÇÃO  */}
-                {/* Segue a mesma lógica do deleteId: só aparece se editingTask existir */}
                 {editingTask && (
                     <EditTaskModal
                         initialData={{ 

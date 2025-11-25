@@ -13,18 +13,18 @@ export interface ITask {
 }
 
 /**
-  Props para o componente `KanbanColumn`.
+  Props para o componente PainelCardsColumn.
  */
 
 export interface IKanbanColumnProps {
     title: string;
     icon: React.ReactNode;
     accentColor: string;
-    // Agora usamos o tipo Status para garantir que seja apenas um dos valores válidos
+    //o tipo Status para garantir que seja apenas um dos valores válidos
     droppableId: Status; 
     tasks: Task[];
     onAddTask: () => void;
-    // Agora opcional, pois pode haver colunas onde não se pode deletar
+    // opcional, pois pode haver colunas onde não se pode deletar
     onRequestDelete?: (id: string) => void;
     // Opcional para edição
     onRequestEdit?: (id: string, data: { title: string; subtitle: string; date: string }) => void;
@@ -32,7 +32,7 @@ export interface IKanbanColumnProps {
 
 
 /**
-  Props para o componente `CardTask`
+  Props para o componente CardTask
  */
 export interface ICardTaskProps {
   statusColor: string;
