@@ -6,6 +6,8 @@ import columnRoutes from './routes/column.routes.js'
 import jobRoutes from './routes/job.routes.js'
 import userpositionRoutes from './routes/userposition.routes.js'
 import cardsRoutes from './routes/cards.routes.js'
+import authRoutes from './routes/auth.routes.js'
+
 
 
 
@@ -24,6 +26,9 @@ app.use('/column', columnRoutes)
 app.use('/job', jobRoutes)
 app.use('/userposition',userpositionRoutes)
 app.use('/cards', cardsRoutes)
+app.use('/users', userRoutes)
+app.use('/auth', authRoutes)
+
 
 
 export default app

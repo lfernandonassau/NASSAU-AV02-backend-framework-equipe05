@@ -251,7 +251,7 @@ export const IconWrapper = styled.span<{ $accentColor: string }>`
     /* Aplica a cor recebida via prop */
     color: ${({ $accentColor }) => $accentColor};
     
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    
     
     svg {
         font-size: 1.2rem; 

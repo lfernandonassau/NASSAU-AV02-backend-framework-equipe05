@@ -50,6 +50,7 @@ export const ColumnTitle = styled.div`
         font-weight: 600;
         font-size: 1rem;
         color: #272727ff;
+        text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     }
     
     .count {
