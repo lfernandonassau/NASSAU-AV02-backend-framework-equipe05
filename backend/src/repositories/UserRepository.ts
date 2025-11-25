@@ -1,42 +1,72 @@
 import prisma from '../database/prismaClient.js'
 
+// Tipos auxiliares pra organizar
+interface CreateUserInput {
+    name: string
+    lastname: string
+    cpf: string
+    email: string
+    password: string
+}
+
+interface UpdateUserInput {
+    name?: string
+    lastname?: string
+    cpf?: string
+    email?: string
+    password?: string // já em HASH
+    imagemUrl?: string | null
+}
+
 export default {
-    async createUser(data: {
-        id_user: bigint
-        name: string
-        lastname: string
-        cpf: string
-        email: string
-        password: string // já deve vir HASH
-    }) {
-        const user = await prisma.user.create({
-            data: {
-                id_user: data.id_user,
-                name: data.name,
-                lastname: data.lastname,
-                cpf: data.cpf,
-                email: data.email,
-                password: data.password,
-            },
-        })
-        return user
+    async createUser(data: CreateUserInput) {
+    const user = await prisma.user.create({
+        data: {
+        name: data.name,
+        lastname: data.lastname,
+        cpf: data.cpf,
+        email: data.email,
+        password: data.password,
+        },
+    })
+    return user
     },
 
     async listUsers() {
-        return prisma.user.findMany()
+    return prisma.user.findMany()
     },
 
-    async update(id: number | bigint, data: any) {
-        return prisma.user.update({
-            where: { id_user: Number(id) },
-            data,
-        })
+    async findByEmail(email: string) {
+    return prisma.user.findUnique({
+        where: { email },
+    })
     },
 
-    async delete(id: number) {
-        return prisma.user.delete({
-            where: {id_user: Number(id)}
-        })
-    }
+    async findByCpf(cpf: string) {
+    return prisma.user.findUnique({
+        where: { cpf },
+    })
+    },
 
+    async update(id: number | bigint, data: UpdateUserInput) {
+    const user = await prisma.user.update({
+        where: { id_user: BigInt(id) },
+        data,
+    })
+    return user
+    },
+
+    async updatePassword(id: number | bigint, newPasswordHash: string) {
+    const user = await prisma.user.update({
+        where: { id_user: BigInt(id) },
+        data: { password: newPasswordHash },
+    })
+    return user
+    },
+
+    async delete(id: number | bigint) {
+    return prisma.user.delete({
+        where: { id_user: BigInt(id) },
+    })
+    },
 }
