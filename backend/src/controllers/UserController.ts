@@ -20,4 +20,21 @@ export default {
         return res.json(serializeBigInt(result))
     },
 
+    async update(req: Request, res: Response) {
+        try {
+            const id = Number(req.params.id)
+            const result = await UserService.update(id, req.body)
+        return res.json(serializeBigInt(result))
+        }catch (err: any) {
+            return res.status(400).json({ message: err.message })
+        }
+    },
+
+    async delete(req: Request, res: Response) {
+            const id = Number(req.params.id)
+            const result = await UserService.delete(id)
+            const safeResult = serializeBigInt(result)
+        return res.json(safeResult)
+    },
+
 }
