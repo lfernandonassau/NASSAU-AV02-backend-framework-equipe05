@@ -1,9 +1,20 @@
+import type { ClassJob } from '@prisma/client'
 import prisma from '../database/prismaClient.js'
+
+export type ProjectRecord = {
+    id_job: bigint
+    position: ClassJob
+    users: bigint
+}
 
 export default {
 
-    async create(data:any) {
-        return prisma.job.create({ data })
+    async create(data: {position : ClassJob}) {
+        return prisma.job.create({
+            data:{
+                position: data.position
+        },
+        })
     },
 
     async list() {

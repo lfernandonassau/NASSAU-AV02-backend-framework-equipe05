@@ -44,7 +44,7 @@ model User{
 model Job{
 
   id_job        BigInt         @id @default(autoincrement())
-  position      ClassJob       @default(MEMBERS)
+  position      ClassJob      @default(MEMBERS)
   users         UserPosition[]
   informationdisplay Dashboard[]
 
