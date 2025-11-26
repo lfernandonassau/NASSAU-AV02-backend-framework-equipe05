@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const CardContainer = styled.div`
+export const EvolutionContainer = styled.div`
   background: #ffffff;
   border-radius: 16px;
   padding: 24px;
   width: 100%;
-  min-height: 320px;
+  min-height: 350px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   border: 1px solid #f1f1f1;
   display: flex;
@@ -36,4 +36,4 @@ export const CardContainer = styled.div`
       font-size: 14px;
     }
   }
-`;
+`;  
