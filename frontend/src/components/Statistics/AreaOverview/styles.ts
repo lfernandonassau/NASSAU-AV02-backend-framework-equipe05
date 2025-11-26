@@ -5,13 +5,16 @@ export const AreaContainer = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  align-items: flex-start;
 
-  h3 {
-    font-family: "Montserrat", sans-serif;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #021c2e;
-  }
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #0B1B3A;
+  margin: 0 0 14px 0;
+}
 
   svg,
   canvas {
