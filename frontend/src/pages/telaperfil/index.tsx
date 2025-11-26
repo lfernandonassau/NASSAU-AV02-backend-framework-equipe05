@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react' // Importe useRef
+import { useState } from 'react' // useRef não é mais necessário aqui
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form' 
 
@@ -7,8 +7,10 @@ import { HeaderProfile } from '../../components/HeaderProfile'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 
-import { MdBuild, MdGroup, MdPublic } from 'react-icons/md'; 
-import { FaBoxOpen } from 'react-icons/fa'; 
+import { MdBuild } from 'react-icons/md'; 
+
+// IMPORTA O NOVO MODAL
+import { AvatarSelectionModal } from './AvatarSelectionModal';
 
 import { 
     Wrapper,           
@@ -24,7 +26,7 @@ import {
     ProfileNavLink,   
     FormGrid,
     SectionTitle,
-    HiddenInput // Importe o input invisível
+    // HiddenInput removido daqui pois foi para o modal
 } from './styles'; 
 import { LiaProjectDiagramSolid } from 'react-icons/lia'
 
@@ -37,7 +39,9 @@ const TelaPerfil = () => {
     
     // --- LÓGICA DA FOTO ---
     const [avatarUrl, setAvatarUrl] = useState(DEFAULT_AVATAR);
-    const fileInputRef = useRef<HTMLInputElement>(null); // Referência ao input oculto
+    
+    // Estado para controlar o modal
+    const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -56,22 +60,10 @@ const TelaPerfil = () => {
         if (tab === 'painel') navigate('/painel');
     };
 
-    // Ao clicar no botão "Alterar foto", simula um clique no input file
-    const handleChangeAvatarClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    // Quando o usuário seleciona um arquivo
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            // Cria uma URL temporária para exibir a imagem imediatamente
-            const previewUrl = URL.createObjectURL(file);
-            setAvatarUrl(previewUrl);
-            
-            // Aqui você também faria o upload para o backend se necessário
-            console.log("Arquivo selecionado:", file);
-        }
+    // Função chamada pelo Modal quando uma imagem é escolhida (seja ícone ou upload)
+    const handleAvatarSelected = (newUrl: string) => {
+        setAvatarUrl(newUrl);
+        // Aqui você salvaria no backend se necessário
     };
 
     const handleSearch = (val: string) => console.log("Buscar:", val);
@@ -101,16 +93,8 @@ const TelaPerfil = () => {
                                     <h2>Rafael Alexandre</h2>
                                     <span>rafael@kodan.com</span>
                                     
-                                    {/* Input invisível conectado via ref */}
-                                    <HiddenInput 
-                                        type="file" 
-                                        ref={fileInputRef} 
-                                        accept="image/*" // Aceita apenas imagens
-                                        onChange={handleFileChange}
-                                    />
-                                    
-                                    {/* Botão que aciona o input */}
-                                    <button type="button" onClick={handleChangeAvatarClick}>
+                                    {/* Botão agora abre o Modal */}
+                                    <button type="button" onClick={() => setIsAvatarModalOpen(true)}>
                                         Alterar foto
                                     </button>
                                 </ProfileInfo>
@@ -159,7 +143,6 @@ const TelaPerfil = () => {
                             </>
                         )}
 
-
                         {/* CONTEÚDO: PROJETOS */}
                         {profileSubTab === 'projects' && (
                             <div>
@@ -172,6 +155,13 @@ const TelaPerfil = () => {
                         
                     </Container>
                 </ContentWrapper>
+
+                {/* --- RENDERIZAÇÃO DO NOVO MODAL --- */}
+                <AvatarSelectionModal 
+                    isOpen={isAvatarModalOpen}
+                    onClose={() => setIsAvatarModalOpen(false)}
+                    onSelectAvatar={handleAvatarSelected}
+                />
 
             </ContentContainer>
         </Wrapper>

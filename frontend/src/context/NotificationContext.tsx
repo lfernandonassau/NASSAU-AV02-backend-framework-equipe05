@@ -7,6 +7,7 @@ interface INotificationContext {
   markAsRead: (id: string | number) => void;
   markAllAsRead: () => void;
   addNotification: (notification: INotification) => void;
+  clearNotifications: () => void; // ✅ NOVO
 }
 
 const NotificationContext = createContext<INotificationContext | null>(null);
@@ -22,7 +23,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
   const markAsRead = (id: string | number) => {
     setNotifications(prev =>
-      prev.map(n => n.id === id ? { ...n, read: true } : n)
+      prev.map(n => (n.id === id ? { ...n, read: true } : n))
     );
   };
 
@@ -34,8 +35,20 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     setNotifications(prev => [notification, ...prev]);
   };
 
+  // ✅ Limpa todas as notificações (para mostrar o empty state)
+  const clearNotifications = () => setNotifications([]);
+
   return (
-    <NotificationContext.Provider value={{ notifications, unreadCount, markAsRead, markAllAsRead, addNotification }}>
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        unreadCount,
+        markAsRead,
+        markAllAsRead,
+        addNotification,
+        clearNotifications,
+      }}
+    >
       {children}
     </NotificationContext.Provider>
   );

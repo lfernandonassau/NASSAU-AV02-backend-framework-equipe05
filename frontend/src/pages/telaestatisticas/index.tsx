@@ -2,23 +2,22 @@ import { useState } from "react";
 import { Sidebar } from "../../components/Sidebar";
 import { HeaderProfile } from "../../components/HeaderProfile";
 
-import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
-import ProjectOverviewPie from "../../components/Statistics/Overview";
-import CollaboratorStats from "../../components/Statistics/CollaboratorStats";
 import AreaOverview from "../../components/Statistics/AreaOverview";
+import ProjectOverviewPie from "../../components/Statistics/OverviewChart";
+import WeeklyEvolutionChart from "../../components/Statistics/EvolutionChart";
+import CollaboratorStats from "../../components/Statistics/CollaboratorStats";
 
 import {
   Container,
   Content,
   ChartsRow,
   BottomRow,
-  CollaboratorSection,
   PerfilBar,
   UserAvatar,
   PerfilTextContainer,
   PerfilTitleBar,
   PerfilTextBar,
-  PerfilTextSpanBar,
+  PerfilTextSpanBar
 } from "./styles";
 
 const USER_AVATAR =
@@ -40,37 +39,39 @@ const Estatisticas = () => {
         onSearch={(v: string) => console.log("Buscar:", v)}
         />
 
-      
       <Content>
-        {/* PERFIL BAR */}
+
         <PerfilBar>
-            <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
-            <PerfilTextContainer>
-                <PerfilTitleBar>
-                    👋 Rafael, <PerfilTextSpanBar>você está visualizando as estatisticas!</PerfilTextSpanBar>
-                </PerfilTitleBar>
-                <PerfilTextBar>
-                    Essa é a parte em que você acompanhará a evolução geral dos seus projetos.
-                </PerfilTextBar>
-            </PerfilTextContainer>
+          <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
+          <PerfilTextContainer>
+            <PerfilTitleBar>
+              👋 Rafael,{" "}
+              <PerfilTextSpanBar>
+                você está visualizando as estatísticas!
+              </PerfilTextSpanBar>
+            </PerfilTitleBar>
+
+            <PerfilTextBar>
+              Aqui você acompanha a evolução geral dos seus projetos.
+            </PerfilTextBar>
+          </PerfilTextContainer>
         </PerfilBar>
 
-        {/* Daqui para baixo continua os gráficos */}
+        {/* LINHA 1 */}
         <ChartsRow>
-            <WeeklyEvolutionChart />
-            <ProjectOverviewPie />
+          <AreaOverview />
+          <ProjectOverviewPie />
         </ChartsRow>
 
+        {/* LINHA 2 */}
         <BottomRow>
-            <AreaOverview />
+          <WeeklyEvolutionChart />
+          <CollaboratorStats />
         </BottomRow>
 
-        <CollaboratorSection>
-            <CollaboratorStats />
-        </CollaboratorSection>
-        </Content>
+      </Content>
     </Container>
     );
 };
 
-export { Estatisticas };
+export { Estatisticas};

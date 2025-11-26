@@ -183,7 +183,7 @@ export const ModalFooter = styled.div`
   background-color: #f8fafc;
   padding: 1.25rem 1.5rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
   border-top: 1px solid #e2e8f0;
   flex-shrink: 0; /* Footer fixo, não encolhe */

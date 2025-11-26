@@ -22,7 +22,6 @@ app.use(cors({
 app.use(express.json())
 
 app.use('/projects', projectRoutes)
-app.use('/user', userRoutes)
 app.use('/column', columnRoutes)
 app.use('/job', jobRoutes)
 app.use('/userposition',userpositionRoutes)

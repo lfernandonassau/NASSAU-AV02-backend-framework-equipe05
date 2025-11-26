@@ -65,4 +65,3 @@ const WeeklyEvolutionChart = () => {
 };
 
 export default WeeklyEvolutionChart;
-
