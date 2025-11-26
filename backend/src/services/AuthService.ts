@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import UserRepository from '../repositories/UserRepository.js'
 import PasswordResetTokenRepository from '../repositories/PasswordResetTokenRepository.js'
-// import MailService from '../services/MailService.js'
+import MailService from '../services/MailService.js'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-define-no-.env'
 
@@ -54,8 +54,14 @@ export default {
 
         const resetLink = `https://seu-frontend.com/reset-password?token=${rawToken}`
 
-        // aqui entra o envio de email
-        // await MailService.sendPasswordReset(user.email, resetLink)
+        await PasswordResetTokenRepository.createToken(
+            user.id_user,
+            rawToken,
+            expiresAt
+        )
+
+        // envio de email real
+        await MailService.sendPasswordReset(user.email, rawToken)
 
         return
     },
