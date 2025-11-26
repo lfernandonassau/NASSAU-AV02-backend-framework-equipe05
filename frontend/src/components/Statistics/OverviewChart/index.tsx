@@ -13,7 +13,7 @@ const ProjectOverviewPie = () => {
     <OverviewChartContainer style={{ height: 330 }}>
 
       <PieWrapper>
-        <h3>Visão Geral</h3> 
+        <h3>Visão Geral:</h3> 
         <div style={{ width: "100%", height: "260px" }}>
           <ResponsivePie
             data={data}
