@@ -1,93 +1,89 @@
-import {styled, css} from 'styled-components'
-import { IInputStyled } from './types'
-
+import styled, { css } from 'styled-components';
+import { IInputStyled } from './types';
 
 export const InputContainer = styled.div<IInputStyled>`
-    max-width: 100%;
     width: 100%;
-    height: 50px;
-    border-bottom: 1px solid #ffffffff;
+    height: 48px;
+    background-color: #fff;
+    
+    border: 1px solid #d1d5db; 
+    border-radius: 8px;
+    
     display: flex;
     align-items: center;
-    margin-bottom: 25px;
-    cursor: pointer;
-
-    position: relative;
-
-    input {
-        
-         &::placeholder {
-            color: #ffffffea;
-            font-size: 15px;
-        }
-            
-    }
-    ${({variant}) => variant !== 'primary' && css`
-        max-width: 150px;
-        height: 150px;
-        margin-bottom: 0;
+    padding: 0 12px; 
+    margin-bottom: 5px; /* Espaço para o erro não colar */
     
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    /* Foco: Borda azul/roxa */
+    &:focus-within {
+        border-color: #483EFF;
+        box-shadow: 0 0 0 3px rgba(72, 62, 255, 0.1);
+    }
+
+    /* Variante secundária (se existir) */
+    ${({ variant }) => variant !== 'primary' && css`
         background: transparent;
-        flex: 1;
-        border: 0;
-
-        input {
-            background-color: transparent;
-            width: 100%;
-            height: 20px;
-
-            &::placeholder {
-                color: #d8d7d7ea;
-            }
-            
-        }
-        
+        border: 1px solid #e5e7eb;
     `}
-`
+`;
+
 export const LeftIcon = styled.div`
     margin-right: 10px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    
+    /* Muda cor do ícone quando focado */
+    ${InputContainer}:focus-within & {
+        color: #483EFF;
+    }
+`;
 
-`
 export const RightIcon = styled.div`
-    margin-right: 0;
-    height: 20px;
+    margin-left: 10px;
     cursor: pointer;
-`
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        color: #4b5563;
+    }
+`;
 
 export const InputText = styled.input`
     background-color: transparent;
-    color: #ffffffff;
-
-    flex: 1;
-    width: 100%;
     border: 0;
+    flex: 1;
     height: 100%;
     outline: none;
+    
+    
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #1f2937; 
+    font-weight: 500;
 
-    /* Remove o ícone de senha nativo do Edge/Internet Explorer */
+    &::placeholder {
+        color: #9ca3af; 
+        font-weight: 400;
+    }
+
+    /* Remove o ícone de senha nativo do Edge */
     &::-ms-reveal,
     &::-ms-clear {
         display: none;
     }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover, 
-    &:-webkit-autofill:focus, 
-    &:-webkit-autofill:active {
-        transition: background-color 5000s ease-in-out 0s;
-
-    }
-
-`
+`;
 
 export const ErrorText = styled.p`
-    color: #c00707ff;
-    font-size: 11px;
-    font-weight: 400;
-    font-family: 'Montserrat';
-    margin-top: -10px;
-    margin-bottom: 10px;
-    width: 100%;
+    color: #ef4444; 
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 4px;
+    margin-bottom: 16px; /* Espaço até o próximo input */
     text-align: left;
-
-`
+    padding-left: 2px;
+`;

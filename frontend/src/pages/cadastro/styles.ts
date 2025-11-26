@@ -1,105 +1,32 @@
-import styled from 'styled-components'
-import { MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
-import RegisterBackgroundImage from '../../assets/register-background.svg'
-import { IAnimation } from './types'
-import { FaRegIdCard, FaUser } from 'react-icons/fa'
+import styled from 'styled-components';
+import { IAnimation } from './types';
+import { MdVisibility, MdVisibilityOff, MdEmail, MdLock } from 'react-icons/md';
 
-
-export const RegisterNewScreen = styled.div<IAnimation>`
+export const LogoContainer = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 150px;
-    width: 100%;
-    max-width: 1400px;
-    padding: 0 20px;
-
+    gap: 10px;
+    margin-bottom: 30px;
     
-
-    /* Animação ao rolar a pagina */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-    ${({ $visivel }) => $visivel && `
-        opacity: 1;
-        transform: translateY(0);
-    `}
-
-
+    /* No mobile, centraliza a logo também */
     @media (max-width: 768px) {
-      flex-direction: column;
-      min-width: 0;
-      width: 100%;
-      max-width: 500px;
-      gap: 10px;
+        margin-bottom: 0;
     }
+`;
 
-    @media (max-width: 1366px) {
-        gap: 50px;  */
-    }
-`
+export const LogoImage = styled.img`
+    height: 32px;
+`;
 
-export const RegisterContainer = styled.main`
-    width: 100%;
-    max-width: 450px;
-    padding: 40px;
-    flex: 1;
-    margin: 20px auto;
+export const LogoText = styled.h1`
+    font-family: 'Lobster Two', cursive;
+    color: #ffffff;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+`;
 
-    background-color: #47b8da7c;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    border-radius: 10px;
-
-
-
-    @media (max-width: 1600px) {
-        
-        width: 90%;
-        margin: 20px auto;
-    }
-    
-    @media (max-width: 480px) {
-        width: 95%;
-        margin: 10px auto;
-        
-    }
-
-`
-
-
-export const WelcomeContainer = styled.main`
-    width: 100%;
-    height: 100%;
-    min-height: 600px;
-    padding: 40px;
-    flex: 2;
-
-    background: transparent;
-
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    
-    border-radius: 20px;
-
-    @media (max-width: 1366px) {
-        flex: 1; 
-        padding: 20px; 
-    }
-
-    /* O verdadeiro pulo do gato para isso não QUEBRAR nunca mais!!!! */  
-    @media (max-width: 1250px) {
-        display: none;
-    }
-
-`
+// WRAPPER GERAL
 export const PageWrapper = styled.div`
     background: radial-gradient(
         circle at 70% 30%, 
@@ -108,303 +35,315 @@ export const PageWrapper = styled.div`
         #216b99ff 70%,     
         #0191daff 100%     
     );
-
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     width: 100%;
-    box-sizing: border-box;
     min-height: 100vh;
     
     display: flex;
-    flex-direction: column; /* Coloca um item abaixo do outro */
     justify-content: center;
     align-items: center;
-    
-    padding-bottom: 20px; 
-
-    @media (max-width: 768px) {
-        padding: 20px 15px;
-        background-attachment: scroll;
-        height: auto;
-    }
-`
-
-export const FormContainer = styled.form`
-    width: 100%;
-    max-width: 350px; /* Define a largura "Grande" dos seus inputs aqui */
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-
-   
+    padding: 20px;
+    box-sizing: border-box;
 `;
 
-
-
-
-
-export const Column = styled.div`
+// O CARD PRINCIPAL (Branco)
+export const CardContainer = styled.div<IAnimation>`
+    background-color: #ffffff;
     width: 100%;
+    max-width: 900px; /* Mais largo para caber a sidebar */
+    min-height: 550px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    
     display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-export const Row = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-`
-export const TitleKanban = styled.h2`
-    font-family: 'Lobster Two', 'cursive';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 55px;
+    overflow: hidden; /* Para o conteudo não vazar as bordas arredondadas */
+    
+    /* Animação de entrada */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    
+    ${({ $visivel }) => $visivel && `
+        opacity: 1;
+        transform: translateY(0);
+    `}
 
     @media (max-width: 768px) {
-        font-size: 30px;
+        flex-direction: column; /* No mobile vira coluna */
+        min-height: auto;
+        margin-top: 20px;
     }
-`
-export const TitleLogin = styled.p`
-    font-family: 'Lobster two';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 15px;
-    line-height: 75px;
-
-`
-
-export const TitleWelcome = styled.h2`
-    font-family: 'Montserrat';
-    font-weight: 700;
-    color: #000000ff;
-    font-size: 15px;
-    text-align: center;
-    padding-right: 500px;
-    margin-top: -25px;
-`
-
-export const WelcomeSubText = styled.p`
-    font-family: 'Montserrat', 'sans serif';
-    font-weight: 400;
-    color: #000000ff;
-
-    background-color: #7bdcfa65;
-
-    filter: 
-        drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
-    &:hover {
-    transform: translateY(-5px);
-    filter: 
-        drop-shadow(0 12px 10px rgba(12, 24, 40, 0.3));
-    }
-
-    border: 2px solid #ffffffff;
-    border-radius: 10px;
-    padding: 15px;
-    background-image:
-    width: 100%;
-    font-size: 22px;
-    text-align: center; 
-    line-height: 35px;
-    margin: 25px auto 15px auto;
-    @media (max-width: 768px) {
-      font-size: 20px;
-    }
-`
-
-export const CloseButton = styled.button`
-  background: transparent;
-  border: none;
-  color: #000000;
-  font-size: 1rem;
-  cursor: pointer;
-  padding-left: 660px;
-  margin-top: -10px;
-
-
-  &:hover {
-    color: #FFFFFF;
-  }
 `;
 
-export const KanbanSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    color: #ffffffff;
-    font-size: 15px;
-    text-align: center; 
-    max-width: 420px;
-    margin-bottom: 35px;
-    line-height: 25px;
-    margin: 0 auto 20px auto;
-    padding-bottom: 10px;
-
-`
-
-export const PossuiContaSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 10px; 
-    text-align: center;
-    margin: 10px;
-    width: 100%;
-    cursor: pointer;
-    margin-top: -15px;
-    margin-bottom: 20px;
-
-    a {
-        color: #084e88ff;
-    }
-`
-export const TextoLivreSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 10px; 
-    
+// --- SIDEBAR (Esquerda - Azul/Roxo) ---
+export const SidebarContainer = styled.div`
+    width: 280px;
+    background-color: #000000;
+    padding: 40px;
     display: flex;
-    align-items: center; 
-    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+    flex-shrink: 0;
     
-    margin-top: 5px;
-    margin-bottom: 25px;
-    width: 100%;
-    cursor: pointer;
-
-    /* --- Linhas --- */
-    
-    &::before,
+    /* Decoração (Bolinha) */
     &::after {
         content: '';
-        flex: 1;
-        height: 1px;
-        background: #ffffff50; 
+        position: absolute;
+        bottom: -50px;
+        left: -50px;
+        width: 150px;
+        height: 150px;
+        background-color: #0191daff;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.8;
     }
 
-    /* Espaçamento entre a linha e o texto */
+    /* Outra decoração */
     &::before {
-        margin-right: 20px;
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        background-color: #6cc4f0ff;
+        border-radius: 50%;
+        filter: blur(30px);
+        opacity: 0.6;
     }
 
-    &::after {
-        margin-left: 20px;
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 20px;
+        flex-direction: row;
+        justify-content: center;
+        overflow: hidden;
+        min-height: 100px;
+        gap: 15px;
     }
-`
+`;
 
+// Item do Passo (Bolinha + Texto)
+export const StepItem = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2; /* Ficar acima das bolinhas decorativas */
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+`;
 
-export const CriarContaText = styled.p`
-    font-family: 'Inter';
-    font-style: normal;
+// A Bolinha do número
+export const StepNumber = styled.div<{ $active?: boolean }>`
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid ${({ $active }) => $active ? 'transparent' : '#ffffff'};
+    background-color: ${({ $active }) => $active ? '#bfe2fd' : 'transparent'};
+    color: ${({ $active }) => $active ? '#022959' : '#ffffff'};
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
-    color: #000000;
-    font-size: 10px;
-    text-align: center; 
-    max-width: 420px;
-    line-height: 19px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+`;
 
-    margin-top: 0;
-`
+// O Texto ao lado (PASSO X / TÍTULO)
+export const StepTexts = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+    span {
+        font-family: 'Montserrat', sans-serif;
+    }
 
-export const CpfIconStyled = styled(FaRegIdCard)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+    .step-label {
+        font-size: 10px;
+        color: rgba(255,255,255,0.7);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-export const NameIconStyled = styled(MdPerson)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+    .step-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-export const LoginIconStyled = styled(MdPerson)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
-export const PasswordStyled = styled(MdLock)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+    @media (max-width: 768px) {
+        display: none; /* Esconde o texto no mobile pra caber */
+    }
+`;
 
-export const MagicEye = styled(MdVisibility)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+// --- ÁREA DO FORMULÁRIO (Direita - Branco) ---
+export const FormContent = styled.div`
+    flex: 1;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Título topo, Form meio, Botões base */
+    
+    @media (max-width: 768px) {
+        padding: 30px 20px;
+    }
+`;
 
-export const MagicEyeOff = styled(MdVisibilityOff)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+export const FormHeader = styled.div`
+    margin-bottom: 30px;
 
+    h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem;
+        color: #022959;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+    }
 
-/*  ESTILIZAÇÃO DO TERMOS E CONDIÇÕES*/
+    p {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        color: #9699aa;
+        margin: 0;
+        line-height: 1.5;
+    }
+`;
+
+// --- ESTILOS GENÉRICOS REAPROVEITADOS ---
+export const FormBody = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1; /* Ocupa o espaço disponível */
+`;
+
+export const ButtonsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+`;
+
+// Botão "Próximo" Estilo Dark Blue
+export const NextButton = styled.button`
+    background-color: #022959;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    
+    &:hover {
+        background-color: #164a8a;
+    }
+`;
+
+// Botão "Voltar" Estilo Texto
+export const BackButton = styled.button`
+    background: transparent;
+    border: none;
+    color: #9699aa;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+        color: #022959;
+    }
+`;
+
+// Adaptação para o componente Input (Labels e Inputs mais limpos)
+export const Label = styled.label`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #022959;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+`;
+
+/* --- Utilitários Antigos Mantidos para Compatibilidade --- */
+export const Row = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+`;
+
+export const TextoLivreSubText = styled.span`
+    font-family: 'Montserrat';
+    color: #9699aa;
+    font-size: 12px;
+`;
 
 export const TermsContainer = styled.div`
-    width: 100%;
     display: flex;
-    align-items: flex-start; 
-    justify-content: flex-start;
-    
-    margin-top: 15px;
-    margin-bottom: 20px;
-    gap: 10px; 
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 `;
 
 export const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
-    cursor: pointer;
-    
-    /* Tamanho Fixo */
-    width: 16px;
-    height: 16px;
-    
-    min-width: 16px; 
-    min-height: 16px;
-    flex-shrink: 0;
-    
-    margin-top: 2px; 
-    
-    accent-color: #276da3c9;
+    width: 18px;
+    height: 18px;
+    accent-color: #0191daff;
 `;
 
-export const TermsText = styled.label`
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: #ffffff;
-    cursor: pointer;
-    user-select: none;
-    
-    line-height: 1.4; 
-    text-align: left;
-
-    span {
-        font-weight: 700;
-        text-decoration: underline;
-        color: #05416bff;
-         
-    }
+export const TermsText = styled.p`
+    font-family: 'Montserrat';
+    font-size: 14px;
+    color: #9699aa;
+    span { color: #0191daff; text-decoration: underline; cursor: pointer; }
 `;
 
 export const ErrorText = styled.p`
-    color: #c00707ff;
-    font-size: 10px;
+    color: #ee374a;
+    font-size: 12px;
     font-family: 'Montserrat';
-    margin-top: -10px;
-    margin-bottom: 10px;
-    width: 100%;
-    text-align: left;
-`
+    margin-top: 5px;
+`;
+
+
+export const MagicEye = styled(MdVisibility)`
+    color: #9699aa;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.2s;
+    &:hover { color: #022959; }
+`;
+
+export const MagicEyeOff = styled(MdVisibilityOff)`
+    color: #9699aa;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.2s;
+    &:hover { color: #022959; }
+`;
+
+export const LoginIconStyled = styled(MdEmail)`
+    color: #022959;
+    font-size: 20px;
+`;
+
+export const PasswordStyled = styled(MdLock)`
+    color: #022959;
+    font-size: 20px;
+`;

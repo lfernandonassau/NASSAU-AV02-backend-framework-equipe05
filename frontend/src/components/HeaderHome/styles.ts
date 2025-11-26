@@ -25,6 +25,11 @@ export const NavBar = styled.nav<INavBarProps>`
 
     transition: background 0.3s ease, backdrop-filter 0.3s ease, padding 0.3s ease;
 
+
+        @media (max-width: 1200px) {
+        padding: 1rem 2rem; 
+    }
+
     @media (max-width: 768px) {
         padding: 1rem 1.5rem;
     }
@@ -41,10 +46,11 @@ export const LogoArea = styled.div`
 
     img {
         height: 33px;
-        margin-right: 4px;
+        margin-right: -10px;
     }
 
     span {
+        font-size: 1.2rem;
         font-family: "Montserrat", sans-serif;
         color: rgba(255, 255, 255, 0.85);
     }
@@ -55,6 +61,21 @@ export const NavLinks = styled.div`
     font-family: "Montserrat", sans-serif;
     display: flex;
     gap: 50px;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+
+    @media (max-width: 1100px) {
+        gap: 30px; 
+        font-size: 0.9rem; 
+    }
+
+    
+    @media (max-width: 1000px) {
+        gap: 20px;
+    }
 
     @media (max-width: 900px) {
         display: none;
@@ -78,7 +99,8 @@ export const RightSide = styled.div`
     align-items: center;
     gap: 14px;
 
-    /* TELAS PEQUENAS */
+    z-index: 10;
+
     @media (max-width: 768px) {
         gap: 10px;
     }
@@ -94,17 +116,23 @@ export const SignInButton = styled.button`
     font-weight: 700;
     font-size: 0.9rem;
     cursor: pointer;
+    white-space: nowrap;
     transition: transform 0.2s, box-shadow 0.2s;
 
-    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 5px rgba(0,0,0,0.3);
 
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
+        
+    @media (max-width: 1100px) {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
 
     @media (max-width: 768px) {
-        padding: 8px 14px;   /* diminui */
+        padding: 8px 14px;  
         font-size: 0.8rem;
     }
 `;
@@ -137,7 +165,7 @@ export const MobileMenuButton = styled.button<{ isOpen: boolean }>`
     background: transparent;
     border: none;
     cursor: pointer;
-    z-index: 9999; /* <<< AQUI */
+    z-index: 9999; 
 
     span {
       display: block;
@@ -175,7 +203,7 @@ export const MobileMenu = styled.div<{ isOpen: boolean }>`
     justify-content: center;    
     align-items: center;        
 
-    gap: 2.5rem;                 /* espaçamento entre links */
+    gap: 2.5rem;                 
     transition: right 0.35s ease-in-out;
     z-index: 1000;
 
