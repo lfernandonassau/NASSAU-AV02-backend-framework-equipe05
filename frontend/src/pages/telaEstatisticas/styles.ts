@@ -97,70 +97,86 @@ export const CollaboratorSection = styled.div`
   width: 100%;
 `;
 
-/* PERFIL BAR */
+// PERFIL BAR (Inicial do Painel)
 export const PerfilBar = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    width: 100%;
+    max-width: 100%; 
+    margin: 0; 
+    
+    background-color: transparent; 
+    
+    border-radius: 10px;
+    display: flex;
+    
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+    
+    padding: 0 20px 0 0;
+    
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    gap: 10px;
-  }
-`;
+
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        margin: 0 auto;
+        padding: 10px 20px;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+    }
+`
 
 export const PerfilTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`
 
 export const UserAvatar = styled.img`
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 3px solid #ffffff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  object-fit: cover;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #ffffff; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    object-fit: cover;
 
-  @media (max-width: 768px) {
-    width: 50px;
-    height: 50px;
-  }
-`;
+    @media (max-width: 768px) {
+        width: 60px;
+        height: 60px;
+    }
+`
 
 export const PerfilTitleBar = styled.h1`
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #3b3b3b;
-  margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #444444ff;
+    margin: 0;
+    padding: 0;
 
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-  }
-`;
+    @media (max-width: 1024px) {
+        font-size: 15px;
+    }
+`
 
 export const PerfilTextSpanBar = styled.span`
-  font-weight: 600;
-  color: #1454B8;
-`;
+    font-weight: 500;
+    color: #4d4d4dff;
+`
 
 export const PerfilTextBar = styled.p`
-  font-family: 'Montserrat', sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  color: #666;
-  margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #494949ff;
+    margin: 0;
+    padding: 0;
 
-  @media (max-width: 768px) {
-    font-size: 13px;
-  }
-`;
+    @media (max-width: 1024px) {
+        font-size: 15px;
+    }
+`
