@@ -30,6 +30,7 @@ interface AvatarSelectionModalProps {
   onSelectAvatar: (url: string) => void; // Retorna a URL escolhida
 }
 
+
 const AvatarSelectionModal: React.FC<AvatarSelectionModalProps> = ({ isOpen, onClose, onSelectAvatar }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 

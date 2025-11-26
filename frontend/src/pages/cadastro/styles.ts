@@ -190,7 +190,7 @@ export const TitleWelcome = styled.h2`
     margin-top: -25px;
 `
 
-export const WelcomeSubText = styled.p`
+export const WelcomeSubText = styled.div`
     font-family: 'Montserrat', 'sans serif';
     font-weight: 400;
     color: #000000ff;

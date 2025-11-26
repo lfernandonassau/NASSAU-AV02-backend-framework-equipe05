@@ -19,8 +19,9 @@ export default {
             throw new Error('Email ou senha inválidos')
         }
 
+        // converter o BigInt
         const payload = {
-            id_user: user.id_user,
+            id_user: Number(user.id_user),
             name: user.name,
             lastname: user.lastname,
             email: user.email,
