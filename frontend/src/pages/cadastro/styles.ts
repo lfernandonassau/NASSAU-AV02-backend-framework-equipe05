@@ -75,6 +75,74 @@ export const CardContainer = styled.div<IAnimation>`
         min-height: auto;
         margin-top: 20px;
     }
+<<<<<<< HEAD
+=======
+`
+export const TitleLogin = styled.p`
+    font-family: 'Lobster two';
+    font-style: normal;
+    font-weight: 700;
+    color: #ffffffff;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 75px;
+
+`
+
+export const TitleWelcome = styled.h2`
+    font-family: 'Montserrat';
+    font-weight: 700;
+    color: #000000ff;
+    font-size: 15px;
+    text-align: center;
+    padding-right: 500px;
+    margin-top: -25px;
+`
+
+export const WelcomeSubText = styled.div`
+    font-family: 'Montserrat', 'sans serif';
+    font-weight: 400;
+    color: #000000ff;
+
+    background-color: #7bdcfa65;
+
+    filter: 
+        drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
+    &:hover {
+    transform: translateY(-5px);
+    filter: 
+        drop-shadow(0 12px 10px rgba(12, 24, 40, 0.3));
+    }
+
+    border: 2px solid #ffffffff;
+    border-radius: 10px;
+    padding: 15px;
+    background-image:
+    width: 100%;
+    font-size: 22px;
+    text-align: center; 
+    line-height: 35px;
+    margin: 25px auto 15px auto;
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+`
+
+export const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  color: #000000;
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 660px;
+  margin-top: -10px;
+
+
+  &:hover {
+    color: #FFFFFF;
+  }
+>>>>>>> a19e89aafe6684bd61f3d51b03d2b4e6951f0e78
 `;
 
 // --- SIDEBAR (Esquerda - Azul/Roxo) ---
