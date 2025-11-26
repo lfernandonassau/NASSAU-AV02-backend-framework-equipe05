@@ -1,45 +1,67 @@
-import { CardContainer } from "../CardContainer";
-import { MdCheckCircle, MdAccessTime, MdTrendingUp } from "react-icons/md";
+import { CollaboratorContainer } from "./CollaboratorStatsContainer";
+import {
+  Wrapper,
+  Row,
+  LabelIcon,
+  LabelText,
+  Value,
+  Bar,
+  Fill
+} from "./styles";
+
+import { MdCheckCircle } from "react-icons/md";
+import { MdAccessTime } from "react-icons/md";
+import { MdTrendingUp } from "react-icons/md";
 import { FaTasks } from "react-icons/fa";
-import { StatsContainer, StatsList, StatItem } from "./styles";
+
+const total = 124;
 
 const CollaboratorStats = () => {
   return (
-    <CardContainer>
-      <StatsContainer>
+    <CollaboratorContainer>
+      <Wrapper>
         <h3>Acompanhamento por equipe</h3>
 
-        <StatsList>
-          <StatItem>
-            <span>
-              <FaTasks color="#4A4A4A" size={16} /> Total de Tarefas
-            </span>
-            <strong>124</strong>
-          </StatItem>
+        {/* TOTAL — agora padronizado */}
+        <Row>
+          <LabelIcon><FaTasks size={18} color="#1454B8" /></LabelIcon>
+          <LabelText>Total de Tarefas</LabelText>
+          <Value>{total}</Value>
+        </Row>
+        {/* Linha invisível para manter o mesmo espaçamento */}
+        <Bar style={{ opacity: 0 }} />
 
-          <StatItem>
-            <span>
-              <MdCheckCircle color="#4CAF50" size={18} /> Concluídas
-            </span>
-            <strong>73</strong>
-          </StatItem>
+        {/* CONCLUÍDAS */}
+        <Row>
+          <LabelIcon><MdCheckCircle size={18} color="#1454B8" /></LabelIcon>
+          <LabelText>Concluídas</LabelText>
+          <Value>73</Value>
+        </Row>
+        <Bar>
+          <Fill width={(73 / total) * 100} color="#1454B8" />
+        </Bar>
 
-          <StatItem>
-            <span>
-              <MdTrendingUp color="#FFC94D" size={18} /> Em andamento
-            </span>
-            <strong>36</strong>
-          </StatItem>
+        {/* EM ANDAMENTO */}
+        <Row>
+          <LabelIcon><MdTrendingUp size={18} color="#47B0F7" /></LabelIcon>
+          <LabelText>Em andamento</LabelText>
+          <Value>36</Value>
+        </Row>
+        <Bar>
+          <Fill width={(36 / total) * 100} color="#47B0F7" />
+        </Bar>
 
-          <StatItem>
-            <span>
-              <MdAccessTime color="#FF6B6B" size={18} /> Pendentes
-            </span>
-            <strong>15</strong>
-          </StatItem>
-        </StatsList>
-      </StatsContainer>
-    </CardContainer>
+        {/* PENDENTES */}
+        <Row>
+          <LabelIcon><MdAccessTime size={18} color="#A8A8A8" /></LabelIcon>
+          <LabelText>Pendentes</LabelText>
+          <Value>15</Value>
+        </Row>
+        <Bar>
+          <Fill width={(15 / total) * 100} color="#A8A8A8" />
+        </Bar>
+      </Wrapper>
+    </CollaboratorContainer>
   );
 };
 

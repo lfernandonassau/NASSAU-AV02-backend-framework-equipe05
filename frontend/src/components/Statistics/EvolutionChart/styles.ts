@@ -7,13 +7,14 @@ export const ChartWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 
-  h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #1f1f1f;
-    margin-bottom: 10px;
-  }
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #0B1B3A;
+  margin: 0 0 14px 0;
+}
 
   svg,
   canvas {
@@ -22,7 +23,6 @@ export const ChartWrapper = styled.div`
 
   @media (max-width: 768px) {
     h3 {
-      font-size: 14px;
       text-align: center;
     }
   }

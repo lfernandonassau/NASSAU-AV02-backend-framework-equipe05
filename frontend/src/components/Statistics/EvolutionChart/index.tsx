@@ -1,5 +1,5 @@
 import { ResponsiveLine } from "@nivo/line";
-import { CardContainer } from "../CardContainer";
+import { EvolutionContainer } from "./EvolutionChartContainer";
 import { ChartWrapper } from "./styles";
 
 const data = [
@@ -31,7 +31,7 @@ const data = [
 
 const WeeklyEvolutionChart = () => {
   return (
-    <CardContainer>
+    <EvolutionContainer>
       <ChartWrapper>
         <h3>Evolução Semanal</h3>
 
@@ -60,7 +60,7 @@ const WeeklyEvolutionChart = () => {
           }}
         />
       </ChartWrapper>
-    </CardContainer>
+    </EvolutionContainer>
   );
 };
 

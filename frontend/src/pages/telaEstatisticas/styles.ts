@@ -47,13 +47,12 @@ export const ChartsRow = styled.div`
 /* LINHA 2: Evolução Semanal + Acompanhamento */
 export const BottomRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: 0.9fr 2.0fr; 
   gap: 32px;
   width: 100%;
-  align-items: stretch;
-  margin-top: 4px;
+  margin-top: 10px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
 `;
