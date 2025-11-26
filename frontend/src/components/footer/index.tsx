@@ -25,10 +25,11 @@ const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const developers = [
-    { name: "Samuel", url: "https://github.com/usuario1" },
-    { name: "Ryan", url: "https://github.com/usuario2" },
-    { name: "Rafael", url: "https://github.com/usuario3" },
-    { name: "Alanderson", url: "https://github.com/usuario4" },
+    { name: "Rafael", url: "https://github.com/rafxys" },
+    { name: "Samuel", url: "https://github.com/Sadousan" },
+    { name: "Ryan", url: "https://github.com/Ryan27r" },
+    { name: "Alanderson", url: "https://github.com/AlandersonSantos" },
+    { name: "Daniel", url: "https://github.com/daniel2311x" },
   ];
 
   return (
