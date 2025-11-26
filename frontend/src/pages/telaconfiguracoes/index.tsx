@@ -26,7 +26,13 @@ import {
     SwitchSlider,
     StyledSelect,
     DangerZone,
-    DangerButton
+    DangerButton,
+    PerfilBar,
+    UserAvatar,
+    PerfilTextContainer,
+    PerfilTextSpanBar,
+    PerfilTitleBar,
+    PerfilTextBar
 } from './styles';
 
 const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
@@ -68,6 +74,23 @@ const TelaConfig = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
 
+
+                    {/* PERFIL */}
+                    <PerfilBar>
+                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
+                        <PerfilTextContainer>
+                        <PerfilTitleBar>
+                            👋 Rafael,{" "}
+                            <PerfilTextSpanBar>
+                            aqui você quem manda!
+                            </PerfilTextSpanBar>
+                        </PerfilTitleBar>
+            
+                        <PerfilTextBar>
+                            Configure do seu jeito. Como quiser.
+                        </PerfilTextBar>
+                        </PerfilTextContainer>
+                    </PerfilBar>
                     <SettingsContainer>
                         {/* Título Traduzido */}
                         <PageTitle>{t('settings.title')}</PageTitle>
