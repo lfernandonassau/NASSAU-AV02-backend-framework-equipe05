@@ -60,17 +60,26 @@ const Login = () => {
     const navigate = useNavigate()
 
     const onSubmit = async (formData: IFormData) => {
-        try{
-            const { data } = await api.get(`users?email=${formData.email}&password=${formData.password}`)
-            if(data.length === 1){
-                navigate('/perfil')
-            } else {
-                alert('Email ou senha inválido.')
-            }
-        } catch {
-            alert('Houve um erro, tente novamente')
-        }
+    try {
+        const { data } = await api.post('/auth/login', {
+            email: formData.email,
+            password: formData.password,
+        })
+
+        // data = { user, token }
+
+        localStorage.setItem('kodan_token', data.token)
+        localStorage.setItem('kodan_user', JSON.stringify(data.user))
+
+        navigate('/perfil')
+
+    } catch (err: any) {
+        // Se backend devolveu 401 com message
+        const message = err?.response?.data?.message || 'Email ou senha inválido.'
+        alert(message)
     }
+}
+
 
     const [showPassword, setShowPassword] = useState(false)
 

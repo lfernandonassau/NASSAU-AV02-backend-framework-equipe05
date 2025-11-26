@@ -33,26 +33,57 @@ import { LiaProjectDiagramSolid } from 'react-icons/lia'
 // Imagem inicial padrão
 const DEFAULT_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
+
+type AuthUser = {
+    id_user: number
+    name: string
+    lastname: string
+    email: string
+    cpf?: string | null
+    imagemUrl?: string | null
+}
+
 const TelaPerfil = () => {
+
+        //RECUPERA USUÁRIO LOGADO DO LOCALSTORAGE
+    const storedUserString = localStorage.getItem('kodan_user')
+
+    let initialUser: AuthUser | null = null
+    if (storedUserString) {
+        try {
+            initialUser = JSON.parse(storedUserString)
+        } catch (e) {
+            console.error('Erro ao ler usuário do localStorage', e)
+        }
+    }
+
+    const [user, setUser] = useState<AuthUser | null>(initialUser)
+
     const [activeTab, setActiveTab] = useState('perfil');
     const [profileSubTab, setProfileSubTab] = useState('overview'); 
     
-    // --- LÓGICA DA FOTO ---
-    const [avatarUrl, setAvatarUrl] = useState(DEFAULT_AVATAR);
+    // --- LÓGICA DA FOTO --- atualizada
+        const [avatarUrl, setAvatarUrl] = useState(
+        initialUser?.imagemUrl || DEFAULT_AVATAR
+    )
+
     
     // Estado para controlar o modal
     const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, reset } = useForm({
         defaultValues: {
-            nome: "Rafael Alexandre",
-            email: "rafael@kodan.com",
-            cpf: "",
-            bio: ""
-        }
-    });
+            nome: initialUser
+                ? `${initialUser.name} ${initialUser.lastname}`
+                : '',
+            email: initialUser?.email || '',
+            cpf: initialUser?.cpf || '',
+            bio: '',
+        },
+    })
+
 
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
@@ -61,10 +92,17 @@ const TelaPerfil = () => {
     };
 
     // Função chamada pelo Modal quando uma imagem é escolhida (seja ícone ou upload)
-    const handleAvatarSelected = (newUrl: string) => {
-        setAvatarUrl(newUrl);
-        // Aqui você salvaria no backend se necessário
-    };
+        const handleAvatarSelected = (newUrl: string) => {
+        setAvatarUrl(newUrl)
+
+        setUser((prev) => {
+            if (!prev) return prev
+            const updated = { ...prev, imagemUrl: newUrl }
+            localStorage.setItem('kodan_user', JSON.stringify(updated))
+            return updated
+        })
+    }
+
 
     const handleSearch = (val: string) => console.log("Buscar:", val);
     const onSubmit = (data: any) => console.log("Dados salvos:", data);
@@ -88,16 +126,15 @@ const TelaPerfil = () => {
                             <ProfileLeftGroup>
                                 {/* Usa o estado avatarUrl */}
                                 <ProfileAvatar src={avatarUrl} alt="Foto de perfil" />
-                                
                                 <ProfileInfo>
-                                    <h2>Rafael Alexandre</h2>
-                                    <span>rafael@kodan.com</span>
-                                    
-                                    {/* Botão agora abre o Modal */}
+                                    <h2>{user ? `${user.name} ${user.lastname}` : 'Usuário Kodan'}</h2>
+                                    <span>{user?.email || 'email@kodan.com'}</span>
+
                                     <button type="button" onClick={() => setIsAvatarModalOpen(true)}>
                                         Alterar foto
                                     </button>
                                 </ProfileInfo>
+
                             </ProfileLeftGroup>
 
                             <ProfileNav>
@@ -130,7 +167,7 @@ const TelaPerfil = () => {
                                             <Input name="email" placeholder="E-mail" control={control} />
                                         </div>
                                         <div>
-                                            <Input name="CPF" placeholder="CPF" control={control} />
+                                            <Input name="cpf" placeholder="CPF" control={control} />
                                         </div>
                                         <div className="full-width">
                                             <Input name="bio" placeholder="Bio / Descrição" control={control} />

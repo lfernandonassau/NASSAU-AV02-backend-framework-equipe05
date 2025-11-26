@@ -76,36 +76,50 @@ const Cadastro = () => {
     }, [])
 
     const {
-        control,
-        handleSubmit,
-        setValue,        
-        clearErrors,     
-        formState: { errors, touchedFields, isSubmitted },
+    control,
+    handleSubmit,
+    setValue,
+    clearErrors,
+    formState: { errors, touchedFields, isSubmitted },
     } = useForm<IFormData>({
-        resolver: yupResolver(schema),
-        mode: 'onSubmit',
-        reValidateMode: 'onSubmit'
+    resolver: yupResolver(schema),
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+    defaultValues: {
+        cpf: '',
+        name: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        terms: false,
+    },
     })
+
 
     const navigate = useNavigate()
 
     const onSubmit = async (formData: IFormData) => {
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { confirmPassword, terms, ...userData } = formData
 
-            const { data } = await api.post(`users?email=${formData.email}`)
-            
-            if (data.length === 0) {
-                alert(`Usuário ${formData.name} cadastrado com sucesso!`)
-                navigate('/login')
-            } else {
-                alert('Este e-mail já está cadastrado.')
-            }
-        } catch {
-            alert('Houve um erro, tente novamente')
+            await api.post('/users', {
+                cpf: userData.cpf.replace(/\D/g, ''),   // remove tudo que não for número
+                name: userData.name,
+                lastname: userData.lastName,
+                email: userData.email,
+                password: userData.password,
+            })
+
+
+            alert(`Usuário ${formData.name} cadastrado com sucesso!`)
+            navigate('/login')
+        } catch (err: any) {
+            const message = err?.response?.data?.message || 'Houve um erro, tente novamente'
+            alert(message)
         }
     }
+
 
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -150,16 +164,17 @@ const Cadastro = () => {
                             {/* TERMOS E POLÍTICA  */}
                             <TermsContainer>
                                 <Controller
-                                    name="terms"
-                                    control={control}
-                                    render={({ field: { onChange, value } }) => (
-                                        <CheckboxInput
-                                            id="terms-check"
-                                            checked={value}
-                                            onChange={onChange}
-                                        />
-                                    )}
+                                name="terms"
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                    <CheckboxInput
+                                    id="terms-check"
+                                    checked={!!value}      // garante boolean
+                                    onChange={onChange}
+                                    />
+                                )}
                                 />
+
                                 
                                 <TermsText>
                                     Li e aceito os 

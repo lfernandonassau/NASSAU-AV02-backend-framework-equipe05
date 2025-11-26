@@ -10,6 +10,8 @@ import { TelaPerfil } from "../pages/telaperfil";
 import { TelaProjetos } from "../pages/telaprojetos";
 import {Estatisticas} from "../pages/telaEstatisticas";
 import { TelaConfig } from "../pages/telaconfiguracoes";
+import { ForgotPassword } from '../pages/forgotpassword'
+import { ResetPassword } from '../pages/resetpassword'
 
 const AppRoutes = () => {
   return (
@@ -24,7 +26,9 @@ const AppRoutes = () => {
           <Route path="/dashboard" element={<TelaDashboard />} />
           <Route path="/perfil" element={<TelaPerfil />} />
           <Route path="/estatisticas" element={<Estatisticas />} /> 
-          <Route path="/configuracoes" element={<TelaConfig />} /> 
+          <Route path="/configuracoes" element={<TelaConfig />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </TasksProvider>
     </BrowserRouter>
