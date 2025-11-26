@@ -1,6 +1,7 @@
 import { ResponsiveLine } from "@nivo/line";
-import { CardContainer } from "../CardContainer";
+import { AreaOverviewContainer } from "./AreaOverviewContainer";
 import { AreaContainer } from "./styles";
+
 
 const data = [
   {
@@ -17,7 +18,7 @@ const data = [
 
 const AreaOverview = () => {
   return (
-    <CardContainer>
+    <AreaOverviewContainer>
       <AreaContainer>
         <h3>Evolução Geral</h3>
 
@@ -59,7 +60,7 @@ const AreaOverview = () => {
           useMesh={true}
         />
       </AreaContainer>
-    </CardContainer>
+    </AreaOverviewContainer>
   );
 };
 
