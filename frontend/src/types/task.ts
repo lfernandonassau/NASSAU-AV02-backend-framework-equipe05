@@ -32,4 +32,3 @@ export interface UpdateTaskData {
     subtitle: string;
     date?: string;
 }
-

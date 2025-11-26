@@ -21,26 +21,27 @@ import {
 } from "./styles";
 
 const USER_AVATAR =
-    "https://avatars.githubusercontent.com/u/179970243?v=4";
+  "https://avatars.githubusercontent.com/u/179970243?v=4";
 
 const Estatisticas = () => {
-    const [activeTab, setActiveTab] = useState("estatisticas");
+  const [activeTab, setActiveTab] = useState("estatisticas");
 
-    return (
+  return (
     <Container>
-        <Sidebar
+      <Sidebar
         autenticado={true}
         activeTab={activeTab}
         onChangeTab={setActiveTab}
-        />
+      />
 
-        <HeaderProfile
+      <HeaderProfile
         userImage={USER_AVATAR}
         onSearch={(v: string) => console.log("Buscar:", v)}
-        />
+      />
 
       <Content>
 
+        {/* PERFIL */}
         <PerfilBar>
           <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
           <PerfilTextContainer>
@@ -57,21 +58,21 @@ const Estatisticas = () => {
           </PerfilTextContainer>
         </PerfilBar>
 
-        {/* LINHA 1 */}
+        {/* LINHA 1 — Evolução Geral + Visão Geral */}
         <ChartsRow>
           <AreaOverview />
           <ProjectOverviewPie />
         </ChartsRow>
 
-        {/* LINHA 2 */}
+        {/* LINHA 2 — */}
         <BottomRow>
-          <WeeklyEvolutionChart />
-          <CollaboratorStats />
+          <CollaboratorStats />       {/* Agora à ESQUERDA (menor) */}
+          <WeeklyEvolutionChart />   {/* Agora à DIREITA (maior) */}
         </BottomRow>
 
       </Content>
     </Container>
-    );
+  );
 };
 
-export { Estatisticas};
+export { Estatisticas };
