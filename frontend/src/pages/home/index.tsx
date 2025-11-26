@@ -69,7 +69,7 @@ const Home = () => {
                 </HeroSubtitle>
                 
                 <ButtonGroup>
-                    <PrimaryButton onClick={() => navigate('/register')}>
+                    <PrimaryButton onClick={() => navigate('/cadastro')}>
                         Comece agora
                     </PrimaryButton>
                     

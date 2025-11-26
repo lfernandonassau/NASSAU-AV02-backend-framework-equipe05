@@ -60,7 +60,7 @@ const HeaderHome = () => {
             <NavLinks>
                 <NavLink href="#sobre">Sobre nós</NavLink>
                 <NavLink href="#">Contato</NavLink>
-                <NavLink href="#">Nossa equipe</NavLink>
+                <NavLink onClick={() => handleNavigate('/equipe')}>Nossa equipe</NavLink>
             </NavLinks>
 
             <RightSide>
@@ -91,7 +91,7 @@ const HeaderHome = () => {
             <MobileMenu isOpen={isMobileMenuOpen}>
                 <MobileLink href="#sobre">Sobre nós</MobileLink>
                 <MobileLink href="#">Contato</MobileLink>
-                <MobileLink href="#">Nossa equipe</MobileLink>
+                <MobileLink onClick={() => navigate('/equipe')}>Nossa equipe</MobileLink>
             </MobileMenu>
             
         </NavBar>
