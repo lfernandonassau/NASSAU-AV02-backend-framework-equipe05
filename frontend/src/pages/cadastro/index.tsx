@@ -1,214 +1,111 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Controller, useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { api } from '../../services/api'
-import { signInWithPopup } from "firebase/auth";
+import { useEffect, useState } from 'react';
+import { RegistrationProvider, useRegistration } from '../../context/RegistrationContext';
 
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '../../components/Button'
-import { Input } from '../../components/Input'
-// ... imports dos estilos (mantém igual) ...
+// Componentes de Passos
+import { StepPersonal } from './steps/StepPersonal';
+import { StepCredentials } from './steps/StepCredentials';
+import { StepTerms } from './steps/StepTerms';
+import logo from '../../assets/logo.svg'
+// Estilos
 import {
-    Column,
-    LoginIconStyled,
-    KanbanSubText,
-    MagicEye,
-    MagicEyeOff,
     PageWrapper,
-    PasswordStyled,
-    Row,
-    TitleKanban,
-    WelcomeContainer,
-    WelcomeSubText,
-    CpfIconStyled,
-    NameIconStyled,
-    PossuiContaSubText,
-    FormContainer,
-    TitleWelcome,
-    CloseButton,
-    RegisterContainer,
-    RegisterNewScreen,
-    TextoLivreSubText,
-    TermsText,
-    ErrorText,
-    TermsContainer,
-    CheckboxInput,
-} from './styles'
+    CardContainer,
+    SidebarContainer,
+    FormContent,
+    StepItem,
+    StepNumber,
+    StepTexts,
+    FormHeader,
+    LogoContainer,
+    LogoImage,
+    LogoText
+} from './styles';
 
-import { IFormData } from './types'
-import { cpfMask } from '../../utils/cpfMask'
-import { nameMask } from '../../utils/nameMask'
-import { FcGoogle } from 'react-icons/fc'
+const SidebarSteps = () => {
+    const { currentStep } = useRegistration();
 
-
-// IMPORTA O COPYRIGHT
-import { Copyright } from '../../components/Copyright';
-
-import { auth, googleProvider } from '../../services/firebase'
-
-
-const schema = yup.object({
-    cpf: yup.string().min(14, 'No mínimo 11 caracteres').required('Campo obrigatório'),
-    name: yup.string().min(3, 'Digite um nome válido').required('Campo obrigatório'),
-    lastName: yup.string().min(3, 'Digite um sobrenome válido').required('Campo obrigatório'),
-    email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
-    password: yup.string().min(8, 'No mínimo 8 caracteres').required('Campo obrigatório'),
-    confirmPassword: yup.string()
-        .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
-        .required('Confirmação obrigatória'),
-    terms: yup.boolean()
-        .oneOf([true], 'Você deve aceitar os termos para continuar')
-        .required('Campo obrigatório')
-}).required()
-
-const Cadastro = () => {
-
-    const [estaVisivel, setEstaVisivel] = useState(false)
-    
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setEstaVisivel(true)
-        }, 200)
-
-        return () => clearTimeout(timer)
-    }, [])
-
-    const {
-        control,
-        handleSubmit,
-        setValue,        
-        clearErrors,     
-        formState: { errors, touchedFields, isSubmitted },
-    } = useForm<IFormData>({
-        resolver: yupResolver(schema),
-        mode: 'onSubmit',
-        reValidateMode: 'onSubmit'
-    })
-
-    const navigate = useNavigate()
-
-    const onSubmit = async (formData: IFormData) => {
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { confirmPassword, terms, ...userData } = formData
-
-            const { data } = await api.post(`users?email=${formData.email}`)
-            
-            if (data.length === 0) {
-                alert(`Usuário ${formData.name} cadastrado com sucesso!`)
-                navigate('/login')
-            } else {
-                alert('Este e-mail já está cadastrado.')
-            }
-        } catch {
-            alert('Houve um erro, tente novamente')
-        }
-    }
-
-    const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-    const handleGoogleLogin = async () => {
-        try {
-            await signInWithPopup(auth, googleProvider)
-            navigate('/perfil')
-        } catch {
-            alert("Erro ao entrar com Google.")
-        }
-    }
+    const steps = [
+        { label: 'PASSO 1', title: 'Nome e CPF' },
+        { label: 'PASSO 2', title: 'Senha e E-mail' },
+        { label: 'PASSO 3', title: 'Termos de Uso' },
+    ];
 
     return (
-        <PageWrapper>
-            <RegisterNewScreen $visivel={estaVisivel}>
-                <RegisterContainer>
-                    <Column>
-                        <TitleKanban>Crie sua conta</TitleKanban>
-                        <KanbanSubText>Defina as informações necessárias 👌</KanbanSubText>
+        <SidebarContainer>
 
-                        <FormContainer onSubmit={handleSubmit(onSubmit)}>
-                            {/* ... Inputs (CPF, Name, etc) */}
-                            
-                            <Input
-                                name="cpf"
-                                placeholder="Digite seu CPF"
-                                control={control}
-                                errorMessage={(touchedFields.cpf || isSubmitted) ? errors?.cpf?.message : ''}
-                                leftIcon={<CpfIconStyled />}
-                                mask={cpfMask}
-                            />
-                            
-                            {/* ... Outros Inputs ... */}
-                            <Input name="name" placeholder="Digite seu nome" control={control} errorMessage={(touchedFields.name || isSubmitted) ? errors?.name?.message : ''} leftIcon={<NameIconStyled />} mask={nameMask} />
-                            <Input name="lastName" placeholder="Digite seu sobrenome" control={control} errorMessage={(touchedFields.lastName || isSubmitted) ? errors?.lastName?.message : ''} leftIcon={<NameIconStyled />} mask={nameMask} />
-                            <Input name='email' errorMessage={(touchedFields.email || isSubmitted) ? errors?.email?.message : ''} placeholder="Digite um e-mail" control={control} leftIcon={<LoginIconStyled />} />
-                            <Input name='password' errorMessage={(touchedFields.password || isSubmitted) ? errors?.password?.message : ''} placeholder="Digite uma senha" control={control} type={showPassword ? 'text' : 'password'} leftIcon={<PasswordStyled />} rightIcon={showPassword ? <MagicEye onClick={() => setShowPassword(false)} /> : <MagicEyeOff onClick={() => setShowPassword(true)} />} />
-                            <Input name='confirmPassword' placeholder="Digite novamente sua senha" control={control} errorMessage={(touchedFields.confirmPassword || isSubmitted) ? errors?.confirmPassword?.message : ''} type={showConfirmPassword ? 'text' : 'password'} leftIcon={<PasswordStyled />} rightIcon={showConfirmPassword ? <MagicEye onClick={() => setShowConfirmPassword(false)} /> : <MagicEyeOff onClick={() => setShowConfirmPassword(true)} />} />
+            <LogoContainer>
+                <LogoImage src={logo} alt="Kodan Logo" />
+                <LogoText>kodan.</LogoText>
+            </LogoContainer>
 
+            {steps.map((step, index) => (
+                <StepItem key={index}>
+                    {/* Se o index for igual ao passo atual, marca como ativo */}
+                    <StepNumber $active={currentStep === index}>
+                        {index + 1}
+                    </StepNumber>
+                    <StepTexts>
+                        <span className="step-label">{step.label}</span>
+                        <span className="step-title">{step.title}</span>
+                    </StepTexts>
+                </StepItem>
+            ))}
+        </SidebarContainer>
+    );
+};
 
-                            {/* TERMOS E POLÍTICA  */}
-                            <TermsContainer>
-                                <Controller
-                                    name="terms"
-                                    control={control}
-                                    render={({ field: { onChange, value } }) => (
-                                        <CheckboxInput
-                                            id="terms-check"
-                                            checked={value}
-                                            onChange={onChange}
-                                        />
-                                    )}
-                                />
-                                
-                                <TermsText>
-                                    Li e aceito os 
-                                    {/* Removemos os onClicks aqui, pois o Copyright lá embaixo que cuida disso agora, ou mantemos apenas visualmente */}
-                                    <span> Termos e Condições</span> e a <span> Política de Privacidade</span>.
-                                </TermsText>
-                            </TermsContainer>
+const FormArea = () => {
+    const { currentStep } = useRegistration();
 
-                            {(touchedFields.terms || isSubmitted) && errors.terms && (
-                                <ErrorText>{errors.terms.message}</ErrorText>
-                            )}
+    // Títulos dinâmicos baseados no passo
+    const headerContent = [
+        { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, CPF e sobrenome.' },
+        { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha segura.' },
+        { title: 'Termos de Uso', desc: 'Confirme seus dados e aceite os termos para finalizar.' }
+    ];
 
-                            <Row>
-                                <PossuiContaSubText onClick={() => navigate('/login')}>
-                                    Já possui uma conta? <a>Clique aqui</a>
-                                </PossuiContaSubText>
-                            </Row>
+    const currentHeader = headerContent[currentStep];
 
-                            <Button title='Entrar' type='submit' variant='loginb' />
-                        </FormContainer>
+    const renderStep = () => {
+        switch (currentStep) {
+            case 0: return <StepPersonal />;
+            case 1: return <StepCredentials />;
+            case 2: return <StepTerms />;
+            default: return <StepPersonal />;
+        }
+    };
 
-                        <Row><TextoLivreSubText>ou</TextoLivreSubText></Row>
+    return (
+        <FormContent>
+            <FormHeader>
+                <h2>{currentHeader.title}</h2>
+                <p>{currentHeader.desc}</p>
+            </FormHeader>
 
-                        <Button title='Entrar com Google' type='button' variant="google" leftIcon={<FcGoogle />} onClick={handleGoogleLogin} />
+            {/* O componente do passo renderiza os inputs e os botões */}
+            {renderStep()}
+        </FormContent>
+    );
+};
 
-                    </Column>
-                </RegisterContainer>
+const Cadastro = () => {
+    const [estaVisivel, setEstaVisivel] = useState(false);
 
-                <WelcomeContainer>
-                    <Column>
-                        <WelcomeSubText>
-                            <CloseButton>X</CloseButton>
-                            <TitleWelcome>✅ Seja bem-vindo!</TitleWelcome>
-                            Diga adeus à desorganização. Cadastre-se no Kodan e transforme sua rotina!
-                        </WelcomeSubText>
-                    </Column>
-                </WelcomeContainer>
-            </RegisterNewScreen>
+    useEffect(() => {
+        const timer = setTimeout(() => setEstaVisivel(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
 
-            {/* AQUI ENTRA O COPYRIGHT (Que contém o Modal) */}
-            <Copyright 
-                onAcceptTerms={() => {
-                    setValue("terms", true)  
-                    clearErrors("terms")      
-                }}
-            />
-            
-        </PageWrapper>
-    )
-}
+    return (
+        <RegistrationProvider>
+            <PageWrapper>
+                <CardContainer $visivel={estaVisivel}>
+                    <SidebarSteps />
+                    <FormArea />
+                </CardContainer>
+            </PageWrapper>
+        </RegistrationProvider>
+    );
+};
 
-export { Cadastro }
+export { Cadastro };

@@ -1,48 +1,58 @@
 import logo from '../../assets/logo.svg';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+// 1. Importe o useLocation aqui
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-// CONTEXTO GLOBAL
-import { useNotifications } from '../../context/NotificationContext';
 import { LogoArea, NavBar, NavLink, NavLinks, SignInButton, MobileMenuButton, MobileMenu, MobileLink, AuthButtons, RightSide } from './styles';
 
 const HeaderHome = () => {
-
-    // Menu Hamburguer
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-
-    // Dados do contexto
-    const navigate = useNavigate();
-
-    // Fecha modal no ESC
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setIsMobileMenuOpen(false);
-            }
-        };
-        window.addEventListener('keydown', handleEsc);
-        return () => window.removeEventListener('keydown', handleEsc);
-    }, []);
-
-    // Controle de scroll
     const [isScrolled, setIsScrolled] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation(); // Hook para saber a página atual
+
+    // Controle de Scroll
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Formulário
-    const { control } = useForm({
-        mode: 'onChange',
-        defaultValues: { campoDeBusca: '' }
-    });
+    // LÓGICA DE NAVEGAÇÃO E SCROLL
+    // Esse useEffect verifica se chegamos na Home vindo de outra página com um pedido de scroll
+    useEffect(() => {
+        // Se estivermos na home e houver um estado ou hash de destino
+        if (location.pathname === '/' && location.state?.targetId) {
+            const element = document.getElementById(location.state.targetId);
+            if (element) {
+                // Pequeno timeout para garantir que a página renderizou antes de rolar
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+            // Limpa o state para não rolar de novo num refresh
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
-    const handleLogout = () => {
-        navigate('/login');
+    // Função Inteligente de Clique
+    const handleScrollLink = (e: React.MouseEvent, targetId: string) => {
+        e.preventDefault(); // Impede o comportamento padrão do href="#"
+
+        if (location.pathname === '/') {
+            // CENÁRIO A: JÁ ESTOU NA HOME -> Só rola
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // CENÁRIO B: ESTOU EM OUTRA PAGE -> Navega para Home e avisa para rolar
+            navigate('/', { state: { targetId: targetId } });
+        }
+        
+        setIsMobileMenuOpen(false); // Fecha menu mobile se estiver aberto
     };
 
     const handleNavigate = (path: string) => {
@@ -50,48 +60,64 @@ const HeaderHome = () => {
         setIsMobileMenuOpen(false);
     };
 
+    // Fecha modal no ESC
+    useEffect(() => {
+        const handleEsc = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setIsMobileMenuOpen(false);
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
+
     return (
         <NavBar isScrolled={isScrolled}>
             <LogoArea onClick={() => handleNavigate('/')}>
                 <img src={logo} alt="Logo" /> <span>kodan.</span>
             </LogoArea>
 
-            {/* Links desktop */}
             <NavLinks>
-                <NavLink href="#sobre">Sobre nós</NavLink>
-                <NavLink href="#">Contato</NavLink>
-                <NavLink onClick={() => handleNavigate('/equipe')}>Nossa equipe</NavLink>
+                {/* APLICAÇÃO DA FUNÇÃO NOS LINKS */}
+                
+                <NavLink href="#features" onClick={(e) => handleScrollLink(e, 'features')}>
+                    Sobre nós
+                </NavLink>
+
+                <NavLink href="#" onClick={(e) => e.preventDefault()}>
+                    Contato
+                </NavLink>
+
+                <NavLink onClick={() => handleNavigate('/equipe')}>
+                    Nossa equipe
+                </NavLink>
             </NavLinks>
 
             <RightSide>
                 <AuthButtons>
-                    <SignInButton 
-                    onClick={() => handleNavigate('/login')}>
+                    <SignInButton onClick={() => handleNavigate('/login')}>
                         Entrar
                     </SignInButton>
-                    <SignInButton 
-                    onClick={() => handleNavigate('/cadastro')}>
+                    <SignInButton onClick={() => handleNavigate('/cadastro')}>
                         Cadastrar
                     </SignInButton>
                 </AuthButtons>
-                {/* Botão Mobile */}
+                
                 <MobileMenuButton
-                isOpen={isMobileMenuOpen}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    isOpen={isMobileMenuOpen}
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
-                    <span />
-                    <span />
-                    <span />
+                    <span /><span /><span />
                 </MobileMenuButton>
             </RightSide>
-            
-            
 
-            {/* Menu Mobile */}
             <MobileMenu isOpen={isMobileMenuOpen}>
-                <MobileLink href="#sobre">Sobre nós</MobileLink>
+                {/* Mesma lógica para o Mobile */}
+                <MobileLink href="#features" onClick={(e) => handleScrollLink(e, 'features')}>
+                    Sobre nós
+                </MobileLink>
                 <MobileLink href="#">Contato</MobileLink>
-                <MobileLink onClick={() => navigate('/equipe')}>Nossa equipe</MobileLink>
+                <MobileLink onClick={() => handleNavigate('/nossa-equipe')}>
+                    Nossa equipe
+                </MobileLink>
             </MobileMenu>
             
         </NavBar>

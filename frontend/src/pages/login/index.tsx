@@ -165,7 +165,6 @@ const Login = () => {
                     </Column>
                 </WelcomeContainer>
             </LoginNewScreen>
-            {/* AQUI ENTRA O COPYRIGHT */}
             <Copyright/>
         </PageWrapper>
     )

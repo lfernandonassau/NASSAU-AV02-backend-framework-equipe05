@@ -7,7 +7,6 @@ import {
     HeroSubtitle,
     ButtonGroup,
     PrimaryButton,
-    OutlineButton,
     ScrollArea,
     MouseIcon,
     ScrollText,
@@ -17,7 +16,8 @@ import {
     IconWrapper,
     FeatureTitle,
     FeatureText,
-    FeaturesGrid
+    FeaturesGrid,
+    MiniHeroSubtitle
 } from './styles'
 
 // Importação do Footer
@@ -70,13 +70,10 @@ const Home = () => {
                 
                 <ButtonGroup>
                     <PrimaryButton onClick={() => navigate('/cadastro')}>
-                        Comece agora
+                        Comece já
                     </PrimaryButton>
-                    
-                    <OutlineButton>
-                        Entrar
-                    </OutlineButton>
                 </ButtonGroup>
+                <MiniHeroSubtitle>Comece agora. Com compromisso.</MiniHeroSubtitle>
 
                 {/* Indicador de Scroll (Fica preso na primeira dobra) */}
                 {showScrollArea && (

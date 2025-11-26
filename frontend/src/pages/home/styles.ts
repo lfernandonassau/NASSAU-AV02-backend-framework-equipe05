@@ -203,10 +203,31 @@ export const HeroSubtitle = styled.p`
     }
 `;
 
+
+export const MiniHeroSubtitle = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: rgba(44, 44, 44, 1);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-top: 10px;
+    font-weight: 600;
+    gap: 10px;
+
+    text-shadow: 0 4px 3px rgba(0,0,0,0.3);
+
+    @media (max-width: 768px) {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+`;
+
 export const ButtonGroup = styled.div`
     display: flex;
     gap: 20px;
     align-items: center;
+    margin-top: -15px;
+
 
     @media (max-width: 480px) {
         flex-direction: column;
@@ -239,29 +260,7 @@ export const PrimaryButton = styled.button`
     }
 `;
 
-// Botão Transparente (Contact Sales)
-export const OutlineButton = styled.button`
-    background-color: transparent;
-    color: #fffefeff;
-    border: 1px solid rgba(24, 24, 24, 0.6);
-    padding: 13px 32px; /* -1px da borda para alinhar */
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
 
-    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
-    &:hover {
-        border-color: #ffffff;
-        color: #3b3b3bff;
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    @media (max-width: 480px) {
-        width: 100%;
-    }
-`;
 
 /* --- NOVOS ESTILOS PARA OS CARDS GRID --- */
 
