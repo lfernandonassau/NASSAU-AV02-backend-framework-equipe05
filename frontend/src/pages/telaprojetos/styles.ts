@@ -70,10 +70,10 @@ export const Container = styled.div`
 
     /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
     @media (max-width: 1024px) {
-        /* Destrava a largura para preencher o espaço disponível */
+        
         max-width: 100%;
         
-        /* Centraliza o container na tela */
+        
         margin: 0 auto;
         
         height: auto; 
@@ -99,8 +99,8 @@ export const ProjectInfoGroup = styled.div`
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 1; /* Ocupa o espaço disponível */
-    min-width: 0; /* Permite truncate do texto */
+    flex: 1; 
+    min-width: 0; 
 `
 
 // O container do Ícone Genérico
@@ -109,7 +109,6 @@ export const ProjectIconBox = styled.div`
     height: 42px;
     border-radius: 10px;
     
-    /* Gradiente bonito para o ícone */
     background: linear-gradient(135deg, #006391, #0091c2);
     
     display: flex;
@@ -276,7 +275,7 @@ export const ProjectActionsRow = styled.div`
 
     display: flex;
     gap: 12px;
-    justify-content: flex-end; /* Botões à direita */
+    justify-content: flex-end; 
     align-items: center;
     
     animation: slideDown 0.2s ease-out;
@@ -389,14 +388,14 @@ export const ModalHeader = styled.div`
 
 export const ModalTitle = styled.h2`
   margin: 0;
-  font-size: 1rem; /* Ajustado para 1rem (aprox 16px) para consistência */
+  font-size: 1rem; 
   font-weight: 600;
   color: #363535ff;
 `;
 
 export const ModalCloseButton = styled.button`
   border: none;
-  background: rgba(255,255,255,0.2); /* Fundo sutil no botão de fechar */
+  background: rgba(255,255,255,0.2); 
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -535,7 +534,7 @@ export const ModalDangerButton = styled(ModalPrimaryButton)`
   &:hover { background: #dc2626; }
 `;
 
-// --- PERFIL BAR (Inicial do Painel) ---
+// PERFIL BAR (Inicial do Painel)
 export const PerfilBar = styled.div`
     width: 100%;
     max-width: 100%; 
@@ -635,11 +634,10 @@ export const EmptyStateMessage = styled.div`
         font-family: 'Montserrat', sans-serif;
         font-size: 1.1rem;
         font-weight: 500;
-        color: #94a3b8; /* Um cinza suave para indicar vazio */
+        color: #94a3b8; 
         margin: 0;
     }
 
-    /* Opcional: Estilo para um ícone se quiser colocar junto */
     svg {
         font-size: 3rem;
         color: #cbd5e1;

@@ -97,6 +97,10 @@ export const BoardHeader = styled.div`
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #f0f0f0; 
     margin-bottom: 1rem;
+
+    z-index: 10;
+    position: relative;
+
     @media (max-width: 600px) {
         flex-direction: column; /* Um embaixo do outro */
         align-items: center;    /* Centraliza horizontalmente */
@@ -119,6 +123,28 @@ export const BoardInfoLeft = styled.div`
     }   
 `;
 
+export const BoardInfoTitleWrapper = styled.div<{ $isOpen: boolean }>`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    position: relative; /* Importante para o SelectProjectModal se posicionar absolutamente a este elemento */
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: #f1f5f9; /* Efeito visual ao passar o mouse */
+    }
+
+    /* Estilo da seta */
+    .arrow-icon {
+        color: #64748b;
+        transition: transform 0.2s ease;
+        transform: ${({ $isOpen }) => $isOpen ? 'rotate(180deg)' : 'rotate(0deg)'}; /* Gira a seta quando aberto */
+    }
+`;
+
 export const BoardInfoTitle = styled.h1`
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
@@ -126,7 +152,7 @@ export const BoardInfoTitle = styled.h1`
     color: #2d3748;
     margin: 0;
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 16px;
     }
 `;
 
@@ -143,7 +169,7 @@ export const ColumnsWrapper = styled.div`
     
     /* Comportamento de Scroll */
     overflow-x: auto; 
-    overflow-y: hidden; /* Evita scroll vertical desnecessário no wrapper */
+    overflow-y: hidden; 
     scroll-behavior: smooth;
     
     /* Scroll Snap: Melhora a experiência de rolagem horizontal */
@@ -152,33 +178,32 @@ export const ColumnsWrapper = styled.div`
     /* Espaçamento para a barra de rolagem e para não cortar sombras laterais */
     padding: 4px 4px 12px 4px; 
     
-    /* --- SCROLLBAR ESTILIZADA --- */
+    /*  SCROLLBAR ESTILIZADA */
     &::-webkit-scrollbar {
-        height: 8px; /* Altura da barra horizontal */
+        height: 8px; 
     }
 
     &::-webkit-scrollbar-track {
-        background: transparent; /* Fundo transparente para parecer flutuante */
+        background: transparent; 
         border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #cbd5e1; /* Cinza suave (Slate-300) */
-        border-radius: 10px;       /* Borda totalmente redonda */
-        border: 2px solid #ffffff; /* Borda branca cria um respiro interno */
+        background-color: #cbd5e1; 
+        border-radius: 10px;       
+        border: 2px solid #ffffff; 
         
         &:hover {
-            background-color: #94a3b8; /* Escurece ao passar o mouse */
+            background-color: #94a3b8; 
         }
     }
 
-    /* Configuração para empilhar (Mobile/Tablet) */
     @media (max-width: 1540px) {
         flex-direction: column; 
-        overflow-x: visible;    /* Remove scroll horizontal */
+        overflow-x: visible;    
         align-items: stretch;   
         
-        gap: 24px; /* Aumenta um pouco o espaço vertical entre as colunas */
+        gap: 24px; 
         padding-bottom: 0;
         padding-left: 0;
         padding-right: 0;
@@ -259,7 +284,7 @@ export const IconWrapper = styled.span<{ $accentColor: string }>`
 `
 
 
-// --- PERFIL BAR (Inicial do Painel) ---
+//  PERFIL BAR (Inicial do Painel)
 export const PerfilBar = styled.div`
     width: 100%;
     max-width: 100%; 

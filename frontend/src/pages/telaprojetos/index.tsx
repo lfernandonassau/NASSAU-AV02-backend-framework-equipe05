@@ -315,18 +315,15 @@ const TelaProjetos = () => {
                             </CreateButton>
                         </TitleRow>
 
-                        {/* --------------------------------------------------------- */}
                         {/* <--- LÓGICA PARA EMPTY MESSAGE ---> */}
-                        {/* --------------------------------------------------------- */}
-
                         {projects.length === 0 ? (
-                            // 1. SE NÃO TIVER PROJETOS, MOSTRA ISSO:
+                            // SE NÃO TIVER PROJETOS, MOSTRA ISSO:
                             <EmptyStateMessage>
                                 <BsEmojiSmileUpsideDown/>
                                 <p>Você ainda não criou um projeto</p>
                             </EmptyStateMessage>
                         ) : (
-                            // 2. SE TIVER PROJETOS, MOSTRA A LISTA DE CARDS:
+                            // SE TIVER PROJETOS, MOSTRA A LISTA DE CARDS:
                             projects.map(project => {
                                 const isExpanded = expandedProjectId === project.id
                                 const menuOpen = menuProjectId === project.id
@@ -397,9 +394,7 @@ const TelaProjetos = () => {
                             })
                         )}
                         
-                        {/* --------------------------------------------------------- */}
-                        {/* <--- FIM DA NOVA LÓGICA ---> */}
-                        {/* --------------------------------------------------------- */}
+                        
 
                     </Container>
                 </ContentWrapper>

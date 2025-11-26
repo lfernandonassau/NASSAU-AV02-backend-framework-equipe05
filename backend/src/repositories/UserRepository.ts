@@ -18,7 +18,12 @@ interface UpdateUserInput {
     imagemUrl?: string | null
 }
 
+function toBigInt(id: number | bigint): bigint {
+    return typeof id === 'bigint' ? id : BigInt(id)
+}
+
 export default {
+    
     async createUser(data: CreateUserInput) {
     const user = await prisma.user.create({
         data: {
@@ -50,23 +55,24 @@ export default {
 
     async update(id: number | bigint, data: UpdateUserInput) {
     const user = await prisma.user.update({
-        where: { id_user: BigInt(id) },
+        where: { id_user: toBigInt(id) },
         data,
     })
     return user
     },
 
     async updatePassword(id: number | bigint, newPasswordHash: string) {
-    const user = await prisma.user.update({
-        where: { id_user: BigInt(id) },
-        data: { password: newPasswordHash },
-    })
-    return user
+        const user = await prisma.user.update({
+            where: { id_user: toBigInt(id) },
+            data: { password: newPasswordHash },
+        })
+        return user
     },
 
     async delete(id: number | bigint) {
-    return prisma.user.delete({
-        where: { id_user: BigInt(id) },
-    })
+        return prisma.user.delete({
+            where: { id_user: toBigInt(id) },
+        })
     },
+
 }

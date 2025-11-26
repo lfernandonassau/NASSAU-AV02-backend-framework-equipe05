@@ -1,5 +1,5 @@
 /**
- * Define a estrutura de um membro da equipe em um card.
+Define a estrutura de um membro da equipe em um card.
  */
 export interface IMember {
   name: string;
@@ -7,7 +7,7 @@ export interface IMember {
 }
 
 /**
- * Define a estrutura de uma única tarefa (card) no Kanban.
+Define a estrutura de uma única tarefa (card) no Kanban
  */
 export interface ITask {
   title: string;
@@ -17,7 +17,7 @@ export interface ITask {
 }
 
 /**
- * Define os dados que o modal "AddTaskModal" envia ao salvar.
+Define os dados que o modal AddTaskModal envia ao salvar.
  */
 export interface INewTaskPayload {
   title: string;
@@ -25,17 +25,17 @@ export interface INewTaskPayload {
   date: string;
 }
 
-// --- PROPS DOS COMPONENTES ---
+// PROPS DOS COMPONENTES
 
 /**
- * Props para o componente `PainelPage`.
+ Props para o componente PainelPage
  */
 export interface IPainelPageProps {
   variant?: 'primary' | 'secondary';
 }
 
 /**
- * Props para o componente `Header`.
+  Props para o componente Header
  */
 export interface IHeaderProps {
   autenticado: boolean;
@@ -43,18 +43,18 @@ export interface IHeaderProps {
 }
 
 /**
- * Props para o componente `KanbanColumn`.
+ Props para o componente PainelCardsColumn
  */
 export interface IKanbanColumnProps {
   title: string;
-  icon: string; // É um emoji, mas string cobre isso
+  icon: string; 
   accentColor: string;
-  tasks: ITask[]; // Reutiliza a interface ITask
+  tasks: ITask[]; 
   onAddTask: () => void;
 }
 
 /**
- * Props para o componente `AddTaskModal`.
+  Props para o componente AddTaskModal
  */
 export interface IAddTaskModel {
   columnName: string;

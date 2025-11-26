@@ -5,11 +5,15 @@ export const CardContainer = styled.div`
   border-radius: 16px;
   padding: 24px;
   width: 100%;
+  min-height: 320px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   border: 1px solid #f1f1f1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
 
   h3 {
     font-size: 16px;
@@ -18,7 +22,13 @@ export const CardContainer = styled.div`
     margin: 0 0 8px 0;
   }
 
+  @media (max-width: 1024px) {
+    min-height: 300px;
+    padding: 20px;
+  }
+
   @media (max-width: 768px) {
+    min-height: 260px;
     padding: 16px;
     border-radius: 12px;
 
@@ -27,4 +37,3 @@ export const CardContainer = styled.div`
     }
   }
 `;
-

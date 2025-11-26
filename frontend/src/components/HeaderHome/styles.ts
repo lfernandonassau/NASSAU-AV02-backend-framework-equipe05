@@ -78,7 +78,7 @@ export const RightSide = styled.div`
     align-items: center;
     gap: 14px;
 
-    /* ⭐ TELAS PEQUENAS */
+    /* TELAS PEQUENAS */
     @media (max-width: 768px) {
         gap: 10px;
     }
