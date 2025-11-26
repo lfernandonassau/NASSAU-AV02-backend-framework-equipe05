@@ -20,7 +20,7 @@ const AreaOverview = () => {
   return (
     <AreaOverviewContainer>
       <AreaContainer>
-        <h3>Evolução Geral</h3>
+        <h3>Evolução Geral:</h3>
 
         <ResponsiveLine
           data={data}

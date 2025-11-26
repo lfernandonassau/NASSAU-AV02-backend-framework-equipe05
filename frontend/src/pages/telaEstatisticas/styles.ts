@@ -32,19 +32,37 @@ export const Content = styled.div`
   }
 `;
 
-/* LINHA 1: Evolução Geral (maior) + Visão Geral (menor) */
+/* LINHA 1: Evolução Semanal  + Visão Geral  */
 export const ChartsRow = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+  grid-template-columns: minmax(0, 1.58fr) minmax(320px, 1.02fr);
   gap: 32px;
   align-items: stretch;
 
   @media (max-width: 1280px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+
+    @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+
+  grid-template-columns: 1fr;
+
+  .weekly {
+    order: 1;
+  }
+  .pie {
+    order: 2;
+  }
+}
+
 `;
 
-/* LINHA 2: Evolução Semanal + Acompanhamento */
+/* LINHA 2: Acompanhamento por equipe + Evolução geral */
 export const BottomRow = styled.div`
   display: grid;
   grid-template-columns: 0.9fr 2.0fr; 
@@ -53,8 +71,26 @@ export const BottomRow = styled.div`
   margin-top: 10px;
 
   @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
+
+  @media (min-width: 768px) and (max-width: 1280px) {
+
+  grid-template-columns: 1fr;
+
+  .weekly {
+    order: 1;
+  }
+  .pie {
+    order: 2;
+  }
+}
+
+
 `;
 
 export const CollaboratorSection = styled.div`

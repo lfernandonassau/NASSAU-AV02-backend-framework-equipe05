@@ -3,7 +3,9 @@ import {
   Wrapper,
   Row,
   LabelIcon,
+  TotalIcon,
   LabelText,
+  TotalText,
   Value,
   Bar,
   Fill
@@ -20,16 +22,14 @@ const CollaboratorStats = () => {
   return (
     <CollaboratorContainer>
       <Wrapper>
-        <h3>Acompanhamento por equipe</h3>
+        <h3>Acompanhamento por equipe:</h3>
 
         {/* TOTAL — agora padronizado */}
         <Row>
-          <LabelIcon><FaTasks size={18} color="#1454B8" /></LabelIcon>
-          <LabelText>Total de Tarefas</LabelText>
+          <TotalIcon><FaTasks size={18} color="#1454B8" /></TotalIcon>
+          <TotalText>Total de Tarefas</TotalText>
           <Value>{total}</Value>
         </Row>
-        {/* Linha invisível para manter o mesmo espaçamento */}
-        <Bar style={{ opacity: 0 }} />
 
         {/* CONCLUÍDAS */}
         <Row>
