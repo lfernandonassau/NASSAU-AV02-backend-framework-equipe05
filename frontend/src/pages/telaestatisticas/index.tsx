@@ -58,17 +58,16 @@ const Estatisticas = () => {
           </PerfilTextContainer>
         </PerfilBar>
 
-        {/* LINHA 1 — Evolução Geral + Visão Geral */}
-        <ChartsRow>
-          <AreaOverview />
-          <ProjectOverviewPie />
-        </ChartsRow>
+       <ChartsRow>
+        <WeeklyEvolutionChart />
+        <ProjectOverviewPie />
+      </ChartsRow>
 
-        {/* LINHA 2 — */}
-        <BottomRow>
-          <CollaboratorStats />       {/* Agora à ESQUERDA (menor) */}
-          <WeeklyEvolutionChart />   {/* Agora à DIREITA (maior) */}
-        </BottomRow>
+      <BottomRow>
+        <CollaboratorStats />
+        <AreaOverview />
+      </BottomRow>
+
 
       </Content>
     </Container>
