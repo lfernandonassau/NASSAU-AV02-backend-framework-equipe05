@@ -18,12 +18,19 @@ h3 {
 
   svg,
   canvas {
-    margin: auto;
+    margin: 0;
   }
 
   @media (max-width: 768px) {
     h3 {
-      text-align: center;
+      text-align: left;
     }
+
+  @media (max-width: 480px) {
+  h3 {
+    font-size: 13px;
+  }  
+}
+
   }
 `;

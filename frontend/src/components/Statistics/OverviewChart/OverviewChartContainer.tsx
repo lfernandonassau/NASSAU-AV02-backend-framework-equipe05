@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const OverviewChartContainer = styled.div`
   background: #ffffff;
   border-radius: 16px;
-  padding: 24px;
+  padding: 22px 28px 28px 28px;
   width: 100%;
   min-height: 350px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);
@@ -29,11 +29,12 @@ export const OverviewChartContainer = styled.div`
 
   @media (max-width: 768px) {
     min-height: 260px;
-    padding: 16px;
+
     border-radius: 12px;
 
     h3 {
       font-size: 14px;
+      margin-bottom: 6px;
     }
   }
 `;  

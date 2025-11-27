@@ -4,6 +4,8 @@ export const EvolutionContainer = styled.div`
   background: #ffffff;
   border-radius: 16px;
   padding: 24px;
+  padding-left: 36px;
+  padding-right: 36px;
   width: 100%;
   min-height: 350px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);

@@ -13,13 +13,30 @@ export const Wrapper = styled.div`
   color: #0B1B3A;
   margin: 0 0 14px 0;
 }
+  @media (max-width: 480px) {
+  h3 {
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+  padding: 20px 16px;
+  min-height: 300px;
+}
+
+}
+
 `;
 
 export const Row = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &:first-of-type {
+    margin-top: 8px;
+  }
 `;
+
 
 export const LabelIcon = styled.div`
   margin-right: 8px;
@@ -27,11 +44,26 @@ export const LabelIcon = styled.div`
   align-items: center;
 `;
 
+export const TotalIcon = styled.div`
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+`;
+
 export const LabelText = styled.span`
   flex: 1;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   color: #2E2E2E;
+`;
+
+export const TotalText = styled.span`
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #2E2E2E;
+  margin-bottom: 15px;
 `;
 
 export const Value = styled.span`

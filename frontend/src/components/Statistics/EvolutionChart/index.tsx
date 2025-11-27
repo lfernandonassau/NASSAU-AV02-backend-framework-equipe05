@@ -33,7 +33,7 @@ const WeeklyEvolutionChart = () => {
   return (
     <EvolutionContainer>
       <ChartWrapper>
-        <h3>Evolução Semanal</h3>
+        <h3>Evolução Semanal:</h3>
 
         <ResponsiveLine
           data={data}
@@ -48,11 +48,6 @@ const WeeklyEvolutionChart = () => {
           pointBorderWidth={2}
           pointBorderColor="#ffffff"
           useMesh={true}
-          axisBottom={{
-            legend: "Semana",
-            legendOffset: 35,
-            tickPadding: 8,
-          }}
           axisLeft={{
             legend: "Tarefas",
             legendOffset: -38,

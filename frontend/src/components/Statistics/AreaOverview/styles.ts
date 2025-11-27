@@ -6,6 +6,7 @@ export const AreaContainer = styled.div`
   width: 100%;
   height: 100%;
   align-items: flex-start;
+  margin-bottom: 12px;
 
 h3 {
   font-family: "Montserrat", sans-serif;
@@ -25,5 +26,12 @@ h3 {
     h3 {
       text-align: center;
     }
+
+  @media (max-width: 480px) {
+  h3 {
+    font-size: 13px;
+  }
+}
+
   }
 `;
