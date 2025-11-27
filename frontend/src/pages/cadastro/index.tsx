@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RegistrationProvider, useRegistration } from '../../context/RegistrationContext';
+import { api } from '../../services/api'; // Importe sua API
 
 // Componentes de Passos
 import { StepPersonal } from './steps/StepPersonal';
 import { StepCredentials } from './steps/StepCredentials';
 import { StepTerms } from './steps/StepTerms';
-import logo from '../../assets/logo.svg'
+import { IFormData } from './types';
+
+import logo from '../../assets/logo.svg';
+
 // Estilos
 import {
     PageWrapper,
@@ -18,7 +23,14 @@ import {
     FormHeader,
     LogoContainer,
     LogoImage,
-    LogoText
+    LogoText,
+    SuccessContent,
+    SuccessIcon,
+    SuccessTitle,
+    SuccessMessage,
+    RedirectText,
+    CenteredContainer,
+    LoadingText
 } from './styles';
 
 const SidebarSteps = () => {
@@ -32,7 +44,6 @@ const SidebarSteps = () => {
 
     return (
         <SidebarContainer>
-
             <LogoContainer>
                 <LogoImage src={logo} alt="Kodan Logo" />
                 <LogoText>kodan.</LogoText>
@@ -40,7 +51,6 @@ const SidebarSteps = () => {
 
             {steps.map((step, index) => (
                 <StepItem key={index}>
-                    {/* Se o index for igual ao passo atual, marca como ativo */}
                     <StepNumber $active={currentStep === index}>
                         {index + 1}
                     </StepNumber>
@@ -56,11 +66,52 @@ const SidebarSteps = () => {
 
 const FormArea = () => {
     const { currentStep } = useRegistration();
+    const navigate = useNavigate();
+    
+    // Estado para controlar a tela de sucesso
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Efeito para redirecionar automaticamente após o sucesso
+    useEffect(() => {
+        if (isSuccess) {
+            const timer = setTimeout(() => {
+                navigate('/login');
+            }, 3000); // 3 segundos para o usuário ver a mensagem
+            return () => clearTimeout(timer);
+        }
+    }, [isSuccess, navigate]);
+
+    // Função que será chamada quando o usuário clicar em "Confirmar" no Step 3
+    const handleFinalSubmit = async (fullData: IFormData) => {
+        setIsLoading(true);
+        try {
+            // Remove confirmação de senha e termos antes de enviar para API
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { confirmPassword, terms, ...userData } = fullData;
+
+            // Simulação de delay (opcional, para UX)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Chamada real para a API
+            const { data } = await api.post(`users`, userData); 
+            // Ajustar a rota 'users' conforme o backend. Se for users?email=... manter como estava.
+            
+            // Se chegou aqui sem erro, ativamos o sucesso
+            setIsSuccess(true);
+
+        } catch (error) {
+            console.error(error);
+            alert('Houve um erro ao realizar o cadastro. Tente novamente.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     // Títulos dinâmicos baseados no passo
     const headerContent = [
         { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, sobrenome e CPF.' },
-        { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha com alfanuméricos.' },
+        { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha segura.' },
         { title: 'Termos de Uso', desc: 'Confirme seus dados e aceite os termos para finalizar.' }
     ];
 
@@ -68,13 +119,38 @@ const FormArea = () => {
 
     const renderStep = () => {
         switch (currentStep) {
-            case 0: return <StepPersonal />;
-            case 1: return <StepCredentials />;
-            case 2: return <StepTerms />;
-            default: return <StepPersonal />;
+            case 0: 
+                return <StepPersonal />;
+            case 1: 
+                return <StepCredentials />;
+            case 2: 
+                // Passado a função de submit final para o StepTerms
+                return <StepTerms onFinalSubmit={handleFinalSubmit} />;
+            default: 
+                return <StepPersonal />;
         }
     };
 
+    // RENDERIZAÇÃO CONDICIONAL
+    
+    // Se o cadastro foi um sucesso, mostra APENAS a tela de sucesso
+    if (isSuccess) {
+        return (
+            <FormContent>
+                <SuccessContent>
+                    <SuccessIcon />
+                    <SuccessTitle>Cadastro Realizado!</SuccessTitle>
+                    <SuccessMessage>
+                        Sua conta foi criada com sucesso. <br/>
+                        Bem-vindo ao Kodan.
+                    </SuccessMessage>
+                    <RedirectText>Redirecionando para o login...</RedirectText>
+                </SuccessContent>
+            </FormContent>
+        );
+    }
+
+    // Caso contrário, mostra o formulário normal (Header + Inputs)
     return (
         <FormContent>
             <FormHeader>
@@ -82,8 +158,14 @@ const FormArea = () => {
                 <p>{currentHeader.desc}</p>
             </FormHeader>
 
-            {/* O componente do passo renderiza os inputs e os botões */}
-            {renderStep()}
+            {/* Se estiver carregando o envio final, você pode travar a tela ou passar loading prop */}
+            {isLoading ? (
+                <CenteredContainer>
+                    <LoadingText>Finalizando cadastro...</LoadingText>
+                </CenteredContainer>
+            ) : (
+                renderStep()
+            )}
         </FormContent>
     );
 };
