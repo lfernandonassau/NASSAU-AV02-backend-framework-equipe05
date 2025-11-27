@@ -2,89 +2,90 @@ import styled, { css } from 'styled-components'
 import { IButtonStyled } from './types'
 
 export const ButtonContainer = styled.button<IButtonStyled>`
-    background: #5cc8f3ad;
-    border-radius: 10px;
-    font-family: 'Montserrat';
-    color: #FFFFFF;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-
-    width: 100%; 
-    max-width: 250px; 
-    height: 35px; 
-    padding: 0 15px; 
- 
-    margin: 0 auto;
+    width: 100%;
+    height: 48px; /* Mesma altura do Input para alinhar */
+    border-radius: 8px;
+    position: relative;
+    
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 13px;
-    font-weight: 400;
-
-    z-index: 100;
-
-    filter: drop-shadow(0 3px 3px rgba(8, 16, 30, 0.35))
-            drop-shadow(0 2px 2px rgba(12, 24, 40, 0.25));
-
-    &:hover {
-        background: #ffffffff;
-        color: #000000;
-        opacity: 0.9;
-        transform: translateY(-1px);
+    gap: 10px; /* Espaço entre ícone e texto */
+    
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem; /* ~15px */
+    font-weight: 600;
+    
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    
+    /* Estado desabilitado (ex: formulário inválido) */
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
     }
 
+    /* --- VARIANTE 1: PRIMARY (Padrão - Azul Escuro) --- */
+    /* Usado no botão "Próximo" ou "Entrar" */
+    ${({ variant }) => variant === 'primary' && css`
+        background-color: #022959;
+        color: #ffffff;
+        box-shadow: 0 4px 6px rgba(2, 41, 89, 0.2);
 
-    ${({ variant }) => variant !== 'primary' && css`
-        min-width: 230px;
-        height: 40px;
-        font-weight: 600;
-
-        background: linear-gradient(
-            135deg,
-            #20364bff 10%,      
-            #096cc9ff 100%,
-            #a8d2faff 50%  
-        );
-        filter: 
-            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
-
-        &::after {
-            border-radius: 22px;
+        &:hover:not(:disabled) {
+            background-color: #164a8a; /* Um pouco mais claro no hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(2, 41, 89, 0.3);
         }
-        &:hover {
-            color: #000000ff;
-            background: #ffffffa6;
-            transform: translateY(-5px);
+
+        &:active:not(:disabled) {
+            transform: translateY(0);
         }
     `}
 
-    ${({ variant }) => variant === "loginb" && css`
-        min-width: 150px;
-        max-width: 250px;
-        height: 35px;
-        font-weight: 700;
-        margin: 0 auto;
+    /* --- VARIANTE 2: SECONDARY (Branco) --- */
+    /* Usado no lado colorido para "Cadastrar" */
+    ${({ variant }) => variant === 'secondary' && css`
+        background-color: #ffffff;
+        color: #022959;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 
-        background: radial-gradient(
-            circle at 70% 30%,
-            #cde4facb 0%,
-            #6ad2f1ff 50%,      
-            #6ad2f1ff 100%   
-        );
-        filter: 
-            drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
-
-        &::after {
-            border-radius: 22px;
-        }
         &:hover {
-            color: #000000ff;
-            background: #ffffffe0;
-            transform: translateY(-5px);
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
     `}
+
+    /* --- VARIANTE 3: GOOGLE (Branco com borda) --- */
+    ${({ variant }) => variant === 'google' && css`
+        background-color: #ffffff;
+        color: #334155; /* Cinza escuro */
+        border: 1px solid #cbd5e1;
+        font-weight: 500;
+
+        &:hover {
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+        }
+    `}
+
+    /* --- VARIANTE 4: LOGINB (Gradiente Moderno) --- */
+    /* Mantendo compatibilidade com seu código antigo, mas mais bonito */
+    ${({ variant }) => variant === 'loginb' && css`
+        background: linear-gradient(135deg, #022959 0%, #006391 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 99, 145, 0.3);
+
+        &:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 99, 145, 0.4);
+        }
+    `}
+
 
     ${({ variant }) => variant === "taskbutton" && css`
         min-width: 130px; 
@@ -113,55 +114,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
     `}
 
 
-    ${({ variant }) => variant === "google" && css`
-        background: #0000005d;
-        background-color: #85e3ff75;
-        background-image: none;
-        color: #ffffffff; 
-        gap: 5px;
-
-        max-width: 250px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 12px;
-        
-        &:hover {
-            background: #ffffffcb;
-            color: #000000ff;
-            opacity: 1;
-        }
-    `}
-
-    ${({ variant }) => variant === "cadastrobutton" && css`
-        background: #59adeec9;
-
-        width: 100%; 
-        min-width: 100px;
-        height: 30px; 
-        padding: 0 15px;
-
-        border-radius: 10px;
-        position: relative;
-        font-family: 'Montserrat';
-        font-weight: 400;
-        color: #FFFFFF;
-        border: none;
-        margin-right: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        filter: drop-shadow(0 6px 5px rgba(8, 16, 30, 0.35));
-
-        &:hover {
-            background: #ffffffff;
-            color: #000000;
-            opacity: 0.9;
-            transform: translateY(-1px);
-        
-        }
-    `}
+    
 
 `
 export const DelTaskButton = styled.button`

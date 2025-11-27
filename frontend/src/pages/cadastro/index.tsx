@@ -59,8 +59,8 @@ const FormArea = () => {
 
     // Títulos dinâmicos baseados no passo
     const headerContent = [
-        { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, CPF e sobrenome.' },
-        { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha segura.' },
+        { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, sobrenome e CPF.' },
+        { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha com alfanuméricos.' },
         { title: 'Termos de Uso', desc: 'Confirme seus dados e aceite os termos para finalizar.' }
     ];
 
