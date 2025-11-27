@@ -14,7 +14,6 @@ import { useLanguage } from '../../context/LanguageContext';
 const Sidebar = ({ activeTab, onChangeTab, autenticado = false }: IProfileSidebar) => { 
 
     // Se não estiver autenticado, não mostra nada (retorna null)
-    // Isso substitui aquele return gigante de "Visitante"
     if (!autenticado) return null;
 
 

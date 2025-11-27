@@ -2,8 +2,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRegistration } from '../../../context/RegistrationContext';
-import { api } from '../../../services/api';
-import { useNavigate } from 'react-router-dom';
 import { 
     FormBody, 
     ButtonsContainer, 
@@ -14,32 +12,28 @@ import {
     TermsText, 
     ErrorText 
 } from '../styles';
+import { StepTermsProps } from '../types';
 
 const schema = yup.object({
   terms: yup.boolean().oneOf([true], 'Você precisa aceitar os termos').required()
 }).required();
 
-export const StepTerms = () => {
+
+
+// USO DA INTERFACE NO COMPONENTE
+export const StepTerms = ({ onFinalSubmit }: StepTermsProps) => {
   const { prevStep, formData } = useRegistration();
-  const navigate = useNavigate();
   
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { terms: false }
   });
 
-  const onSubmit = async (data: any) => {
-    // Lógica de envio final
-    try {
-        const finalData = { ...formData, ...data };
-        // Simulação de envio
-        // await api.post('users', finalData); 
-        console.log("Enviando:", finalData);
-        alert(`Bem-vindo, ${formData.name}!`);
-        navigate('/login');
-    } catch (error) {
-        alert("Erro ao cadastrar");
-    }
+  const onSubmit = (data: any) => {
+    // Pega os dados do checkbox (termos)
+    // Junta com os dados do contexto (formData)
+    // Envia tudo para a função do pai (Cadastro/index.tsx)
+    onFinalSubmit({ ...formData, ...data });
   };
 
   return (

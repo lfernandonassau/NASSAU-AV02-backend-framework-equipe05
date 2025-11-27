@@ -1,80 +1,68 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-// --- ESTRUTURA DE LAYOUT (Igual ao PainelPage) ---
+// ESTRUTURA DE LAYOUT
 
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-image: linear-gradient(150deg, #ece9e9ff, #ffffffff);
-`
+`;
 
 export const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
     min-height: 100vh;
-
     padding-left: 350px;
     box-sizing: border-box;
-
 
     @media (max-width: 1024px) {
         flex-direction: column;
         padding-left: 0; 
     }
-`
+`;
 
 export const ContentWrapper = styled.div`
     flex: 1; 
     width: 100%;
     padding: 30px;
     padding-top: 100px;
-    
     min-width: 0; 
     overflow-x: hidden; 
     box-sizing: border-box;
-    
-    
 
     @media (max-width: 1024px) {
         overflow-x: visible;
         padding: 10px; 
         padding-top: 100px;
     }
-`
+`;
 
-// --- CONTAINER BRANCO DO PERFIL ---
+// CONTAINER BRANCO DO PERFIL
 
 export const Container = styled.div`
     width: 100%;
-    max-width: 1150px; 
-    
+    max-width: 800px; 
     gap: 20px;
-    
     margin: 0; 
-
     background-color: #ffffff;
     border: 1px solid #8a8a8a60;
     border-radius: 10px; 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
     padding: 1.5rem 2rem 2rem 2rem;
     display: flex;
     flex-direction: column;
+    margin-top: 40px;
 
     @media (max-width: 1540px) {
         max-width: 700px;
     }
 
-    /* Responsividade: Sidebar vira Menu Hambúrguer/Topo */
     @media (max-width: 1024px) {
-        /* Destrava a largura para preencher o espaço disponível */
         max-width: 100%;
-        
-        /* Centraliza o container na tela */
         margin: 0 auto;
-        
+        margin-top: 20px;
         height: auto; 
         padding: 1.5rem;
     }
@@ -82,7 +70,7 @@ export const Container = styled.div`
     @media (max-width: 768px) {
         padding: 1rem;
     }
-`
+`;
 
 export const TitleProject = styled.h1`
     font-family: 'Montserrat', sans-serif;
@@ -93,31 +81,30 @@ export const TitleProject = styled.h1`
     margin: 0;
     padding-bottom: 15px;
     border-bottom: 1px solid #e2e8f0;
-`
+`;
 
 export const SectionTitle = styled.h3`
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     color: #555;
     font-size: 18px;
-    margin-bottom: 10px;
-`
+    margin-bottom: 20px;
+`;
 
-// --- ÁREA DA FOTO E NOME ---
+// AREA DA FOTO E NOME
 
 export const ProfileHeader = styled.div`
     display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 10px;
-
     justify-content: space-between;
 
     @media (max-width: 600px) {
         flex-direction: column;
         text-align: center;
     }
-`
+`;
 
 export const ProfileAvatar = styled.img`
     width: 100px;
@@ -126,9 +113,8 @@ export const ProfileAvatar = styled.img`
     object-fit: cover;
     border: 5px solid #5fbbe6ff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-`
+`;
 
-/* Grupo da Esquerda (Foto + Texto) */
 export const ProfileLeftGroup = styled.div`
     display: flex;
     align-items: center;
@@ -176,10 +162,10 @@ export const ProfileInfo = styled.div`
             text-align: center;
         }
     }
-`
+`;
 
+//  MENU DE NAVEGAÇÃO INTERNO
 
-/* --- NOVO: Menu da Direita (Nav) --- */
 export const ProfileNav = styled.div`
     display: flex;
     align-items: center;
@@ -191,8 +177,6 @@ export const ProfileNav = styled.div`
     }
 `;
 
-
-/* Botões do Menu (Overview, Teams, Projects) */
 export const ProfileNavLink = styled.button<{ $active?: boolean }>`
     display: flex;
     align-items: center;
@@ -211,10 +195,8 @@ export const ProfileNavLink = styled.button<{ $active?: boolean }>`
     cursor: pointer;
     transition: all 0.2s ease;
     
-    /* Sombra suave apenas no ativo */
     box-shadow: ${({ $active }) => $active ? '0 4px 6px -1px rgba(0, 0, 0, 0.05)' : 'none'};
 
-    /* Para mudar a cor do icon e tamanho em informações pessoais e projetos */
     svg {
         font-size: 18px;
         color: ${({ $active }) => $active ? '#363636ff' : '#64748b'};
@@ -243,27 +225,136 @@ export const FormGrid = styled.div`
     grid-template-columns: 1fr 1fr; 
     gap: 20px;
 
-    /* Inputs que ocupam a linha toda */
+    /* Wrapper para inputs que ocupam linha inteira */
     .full-width {
         grid-column: 1 / -1; 
     }
 
-    /* --- SOBRESCREVENDO A COR DO INPUT APENAS NESTA PÁGINA --- */
+    /* Sobrescrita de estilo para Inputs específicos desta página */
     input {
-        color: #0f172a !important; /* Preto/Azul escuro para o texto digitado */
+        color: #0f172a !important;
         font-weight: 500;
         
-        /* Se quiser ajustar o placeholder também */
         &::placeholder {
             color: #94a3b8 !important;
         }
         
-        /* Se precisar forçar uma borda mais visível no fundo branco */
         border-bottom: 1px solid #cbd5e1;
     }
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr; 
     }
+`;
+
+// CONTAINER DO BOTÃO SALVAR  ---
+export const SaveButtonWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+
+    
+    button {
+        width: auto;
+        min-width: 200px;
+    }
+
+    @media (max-width: 600px) {
+        button {
+            width: 100%;
+        }
+    }
+`;
+
+export const EmptyStateText = styled.p`
+    color: #666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+`;
+
+
+
+
+// PERFIL BAR (Inicial do Painel)
+export const PerfilBar = styled.div`
+    width: 100%;
+    max-width: 100%; 
+    margin: 0; 
+    
+    background-color: transparent; 
+    
+    border-radius: 10px;
+    display: flex;
+    
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+    
+    padding: 0 20px 0 0;
+    
+
+
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        margin: 0 auto;
+        padding: 10px 20px;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+    }
 `
 
+export const PerfilTextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`
+
+export const UserAvatar = styled.img`
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #ffffff; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    object-fit: cover;
+
+    @media (max-width: 768px) {
+        width: 60px;
+        height: 60px;
+    }
+`
+
+export const PerfilTitleBar = styled.h1`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #444444ff;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 1024px) {
+        font-size: 15px;
+    }
+`
+
+export const PerfilTextSpanBar = styled.span`
+    font-weight: 500;
+    color: #4d4d4dff;
+`
+
+export const PerfilTextBar = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #494949ff;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 1024px) {
+        font-size: 15px;
+    }
+`

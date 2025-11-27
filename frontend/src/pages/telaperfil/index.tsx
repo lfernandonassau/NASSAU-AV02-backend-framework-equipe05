@@ -1,15 +1,12 @@
-import { useState } from 'react' // useRef não é mais necessário aqui
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form' 
-
 import { Sidebar } from '../../components/Sidebar'
 import { HeaderProfile } from '../../components/HeaderProfile'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
-
 import { MdBuild } from 'react-icons/md'; 
-
-// IMPORTA O NOVO MODAL
+import { LiaProjectDiagramSolid } from 'react-icons/lia'
 import { AvatarSelectionModal } from './AvatarSelectionModal';
 
 import { 
@@ -26,13 +23,17 @@ import {
     ProfileNavLink,   
     FormGrid,
     SectionTitle,
-    // HiddenInput removido daqui pois foi para o modal
+    SaveButtonWrapper,
+    EmptyStateText,
+    PerfilBar,
+    UserAvatar,
+    PerfilTitleBar,
+    PerfilTextSpanBar,
+    PerfilTextContainer,
+    PerfilTextBar
 } from './styles'; 
-import { LiaProjectDiagramSolid } from 'react-icons/lia'
 
-// Imagem inicial padrão
 const DEFAULT_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
-
 
 type AuthUser = {
     id_user: number
@@ -45,7 +46,7 @@ type AuthUser = {
 
 const TelaPerfil = () => {
 
-        //RECUPERA USUÁRIO LOGADO DO LOCALSTORAGE
+    // RECUPERA USUÁRIO LOGADO DO LOCALSTORAGE
     const storedUserString = localStorage.getItem('kodan_user')
 
     let initialUser: AuthUser | null = null
@@ -58,22 +59,20 @@ const TelaPerfil = () => {
     }
 
     const [user, setUser] = useState<AuthUser | null>(initialUser)
-
     const [activeTab, setActiveTab] = useState('perfil');
     const [profileSubTab, setProfileSubTab] = useState('overview'); 
     
-    // --- LÓGICA DA FOTO --- atualizada
-        const [avatarUrl, setAvatarUrl] = useState(
+    // --- LÓGICA DA FOTO ---
+    const [avatarUrl, setAvatarUrl] = useState(
         initialUser?.imagemUrl || DEFAULT_AVATAR
     )
-
     
     // Estado para controlar o modal
     const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
-    const { control, handleSubmit, reset } = useForm({
+    const { control, handleSubmit } = useForm({
         defaultValues: {
             nome: initialUser
                 ? `${initialUser.name} ${initialUser.lastname}`
@@ -84,15 +83,14 @@ const TelaPerfil = () => {
         },
     })
 
-
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
         if (tab === 'projetos') navigate('/home');
         if (tab === 'painel') navigate('/painel');
     };
 
-    // Função chamada pelo Modal quando uma imagem é escolhida (seja ícone ou upload)
-        const handleAvatarSelected = (newUrl: string) => {
+    // Função chamada pelo Modal quando uma imagem é escolhida
+    const handleAvatarSelected = (newUrl: string) => {
         setAvatarUrl(newUrl)
 
         setUser((prev) => {
@@ -102,7 +100,6 @@ const TelaPerfil = () => {
             return updated
         })
     }
-
 
     const handleSearch = (val: string) => console.log("Buscar:", val);
     const onSubmit = (data: any) => console.log("Dados salvos:", data);
@@ -119,12 +116,28 @@ const TelaPerfil = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={avatarUrl} onSearch={handleSearch} />
                     
+
+                    {/* PERFIL */}
+                    <PerfilBar>
+                        <UserAvatar src={DEFAULT_AVATAR} alt="Foto do usuário" />
+                        <PerfilTextContainer>
+                        <PerfilTitleBar>
+                            👋 Rafael,{" "}
+                            <PerfilTextSpanBar>
+                            aqui você quem manda!
+                            </PerfilTextSpanBar>
+                        </PerfilTitleBar>
+            
+                        <PerfilTextBar>
+                            Configure do seu jeito. Como quiser.
+                        </PerfilTextBar>
+                        </PerfilTextContainer>
+                    </PerfilBar>
                     <Container>
                         <TitleProject>Perfil do usuário</TitleProject>
                         
                         <ProfileHeader>
                             <ProfileLeftGroup>
-                                {/* Usa o estado avatarUrl */}
                                 <ProfileAvatar src={avatarUrl} alt="Foto de perfil" />
                                 <ProfileInfo>
                                     <h2>{user ? `${user.name} ${user.lastname}` : 'Usuário Kodan'}</h2>
@@ -134,7 +147,6 @@ const TelaPerfil = () => {
                                         Alterar foto
                                     </button>
                                 </ProfileInfo>
-
                             </ProfileLeftGroup>
 
                             <ProfileNav>
@@ -173,9 +185,10 @@ const TelaPerfil = () => {
                                             <Input name="bio" placeholder="Bio / Descrição" control={control} />
                                         </div>
                                     </FormGrid>
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                                    
+                                    <SaveButtonWrapper>
                                         <Button title="Salvar Alterações" variant="primary" type="submit" />
-                                    </div>
+                                    </SaveButtonWrapper>
                                 </form>
                             </>
                         )}
@@ -184,16 +197,15 @@ const TelaPerfil = () => {
                         {profileSubTab === 'projects' && (
                             <div>
                                 <SectionTitle>Meus Projetos</SectionTitle>
-                                <p style={{ color: '#666' }}>
+                                <EmptyStateText>
                                     Lista de projetos específicos deste usuário.
-                                </p>
+                                </EmptyStateText>
                             </div>
                         )}
                         
                     </Container>
                 </ContentWrapper>
 
-                {/* --- RENDERIZAÇÃO DO NOVO MODAL --- */}
                 <AvatarSelectionModal 
                     isOpen={isAvatarModalOpen}
                     onClose={() => setIsAvatarModalOpen(false)}

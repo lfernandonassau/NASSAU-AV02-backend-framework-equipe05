@@ -104,7 +104,6 @@ export const WelcomeContainer = styled.main`
 export const Column = styled.div`
     display: flex;
     flex-direction: column;
-    /* Adicionado align-items center para centralizar Logo e Textos no Welcome */
     align-items: center; 
     justify-content: center;
     width: 100%;
@@ -118,10 +117,8 @@ export const Row = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    /* Remove margens fixas aqui para controlar nos filhos se necessário */
 `;
 
-/* --- TIPOGRAFIA MELHORADA --- */
 
 export const TitleLogin = styled.h1`
     font-family: 'Lobster Two', cursive;
@@ -229,7 +226,7 @@ export const PageLogin = styled.img`
     width: 120px; 
     margin-bottom: 30px;
     filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-    display: block; /* Garante comportamento de bloco */
+    display: block; 
 `;
 
 /* --- ÍCONES --- */

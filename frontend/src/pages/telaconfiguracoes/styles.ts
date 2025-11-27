@@ -49,16 +49,16 @@ export const ContentWrapper = styled.div`
 // --- CONTAINER PRINCIPAL BRANCO ---
 export const SettingsContainer = styled.div`
     width: 100%;
-    max-width: 800px;
-    margin: 0; /* Alinhado a esquerda */
+    max-width: 800px; 
+    gap: 20px;
+    margin: 0; 
     background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
-    padding: 40px;
+    border: 1px solid #8a8a8a60;
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem 2rem 2rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 40px;
 
     @media (max-width: 1024px) {
         margin: 0 auto;
