@@ -44,7 +44,7 @@ export const StepPersonal = () => {
                 <Label>Primeiro nome</Label>
                 <Input 
                     name="name" 
-                    placeholder="p. ex. Leonardo" 
+                    placeholder="Samuel..." 
                     control={control} 
                     mask={nameMask}
                 />
@@ -55,7 +55,7 @@ export const StepPersonal = () => {
                 <Label>Sobrenome</Label>
                 <Input 
                     name="lastName" 
-                    placeholder="p. ex. Silva" 
+                    placeholder="Douglas..." 
                     control={control} 
                     mask={nameMask}
                 />
@@ -66,7 +66,7 @@ export const StepPersonal = () => {
                 <Label>CPF</Label>
                 <Input 
                     name="cpf" 
-                    placeholder="000.000.000-00" 
+                    placeholder="123.456.789-00" 
                     control={control} 
                     mask={cpfMask}
                 />

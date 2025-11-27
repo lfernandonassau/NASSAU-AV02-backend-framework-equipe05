@@ -36,6 +36,7 @@ import { FcGoogle } from "react-icons/fc"
 // Firebase
 import { auth, googleProvider } from '../../services/firebase'
 import { Copyright } from '../../components/Copyright';
+import { EsqueciSenhaModal } from '../../components/EsqueciSenhaModal';
 
 const schema = yup.object({
     email: yup.string().email('E-mail não é válido').required('Campo obrigatório'),
@@ -56,6 +57,9 @@ const Login = () => {
         resolver: yupResolver(schema),
         mode: 'onChange',
     })
+
+    // Esqueci senha MODAL
+    const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
     const navigate = useNavigate()
 
@@ -130,7 +134,7 @@ const Login = () => {
                             />
 
                             <Row>
-                                <EsqueciSubText onClick={() => navigate('/')}>
+                                <EsqueciSubText onClick={() => setIsForgotModalOpen(true)}>
                                     Esqueci minha senha
                                 </EsqueciSubText>
                             </Row>
@@ -169,12 +173,21 @@ const Login = () => {
                         <Button 
                             title="Clique aqui!" 
                             variant="secondary" 
-                            onClick={() => navigate('/register')}
+                            onClick={() => navigate('/cadastro')}
                         />
                     </Column>
                 </WelcomeContainer>
             </LoginNewScreen>
+
+            {/* COPYRIGHT  */}
             <Copyright/>
+
+
+            {/* RENDERIZAÇÃO DO MODAL ESQUECI SENHA */}
+            <EsqueciSenhaModal 
+                isOpen={isForgotModalOpen} 
+                onClose={() => setIsForgotModalOpen(false)} 
+            />
         </PageWrapper>
     )
 }
