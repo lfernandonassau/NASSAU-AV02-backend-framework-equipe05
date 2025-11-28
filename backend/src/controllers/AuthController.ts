@@ -40,4 +40,15 @@ export default {
             return res.status(400).json({ message: err.message })
         }
     },
+    async googleLogin(req: Request, res: Response) {
+        const { idToken } = req.body
+
+        try {
+            const result = await AuthService.loginWithGoogle(idToken)
+            return res.json(serializeBigInt(result))
+        } catch (err: any) {
+            return res.status(401).json({ message: err.message })
+        }
+    }
+
 }

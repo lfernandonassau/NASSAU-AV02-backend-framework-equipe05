@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { ProjectCard } from '../../components/TelaProjectCard'
 import { Sidebar } from '../../components/Sidebar'
 import { HeaderProfile } from '../../components/HeaderProfile'
+import { PerfilHomeBar } from '../../components/PerfilHomeBar'
+import { api } from '../../services/api'
 
 import {
     Wrapper,
@@ -47,12 +49,8 @@ import {
     MdMoreVert,
 } from 'react-icons/md'
 
-
 import { LuKanban, LuX } from "react-icons/lu";
 import { BsEmojiSmileUpsideDown } from "react-icons/bs";
-import { PerfilHomeBar } from '../../components/PerfilHomeBar'
-
-
 
 type Project = {
     id: string
@@ -69,7 +67,7 @@ const TelaProjetos = () => {
     const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
     
     const [projects, setProjects] = useState<Project[]>([])
-
+    const [userAvatar, setUserAvatar] = useState(USER_AVATAR)
 
     // Modais States
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -90,26 +88,49 @@ const TelaProjetos = () => {
 
     const navigate = useNavigate()
 
+    // carrega usuário logado para avatar (e garante que está autenticado)
     useEffect(() => {
-    async function loadProjects() {
-        try {
-            const res = await fetch('http://localhost:3000/projects')
-            const data = await res.json()
+        const storedUser = localStorage.getItem('kodan_user')
 
-            const mapped = data.map((p: any) => ({
-                id: String(p.id_project ?? p.id),
-                title: p.title,
-                subtitle: p.subtitle ?? '',
-            }))
-
-            setProjects(mapped)
-        } catch (err) {
-            console.error("Erro ao carregar projetos:", err)
+        if (!storedUser) {
+            navigate('/login')
+            return
         }
-    }
 
-    loadProjects()
-}, [])
+        try {
+            const parsed = JSON.parse(storedUser)
+            if (parsed?.imagemUrl) {
+                setUserAvatar(parsed.imagemUrl)
+            }
+        } catch (err) {
+            console.error('Erro ao ler usuário do localStorage:', err)
+        }
+    }, [navigate])
+
+    useEffect(() => {
+        async function loadProjects() {
+            try {
+                // usa a instância do axios com baseURL e interceptors
+                const { data } = await api.get('/projects')
+
+                const mapped = data.map((p: any) => ({
+                    id: String(p.id_project ?? p.id),
+                    title: p.title,
+                    subtitle: p.subtitle ?? '',
+                }))
+
+                setProjects(mapped)
+            } catch (err: any) {
+                console.error("Erro ao carregar projetos:", err)
+                if (err?.response?.status === 401) {
+                    alert('Sessão expirada. Faça login novamente.')
+                    navigate('/login')
+                }
+            }
+        }
+
+        loadProjects()
+    }, [navigate])
 
     // helpers de texto
     function handleChangeNewTitle(e: React.ChangeEvent<HTMLInputElement>) {
@@ -153,18 +174,10 @@ const TelaProjetos = () => {
         if (!title) return
 
         try {
-            const res = await fetch('http://localhost:3000/projects', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, subtitle }),
+            const { data: created } = await api.post('/projects', {
+                title,
+                subtitle,
             })
-
-            if (!res.ok) {
-                console.error('Erro ao criar projeto:', await res.json())
-                return
-            }
-
-            const created = await res.json()
 
             const newProject: Project = {
                 id: String(created.id_project),
@@ -174,12 +187,16 @@ const TelaProjetos = () => {
 
             setProjects(prev => [...prev, newProject])
             closeCreateModal()
-        } catch (err) {
+        } catch (err: any) {
             console.error("Erro ao criar projeto:", err)
+            if (err?.response?.status === 401) {
+                alert('Sessão expirada. Faça login novamente.')
+                navigate('/login')
+                return
+            }
+            alert('Erro ao criar projeto.')
         }
     }
-
-
 
     // Edit
     function openEditModal(project: Project) {
@@ -205,18 +222,10 @@ const TelaProjetos = () => {
         if (!title) return
 
         try {
-            const res = await fetch(`http://localhost:3000/projects/${projectToEdit.id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, subtitle }),
-            })
-
-            if (!res.ok) {
-                console.error('Erro ao editar:', await res.json())
-                return
-            }
-
-            const updated = await res.json()
+            const { data: updated } = await api.patch(
+                `/projects/${projectToEdit.id}`,
+                { title, subtitle }
+            )
 
             setProjects(prev =>
                 prev.map(p =>
@@ -227,12 +236,16 @@ const TelaProjetos = () => {
             )
 
             closeEditModal()
-        } catch (err) {
+        } catch (err: any) {
             console.error("Erro ao editar:", err)
+            if (err?.response?.status === 401) {
+                alert('Sessão expirada. Faça login novamente.')
+                navigate('/login')
+                return
+            }
+            alert('Erro ao editar projeto.')
         }
     }
-
-
 
     // Delete
     function openDeleteModal(project: Project) {
@@ -248,14 +261,7 @@ const TelaProjetos = () => {
         if (!projectToDelete) return
 
         try {
-            const res = await fetch(`http://localhost:3000/projects/${projectToDelete.id}`, {
-                method: 'DELETE',
-            })
-
-            if (!res.ok) {
-                console.error('Erro ao excluir:', await res.json())
-                return
-            }
+            await api.delete(`/projects/${projectToDelete.id}`)
 
             setProjects(prev => prev.filter(p => p.id !== projectToDelete.id))
             setExpandedProjectId(current =>
@@ -263,11 +269,16 @@ const TelaProjetos = () => {
             )
 
             closeDeleteModal()
-        } catch (err) {
+        } catch (err: any) {
             console.error("Erro ao excluir:", err)
+            if (err?.response?.status === 401) {
+                alert('Sessão expirada. Faça login novamente.')
+                navigate('/login')
+                return
+            }
+            alert('Erro ao excluir projeto.')
         }
     }
-
 
     function handleToggleProject(projectId: string) {
         setExpandedProjectId(current => (current === projectId ? null : projectId))
@@ -289,7 +300,7 @@ const TelaProjetos = () => {
                 />
 
                 <ContentWrapper>
-                    <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
+                    <HeaderProfile userImage={userAvatar} onSearch={handleSearch} />
                     
                     <PerfilHomeBar />
 
@@ -379,9 +390,6 @@ const TelaProjetos = () => {
                                 )
                             })
                         )}
-                        
-                        
-
                     </Container>
                 </ContentWrapper>
             </ContentContainer>

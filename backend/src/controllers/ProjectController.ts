@@ -7,27 +7,32 @@ function serializeBigInt(obj: any) {
         typeof value === 'bigint' ? Number(value) : value,
     ),
     )
-    }
+}
 
-    export default {
+export default {
     async create(req: Request, res: Response) {
     try {
-        // O middleware ensureAuthenticated colocou o user aqui
-        const userId = (req as any).user.id_user; 
-        
-        // Passamos o ID do usuário para o service
-        const result = await ProjectService.create({ ...req.body, userId });
-        
+        const userId = (req as any).user.id_user as number
+
+        const result = await ProjectService.create({
+        ...req.body,
+        userId,
+        })
+
         return res.status(201).json(serializeBigInt(result))
     } catch (err: any) {
+        console.error('Erro ao criar projeto:', err)
         return res.status(400).json({ message: err.message })
     }
     },
 
-    async list(_req: Request, res: Response) {
-    const result = await ProjectService.list()
+    async list(req: Request, res: Response) {
+    const userId = (req as any).user.id_user as number
+
+    const result = await ProjectService.listByOwner(userId)
     return res.json(serializeBigInt(result))
     },
+
 
     async update(req: Request, res: Response) {
     try {
@@ -56,4 +61,5 @@ function serializeBigInt(obj: any) {
         return res.status(400).json({ message: err.message })
     }
     },
+
 }

@@ -2,8 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { api } from '../../services/api'
-import { signInWithPopup } from "firebase/auth";
-
+import { signInWithPopup } from "firebase/auth";     
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
@@ -90,17 +89,31 @@ const Login = () => {
     // LOGIN COM GOOGLE
     const handleGoogleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
+            // Login no Firebase (popup)
+            const result = await signInWithPopup(auth, googleProvider)
+            const user = result.user
 
-            console.log("Usuário logado:", user);
-            navigate('/perfil');
+            // Pega o ID Token do Firebase
+            const idToken = await user.getIdToken()
 
-        } catch (error) {
-            console.error("Erro ao logar com Google:", error);
-            alert("Erro ao entrar com Google.");
+            // Envia pro backend validar e gerar o JWT do Kodan
+            const { data } = await api.post('/auth/google', { idToken })
+
+            // Espera que o backend devolva { user, token } igual ao /auth/login normal
+            localStorage.setItem('kodan_token', data.token)
+            localStorage.setItem('kodan_user', JSON.stringify(data.user))
+
+            navigate('/perfil')
+        } catch (error: any) {
+            console.error('Erro ao entrar com Google:', error)
+
+            const message =
+            error?.response?.data?.message ||
+            'Erro ao entrar com Google. Tente novamente.'
+
+            alert(message)
         }
-    };
+    }
 
     return (
         <PageWrapper>

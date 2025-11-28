@@ -8,6 +8,7 @@ import userpositionRoutes from './routes/userposition.routes.js'
 import cardsRoutes from './routes/cards.routes.js'
 import authRoutes from './routes/auth.routes.js'
 import relatoryRoutes from './routes/relatory.routes.js'
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated.js'
 
 
 
@@ -22,14 +23,16 @@ app.use(cors({
 
 app.use(express.json())
 
-app.use('/projects', projectRoutes)
-app.use('/column', columnRoutes)
-app.use('/job', jobRoutes)
-app.use('/userposition',userpositionRoutes)
-app.use('/cards', cardsRoutes)
+app.use('/projects', ensureAuthenticated, projectRoutes)
+app.use('/column', ensureAuthenticated, columnRoutes)
+app.use('/job', ensureAuthenticated, jobRoutes)
+app.use('/userposition', ensureAuthenticated, userpositionRoutes)
+app.use('/cards', ensureAuthenticated, cardsRoutes)
+app.use('/relatory', ensureAuthenticated, relatoryRoutes)
+
+//rotas publicas
 app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
-app.use('/relatory',relatoryRoutes)
 
 
 
