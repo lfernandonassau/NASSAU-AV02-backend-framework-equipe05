@@ -1,5 +1,9 @@
+// src/context/RegistrationContext.tsx
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { IFormData } from '../pages/cadastro/types'; // Importe seus tipos existentes
+import { IFormData } from '../pages/cadastro/types';
+// client HTTP (axios configurado)
+import { api } from '../services/api';
 
 interface RegistrationContextData {
   currentStep: number;
@@ -9,6 +13,11 @@ interface RegistrationContextData {
   prevStep: () => void;
   isFirstStep: boolean;
   isLastStep: boolean;
+
+  //função que realmente FALA COM O BACKEND
+  submitRegistration: () => Promise<void>;
+
+  isSubmitting: boolean;
 }
 
 const RegistrationContext = createContext<RegistrationContextData>({} as RegistrationContextData);
@@ -16,6 +25,7 @@ const RegistrationContext = createContext<RegistrationContextData>({} as Registr
 export const RegistrationProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Partial<IFormData>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateFormData = (data: Partial<IFormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
@@ -28,6 +38,33 @@ export const RegistrationProvider = ({ children }: { children: ReactNode }) => {
   // Assumindo 3 etapas (índices 0, 1, 2)
   const isLastStep = currentStep === 2; 
 
+  // COMUNICAÇÃO COM O BACK
+  const submitRegistration = async () => {
+    setIsSubmitting(true);
+
+    try {
+      // Ajusta de acordo com o DTO do endpoint de cadastro.
+      const payload = {
+        name: formData.name,
+        lastname: formData.lastName,
+        cpf: formData.cpf,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      // POST /users ou POST /auth/register
+      await api.post('/users', payload);
+
+    } catch (error) {
+      
+      console.error('Erro ao registrar usuário:', error);
+      
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <RegistrationContext.Provider value={{ 
       currentStep, 
@@ -36,7 +73,9 @@ export const RegistrationProvider = ({ children }: { children: ReactNode }) => {
       nextStep, 
       prevStep,
       isFirstStep,
-      isLastStep
+      isLastStep,
+      submitRegistration,
+      isSubmitting,
     }}>
       {children}
     </RegistrationContext.Provider>

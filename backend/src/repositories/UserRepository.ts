@@ -75,4 +75,10 @@ export default {
         })
     },
 
+    async findById(id: number | bigint) {
+    return prisma.user.findUnique({
+        where: { id_user: BigInt(id) },
+    })
+}
+
 }

@@ -1,12 +1,15 @@
+// src/routes/user.routes.ts
 import { Router } from 'express'
 import UserController from '../controllers/UserController.js'
+import { ensureAuthenticated } from '../middlewares/ensureAuthenticated.js'
 
 const router = Router()
 
-//User
 router.post('/', UserController.create)
 router.get('/', UserController.list)
-router.patch('/:id', UserController.update)
-router.delete('/:id', UserController.delete)
+
+//Apenas quando user estiver logado
+router.get('/me', ensureAuthenticated, UserController.me)
+router.put('/me', ensureAuthenticated, UserController.updateMe)
 
 export default router

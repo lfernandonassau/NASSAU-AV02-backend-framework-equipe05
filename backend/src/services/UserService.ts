@@ -18,10 +18,25 @@ interface UpdateUserDTO {
     password?: string
 }
 
+interface UpdateProfileDTO{
+    name?: string
+    lastname?: string
+    cpf?: string
+    email?: string
+    bio?: string
+    imagemUrl?: string
+}
+
 
 
 export default {
     async create(data: CreateUserDTO) {
+
+    //Normaliza o CPF para apenas dígitos
+    const cleanCpf = data.cpf.replace(/\D/g, ''); // remove tudo que NÃO é número
+    if (cleanCpf.length !== 11) {
+    throw new Error('CPF inválido');
+    }
     // Regra básica
     if (!data.email) {
         throw new Error('E-mail obrigatório')
@@ -41,15 +56,14 @@ export default {
     // Gerar hash da senha
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(data.password, saltRounds)
-
+    // Criar user usando o CPF limpo
     const user = await UserRepository.createUser({
         ...data,
+        cpf: cleanCpf,
         password: passwordHash,
     })
-
-    // não devolver password
-    const { password, ...userWithoutPassword } = user as any
-    return userWithoutPassword
+    const { password, ...userWithoutPassword } = user as any;
+    return userWithoutPassword;
     },
 
     async list() {
@@ -67,7 +81,32 @@ export default {
         return updated
     },
 
+    async updateProfile(id: number, input: UpdateProfileDTO) {
+        // objeto que realmente será enviado para o Prisma
+        const data: UpdateProfileDTO = {}
+
+        //só copia o que realmente veio definido na requisição
+        if (input.name !== undefined) data.name = input.name
+        if (input.lastname !== undefined) data.lastname = input.lastname
+        if (input.email !== undefined) data.email = input.email
+        if (input.cpf !== undefined) data.cpf = input.cpf
+        if (input.bio !== undefined) data.bio = input.bio
+        if (input.imagemUrl !== undefined) data.imagemUrl = input.imagemUrl
+
+        const updated = await UserRepository.update(id, data)
+        return updated
+        },
+
     async delete(id: number) {
     return await UserRepository.delete(id)
     },
+
+    async findById(id: number | bigint) {
+        const user = await UserRepository.findById(id)
+        if (!user) {
+            throw new Error('Usuário não encontrado')
+        }
+        const { password, ...rest } = user as any
+        return rest
+    }
 }
