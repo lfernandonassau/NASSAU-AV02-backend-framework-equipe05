@@ -82,10 +82,6 @@ const HeaderHome = () => {
                     Sobre nós
                 </NavLink>
 
-                <NavLink href="#" onClick={(e) => e.preventDefault()}>
-                    Contato
-                </NavLink>
-
                 <NavLink onClick={() => handleNavigate('/equipe')}>
                     Nossa equipe
                 </NavLink>
