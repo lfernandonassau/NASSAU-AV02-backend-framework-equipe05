@@ -169,3 +169,63 @@ export const LogoutMenuItem = styled.button`
         background: #ffe5e5;
     }
 `;
+
+
+/* --- NOVO: Container de Sugestões (Dropdown) --- */
+export const SuggestionsList = styled.ul`
+    position: absolute;
+    top: 100%; /* Logo abaixo do search container */
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 5px 0;
+    margin-top: 5px;
+    z-index: 1000;
+    border: 1px solid #f0f0f0;
+    
+    /* Limita a altura se tiver muitos projetos */
+    max-height: 200px;
+    overflow-y: auto; 
+
+    /* Scrollbar bonita */
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+`;
+
+export const SuggestionItem = styled.li`
+    padding: 10px 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+
+    &:hover {
+        background-color: #f5f5f5;
+        color: #006391;
+    }
+
+    svg {
+        font-size: 16px;
+        color: #999;
+    }
+`;
+
+export const NoResults = styled.li`
+    padding: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+`;

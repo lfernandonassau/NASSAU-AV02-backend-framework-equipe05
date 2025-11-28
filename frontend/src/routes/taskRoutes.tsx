@@ -10,9 +10,8 @@ import { TelaPerfil } from "../pages/telaperfil";
 import { TelaProjetos } from "../pages/telaprojetos";
 import {Estatisticas} from "../pages/telaEstatisticas";
 import { TelaConfig } from "../pages/telaconfiguracoes";
-import { ForgotPassword } from '../pages/forgotpassword'
-import { ResetPassword } from '../pages/resetpassword'
 import { NossaEquipe } from "../pages/equipe";
+import { AlterarSenha } from "../pages/alterarsenha";
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -27,10 +26,11 @@ const AppRoutes = () => {
           <Route path="/perfil" element={<TelaPerfil />} />
           <Route path="/estatisticas" element={<Estatisticas />} /> 
           <Route path="/configuracoes" element={<TelaConfig />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/configuracoes" element={<TelaConfig />} /> 
-          <Route path="/equipe" element={<NossaEquipe />} /> 
+          <Route path="/equipe" element={<NossaEquipe />} />
+          //<Route path="/alterar-senha/:token" element={<AlterarSenha />} /> 
+          // apenas uma tela de teste por enquanto:
+          <Route path="/alterar-senha" element={<AlterarSenha />} />
         </Routes>
       </TasksProvider>
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRegistration } from '../../../context/RegistrationContext';
 import { useNavigate } from 'react-router-dom';
+
 import { 
     FormBody, 
     ButtonsContainer, 
@@ -19,11 +20,9 @@ const schema = yup.object({
 }).required();
 
 export const StepTerms = () => {
-
-  // formData           ->   dados de todos os passos
-  // submitRegistration ->   função que chama o backend
-  // isSubmitting       ->   para desabilitar botão enquanto envia
-  
+  // formData           -> dados de todos os passos
+  // submitRegistration -> função que chama o backend (RegistrationContext)
+  // isSubmitting       -> para desabilitar botão enquanto envia
   const {
     formData,
     prevStep,
@@ -40,14 +39,12 @@ export const StepTerms = () => {
 
   const onSubmit = async () => {
     try {
-
-      //Chama a função centralizada que faz o POST no backend
+      // Chama a função centralizada que faz o POST no backend
       await submitRegistration();
 
       alert(`Bem-vindo, ${formData.name}!`);
       navigate('/login');
     } catch (error) {
-
       console.error(error);
       alert('Erro ao cadastrar. Tente novamente.');
     }
