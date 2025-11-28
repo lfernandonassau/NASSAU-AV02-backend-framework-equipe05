@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from '../../services/api';
 
-// Componentes Globais
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { Copyright } from '../../components/Copyright';
 import logo from '../../assets/logo.svg';
 
-// Importação dos Estilos Separados
 import { 
     PageWrapper, 
     ResetCard, 
@@ -48,7 +47,11 @@ interface IResetForm {
 
 const AlterarSenha = () => {
     const navigate = useNavigate();
-    
+    const [searchParams] = useSearchParams();
+
+    // token vindo do link enviado por e-mail: /reset-password?token=XYZ
+    const token = searchParams.get('token');
+
     // Estados Lógicos
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -61,26 +64,35 @@ const AlterarSenha = () => {
     });
 
     const onSubmit = async (data: IResetForm) => {
+        if (!token) {
+            alert('Link de redefinição inválido ou expirado.');
+            navigate('/login');
+            return;
+        }
+
         setIsLoading(true);
         
         try {
-            // Lógica de envio para API aqui...
-            console.log("Nova senha enviada:", data.password);
-            
-            // Simulação de delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Ajuste a rota conforme seu backend: /reset-password, /auth/reset-password etc.
+            await api.post('/auth/reset-password', {
+                token,
+                password: data.password,
+            });
 
             // Ativa a tela de sucesso
             setIsSuccess(true);
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Erro ao alterar senha. Tente novamente.');
+            const message =
+                error?.response?.data?.message ||
+                'Erro ao alterar senha. Tente novamente.';
+            alert(message);
             setIsLoading(false);
         }
     };
 
-    // Redirecionamento Automático
+    // Redirecionamento Automático após sucesso
     useEffect(() => {
         if (isSuccess) {
             const timer = setTimeout(() => {
@@ -93,10 +105,7 @@ const AlterarSenha = () => {
     return (
         <PageWrapper>
             <ResetCard>
-                {/* Lógica de Exibição Condicional:
-                    Se sucesso = true, mostra loading/sucesso.
-                    Se sucesso = false, mostra formulário.
-                */}
+                {/* Se sucesso = true, mostra tela de sucesso */}
                 {isSuccess ? (
                     <SuccessContent>
                         <SuccessIcon />
