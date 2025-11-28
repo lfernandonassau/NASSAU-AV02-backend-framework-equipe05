@@ -28,9 +28,8 @@ const AppRoutes = () => {
           <Route path="/configuracoes" element={<TelaConfig />} />
           <Route path="/configuracoes" element={<TelaConfig />} /> 
           <Route path="/equipe" element={<NossaEquipe />} />
-          //<Route path="/alterar-senha/:token" element={<AlterarSenha />} /> 
+          //<Route path="/reset-password" element={<AlterarSenha />} />
           // apenas uma tela de teste por enquanto:
-          <Route path="/alterar-senha" element={<AlterarSenha />} />
         </Routes>
       </TasksProvider>
     </BrowserRouter>
