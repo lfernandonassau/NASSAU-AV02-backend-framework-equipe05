@@ -31,16 +31,11 @@ import {
     ContentWrapper,
     AddMemberButton,
     IconWrapper,
-    PerfilBar,
-    UserAvatar,
-    PerfilTextContainer,
-    PerfilTitleBar,
-    PerfilTextSpanBar,
-    PerfilTextBar,
     BoardInfoTitleWrapper
 } from './styles';
 import { SelectProjectModal } from '../../components/SelectProjectModal';
 import { Project } from '../../components/SelectProjectModal/types';
+import { PerfilHomeBar } from '../../components/PerfilHomeBar';
 
 
 
@@ -173,17 +168,7 @@ const PainelPage: React.FC = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
 
-                    <PerfilBar>
-                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
-                        <PerfilTextContainer>
-                            <PerfilTitleBar>
-                                👋 Rafael, <PerfilTextSpanBar>você está no painel!</PerfilTextSpanBar>
-                            </PerfilTitleBar>
-                            <PerfilTextBar>
-                                Aqui você trabalhará com o nosso modelo Kodan, baseado no modelo Kanban.
-                            </PerfilTextBar>
-                        </PerfilTextContainer>
-                    </PerfilBar>
+                    <PerfilHomeBar />
 
                     <BoardOuterContainer>
                         <BoardHeader>

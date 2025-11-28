@@ -36,12 +36,6 @@ import {
     ModalDangerButton,
     ProjectMenu,
     ProjectMenuItem,
-    PerfilBar,
-    PerfilTextContainer,
-    PerfilTitleBar,
-    UserAvatar,
-    PerfilTextBar,
-    PerfilTextSpanBar,
     CreateButton,
     EmptyStateMessage,
 } from './styles'
@@ -56,6 +50,7 @@ import {
 
 import { LuKanban, LuX } from "react-icons/lu";
 import { BsEmojiSmileUpsideDown } from "react-icons/bs";
+import { PerfilHomeBar } from '../../components/PerfilHomeBar'
 
 
 
@@ -296,17 +291,8 @@ const TelaProjetos = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
                     
-                    <PerfilBar>
-                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
-                        <PerfilTextContainer>
-                            <PerfilTitleBar>
-                                👋 Rafael, <PerfilTextSpanBar>você está vendo os projetos!</PerfilTextSpanBar>
-                            </PerfilTitleBar>
-                            <PerfilTextBar>
-                                É aqui que ficam os projetos em que você está colaborando
-                            </PerfilTextBar>
-                        </PerfilTextContainer>
-                    </PerfilBar>
+                    <PerfilHomeBar />
+
                     <Container>
                         <TitleRow>
                             <TitleProject>Gerenciamento de Projetos</TitleProject>

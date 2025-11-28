@@ -12,7 +12,12 @@ function serializeBigInt(obj: any) {
     export default {
     async create(req: Request, res: Response) {
     try {
-        const result = await ProjectService.create(req.body)
+        // O middleware ensureAuthenticated colocou o user aqui
+        const userId = (req as any).user.id_user; 
+        
+        // Passamos o ID do usuário para o service
+        const result = await ProjectService.create({ ...req.body, userId });
+        
         return res.status(201).json(serializeBigInt(result))
     } catch (err: any) {
         return res.status(400).json({ message: err.message })

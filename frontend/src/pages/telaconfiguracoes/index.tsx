@@ -27,13 +27,8 @@ import {
     StyledSelect,
     DangerZone,
     DangerButton,
-    PerfilBar,
-    UserAvatar,
-    PerfilTextContainer,
-    PerfilTextSpanBar,
-    PerfilTitleBar,
-    PerfilTextBar
 } from './styles';
+import { PerfilHomeBar } from '../../components/PerfilHomeBar';
 
 const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4";
 
@@ -76,21 +71,8 @@ const TelaConfig = () => {
 
 
                     {/* PERFIL */}
-                    <PerfilBar>
-                        <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
-                        <PerfilTextContainer>
-                        <PerfilTitleBar>
-                            👋 Rafael,{" "}
-                            <PerfilTextSpanBar>
-                            aqui você quem manda!
-                            </PerfilTextSpanBar>
-                        </PerfilTitleBar>
-            
-                        <PerfilTextBar>
-                            Configure do seu jeito. Como quiser.
-                        </PerfilTextBar>
-                        </PerfilTextContainer>
-                    </PerfilBar>
+                    <PerfilHomeBar />
+
                     <SettingsContainer>
                         {/* Título Traduzido */}
                         <PageTitle>{t('settings.title')}</PageTitle>

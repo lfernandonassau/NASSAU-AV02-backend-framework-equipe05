@@ -12,13 +12,8 @@ import {
   Content,
   ChartsRow,
   BottomRow,
-  PerfilBar,
-  UserAvatar,
-  PerfilTextContainer,
-  PerfilTitleBar,
-  PerfilTextBar,
-  PerfilTextSpanBar
 } from "./styles";
+import { PerfilHomeBar } from "../../components/PerfilHomeBar";
 
 const USER_AVATAR =
   "https://avatars.githubusercontent.com/u/179970243?v=4";
@@ -42,21 +37,7 @@ const Estatisticas = () => {
       <Content>
 
         {/* PERFIL */}
-        <PerfilBar>
-          <UserAvatar src={USER_AVATAR} alt="Foto do usuário" />
-          <PerfilTextContainer>
-            <PerfilTitleBar>
-              👋 Rafael,{" "}
-              <PerfilTextSpanBar>
-                você está visualizando as estatísticas!
-              </PerfilTextSpanBar>
-            </PerfilTitleBar>
-
-            <PerfilTextBar>
-              Aqui você acompanha a evolução geral dos seus projetos.
-            </PerfilTextBar>
-          </PerfilTextContainer>
-        </PerfilBar>
+        <PerfilHomeBar />
 
        <ChartsRow>
         <WeeklyEvolutionChart />

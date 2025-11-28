@@ -1,6 +1,5 @@
 import logo from '../../assets/logo.svg';
 import { useForm } from 'react-hook-form';
-// 1. Importe o useLocation aqui
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
