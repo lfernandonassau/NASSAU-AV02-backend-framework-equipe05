@@ -14,7 +14,6 @@ const Input = ({
   name,
   mask,
   rules,
-  error,
   ...rest}:IInput) => {
 
 
@@ -42,14 +41,11 @@ const Input = ({
                         onChange(finalValue);
                     }} 
                     {...rest}
-                    $hasError={!!error}
                 /> 
             )}
           />
 
         {rightIcon ? (<RightIcon>{rightIcon}</RightIcon>) : null}
-        {/* TelaPerfil error msg */}
-        {error && <ErrorText>{error}</ErrorText>}
     </InputContainer>
     {errorMessage ? <ErrorText>{errorMessage}</ErrorText> : null}
     </>

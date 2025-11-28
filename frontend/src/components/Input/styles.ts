@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { IInput, IInputStyled } from './types';
+import { IInputStyled } from './types';
 
 export const InputContainer = styled.div<IInputStyled>`
     width: 100%;
@@ -53,7 +53,7 @@ export const RightIcon = styled.div`
     }
 `;
 
-export const InputText = styled.input<IInputStyled>`
+export const InputText = styled.input`
     background-color: transparent;
     border: 0;
     flex: 1;

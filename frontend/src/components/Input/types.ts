@@ -13,12 +13,8 @@ export interface IInput extends React.InputHTMLAttributes<HTMLInputElement>{
     mask?: (value: string) => string;
     // Validação de senha
     rules?: RegisterOptions;
-
-    // Controle de erros (TelaPerfil)
-    error?: string;
 }
 
 export interface IInputStyled {
     variant?: string;
-    $hasError?: boolean;
 }
