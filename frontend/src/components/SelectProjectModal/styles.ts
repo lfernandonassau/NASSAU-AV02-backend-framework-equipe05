@@ -5,7 +5,7 @@ export const ModalContainer = styled.div`
     /* Ajuste fino da posição em relação ao botão "Nome do Projeto" */
     top: 100%; /* Fica logo abaixo do título */
     left: 0;
-    z-index: 100; /* Garante que fique acima de outros elementos */
+    z-index: 9999; /* Garante que fique acima de outros elementos */
     
     width: 250px;
     max-height: 300px;

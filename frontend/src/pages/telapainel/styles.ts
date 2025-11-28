@@ -98,8 +98,11 @@ export const BoardHeader = styled.div`
     border-bottom: 1px solid #f0f0f0; 
     margin-bottom: 1rem;
 
-    z-index: 10;
-    position: relative;
+    /* 1. Define uma posição relativa para o z-index funcionar */
+    position: relative; 
+    
+    /* 2. O valor precisa ser maior que 10 (que é o z-index do AddButtonArea) */
+    z-index: 20;
 
     @media (max-width: 600px) {
         flex-direction: column; /* Um embaixo do outro */

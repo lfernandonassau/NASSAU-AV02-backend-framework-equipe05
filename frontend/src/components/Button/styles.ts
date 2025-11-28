@@ -100,6 +100,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
 
         background: none;
         background-color: #2c2c2cff;
+        color: #ffffff;
         
         filter: drop-shadow(0 4px 3px rgba(12, 24, 40, 0.25));
 
