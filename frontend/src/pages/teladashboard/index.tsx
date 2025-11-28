@@ -10,12 +10,6 @@ import {
     Wrapper, 
     ContentContainer, 
     ContentWrapper, 
-    PerfilBar,
-    PerfilTextBar,
-    PerfilTitleBar,
-    PerfilTextSpanBar,
-    UserAvatar,
-    PerfilTextContainer,
     CardTable,
     TableTitle,
     Table,
@@ -34,7 +28,7 @@ import {
 
 import { LiaProjectDiagramSolid } from "react-icons/lia";
 import { MdMoreVert } from 'react-icons/md';
-import { Copyright } from '../../components/Copyright';
+import { PerfilHomeBar } from '../../components/PerfilHomeBar';
 
 // Interface para projetos
 interface Project {
@@ -92,17 +86,7 @@ const TelaDashboard = () => {
                 <ContentWrapper>
                     <HeaderProfile userImage={userImage} />
                     
-                    <PerfilBar>
-                        <UserAvatar src={userImage} alt="Foto do usuário" />
-                        <PerfilTextContainer>
-                            <PerfilTitleBar>
-                                👋 Ei, <PerfilTextSpanBar>Rafael!</PerfilTextSpanBar>
-                            </PerfilTitleBar>
-                            <PerfilTextBar>
-                                Bem-vindo ao seu painel de controle.
-                            </PerfilTextBar>
-                        </PerfilTextContainer>
-                    </PerfilBar>
+                    <PerfilHomeBar/>
 
                     {/* TABELA 1: Painel de atividades */}
                     <CardTable>

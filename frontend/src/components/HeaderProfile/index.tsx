@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'; 
+import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import {
     Container,
     SearchContainer,
@@ -11,38 +13,31 @@ import {
     NotificationBadge,
     ProfileMenuContainer,
     LogoutMenuItem,
-    ProfileToggle,
-    SuggestionsList,
-    SuggestionItem,
-    NoResults
+    ProfileToggle
 } from './styles';
 
 import { IHeaderProfile } from './types';
-import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose, MdFolderOpen } from 'react-icons/md'; // Adicionei o ícone de pasta
+import { MdNotificationsNone, MdSearch, MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import { TbLogout2 } from 'react-icons/tb';
 import NotificationsModal from '../NotificationsModal';
 import { useNotifications } from '../../context/NotificationContext';
-import { useNavigate } from 'react-router-dom';
 
-// Simulação de dados (Em produção viria da API ou Contexto)
-const MOCK_PROJECTS = [
-    { id: 1, name: "TaskLock App" },
-    { id: 2, name: "Kodan Dashboard" },
-    { id: 3, name: "Marketing Campaign" },
-    { id: 4, name: "Website Redesign" },
-    { id: 5, name: "Mobile App MVP" },
-    { id: 6, name: "API Integration" }
-];
+// IMPORTAÇÃO DO CONTEXTO DE AUTENTICAÇÃO
+import { useAuth } from '../../context/AuthContext';
 
 const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
+    
+    // 1. Consumimos o user diretamente do contexto
+    // Sempre que 'updateUser' for chamado na TelaPerfil, esse 'user' aqui muda
+    // e o componente renderiza de novo automaticamente.
+    const { user, signOut } = useAuth(); 
+    
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [showNotifications, setShowNotifications] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-    const [showSuggestions, setShowSuggestions] = useState(false); // Controle do dropdown
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const searchContainerRef = useRef<HTMLDivElement>(null); // Ref para fechar ao clicar fora
     const navigate = useNavigate();
 
     const {
@@ -53,49 +48,40 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         clearNotifications,
     } = useNotifications();
 
-    // Filtra projetos baseado no texto digitado
-    const filteredProjects = useMemo(() => {
-        if (!searchText.trim()) return [];
-        return MOCK_PROJECTS.filter(p => 
-            p.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-    }, [searchText]);
+    // --- LÓGICA DE DADOS DO USUÁRIO ---
+    // Definimos as variáveis diretamente no corpo do componente (sem useEffect/useState para isso).
+    // Isso garante a reatividade imediata.
+    const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4';
+    
+    // Se user.imagemUrl existir, usa ela. Se não, usa o default.
+    const avatarUrl = user?.imagemUrl ? user.imagemUrl : DEFAULT_AVATAR;
+    
+    // Se user.name existir, usa. Senão "Usuário".
+    const userName = user?.name || "Usuário";
+    // ----------------------------------
 
     const toggleSearch = () => {
-        setIsSearchOpen(!isSearchOpen);
+        setIsSearchOpen(!isSearchOpen)
         if (!isSearchOpen) {
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => inputRef.current?.focus(), 100)
         } else {
-            setSearchText('');
-            setShowSuggestions(false);
+            setSearchText('')
         }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value;
-        setSearchText(val);
-        setShowSuggestions(val.length > 0); // Mostra sugestões se tiver texto
-        if (onSearch) onSearch(val);
-    };
-
-    const handleProjectClick = (projectName: string) => {
-        setSearchText(projectName);
-        setShowSuggestions(false);
-        if (onSearch) onSearch(projectName);
-        // navigate(`/projects/${projectId}`);
+        setSearchText(e.target.value)
+        if (onSearch) onSearch(e.target.value)
     };
 
     const handleLogout = () => {
-        navigate('/login');
+        signOut(); 
+        navigate('/login'); 
     };
 
-    // Fecha sugestões ao clicar fora
+    // Fecha o menu se clicar fora
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-                setShowSuggestions(false);
-            }
-            // Lógica existente do menu profile
             const target = event.target as HTMLElement;
             if (!target.closest('.profile-menu')) {
                 setIsProfileMenuOpen(false);
@@ -105,51 +91,33 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
 
-    const userImage = 'https://avatars.githubusercontent.com/u/179970243?v=4';
-
     return (
         <>
             <Container>
-                {/* ref aqui para controlar o clique fora */}
-                <div style={{ position: 'relative' }} ref={searchContainerRef}>
-                    <SearchContainer $isOpen={isSearchOpen}>
-                        <SearchInput
-                            ref={inputRef}
-                            $isOpen={isSearchOpen}
-                            placeholder="Buscar projeto..."
-                            value={searchText}
-                            onChange={handleInputChange}
-                            onFocus={() => { if(searchText) setShowSuggestions(true); }}
-                        />
-                        <IconButton onClick={toggleSearch} aria-label={isSearchOpen ? "Fechar busca" : "Abrir busca"}>
-                            {isSearchOpen ? <MdClose /> : <MdSearch />}
-                        </IconButton>
-                    </SearchContainer>
+                <SearchContainer $isOpen={isSearchOpen}>
+                    <SearchInput
+                        ref={inputRef}
+                        $isOpen={isSearchOpen}
+                        placeholder="Nome do projeto..."
+                        value={searchText}
+                        onChange={handleInputChange}
+                    />
+                    <IconButton onClick={toggleSearch} aria-label={isSearchOpen ? "Fechar busca" : "Abrir busca"}>
+                        {isSearchOpen ? <MdClose /> : <MdSearch />}
+                    </IconButton>
+                </SearchContainer>
 
-                    {/* LISTA DE SUGESTÕES */}
-                    {isSearchOpen && showSuggestions && (
-                        <SuggestionsList>
-                            {filteredProjects.length > 0 ? (
-                                filteredProjects.map(project => (
-                                    <SuggestionItem 
-                                        key={project.id} 
-                                        onClick={() => handleProjectClick(project.name)}
-                                    >
-                                        <MdFolderOpen />
-                                        {project.name}
-                                    </SuggestionItem>
-                                ))
-                            ) : (
-                                <NoResults>Nenhum projeto encontrado</NoResults>
-                            )}
-                        </SuggestionsList>
-                    )}
-                </div>
-
-                <NotificationWrapper onClick={() => setShowNotifications(prev => !prev)}>
+                <NotificationWrapper
+                  onClick={() => setShowNotifications(prev => !prev)}
+                  role="button"
+                  aria-haspopup="dialog"
+                  aria-expanded={showNotifications}
+                  tabIndex={0}
+                >
                     <IconButton aria-label="Notificações">
                         <MdNotificationsNone />
                     </IconButton>
+
                     {unreadCount > 0 && (
                         <NotificationBadge>{unreadCount}</NotificationBadge>
                     )}
@@ -159,12 +127,17 @@ const HeaderProfile = ({ onSearch }: IHeaderProfile) => {
 
                 <ProfileWrapper className="profile-menu">
                     <ProfileToggle onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
-                        <Avatar src={userImage} alt="User" />
+                        {/* AQUI É O PULO DO GATO: Usamos a variável calculada lá em cima */}
+                        <Avatar src={avatarUrl} alt={userName} />
                         <MdKeyboardArrowDown size={20} color="#555" />
                     </ProfileToggle>
 
                     {isProfileMenuOpen && (
                         <ProfileMenuContainer>
+                            <div style={{ padding: '10px 12px', fontSize: '12px', color: '#666', borderBottom: '1px solid #eee' }}>
+                                {/* Exibe o nome atualizado */}
+                                {userName}
+                            </div>
                             <LogoutMenuItem onClick={handleLogout}>
                                 <TbLogout2 size={18} />
                                 Logout

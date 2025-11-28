@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { api } from '../../services/api'
+import { useAuth } from '../../context/AuthContext' // <--- IMPORTANTE
 
 import { Sidebar } from '../../components/Sidebar'
 import { HeaderProfile } from '../../components/HeaderProfile'
@@ -27,78 +28,48 @@ import {
     SectionTitle,
     SaveButtonWrapper,
     EmptyStateText,
-    PerfilBar,
-    UserAvatar,
-    PerfilTitleBar,
-    PerfilTextSpanBar,
-    PerfilTextContainer,
-    PerfilTextBar,
 } from './styles'
+import { PerfilHomeBar } from '../../components/PerfilHomeBar'
 
 const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4'
 
-// Tipo do usuário autenticado (igual ao que vem do backend / token)
-type AuthUser = {
-    id_user: number
-    name: string
-    lastname: string
-    email: string
-    cpf?: string | null
-    imagemUrl?: string | null
-}
+
 
 const TelaPerfil = () => {
     const navigate = useNavigate()
+    
+    // Pegamos o user e a função de atualizar do Contexto
+    const { user: contextUser, updateUser } = useAuth() 
 
-    // 1) Recupera o usuário salvo no localStorage (quando fez login)
-    const storedUserString = localStorage.getItem('kodan_user')
-
-    let initialUser: AuthUser | null = null
-    if (storedUserString) {
-        try {
-            initialUser = JSON.parse(storedUserString)
-        } catch (e) {
-            console.error('Erro ao ler usuário do localStorage', e)
-        }
-    }
-
-    // 2) Estados básicos da tela
-    const [user, setUser] = useState<AuthUser | null>(initialUser)
+    //  Estados locais para controle de UI
     const [activeTab, setActiveTab] = useState('perfil')
-    const [profileSubTab, setProfileSubTab] = useState<'overview' | 'projects'>(
-        'overview',
-    )
-
-    // 3) Foto de perfil: começa com o que tem no localStorage ou default
-    const [avatarUrl, setAvatarUrl] = useState(
-        initialUser?.imagemUrl || DEFAULT_AVATAR,
-    )
-
-    // 4) Controle de abertura do modal de avatar
+    const [profileSubTab, setProfileSubTab] = useState<'overview' | 'projects'>('overview')
     const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
 
-    // 5) Hook do formulário
+    const [avatarUrl, setAvatarUrl] = useState(contextUser?.imagemUrl || DEFAULT_AVATAR)
+
+    //  Hook do formulário
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
-            // começa com o que já tem do localStorage
-            nome: initialUser
-                ? `${initialUser.name} ${initialUser.lastname}`
-                : '',
-            email: initialUser?.email || '',
-            cpf: initialUser?.cpf || '',
-            bio: '',
+            nome: contextUser ? `${contextUser.name} ${contextUser.lastname}` : '',
+            email: contextUser?.email || '',
+            cpf: contextUser?.cpf || '',
+            bio: '', // Se tiver bio no type AuthUser
         },
     })
 
-    // 6) Carregar dados mais recentes do backend (/users/me)
+    //  Carregar dados mais recentes do backend (/users/me) ao entrar na tela
     useEffect(() => {
+        let isMounted = true; // Flag para evitar atualizações em componentes desmontados
+
         async function loadProfile() {
             try {
                 const { data } = await api.get('/users/me')
-                // data é o usuário do backend (já com serializeBigInt)
+                
+                // Só executa se o componente ainda estiver na tela
+                if (!isMounted) return;
 
-                // Atualiza o estado user com o que veio do backend
-                const loadedUser: AuthUser = {
+                const loadedUser = {
                     id_user: data.id_user,
                     name: data.name,
                     lastname: data.lastname,
@@ -107,10 +78,13 @@ const TelaPerfil = () => {
                     imagemUrl: data.imagemUrl ?? null,
                 }
 
-                setUser(loadedUser)
-                localStorage.setItem('kodan_user', JSON.stringify(loadedUser))
+                // Atualiza o contexto APENAS se os dados forem diferentes (opcional, mas boa prática)
+                
+                if (updateUser) {
+                    updateUser(loadedUser) 
+                }
 
-                // Preenche o formulário com os dados atuais
+                // Preenche o formulário
                 setValue('nome', `${data.name} ${data.lastname}`)
                 setValue('email', data.email)
                 setValue('cpf', data.cpf || '')
@@ -125,33 +99,35 @@ const TelaPerfil = () => {
         }
 
         loadProfile()
-    }, [setValue])
 
-    // 7) Navegação pelas tabs do sidebar
+        // Função de limpeza
+        return () => {
+            isMounted = false;
+        }
+
+    }, [])
+
     const handleTabChange = (tab: string) => {
         setActiveTab(tab)
         if (tab === 'projetos') navigate('/home')
         if (tab === 'painel') navigate('/painel')
     }
 
-    // 8) Quando o usuário escolhe uma nova foto no modal
+    // 5) Alterar foto
     const handleAvatarSelected = (newUrl: string) => {
-        setAvatarUrl(newUrl)
+        setAvatarUrl(newUrl) // Atualiza visual na tela atual
 
-        // Atualiza o estado user + localStorage
-        setUser((prev) => {
-            if (!prev) return prev
-            const updated = { ...prev, imagemUrl: newUrl }
-            localStorage.setItem('kodan_user', JSON.stringify(updated))
-            return updated
-        })
+        // Atualiza o contexto global para refletir no Header imediatamente
+        if (contextUser && updateUser) {
+             const updatedUser = { ...contextUser, imagemUrl: newUrl };
+             updateUser(updatedUser);
+        }
     }
 
     const handleSearch = (val: string) => console.log('Buscar:', val)
 
-    // 9) Submit do formulário: envia alterações para o backend
+    // 6) Submit do formulário
     const onSubmit = async (formData: any) => {
-        // quebra o nome
         const fullName = formData.nome?.trim() || ''
         const [firstName, ...rest] = fullName.split(' ')
         const lastname = rest.join(' ')
@@ -159,20 +135,36 @@ const TelaPerfil = () => {
         try {
             await api.put('/users/me', {
                 name: firstName,
-                lastname, // passa o sobrenome separado
+                lastname,
                 email: formData.email,
                 cpf: formData.cpf,
                 bio: formData.bio,
                 imagemUrl: avatarUrl,
             })
 
+            // Atualiza o contexto global após sucesso no backend
+            if (contextUser && updateUser) {
+                const updatedUser = {
+                    ...contextUser,
+                    name: firstName,
+                    lastname: lastname,
+                    email: formData.email,
+                    cpf: formData.cpf,
+                    imagemUrl: avatarUrl
+                };
+                updateUser(updatedUser);
+            }
+
             alert('Perfil atualizado com sucesso!')
         } catch (err: any) {
-            const message =
-                err?.response?.data?.message || 'Erro ao atualizar perfil.'
+            const message = err?.response?.data?.message || 'Erro ao atualizar perfil.'
             alert(message)
         }
     }
+
+    // Usamos contextUser para exibição, com fallback para segurança
+    const displayName = contextUser ? `${contextUser.name} ${contextUser.lastname}` : 'Usuário Kodan';
+    const displayEmail = contextUser?.email || 'email@kodan.com';
 
     return (
         <Wrapper>
@@ -184,48 +176,20 @@ const TelaPerfil = () => {
                 />
 
                 <ContentWrapper>
-                    <HeaderProfile userImage={avatarUrl} onSearch={handleSearch} />
+                    {/* O HeaderProfile agora recebe os dados atualizados via Contexto automaticamente */}
+                    <HeaderProfile onSearch={handleSearch} />
 
-                    {/* Barra superior de boas-vindas no perfil */}
-                    <PerfilBar>
-                        <UserAvatar src={avatarUrl} alt="Foto do usuário" />
-                        <PerfilTextContainer>
-                            <PerfilTitleBar>
-                                👋{' '}
-                                {user
-                                    ? `${user.name},`
-                                    : 'Usuário Kodan,'}{' '}
-                                <PerfilTextSpanBar>
-                                    aqui você quem manda!
-                                </PerfilTextSpanBar>
-                            </PerfilTitleBar>
-
-                            <PerfilTextBar>
-                                Configure do seu jeito. Como quiser.
-                            </PerfilTextBar>
-                        </PerfilTextContainer>
-                    </PerfilBar>
+                    <PerfilHomeBar/>
 
                     <Container>
                         <TitleProject>Perfil do usuário</TitleProject>
 
                         <ProfileHeader>
                             <ProfileLeftGroup>
-                                {/* Usa o estado avatarUrl */}
-                                <ProfileAvatar
-                                    src={avatarUrl}
-                                    alt="Foto de perfil"
-                                />
+                                <ProfileAvatar src={avatarUrl} alt="Foto de perfil" />
                                 <ProfileInfo>
-                                    <h2>
-                                        {user
-                                            ? `${user.name} ${user.lastname}`
-                                            : 'Usuário Kodan'}
-                                    </h2>
-                                    <span>
-                                        {user?.email || 'email@kodan.com'}
-                                    </span>
-
+                                    <h2>{displayName}</h2>
+                                    <span>{displayEmail}</span>
                                     <button
                                         type="button"
                                         onClick={() => setIsAvatarModalOpen(true)}
@@ -242,7 +206,6 @@ const TelaPerfil = () => {
                                 >
                                     <MdBuild /> INFORMAÇÕES
                                 </ProfileNavLink>
-
                                 <ProfileNavLink
                                     $active={profileSubTab === 'projects'}
                                     onClick={() => setProfileSubTab('projects')}
@@ -252,7 +215,6 @@ const TelaPerfil = () => {
                             </ProfileNav>
                         </ProfileHeader>
 
-                        {/* CONTEÚDO: INFORMAÇÕES */}
                         {profileSubTab === 'overview' && (
                             <>
                                 <SectionTitle>Informações Pessoais</SectionTitle>
@@ -299,7 +261,6 @@ const TelaPerfil = () => {
                             </>
                         )}
 
-                        {/* CONTEÚDO: PROJETOS */}
                         {profileSubTab === 'projects' && (
                             <div>
                                 <SectionTitle>Meus Projetos</SectionTitle>
@@ -311,7 +272,6 @@ const TelaPerfil = () => {
                     </Container>
                 </ContentWrapper>
 
-                {/* Modal de seleção de avatar */}
                 <AvatarSelectionModal
                     isOpen={isAvatarModalOpen}
                     onClose={() => setIsAvatarModalOpen(false)}
