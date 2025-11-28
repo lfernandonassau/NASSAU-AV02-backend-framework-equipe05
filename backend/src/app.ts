@@ -7,6 +7,7 @@ import jobRoutes from './routes/job.routes.js'
 import userpositionRoutes from './routes/userposition.routes.js'
 import cardsRoutes from './routes/cards.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import relatoryRoutes from './routes/relatory.routes.js'
 
 
 
@@ -28,6 +29,7 @@ app.use('/userposition',userpositionRoutes)
 app.use('/cards', cardsRoutes)
 app.use('/users', userRoutes)
 app.use('/auth', authRoutes)
+app.use('/relatory',relatoryRoutes)
 
 
 
