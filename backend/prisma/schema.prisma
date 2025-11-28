@@ -30,6 +30,7 @@ model User{
   lastname      String        @db.VarChar(100)
   cpf           String        @db.Char(11) @unique
   email         String        @db.VarChar(120) @unique
+  bio        String?  @db.Text
   password      String        @db.VarChar(255)
   datecreate    DateTime      @default(now())
   dateupdate    DateTime      @updatedAt

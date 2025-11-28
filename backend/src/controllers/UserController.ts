@@ -36,4 +36,25 @@ export default {
         const safeResult = serializeBigInt(result)
         return res.json(safeResult)
     },
+
+    async me(req: Request, res: Response) {
+        const userId = (req as any).user.id_user
+
+        const result = await UserService.findById(userId)
+        // garantir que não vai senha
+        return res.json(serializeBigInt(result))
+    },
+
+    async updateMe(req: Request, res: Response) {
+        const userId = (req as any).user.id_user
+
+        try {
+            const updated = await UserService.updateProfile(Number(userId), req.body)
+            return res.json(serializeBigInt(updated))
+        } catch (err: any) {
+            return res.status(400).json({ message: err.message })
+        }
+    }
+
+
 }
