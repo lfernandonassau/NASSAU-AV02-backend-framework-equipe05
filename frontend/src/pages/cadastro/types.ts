@@ -11,3 +11,7 @@ export interface IFormData {
 export interface IAnimation {
     $visivel: boolean;
 }
+
+export interface StepTermsProps {
+  onFinalSubmit: (data: any) => void;
+}

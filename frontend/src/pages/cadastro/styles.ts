@@ -1,30 +1,6 @@
 import styled from 'styled-components';
 import { IAnimation } from './types';
-import { MdVisibility, MdVisibilityOff, MdEmail, MdLock } from 'react-icons/md';
-
-export const LogoContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
-    
-    /* No mobile, centraliza a logo também */
-    @media (max-width: 768px) {
-        margin-bottom: 0;
-    }
-`;
-
-export const LogoImage = styled.img`
-    height: 32px;
-`;
-
-export const LogoText = styled.h1`
-    font-family: 'Lobster Two', cursive;
-    color: #ffffff;
-    font-size: 24px;
-    margin: 0;
-    font-weight: 700;
-`;
+import { MdVisibility, MdVisibilityOff, MdEmail, MdLock, MdCheckCircle } from 'react-icons/md';
 
 // WRAPPER GERAL
 export const PageWrapper = styled.div`
@@ -52,15 +28,14 @@ export const PageWrapper = styled.div`
 export const CardContainer = styled.div<IAnimation>`
     background-color: #ffffff;
     width: 100%;
-    max-width: 900px; /* Mais largo para caber a sidebar */
+    max-width: 900px;
     min-height: 550px;
     border-radius: 16px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.1);
     
     display: flex;
-    overflow: hidden; /* Para o conteudo não vazar as bordas arredondadas */
+    overflow: hidden; 
     
-    /* Animação de entrada */
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -71,84 +46,16 @@ export const CardContainer = styled.div<IAnimation>`
     `}
 
     @media (max-width: 768px) {
-        flex-direction: column; /* No mobile vira coluna */
+        flex-direction: column;
         min-height: auto;
         margin-top: 20px;
     }
-<<<<<<< HEAD
-=======
-`
-export const TitleLogin = styled.p`
-    font-family: 'Lobster two';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 15px;
-    line-height: 75px;
-
-`
-
-export const TitleWelcome = styled.h2`
-    font-family: 'Montserrat';
-    font-weight: 700;
-    color: #000000ff;
-    font-size: 15px;
-    text-align: center;
-    padding-right: 500px;
-    margin-top: -25px;
-`
-
-export const WelcomeSubText = styled.div`
-    font-family: 'Montserrat', 'sans serif';
-    font-weight: 400;
-    color: #000000ff;
-
-    background-color: #7bdcfa65;
-
-    filter: 
-        drop-shadow(0 8px 6px rgba(12, 24, 40, 0.25));
-    &:hover {
-    transform: translateY(-5px);
-    filter: 
-        drop-shadow(0 12px 10px rgba(12, 24, 40, 0.3));
-    }
-
-    border: 2px solid #ffffffff;
-    border-radius: 10px;
-    padding: 15px;
-    background-image:
-    width: 100%;
-    font-size: 22px;
-    text-align: center; 
-    line-height: 35px;
-    margin: 25px auto 15px auto;
-    @media (max-width: 768px) {
-      font-size: 20px;
-    }
-`
-
-export const CloseButton = styled.button`
-  background: transparent;
-  border: none;
-  color: #000000;
-  font-size: 1rem;
-  cursor: pointer;
-  padding-left: 660px;
-  margin-top: -10px;
-
-
-  &:hover {
-    color: #FFFFFF;
-  }
->>>>>>> a19e89aafe6684bd61f3d51b03d2b4e6951f0e78
 `;
 
-// --- SIDEBAR (Esquerda - Azul/Roxo) ---
+// MINI SIDEBAR
 export const SidebarContainer = styled.div`
     width: 280px;
-    background-color: #000000;
+    background: linear-gradient(160deg, #2b2b2bff 0%, #000000ff 100%); 
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -156,7 +63,6 @@ export const SidebarContainer = styled.div`
     position: relative;
     flex-shrink: 0;
     
-    /* Decoração (Bolinha) */
     &::after {
         content: '';
         position: absolute;
@@ -164,13 +70,12 @@ export const SidebarContainer = styled.div`
         left: -50px;
         width: 150px;
         height: 150px;
-        background-color: #0191daff;
+        background-color: #000000ff; 
         border-radius: 50%;
         filter: blur(40px);
         opacity: 0.8;
     }
 
-    /* Outra decoração */
     &::before {
         content: '';
         position: absolute;
@@ -178,7 +83,7 @@ export const SidebarContainer = styled.div`
         right: 20px;
         width: 80px;
         height: 80px;
-        background-color: #6cc4f0ff;
+        background-color: #f1edeeff; /* Rosa */
         border-radius: 50%;
         filter: blur(30px);
         opacity: 0.6;
@@ -195,12 +100,36 @@ export const SidebarContainer = styled.div`
     }
 `;
 
-// Item do Passo (Bolinha + Texto)
+export const LogoContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    z-index: 2;
+    
+    @media (max-width: 768px) {
+        display: none; /* Esconde logo na sidebar mobile para economizar espaço */
+    }
+`;
+
+export const LogoImage = styled.img`
+    height: 32px;
+`;
+
+export const LogoText = styled.h1`
+    font-family: 'Lobster Two', cursive;
+    color: #ffffff;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+`;
+
+// Item do Passo
 export const StepItem = styled.div`
     display: flex;
     align-items: center;
     gap: 15px;
-    z-index: 2; /* Ficar acima das bolinhas decorativas */
+    z-index: 2;
     
     @media (max-width: 768px) {
         flex-direction: column;
@@ -209,7 +138,6 @@ export const StepItem = styled.div`
     }
 `;
 
-// A Bolinha do número
 export const StepNumber = styled.div<{ $active?: boolean }>`
     width: 35px;
     height: 35px;
@@ -227,14 +155,11 @@ export const StepNumber = styled.div<{ $active?: boolean }>`
     transition: all 0.3s ease;
 `;
 
-// O Texto ao lado (PASSO X / TÍTULO)
 export const StepTexts = styled.div`
     display: flex;
     flex-direction: column;
     
-    span {
-        font-family: 'Montserrat', sans-serif;
-    }
+    span { font-family: 'Montserrat', sans-serif; }
 
     .step-label {
         font-size: 10px;
@@ -252,17 +177,16 @@ export const StepTexts = styled.div`
     }
 
     @media (max-width: 768px) {
-        display: none; /* Esconde o texto no mobile pra caber */
+        display: none; 
     }
 `;
 
-// --- ÁREA DO FORMULÁRIO (Direita - Branco) ---
+// ÁREA DO FORMULÁRIO (Direita)
 export const FormContent = styled.div`
     flex: 1;
     padding: 40px 60px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Título topo, Form meio, Botões base */
     
     @media (max-width: 768px) {
         padding: 30px 20px;
@@ -289,12 +213,28 @@ export const FormHeader = styled.div`
     }
 `;
 
-// --- ESTILOS GENÉRICOS REAPROVEITADOS ---
+// COMPONENTES INTERNOS DO FORM (REUTILIZÁVEIS NOS STEPS)
 export const FormBody = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    flex: 1; /* Ocupa o espaço disponível */
+    flex: 1;
+`;
+
+export const Label = styled.label`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #022959;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+`;
+
+export const ErrorText = styled.p`
+    color: #ee374a;
+    font-size: 12px;
+    font-family: 'Montserrat';
+    margin-top: 4px;
 `;
 
 export const ButtonsContainer = styled.div`
@@ -304,7 +244,6 @@ export const ButtonsContainer = styled.div`
     margin-top: 40px;
 `;
 
-// Botão "Próximo" Estilo Dark Blue
 export const NextButton = styled.button`
     background-color: #022959;
     color: #ffffff;
@@ -317,12 +256,9 @@ export const NextButton = styled.button`
     cursor: pointer;
     transition: background 0.2s;
     
-    &:hover {
-        background-color: #164a8a;
-    }
+    &:hover { background-color: #164a8a; }
 `;
 
-// Botão "Voltar" Estilo Texto
 export const BackButton = styled.button`
     background: transparent;
     border: none;
@@ -333,22 +269,10 @@ export const BackButton = styled.button`
     cursor: pointer;
     transition: color 0.2s;
 
-    &:hover {
-        color: #022959;
-    }
+    &:hover { color: #022959; }
 `;
 
-// Adaptação para o componente Input (Labels e Inputs mais limpos)
-export const Label = styled.label`
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: #022959;
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-`;
-
-/* --- Utilitários Antigos Mantidos para Compatibilidade --- */
+/* UTILITÁRIOS E ÍCONES  */
 export const Row = styled.div`
     display: flex;
     align-items: center;
@@ -372,46 +296,99 @@ export const TermsContainer = styled.div`
 export const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
     width: 18px;
     height: 18px;
-    accent-color: #0191daff;
+    accent-color: #483EFF;
 `;
 
 export const TermsText = styled.p`
     font-family: 'Montserrat';
     font-size: 14px;
     color: #9699aa;
-    span { color: #0191daff; text-decoration: underline; cursor: pointer; }
+    span { 
+        color: #483EFF; 
+        text-decoration: underline; 
+        cursor: pointer; }
 `;
 
-export const ErrorText = styled.p`
-    color: #ee374a;
-    font-size: 12px;
-    font-family: 'Montserrat';
-    margin-top: 5px;
+export const LoginIconStyled = styled(MdEmail)` 
+    color: #022959; 
+    font-size: 20px; 
+`;
+export const PasswordStyled = styled(MdLock)` 
+    color: #022959; 
+    font-size: 20px; 
+`;
+export const MagicEye = styled(MdVisibility)` 
+    color: #9699aa; cursor: pointer; 
+    font-size: 20px; 
+    &:hover { 
+        color: #022959; 
+    } 
+`;
+export const MagicEyeOff = styled(MdVisibilityOff)` 
+    color: #9699aa; 
+    cursor: pointer; 
+    font-size: 20px; 
+    &:hover { 
+        color: #022959; 
+    } 
 `;
 
-
-export const MagicEye = styled(MdVisibility)`
-    color: #9699aa;
-    cursor: pointer;
-    font-size: 20px;
-    transition: color 0.2s;
-    &:hover { color: #022959; }
+/*  TELA DE SUCESSO  */
+export const SuccessContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 `;
 
-export const MagicEyeOff = styled(MdVisibilityOff)`
-    color: #9699aa;
-    cursor: pointer;
-    font-size: 20px;
-    transition: color 0.2s;
-    &:hover { color: #022959; }
+export const SuccessIcon = styled(MdCheckCircle)`
+    font-size: 90px;
+    color: #48bb78;
+    margin-bottom: 20px;
 `;
 
-export const LoginIconStyled = styled(MdEmail)`
+export const SuccessTitle = styled.h2`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: #022959;
-    font-size: 20px;
+    margin: 0 0 10px 0;
 `;
 
-export const PasswordStyled = styled(MdLock)`
+export const SuccessMessage = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.6;
+`;
+
+export const RedirectText = styled.span`
+    display: block;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-weight: 600;
+`;
+
+
+// Container para Loading e Sucesso
+export const CenteredContainer = styled.div`
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+`;
+
+export const LoadingText = styled.p`
+    font-family: 'Montserrat', sans-serif;
     color: #022959;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 1rem;
 `;

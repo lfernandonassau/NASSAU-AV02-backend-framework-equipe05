@@ -5,7 +5,9 @@ import { RegistrationProvider, useRegistration } from '../../context/Registratio
 import { StepPersonal } from './steps/StepPersonal';
 import { StepCredentials } from './steps/StepCredentials';
 import { StepTerms } from './steps/StepTerms';
-import logo from '../../assets/logo.svg'
+
+import logo from '../../assets/logo.svg';
+
 // Estilos
 import {
     PageWrapper,
@@ -18,7 +20,7 @@ import {
     FormHeader,
     LogoContainer,
     LogoImage,
-    LogoText
+    LogoText,
 } from './styles';
 
 const SidebarSteps = () => {
@@ -32,7 +34,6 @@ const SidebarSteps = () => {
 
     return (
         <SidebarContainer>
-
             <LogoContainer>
                 <LogoImage src={logo} alt="Kodan Logo" />
                 <LogoText>kodan.</LogoText>
@@ -40,7 +41,6 @@ const SidebarSteps = () => {
 
             {steps.map((step, index) => (
                 <StepItem key={index}>
-                    {/* Se o index for igual ao passo atual, marca como ativo */}
                     <StepNumber $active={currentStep === index}>
                         {index + 1}
                     </StepNumber>
@@ -59,7 +59,7 @@ const FormArea = () => {
 
     // Títulos dinâmicos baseados no passo
     const headerContent = [
-        { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, CPF e sobrenome.' },
+        { title: 'Suas Informações', desc: 'Por favor, forneça seu nome, sobrenome e CPF.' },
         { title: 'Credenciais de Acesso', desc: 'Defina seu e-mail e uma senha segura.' },
         { title: 'Termos de Uso', desc: 'Confirme seus dados e aceite os termos para finalizar.' }
     ];
@@ -68,10 +68,14 @@ const FormArea = () => {
 
     const renderStep = () => {
         switch (currentStep) {
-            case 0: return <StepPersonal />;
-            case 1: return <StepCredentials />;
-            case 2: return <StepTerms />;
-            default: return <StepPersonal />;
+            case 0:
+                return <StepPersonal />;
+            case 1:
+                return <StepCredentials />;
+            case 2:
+                return <StepTerms />;
+            default:
+                return <StepPersonal />;
         }
     };
 
@@ -82,7 +86,6 @@ const FormArea = () => {
                 <p>{currentHeader.desc}</p>
             </FormHeader>
 
-            {/* O componente do passo renderiza os inputs e os botões */}
             {renderStep()}
         </FormContent>
     );

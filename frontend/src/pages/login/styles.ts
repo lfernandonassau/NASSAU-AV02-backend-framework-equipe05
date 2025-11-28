@@ -1,285 +1,252 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { MdLock, MdPerson, MdVisibility, MdVisibilityOff } from 'react-icons/md'
-import LoginBackgroundImage from '../../assets/login-background.svg'
 import { IAnimation } from './types'
 
+/* --- Animações Sutis --- */
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+export const PageWrapper = styled.div`
+    background: radial-gradient(
+        circle at 70% 30%, 
+        #cde4faff 0%,      
+        #b7d2ebff 20%,     
+        #216b99ff 70%,     
+        #0191daff 100%     
+    );
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    width: 100%;
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden; 
+`;
 
 export const LoginNewScreen = styled.div<IAnimation>`
     display: flex;
     align-items: stretch;
     width: 100%;
     max-width: 1200px;
+    min-height: 600px;
+    
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border-radius: 20px;
+    overflow: hidden;
 
-    /* Animação ao rolar a pagina */
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
+    transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
     ${({ $visivel }) => $visivel && `
         opacity: 1;
         transform: translateY(0);
     `}
 
-    @media (max-width: 1205px) {
-      flex-direction: column;
-
-      min-width: 0;
-      width: 90%;
-      max-width: 450px;
-      
+    @media (max-width: 1024px) {
+        flex-direction: column;
+        max-width: 500px;
+        min-height: auto;
     }
-`
+`;
 
-
+/* --- LADO ESQUERDO (LOGIN) --- */
 export const LoginContainer = styled.main`
-    width: 100%;
-    max-width: 700px;
-    padding: 100px;
-
-    flex: 1;
+    flex: 1.2;
+    padding: 60px 50px;
     
-
-    background-color: #62c4f183;
+    background: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     text-align: center;
 
-    border-radius: 10px 0 0 10px;
-    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
-
-    input {
-        
-         &::placeholder {
-            color: #ffffffc0;
-            font-size: 13px;
-        }
-            
+    @media (max-width: 1024px) {
+        width: 100%;
+        padding: 40px 30px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(172, 232, 250, 0.18);
     }
+`;
 
-    @media (max-width: 1203px) {
-        
-        border-radius: 10px;
-        padding: 40px 20px;
-        max-width: 100%;
-        border-radius: 10px;
-    }
-    
-
-`
-
-
+/* --- LADO DIREITO (BOAS VINDAS) --- */
 export const WelcomeContainer = styled.main`
-    width: 100%;
-    padding: 150px;
-    flex: 2;
-
-
-    background-image: linear-gradient(135deg, #075d9688, #021c2e86);
+    flex: 1.8;
+    padding: 60px;
+    
+    background: linear-gradient(135deg, rgba(7, 93, 150, 0.9), rgba(2, 28, 46, 0.95));
+    
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    align-items: center; /* Centraliza o conteúdo (Column) horizontalmente */
     text-align: center;
+    position: relative;
     
-    border-radius: 0 10px 10px 0;
-    filter: drop-shadow(0 0 10px rgba(0.10, 0.6, 0.8, 0.6));
-
-    @media (max-width: 1203px) {
+    @media (max-width: 1024px) {
         display: none;
     }
-
-`
-
-
-
-export const PageWrapper = styled.div`
-    background: radial-gradient(
-    circle at 70% 30%, /* Posição do centro da "luz" */
-    #cde4faff 0%,      /* Laranja/Pêssego mais claro */
-    #b7d2ebff 20%,     /* Laranja um pouco mais vibrante */
-    #216b99ff 70%,     /* Azul/Cinza aparece aqui */
-    #0191daff 100%     /* Finaliza com o azul/cinza mais suave */
-    );
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-
-    display: flex;
-    flex-direction: column; /* Coloca um item abaixo do outro */
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 30px;
-    box-sizing: border-box;
-
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    @media (max-width: 768px) {
-        
-    
-        background-attachment: scroll;
-    }
-
-`
-
-
-
-export const PageLogin = styled.img`
-    padding-top: 20px;
-
-`
-
+`;
 
 export const Column = styled.div`
-    flex: 1;
-`
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    width: 100%;
+    max-width: 380px;
+    z-index: 1;
+`;
+
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-`
-export const TitleKanban = styled.h2`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    color: #ffffffff;
-    font-size: 15px;
-`
-export const TitleLogin = styled.p`
-    font-family: 'Lobster two';
-    font-style: normal;
+    width: 100%;
+`;
+
+
+export const TitleLogin = styled.h1`
+    font-family: 'Lobster Two', cursive;
     font-weight: 700;
-    color: #ffffffff;
-    font-size: 50px;
+    color: #ffffff;
+    font-size: 3.5rem;
     text-align: center;
-    margin-bottom: 15px;
-    line-height: 75px;
-
-`
-
-export const TitleWelcome = styled.h2`
-    font-family: 'Lobster Two';
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 40px;
-    text-align: center;
-    line-height: 50px;
-`
-
-export const WelcomeSubText = styled.p`
-    font-family: 'Montserrat', 'sans serif';
-    font-style: normal;
-    font-weight: 300;
-    color: #ffffffff;
-    font-size: 15px;
+    margin-bottom: 5px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.2);
     
-    text-align: center; 
-    line-height: 25px;
-    margin: 25px auto 15px auto;
     @media (max-width: 768px) {
-      font-size: 20px;
+        font-size: 3rem;
     }
-`
+`;
 
 export const KanbanSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    color: #ffffffff;
-    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
     text-align: center; 
-    max-width: 420px;
-    margin-bottom: 35px;
-    line-height: 25px;
-    margin: 0 auto 20px auto;
-`
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
 
-export const EsqueciSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 9px; 
+    text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+`;
+
+export const TitleWelcome = styled.h2`
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 2.5rem;
     text-align: center;
-    margin-top: -10px;
-    margin-left: 110px;
+    line-height: 1.2;
     margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+`;
+
+export const WelcomeSubText = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    text-align: center; 
+    line-height: 1.6;
+    margin-bottom: 30px;
+`;
+
+export const TitleKanban = styled.h3`
+    font-family: 'Lobster Two', cursive;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+`;
+
+/* --- LINKS E BOTÕES AUXILIARES --- */
+
+export const EsqueciSubText = styled.a`
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem; 
+    text-align: right;
     width: 100%;
     cursor: pointer;
-`
-export const TextoLivreSubText = styled.p`
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
-    color: #ffffffff;
-    font-size: 10px; 
+    text-decoration: none;
+    transition: color 0.2s;
+    
+    margin-top: 5px;
+    margin-bottom: 24px; 
+
+    &:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+`;
+
+export const TextoLivreSubText = styled.div`
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem; 
     
     display: flex;
     align-items: center; 
     justify-content: center;
     
-    margin-top: 5px;
-    margin-bottom: 25px;
+    margin: 20px 0;
     width: 100%;
-    cursor: pointer;
 
-    /* --- Linhas --- */
-    
-    &::before,
-    &::after {
+    &::before, &::after {
         content: '';
         flex: 1;
         height: 1px;
-        background: #ffffff50; 
+        background: rgba(255, 255, 255, 0.3); 
     }
+    &::before { margin-right: 15px; }
+    &::after { margin-left: 15px; }
+`;
 
-    /* Espaçamento entre a linha e o texto */
-    &::before {
-        margin-right: 20px;
-    }
+export const PageLogin = styled.img`
+    width: 120px; 
+    margin-bottom: 30px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    display: block; 
+`;
 
-    &::after {
-        margin-left: 20px;
-    }
-`
-
-export const CriarContaText = styled.p`
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    color: #000000;
-    font-size: 10px;
-    text-align: center; 
-    max-width: 420px;
-    line-height: 19px;
-
-    margin-top: 0;
-`
+/* --- ÍCONES --- */
 export const LoginIconStyled = styled(MdPerson)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+`;
 export const PasswordStyled = styled(MdLock)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
-
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+`;
 export const MagicEye = styled(MdVisibility)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
-
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    cursor: pointer;
+    &:hover { color: white; }
+`;
 export const MagicEyeOff = styled(MdVisibilityOff)`
-    color: #ffffffff;
-    margin-right: 5px;
-    font-size: 15px;
-`
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    cursor: pointer;
+    &:hover { color: white; }
+`;
