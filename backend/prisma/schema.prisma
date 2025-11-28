@@ -1,9 +1,10 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 //--Valores padrões--//
@@ -22,46 +23,47 @@ enum ClassJob {
 
 //------------------//
 
-model User{
+model User {
+  id_user    BigInt         @id @default(autoincrement())
+  imagemUrl  String?        @db.VarChar(255)
+  name       String         @db.VarChar(50)
+  lastname   String         @db.VarChar(100)
+  cpf        String         @unique @db.Char(11)
+  email      String         @unique @db.VarChar(120)
+  bio        String?        @db.Text
+  password   String         @db.VarChar(255)
+  datecreate DateTime       @default(now())
+  dateupdate DateTime       @updatedAt
+  positions  UserPosition[]
 
-  id_user       BigInt        @id @default(autoincrement())
-  imagemUrl     String?       @db.VarChar(255)
-  name          String        @db.VarChar(50)
-  lastname      String        @db.VarChar(100)
-  cpf           String        @db.Char(11) @unique
-  email         String        @db.VarChar(120) @unique
-  bio        String?  @db.Text
-  password      String        @db.VarChar(255)
-  datecreate    DateTime      @default(now())
-  dateupdate    DateTime      @updatedAt
-  positions     UserPosition[]
+  // Projetos em que esse usuário é o "dono" (leader)
+  projectsOwned Project[]
+
+  // Convites recebidos para participar de projetos
+  projectInvites ProjectInvite[]
 
   // relação com tokens de reset de senha
   passwordResetTokens PasswordResetToken[]
-
 }
 
-
-model Job{
-
-  id_job        BigInt         @id @default(autoincrement())
-  position      ClassJob      @default(MEMBERS)
-  users         UserPosition[]
+model Job {
+  id_job             BigInt         @id @default(autoincrement())
+  position           ClassJob       @default(MEMBERS)
+  users              UserPosition[]
   informationdisplay Dashboard[]
 
+  project   Project @relation(fields: [projectId], references: [id_project])
+  projectId BigInt
 }
 
-model Dashboard{
-
-  id_panel      BigInt        @id @default(autoincrement())
-  jobs          Job           @relation(fields: [jobId], references: [id_job])
-  jobId         BigInt
-  relatory      Relatory?
-
+model Dashboard {
+  id_panel BigInt    @id @default(autoincrement())
+  jobs     Job       @relation(fields: [jobId], references: [id_job])
+  jobId    BigInt
+  relatory Relatory?
 }
 
-model Relatory{
-
+model Relatory {
   id_relat          BigInt    @id @default(autoincrement())
   datestart         DateTime  @default(now())
   datefinaly        DateTime
@@ -72,72 +74,85 @@ model Relatory{
   createstatistic   BigInt
   managementpanel   Dashboard @relation(fields: [managementpanelId], references: [id_panel])
   managementpanelId BigInt    @unique
-  project           Project   @relation(fields: [projectId],references: [id_project])
+  project           Project   @relation(fields: [projectId], references: [id_project])
   projectId         BigInt    @unique
-
 }
 
-model Project{
+model Project {
+  id_project BigInt  @id @default(autoincrement())
+  title      String  @db.VarChar(40)
+  subtitle   String? @db.VarChar(120)
+  owner      User    @relation(fields: [ownerId], references: [id_user])
+  ownerId    BigInt
 
-  id_project        BigInt        @id @default(autoincrement())
-  title            String        @db.VarChar(40)
-  subtitle          String?        @db.VarChar(120)
-  relatory          Relatory?
-  column            Column[]
+  // JOBS associados a este projeto
+  jobs Job[]
 
+  //CONVITES enviados deste projeto
+  invites ProjectInvite[]
+
+  relatory Relatory?
+  column   Column[]
 }
 
-model Column{
-
-  id_column     BigInt        @id @default(autoincrement())
-  title         String        @db.VarChar(40)
-  subtitle      String?        @db.VarChar(120)
-  status        TaskStatus    @default(PENDENTE) //OBS: fazer teste de criação.
-  project       Project       @relation(fields: [projectId], references: [id_project])
-  projectId     BigInt
-  cards         Card[]
-
+model Column {
+  id_column BigInt     @id @default(autoincrement())
+  title     String     @db.VarChar(40)
+  subtitle  String?    @db.VarChar(120)
+  status    TaskStatus @default(PENDENTE) //OBS: fazer teste de criação.
+  project   Project    @relation(fields: [projectId], references: [id_project])
+  projectId BigInt
+  cards     Card[]
 }
 
-model Card{
-
-  id_card       BigInt        @id @default(autoincrement())
-  qta_members   Int           @db.Int
-  title         String        @db.VarChar(40)
-  subtitle      String?       @db.VarChar(120)
-  timeframe     DateTime?
-  datecreate    DateTime      @default(now())
-  dateupdate    DateTime      @updatedAt
-  column        Column        @relation(fields: [columnId], references: [id_column])
-  columnId      BigInt
-
+model Card {
+  id_card     BigInt    @id @default(autoincrement())
+  qta_members Int       @db.Int
+  title       String    @db.VarChar(40)
+  subtitle    String?   @db.VarChar(120)
+  timeframe   DateTime?
+  datecreate  DateTime  @default(now())
+  dateupdate  DateTime  @updatedAt
+  column      Column    @relation(fields: [columnId], references: [id_column])
+  columnId    BigInt
 }
 
 // Relacionamento N:N
 
 //USUÁRIO -POSSUI- CARGO
 
-model UserPosition{
-
-  user          User          @relation(fields: [userId], references: [id_user])
-  job           Job           @relation(fields: [jobId], references: [id_job])
-  jobId         BigInt
-  userId        BigInt
+model UserPosition {
+  user   User   @relation(fields: [userId], references: [id_user])
+  job    Job    @relation(fields: [jobId], references: [id_job])
+  jobId  BigInt
+  userId BigInt
 
   @@id([userId, jobId])
-
 }
 
 // Conceito de tabela PasswordResetToken resetar com o token enviado por email
 model PasswordResetToken {
-  id          BigInt   @id @default(autoincrement())
-  token       String   @db.VarChar(255)
-  expires_at  DateTime
-  used_at     DateTime?
-  created_at  DateTime @default(now())
+  id         BigInt    @id @default(autoincrement())
+  token      String    @db.VarChar(255)
+  expires_at DateTime
+  used_at    DateTime?
+  created_at DateTime  @default(now())
 
-  user        User     @relation(fields: [userId], references: [id_user])
-  userId      BigInt
+  user   User   @relation(fields: [userId], references: [id_user])
+  userId BigInt
 
   @@index([token])
+}
+
+model ProjectInvite {
+  id        BigInt  @id @default(autoincrement())
+  project   Project @relation(fields: [projectId], references: [id_project])
+  projectId BigInt
+  user      User    @relation(fields: [userId], references: [id_user])
+  userId    BigInt
+
+  email      String    @db.VarChar(120)
+  status     String    @db.VarChar(20) // ex: "PENDING" e "ACCEPTED"
+  createdAt  DateTime  @default(now())
+  acceptedAt DateTime?
 }

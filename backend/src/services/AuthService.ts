@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import UserRepository from '../repositories/UserRepository.js'
 import PasswordResetTokenRepository from '../repositories/PasswordResetTokenRepository.js'
 import MailService from '../services/MailService.js'
+import { admin } from '../lib/firebaseAdmin.js'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-define-no-.env'
 
@@ -88,5 +89,37 @@ export default {
         await PasswordResetTokenRepository.markAsUsed(tokenRecord.id)
 
         return
+    },
+    async loginWithGoogle(idToken: string) {
+    // Verifica o token do Firebase
+    const decoded = await admin.auth().verifyIdToken(idToken)
+
+    const email = decoded.email
+    const name = decoded.name
+    if (!email) {
+        throw new Error('Conta Google sem e-mail disponível.')
+    }
+
+    //Procura usuário no seu banco
+    const user = await UserRepository.findByEmail(email)
+    if (!user) {
+        throw new Error(
+        'Nenhum usuário cadastrado com este e-mail. Faça o cadastro primeiro.'
+        )
+    }
+
+    //Gera JWT igual ao login normal
+    const payload = {
+        id_user: Number(user.id_user),
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email,
+    }
+
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' })
+
+    const { password: _p, ...safeUser } = user as any
+
+    return { user: safeUser, token }
     },
 }
