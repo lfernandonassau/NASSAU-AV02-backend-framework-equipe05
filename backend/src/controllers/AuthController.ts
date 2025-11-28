@@ -31,10 +31,10 @@ export default {
     },
 
     async resetPassword(req: Request, res: Response) {
-        const { token, newPassword } = req.body
+        const { token, password } = req.body
 
         try {
-            await AuthService.resetPassword(token, newPassword)
+            await AuthService.resetPassword(token, password)
             return res.json({ message: 'Senha atualizada com sucesso.' })
         } catch (err: any) {
             return res.status(400).json({ message: err.message })

@@ -1,8 +1,12 @@
+// src/components/EsqueciSenhaModal/index.tsx
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { MdClose, MdEmail, MdCheckCircle } from 'react-icons/md';
+
+import { api } from '../../services/api';
 
 // Componentes reutilizáveis
 import { Button } from '../Button';
@@ -47,19 +51,29 @@ const EsqueciSenhaModal: React.FC<EsqueciSenhaModalProps> = ({ isOpen, onClose }
   const handleClose = () => {
     reset();
     setIsSuccess(false);
+    setIsLoading(false);
     onClose();
   };
 
   const onSubmit = async (data: IEsqueciSenhaForm) => {
     setIsLoading(true);
     
-    // Simulação de envio para API
-    console.log("Enviando link de recuperação para:", data.email);
-    
-    setTimeout(() => {
-        setIsLoading(false);
-        setIsSuccess(true);
-    }, 1500);
+    try {
+      // Ajuste a rota conforme o backend: /forgot-password, /auth/forgot-password etc.
+      await api.post('/auth/forgot-password', {
+        email: data.email,
+      });
+
+      setIsSuccess(true);
+    } catch (error: any) {
+      console.error(error);
+      const message =
+        error?.response?.data?.message ||
+        'Erro ao enviar e-mail de recuperação. Verifique o endereço informado.';
+      alert(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -69,12 +83,11 @@ const EsqueciSenhaModal: React.FC<EsqueciSenhaModalProps> = ({ isOpen, onClose }
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         
         <Header>
-          {/* Se não for sucesso, mostra título normal. Se for sucesso, esconde ou muda */}
           {!isSuccess ? (
-             <div>
+              <div>
                 <Title>Esqueceu a senha?</Title>
                 <Subtitle>Digite seu e-mail abaixo para receber as instruções de recuperação.</Subtitle>
-             </div>
+              </div>
           ) : (
              <div /> /* Espaço vazio para manter o X alinhado */
           )}
@@ -116,7 +129,6 @@ const EsqueciSenhaModal: React.FC<EsqueciSenhaModalProps> = ({ isOpen, onClose }
                 </div>
 
                 <Footer>
-                    {/* Botão Cancelar */}
                     <div style={{ width: '120px' }}>
                         <Button 
                             title="Cancelar" 
@@ -126,7 +138,6 @@ const EsqueciSenhaModal: React.FC<EsqueciSenhaModalProps> = ({ isOpen, onClose }
                         />
                     </div>
                     
-                    {/* Botão Enviar */}
                     <div style={{ flex: 1 }}>
                         <Button 
                             title={isLoading ? "Enviando..." : "Enviar Link"} 
@@ -144,4 +155,4 @@ const EsqueciSenhaModal: React.FC<EsqueciSenhaModalProps> = ({ isOpen, onClose }
   );
 };
 
-export  { EsqueciSenhaModal }
+export  { EsqueciSenhaModal };
