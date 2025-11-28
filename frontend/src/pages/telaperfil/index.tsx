@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { api } from '../../services/api'
-import { useAuth } from '../../context/AuthContext' // <--- IMPORTANTE
+import { useAuth } from '../../context/AuthContext' 
+
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { Sidebar } from '../../components/Sidebar'
 import { HeaderProfile } from '../../components/HeaderProfile'
@@ -11,6 +14,8 @@ import { Input } from '../../components/Input'
 import { MdBuild } from 'react-icons/md'
 import { LiaProjectDiagramSolid } from 'react-icons/lia'
 import { AvatarSelectionModal } from './AvatarSelectionModal'
+import { SuccessModal } from '../../components/TelaPerfilSuccessModal'
+import { ErrorModal } from '../../components/TelaPerfilErrorModal'
 
 import {
     Wrapper,
@@ -33,10 +38,25 @@ import { PerfilHomeBar } from '../../components/PerfilHomeBar'
 
 const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4'
 
+// DEFINIÇÃO DO SCHEMA DE VALIDAÇÃO
+const profileSchema = yup.object({
+    nome: yup.string().required('O nome completo é obrigatório.'),
+    email: yup.string().email('Digite um e-mail válido.').required('O e-mail é obrigatório.'),
+    cpf: yup.string().required('O CPF é obrigatório.'),
+    bio: yup.string().required("Campo obrigatório")
+})
+
 
 
 const TelaPerfil = () => {
     const navigate = useNavigate()
+
+    // Hook state para modal de success
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+
+    // Hooks state para o ErrorModal
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     
     // Pegamos o user e a função de atualizar do Contexto
     const { user: contextUser, updateUser } = useAuth() 
@@ -49,12 +69,18 @@ const TelaPerfil = () => {
     const [avatarUrl, setAvatarUrl] = useState(contextUser?.imagemUrl || DEFAULT_AVATAR)
 
     //  Hook do formulário
-    const { control, handleSubmit, setValue } = useForm({
+    const { 
+        control, 
+        handleSubmit, 
+        setValue, 
+        formState: { errors } // <--- Pegamos os erros aqui
+    } = useForm({
+        resolver: yupResolver(profileSchema), // <--- Conectamos o Yup
         defaultValues: {
             nome: contextUser ? `${contextUser.name} ${contextUser.lastname}` : '',
             email: contextUser?.email || '',
             cpf: contextUser?.cpf || '',
-            bio: '', // Se tiver bio no type AuthUser
+            bio: '',
         },
     })
 
@@ -155,10 +181,13 @@ const TelaPerfil = () => {
                 updateUser(updatedUser);
             }
 
-            alert('Perfil atualizado com sucesso!')
+            setIsSuccessModalOpen(true)
         } catch (err: any) {
-            const message = err?.response?.data?.message || 'Erro ao atualizar perfil.'
-            alert(message)
+            // Lógica de Erro
+            const message = err?.response?.data?.message || 'Ocorreu um erro ao atualizar o perfil. Tente novamente.';
+            
+            setErrorMessage(message); // Define a mensagem que veio do backend
+            setIsErrorModalOpen(true); // Abre o modal vermelho
         }
     }
 
@@ -225,6 +254,7 @@ const TelaPerfil = () => {
                                                 name="nome"
                                                 placeholder="Nome Completo"
                                                 control={control}
+                                                error={errors.nome?.message}
                                             />
                                         </div>
                                         <div>
@@ -232,6 +262,7 @@ const TelaPerfil = () => {
                                                 name="email"
                                                 placeholder="E-mail"
                                                 control={control}
+                                                error={errors.email?.message}
                                             />
                                         </div>
                                         <div>
@@ -239,6 +270,7 @@ const TelaPerfil = () => {
                                                 name="cpf"
                                                 placeholder="CPF"
                                                 control={control}
+                                                error={errors.cpf?.message}
                                             />
                                         </div>
                                         <div className="full-width">
@@ -246,6 +278,7 @@ const TelaPerfil = () => {
                                                 name="bio"
                                                 placeholder="Bio / Descrição"
                                                 control={control}
+                                                error={errors.bio?.message}
                                             />
                                         </div>
                                     </FormGrid>
@@ -276,6 +309,17 @@ const TelaPerfil = () => {
                     isOpen={isAvatarModalOpen}
                     onClose={() => setIsAvatarModalOpen(false)}
                     onSelectAvatar={handleAvatarSelected}
+                />
+                {/* MODAL DE SUCESSO AQUI */}
+                <SuccessModal 
+                    isOpen={isSuccessModalOpen}
+                    onClose={() => setIsSuccessModalOpen(false)}
+                />
+                {/* ErrorModal aqui */}
+                <ErrorModal 
+                    isOpen={isErrorModalOpen}
+                    onClose={() => setIsErrorModalOpen(false)}
+                    message={errorMessage}
                 />
             </ContentContainer>
         </Wrapper>
