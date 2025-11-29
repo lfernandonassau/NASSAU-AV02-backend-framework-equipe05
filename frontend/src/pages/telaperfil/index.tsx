@@ -30,9 +30,10 @@ import {
     EmptyStateText,
 } from './styles'
 import { PerfilHomeBar } from '../../components/PerfilHomeBar'
+import { ErrorModal } from '../../components/TelaPerfilErrorModal'
+import { SuccessModal } from '../../components/TelaPerfilSuccessModal'
 
 const DEFAULT_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4'
-
 
 
 const TelaPerfil = () => {
@@ -45,6 +46,11 @@ const TelaPerfil = () => {
     const [activeTab, setActiveTab] = useState('perfil')
     const [profileSubTab, setProfileSubTab] = useState<'overview' | 'projects'>('overview')
     const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
+
+    // Controle dos modais de feedback
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [avatarUrl, setAvatarUrl] = useState(contextUser?.imagemUrl || DEFAULT_AVATAR)
 
@@ -79,7 +85,6 @@ const TelaPerfil = () => {
                 }
 
                 // Atualiza o contexto APENAS se os dados forem diferentes (opcional, mas boa prática)
-                
                 if (updateUser) {
                     updateUser(loadedUser) 
                 }
@@ -119,8 +124,8 @@ const TelaPerfil = () => {
 
         // Atualiza o contexto global para refletir no Header imediatamente
         if (contextUser && updateUser) {
-                const updatedUser = { ...contextUser, imagemUrl: newUrl };
-                updateUser(updatedUser);
+            const updatedUser = { ...contextUser, imagemUrl: newUrl };
+            updateUser(updatedUser);
         }
     }
 
@@ -128,6 +133,17 @@ const TelaPerfil = () => {
 
     // 6) Submit do formulário
     const onSubmit = async (formData: any) => {
+
+        console.log("BIO:", formData.bio)
+
+
+        // Validação simples de bio antes do submit
+        if (!formData.bio || formData.bio.trim() === '') {
+            setErrorMessage('Você deve preencher o campo Bio.');
+            setIsErrorModalOpen(true);
+            return;
+        }
+
         const fullName = formData.nome?.trim() || ''
         const [firstName, ...rest] = fullName.split(' ')
         const lastname = rest.join(' ')
@@ -155,10 +171,13 @@ const TelaPerfil = () => {
                 updateUser(updatedUser);
             }
 
-            alert('Perfil atualizado com sucesso!')
+            // Exibe modal de sucesso
+            setIsSuccessModalOpen(true);
+
         } catch (err: any) {
             const message = err?.response?.data?.message || 'Erro ao atualizar perfil.'
-            alert(message)
+            setErrorMessage(message)
+            setIsErrorModalOpen(true)
         }
     }
 
@@ -277,6 +296,18 @@ const TelaPerfil = () => {
                     onClose={() => setIsAvatarModalOpen(false)}
                     onSelectAvatar={handleAvatarSelected}
                 />
+
+                <ErrorModal
+                    isOpen={isErrorModalOpen}
+                    message={errorMessage}
+                    onClose={() => setIsErrorModalOpen(false)}
+                />
+
+                <SuccessModal
+                    isOpen={isSuccessModalOpen}
+                    onClose={() => setIsSuccessModalOpen(false)}
+                />
+
             </ContentContainer>
         </Wrapper>
     )

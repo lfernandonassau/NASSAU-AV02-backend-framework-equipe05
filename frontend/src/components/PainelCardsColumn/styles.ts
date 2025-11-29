@@ -10,6 +10,7 @@ export const ColumnWrapper = styled.div`
     min-width: 320px; 
     flex-shrink: 0; 
 
+
     display: flex;
     flex-direction: column;
     position: relative;
