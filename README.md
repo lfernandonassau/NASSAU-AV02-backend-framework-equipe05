@@ -64,16 +64,15 @@
 
 | Entidade | Campos Principais |
 |-----------|------------------|
-| **Usuário** | id_usuário, foto perfil, nome, sobrenome, cpf, e-mail, senha, data de criação, data de atualização|
-| **Cargo**  | id_usuário,  id_função|
-| **Função** | id_cargo, cargo, id_painel|
-| **Painel** | id_painel , id_relatório|
-| **Relatório** | id_relatório, data de começo, data de fim, total de tarefas, tarefas pendentes, tarefas em andamento, tarefas concluidas, criação de estatística, id_painel, id_projetos|
-| **Projetos** | id_projetos, título, subtítulo, id_relatório, id_coluna|
-| **Coluna** | id_coluna, título, subtítulo, id_projetos, id_cartões|
-| **Cartões (Tarefa)** | id_cartões,qta_menbros, título, subtítulo, prazo, data de criação, data de atualização, id_coluna|
-
-> Total de **8 entidades principais**, conforme exigência da disciplina.
+| **Usuário** | Id_Usuário, foto perfil, nome, sobrenome, cpf, e-mail, senha, data de criação, data de atualização, Senha resete tokens, projeto, convites, projetos propriedade, Id_Posição |
+| **Posição do Usuário**  |Id_Posição, Id_Usuário,  Id_Cargo|
+| **Cargo** | Id_Cargo, cargo, , Id_Painel|
+| **Painel** | Id_Painel, Id_Cargo, Id_Relatório|
+| **Relatório** | Id_Relatório, data de começo, data de fim, total de tarefas, tarefas pendentes, tarefas em andamento, tarefas concluidas, criação de estatística, Id_Painel, Id_Projetos|
+| **Projetos** | Id_projetos, título, subtítulo, usuário, convites, Id_Relatório, Id_Coluna|
+| **Coluna** | Id_Coluna, título, subtítulo, status, Id_Projetos, Id_Cartões|
+| **Cartões (Tarefa)** | Id_Cartões,qta_menbros, título, subtítulo, prazo, data de criação, data de atualização, Id_Coluna|
+| **Convite para projeto** | Id_ConvitProjeto, id_projetos, email, status, data de criação, data do pedido aceito, id_usuário|
 
 ---
 
