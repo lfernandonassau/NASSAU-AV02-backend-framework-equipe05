@@ -142,10 +142,6 @@
 
 ---
 
-*Total de* ** Endpoints**, *conforme exigência da disciplina.*
-
----
-
 # 🏃 Passos para Rodar o Sistema
 *Esta seção atende ao critério de Organização do código e garante a execução funcional.*
 
