@@ -165,17 +165,20 @@
 
 ### 📁 Dentro da pasta backend
 
-
-### - yarn workspace prisma migrate dev
-### - yarn workspace prisma generate
+| Comando | Descrição |
+|---------|-------------|
+| **yarn workspace prisma migrate dev** | *Define a Estrutura: Este comando garante que o banco de dados esteja com o esquema correto (tabelas, colunas, relacionamentos) que você desenhou no schema.prisma.* |
+| **yarn workspace prisma generate** | *Cria o Código: Após o banco de dados estar pronto, este comando lê o esquema finalizado e gera o Prisma Client (as classes e métodos) que o seu código JavaScript/TypeScript usará para interagir com a nova estrutura.* |
 
 # 📦 Instalação de Dependências
 
-### *Após clonar o repositório e configurar o arquivo .env, o próximo passo é instalar todas as dependências necessárias para rodar o projeto*
+
 
 ### *Execute o comando a seguir no terminal, na pasta raiz do projeto:*
 
-### - yarn install
+| Comando | Descrição |
+|---------|-----------|
+| **yarn install** | *Após clonar o repositório e configurar o arquivo .env, o próximo passo é instalar todas as dependências necessárias para rodar o projeto* 
 
 
 
