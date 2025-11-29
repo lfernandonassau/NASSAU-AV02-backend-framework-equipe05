@@ -1,22 +1,31 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useNavigate } from 'react-router-dom';
 
 // Tipos e Contexto
-import type { Status } from 'types/task';
+import type { Status, Task } from 'types/task';
 import { useTasks } from '../../context/TasksContext';
 
 // Componentes
 import { AddTaskModal } from '../../components/AddTaskModal';
 import { KanbanColumn } from '../../components/PainelCardsColumn';
-import {  DeleteTaskModal } from '../../components/DeleteTaskModal'; // Seu modal renomeado
-import { Sidebar } from '../../components/Sidebar'; 
+import { DeleteTaskModal } from '../../components/DeleteTaskModal';
+import { Sidebar } from '../../components/Sidebar';
 import { HeaderProfile } from '../../components/HeaderProfile';
 import MembersModal from '../../components/MembersModal';
-import { EditTaskModal } from '../../components/EditTaskModal'; 
+import { EditTaskModal } from '../../components/EditTaskModal';
+import { SelectProjectModal } from '../../components/SelectProjectModal';
+import { Project } from '../../components/SelectProjectModal/types';
+import { PerfilHomeBar } from '../../components/PerfilHomeBar';
 
 // Ícones
-import { MdAccessTime, MdAutorenew, MdCheckCircle, MdFolder, MdKeyboardArrowDown, MdPerson } from 'react-icons/md';
+import {
+    MdAccessTime,
+    MdAutorenew,
+    MdCheckCircle,
+    MdKeyboardArrowDown,
+    MdPerson,
+} from 'react-icons/md';
 
 // Estilos
 import {
@@ -26,257 +35,501 @@ import {
     BoardHeader,
     BoardInfoLeft,
     BoardInfoTitle,
-    BoardInfoIcon,
     ColumnsWrapper,
     ContentWrapper,
     AddMemberButton,
     IconWrapper,
-    BoardInfoTitleWrapper
+    BoardInfoTitleWrapper,
 } from './styles';
-import { SelectProjectModal } from '../../components/SelectProjectModal';
-import { Project } from '../../components/SelectProjectModal/types';
-import { PerfilHomeBar } from '../../components/PerfilHomeBar';
+
+import { api } from '../../services/api';
+import { isoToBrazilianDate, brazilianToIsoDate } from '../../utils/date';
+
+const USER_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4';
+
+// Tipos da API
+type ApiCard = {
+    id_card: number;
+    title: string;
+    subtitle?: string | null;
+    qta_members: number;
+    timeframe?: string | null;
+};
+
+type EditingTaskState = {
+    id: string;
+    title: string;
+    subtitle: string;
+    date: string;
+} | null;
 
 
+type ApiColumn = {
+    id_column: number;
+    title: string;
+    subtitle?: string | null;
+    status: 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDO';
+    cards: ApiCard[];
+};
 
-const USER_AVATAR = "https://avatars.githubusercontent.com/u/179970243?v=4"
+type ApiBoard = {
+    id_project: number;
+    title: string;
+    subtitle?: string | null;
+    column: ApiColumn[];
+};
+
+// Projeto usado no front (id como string)
+type FrontProject = Project;
 
 const PainelPage: React.FC = () => {
-
-    
-
     const [isMembersModalOpen, setIsMembersModalOpen] = useState(false);
 
+    const {
+    tasks,
+    addTask,
+    moveTask,
+    removeTask,
+    updateTask,
+    setTasksFromServer,
+    } = useTasks();
 
-    const { tasks, addTask, moveTask, removeTask, updateTask } = useTasks();
-    
-    const [modal, setModal] = useState<null | { status: Status; title: string }>(null);
-    
-    // Lógica de Delete 
+    const [modal, setModal] = useState<null | { status: Status; title: string }>(
+        null,
+    );
+
     const [deleteId, setDeleteId] = useState<string | null>(null);
 
-    // --- LÓGICA DE EDIÇÃO ---
-    // Estado para guardar a tarefa que está sendo editada (ID + Dados atuais)
-    const [editingTask, setEditingTask] = useState<null | { id: string, title: string, subtitle: string, date: string }>(null);
+    const [editingTask, setEditingTask] = useState<EditingTaskState>(null);
 
-    const [activeTab, setActiveTab] = useState('projetos'); 
+
+    const [activeTab, setActiveTab] = useState('projetos');
     const navigate = useNavigate();
 
+    const [board, setBoard] = useState<ApiBoard | null>(null);
 
-    // ESTADOS PARA O SELECT PROJECT MODAL
+    const [statusToColumnId, setStatusToColumnId] = useState<
+        Record<Status, number | null>
+    >({
+        PENDENTE: null,
+        ANDAMENTO: null,
+        CONCLUIDO: null,
+    });
+
+    // Lista de projetos do backend
+    const [projects, setProjects] = useState<FrontProject[]>([]);
+    const [currentProject, setCurrentProject] = useState<FrontProject | null>(
+        null,
+    );
+
     const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-    const [currentProject, setCurrentProject] = useState<Project>({ id: '1', title: 'Nome do Projeto' }); // Projeto inicial
-    const projectTitleRef = useRef<HTMLDivElement>(null); // Referência para o botão do título
+    const projectTitleRef = useRef<HTMLDivElement>(null);
 
-    // Dados "mockados" de projetos (substituir pela lógica real depois)
-    const userProjects: Project[] = [
-        { id: '1', title: 'Nome do Projeto' },
-        { id: '2', title: 'Desenvolvimento App Mobile' },
-        { id: '3', title: 'Campanha de Marketing' },
-        { id: '4', title: 'Refatoração do Backend' },
-    ];
+    // 1) Carregar projetos quando o Painel montar
+    useEffect(() => {
+        async function loadProjects() {
+        try {
+            const { data } = await api.get('/projects');
 
-    // Função para trocar o projeto
-    const handleSelectProject = (project: Project) => {
+            const mapped: FrontProject[] = data.map((p: any) => ({
+            id: String(p.id_project),
+            title: p.title,
+            }));
+
+            setProjects(mapped);
+
+            if (!currentProject && mapped.length > 0) {
+            setCurrentProject(mapped[0]);
+            }
+        } catch (err: any) {
+            console.error('Erro ao carregar projetos:', err?.response || err);
+            if (err?.response?.status === 401) {
+            navigate('/login');
+            }
+        }
+        }
+
+        loadProjects();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleSelectProject = (project: FrontProject) => {
         setCurrentProject(project);
         setIsProjectModalOpen(false);
-        console.log("Projeto trocado para:", project.title);
     };
 
-    const columns = useMemo(() => ({
-        PENDENTE:  tasks.filter((t) => t.status === 'PENDENTE'),
+    // 2) Carregar board sempre que o projeto atual mudar
+    useEffect(() => {
+        async function loadBoard() {
+        try {
+            if (!currentProject?.id) {
+            setBoard(null);
+            setTasksFromServer([]);
+            setStatusToColumnId({
+                PENDENTE: null,
+                ANDAMENTO: null,
+                CONCLUIDO: null,
+            });
+            return;
+            }
+
+            const { data } = await api.get<ApiBoard>(
+            `/projects/${currentProject.id}/board`,
+            );
+
+            setBoard(data);
+
+            // Mapa Status -> id_column
+            const mapStatus: Record<Status, number | null> = {
+            PENDENTE: null,
+            ANDAMENTO: null,
+            CONCLUIDO: null,
+            };
+
+            const tasksFromApi: Task[] = [];
+
+            data.column.forEach((col) => {
+            const normalizedStatus =
+                col.status === 'EM_ANDAMENTO' ? 'ANDAMENTO' : col.status;
+
+            mapStatus[normalizedStatus as Status] = col.id_column;
+
+            col.cards.forEach((card) => {
+                tasksFromApi.push({
+                id: String(card.id_card),
+                title: card.title,
+                subtitle: card.subtitle ?? '',
+                status: normalizedStatus as Status,
+                // 👉 aqui já convertemos ISO -> dd/mm/yyyy
+                date: card.timeframe
+                    ? isoToBrazilianDate(card.timeframe)
+                    : undefined,
+                members: [
+                    {
+                    name: 'Samuel',
+                    avatarUrl: USER_AVATAR,
+                    },
+                ],
+                });
+            });
+            });
+
+            setStatusToColumnId(mapStatus);
+            setTasksFromServer(tasksFromApi);
+        } catch (err: any) {
+            console.error('Erro ao carregar board:', err?.response || err);
+
+            setBoard(null);
+            setTasksFromServer([]);
+            setStatusToColumnId({
+            PENDENTE: null,
+            ANDAMENTO: null,
+            CONCLUIDO: null,
+            });
+
+            if (err?.response?.status === 401) {
+            navigate('/login');
+            }
+        }
+        }
+
+        loadBoard();
+    }, [currentProject?.id, navigate, setTasksFromServer]);
+
+    // Colunas a partir do contexto (já em dd/mm/yyyy)
+    const columns = useMemo(
+        () => ({
+        PENDENTE: tasks.filter((t) => t.status === 'PENDENTE'),
         ANDAMENTO: tasks.filter((t) => t.status === 'ANDAMENTO'),
         CONCLUIDO: tasks.filter((t) => t.status === 'CONCLUIDO'),
-    }), [tasks]);
+        }),
+        [tasks],
+    );
 
-    const onDragEnd = (result: DropResult) => {
+    const onDragEnd = async (result: DropResult) => {
         const { destination, source, draggableId } = result;
         if (!destination) return;
+
         const from = source.droppableId as Status;
         const to = destination.droppableId as Status;
+
         if (from === to) return;
+
+        const targetColumnId = statusToColumnId[to];
+        if (!targetColumnId) {
+        console.error('ColumnId não encontrado para status', to);
+        return;
+        }
+
         moveTask(draggableId, to);
+
+        try {
+        await api.patch(`/cards/${draggableId}`, {
+            columnId: targetColumnId,
+        });
+        } catch (err) {
+        console.error('Erro ao mover card no backend:', err);
+        // se quiser, rollback:
+        // moveTask(draggableId, from);
+        }
     };
 
     const handleAdd = (status: Status) => {
         setModal({
-            status,
-            title: status === 'PENDENTE' ? 'Pendentes' :
-                status === 'ANDAMENTO' ? 'Em andamento' : 'Concluídos'
+        status,
+        title:
+        status === 'PENDENTE'
+            ? 'Pendentes'
+            : status === 'ANDAMENTO'
+            ? 'Em andamento'
+            : 'Concluídos',
         });
     };
 
-    const handleSaveNew = (data: { title: string; subtitle: string; date?: string }) => {
+    const handleSaveNew = async (data: {
+        title: string;
+        subtitle: string;
+        date?: string;
+    }) => {
         if (!modal) return;
+
+        const columnId = statusToColumnId[modal.status];
+        if (!columnId) {
+        console.error('ColumnId não encontrado para status', modal.status);
+        return;
+        }
+
+        try {
+        const body = {
+            title: data.title,
+            subtitle: data.subtitle,
+            timeframe: brazilianToIsoDate(data.date), // 👉 dd/mm/yyyy -> ISO
+            qta_members: 1,
+            columnId,
+        };
+
+        const response = await api.post<ApiCard>('/cards', body);
+        const created = response.data;
+
         addTask({
-            ...data,
+            id: String(created.id_card),
+            title: created.title,
+            subtitle: created.subtitle ?? '',
             status: modal.status,
-            members: [{ name: 'Samuel', avatarUrl: USER_AVATAR }]
+            // pega a data que veio do back (ISO) e converte pra dd/mm/yyyy
+            date: created.timeframe
+            ? isoToBrazilianDate(created.timeframe)
+            : data.date,
+            members: [
+            {
+                name: 'Samuel',
+                avatarUrl: USER_AVATAR,
+            },
+            ],
         });
+
         setModal(null);
+        } catch (err) {
+        console.error('Erro ao criar card:', err);
+        }
     };
 
-
-    // Função chamada pelo CardTask quando clica em "Editar"
-    // Ela recebe o ID e os dados atuais para preencher o modal
-    const requestEdit = (id: string, data: { title: string, subtitle: string, date: string }) => {
+    const requestEdit = (
+        id: string,
+        data: { title: string; subtitle: string; date: string },
+    ) => {
         setEditingTask({ id, ...data });
     };
 
-    // Função chamada pelo Modal quando clica em "Salvar"
-    const handleSaveEdit = (data: { title: string; subtitle: string; date: string }) => {
-        if (editingTask) {
-            // Chama a função do contexto para atualizar
-            updateTask(editingTask.id, data);
-            // Fecha o modal
-            setEditingTask(null);
+    const handleSaveEdit = async (data: {
+        title: string;
+        subtitle: string;
+        date: string;
+    }) => {
+        if (!editingTask) return;
+
+        try {
+        await api.patch(`/cards/${editingTask.id}`, {
+            title: data.title,
+            subtitle: data.subtitle,
+            timeframe: brazilianToIsoDate(data.date), // 👉 dd/mm/yyyy -> ISO
+        });
+
+        updateTask(editingTask.id, {
+            title: data.title,
+            subtitle: data.subtitle,
+            date: data.date, // no contexto mantemos dd/mm/yyyy
+        });
+
+        setEditingTask(null);
+        } catch (err) {
+        console.error('Erro ao atualizar card:', err);
         }
     };
 
     const cancelEdit = () => {
         setEditingTask(null);
     };
-    
 
     const requestDelete = (id: string) => setDeleteId(id);
-    
-    const confirmDelete = () => {
-        if (deleteId) removeTask(deleteId);
+
+    const confirmDelete = async () => {
+        if (!deleteId) return;
+
+        try {
+        await api.delete(`/cards/${deleteId}`);
+        removeTask(deleteId);
         setDeleteId(null);
+        } catch (err) {
+        console.error('Erro ao deletar card:', err);
+        }
     };
-    
+
     const cancelDelete = () => setDeleteId(null);
 
-    const handleTabChange = (tab: string) => { setActiveTab(tab);
+    const handleTabChange = (tab: string) => {
+        setActiveTab(tab);
 
         if (tab === 'projetos') navigate('/home');
         if (tab === 'painel') navigate('/painel');
-        if (tab === 'estatisticas') navigate('/estatisticas'); 
+        if (tab === 'estatisticas') navigate('/estatisticas');
     };
 
-    const handleSearch = (val: string) => console.log("Buscar no painel:", val);
+    const handleSearch = (val: string) => console.log('Buscar no painel:', val);
 
     return (
         <PageWrapper>
-            <ContentContainer>
-                <Sidebar 
-                    autenticado={true} 
-                    activeTab={activeTab} 
-                    onChangeTab={handleTabChange}
-                />
+        <ContentContainer>
+            <Sidebar
+            autenticado={true}
+            activeTab={activeTab}
+            onChangeTab={handleTabChange}
+            />
 
-                <ContentWrapper>
-                    <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
+            <ContentWrapper>
+            <HeaderProfile userImage={USER_AVATAR} onSearch={handleSearch} />
 
-                    <PerfilHomeBar />
+            <PerfilHomeBar />
 
-                    <BoardOuterContainer>
-                        <BoardHeader>
-                            <BoardInfoLeft>
-                                <BoardInfoTitleWrapper 
-                                    ref={projectTitleRef}
-                                    onClick={() => setIsProjectModalOpen(!isProjectModalOpen)}
-                                    $isOpen={isProjectModalOpen}
-                                >
-                                    <BoardInfoTitle>{currentProject.title}</BoardInfoTitle>
-                                    <MdKeyboardArrowDown size={24} className="arrow-icon" />
-                                    
-                                    <SelectProjectModal
-                                        isOpen={isProjectModalOpen}
-                                        onClose={() => setIsProjectModalOpen(false)}
-                                        projects={userProjects}
-                                        onSelectProject={handleSelectProject}
-                                        activeProjectId={currentProject.id}
-                                        triggerRef={projectTitleRef as React.RefObject<HTMLElement>}
-                                    />
-                                </BoardInfoTitleWrapper>
-                                <AddMemberButton
-                                 onClick={() => setIsMembersModalOpen(true)}> <MdPerson/>Gerenciar Colaboradores
-                                 </AddMemberButton>
-                                <MembersModal 
-                                isOpen={isMembersModalOpen} 
-                                onClose={() => setIsMembersModalOpen(false)}/>
-                            </BoardInfoLeft>
-                        </BoardHeader>
+            <BoardOuterContainer>
+                <BoardHeader>
+                <BoardInfoLeft>
+                    <BoardInfoTitleWrapper
+                    ref={projectTitleRef}
+                    onClick={() => setIsProjectModalOpen(!isProjectModalOpen)}
+                    $isOpen={isProjectModalOpen}
+                    >
+                    <BoardInfoTitle>
+                        {currentProject?.title || 'Selecione um Projeto'}
+                    </BoardInfoTitle>
+                    <MdKeyboardArrowDown size={24} className="arrow-icon" />
 
-                        <DragDropContext onDragEnd={onDragEnd}>
-                            <ColumnsWrapper>
-                                {/* Coluna Pendentes */}
-                                <KanbanColumn
-                                    title="Pendentes"
-                                    icon={<IconWrapper $accentColor="#25B6CF"><MdAccessTime /></IconWrapper>}
-                                    accentColor="#25B6CF"
-                                    droppableId="PENDENTE"
-                                    tasks={columns.PENDENTE}
-                                    onAddTask={() => handleAdd('PENDENTE')}
-                                    onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit}
-                                />
-                                
-                                {/* Coluna Em Andamento */}
-                                <KanbanColumn
-                                    title="Em andamento"
-                                    icon={<IconWrapper $accentColor="#E0C02C"><MdAutorenew /></IconWrapper>}
-                                    accentColor="#E0C02C"
-                                    droppableId="ANDAMENTO"
-                                    tasks={columns.ANDAMENTO}
-                                    onAddTask={() => handleAdd('ANDAMENTO')}
-                                    onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit}
-                                />
-                                
-                                {/* Coluna Concluídos */}
-                                <KanbanColumn
-                                    title="Concluídos"
-                                    icon={<IconWrapper $accentColor="#24C464"> <MdCheckCircle /> </IconWrapper>}
-                                    accentColor="#24C464"
-                                    droppableId="CONCLUIDO"
-                                    tasks={columns.CONCLUIDO}
-                                    onAddTask={() => handleAdd('CONCLUIDO')}
-                                    onRequestDelete={requestDelete}
-                                    onRequestEdit={requestEdit} 
-                                />
-                            </ColumnsWrapper>
-                        </DragDropContext>
-                    </BoardOuterContainer>
-                </ContentWrapper>
-
-                {/* Modal de Adicionar */}
-                {modal && (
-                    <AddTaskModal
-                        columnName={modal.title}
-                        userAvatar={USER_AVATAR}
-                        onClose={() => setModal(null)}
-                        onSave={handleSaveNew}
+                    <SelectProjectModal
+                        isOpen={isProjectModalOpen}
+                        onClose={() => setIsProjectModalOpen(false)}
+                        projects={projects}
+                        onSelectProject={handleSelectProject}
+                        activeProjectId={currentProject?.id ?? ''}
+                        triggerRef={projectTitleRef as React.RefObject<HTMLElement>}
                     />
-                )}
+                    </BoardInfoTitleWrapper>
 
-                {/*  RENDERIZAÇÃO DO MODAL DE EDIÇÃO  */}
-                {editingTask && (
-                    <EditTaskModal
-                        initialData={{ 
-                            title: editingTask.title, 
-                            subtitle: editingTask.subtitle, 
-                            date: editingTask.date 
-                        }}
-                        onClose={cancelEdit}
-                        onSave={handleSaveEdit}
-                    />
-                )}
+                    <AddMemberButton onClick={() => setIsMembersModalOpen(true)}>
+                    <MdPerson />
+                    Gerenciar Colaboradores
+                    </AddMemberButton>
 
-                {/* Modal de Exclusão */}
-                {deleteId && (
-                    <DeleteTaskModal
-                        title="Apagar card"
-                        message="Tem certeza que deseja apagar esta tarefa?"
-                        confirmLabel="Apagar"
-                        cancelLabel="Cancelar"
-                        onConfirm={confirmDelete}
-                        onCancel={cancelDelete}
+                    <MembersModal
+                    isOpen={isMembersModalOpen}
+                    onClose={() => setIsMembersModalOpen(false)}
+                    currentProjectId={currentProject?.id}
                     />
-                )}
-                
-            </ContentContainer>
+                </BoardInfoLeft>
+                </BoardHeader>
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                <ColumnsWrapper>
+                    <KanbanColumn
+                    title="Pendentes"
+                    icon={
+                        <IconWrapper $accentColor="#25B6CF">
+                        <MdAccessTime />
+                        </IconWrapper>
+                    }
+                    accentColor="#25B6CF"
+                    droppableId="PENDENTE"
+                    tasks={columns.PENDENTE}
+                    onAddTask={() => handleAdd('PENDENTE')}
+                    onRequestDelete={requestDelete}
+                    onRequestEdit={requestEdit}
+                    />
+
+                    <KanbanColumn
+                    title="Em andamento"
+                    icon={
+                        <IconWrapper $accentColor="#E0C02C">
+                        <MdAutorenew />
+                        </IconWrapper>
+                    }
+                    accentColor="#E0C02C"
+                    droppableId="ANDAMENTO"
+                    tasks={columns.ANDAMENTO}
+                    onAddTask={() => handleAdd('ANDAMENTO')}
+                    onRequestDelete={requestDelete}
+                    onRequestEdit={requestEdit}
+                    />
+
+                    <KanbanColumn
+                    title="Concluídos"
+                    icon={
+                        <IconWrapper $accentColor="#24C464">
+                        <MdCheckCircle />
+                        </IconWrapper>
+                    }
+                    accentColor="#24C464"
+                    droppableId="CONCLUIDO"
+                    tasks={columns.CONCLUIDO}
+                    onAddTask={() => handleAdd('CONCLUIDO')}
+                    onRequestDelete={requestDelete}
+                    onRequestEdit={requestEdit}
+                    />
+                </ColumnsWrapper>
+                </DragDropContext>
+            </BoardOuterContainer>
+            </ContentWrapper>
+
+            {modal && (
+            <AddTaskModal
+                columnName={modal.title}
+                userAvatar={USER_AVATAR}
+                onClose={() => setModal(null)}
+                onSave={handleSaveNew}
+            />
+            )}
+
+            {editingTask && (
+            <EditTaskModal
+                initialData={{
+                title: editingTask.title,
+                subtitle: editingTask.subtitle,
+                date: editingTask.date,
+                }}
+                onClose={cancelEdit}
+                onSave={handleSaveEdit}
+            />
+            )}
+
+            {deleteId && (
+            <DeleteTaskModal
+                title="Apagar card"
+                message="Tem certeza que deseja apagar esta tarefa?"
+                confirmLabel="Apagar"
+                cancelLabel="Cancelar"
+                onConfirm={confirmDelete}
+                onCancel={cancelDelete}
+            />
+            )}
+        </ContentContainer>
         </PageWrapper>
     );
 };

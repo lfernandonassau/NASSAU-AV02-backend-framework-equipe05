@@ -20,7 +20,7 @@ const SelectProjectModal: React.FC<SelectProjectModalProps> = ({
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
-                modalRef.current && 
+                modalRef.current &&
                 !modalRef.current.contains(event.target as Node) &&
                 triggerRef.current &&
                 !triggerRef.current.contains(event.target as Node)

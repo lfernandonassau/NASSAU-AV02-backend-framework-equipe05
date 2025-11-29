@@ -1,4 +1,3 @@
-// src/types/task.ts
 export type Status = 'PENDENTE' | 'ANDAMENTO' | 'CONCLUIDO';
 
 export interface Member {
@@ -15,10 +14,9 @@ export interface Task {
     members?: Member[];
 }
 
-
-
 // DTO (Data Transfer Object) para criar nova tarefa
 export interface NewTaskData {
+    id?: string; // <- opcional, usado quando vem do backend
     title: string;
     subtitle: string;
     status: Status;

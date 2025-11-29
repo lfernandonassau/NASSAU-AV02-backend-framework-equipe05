@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const api = axios.create({
   baseURL: 'http://localhost:3000',
+  withCredentials: true
 })
 
 // Interceptor pra anexar o token em TODA requisição autenticada
