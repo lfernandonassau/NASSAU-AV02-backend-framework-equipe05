@@ -57,7 +57,6 @@
 | **🔄 Promoção de Membros** | *Líder pode promover ou rebaixar colaboradores dentro do projeto.* |
 | **🗒️ Cards/Tarefas** | *Cada card possui título, prioridade, descrição, status e responsável.* |
 | **📊 Relatórios de Progresso** | *Acompanhamento visual do desempenho dos times.* |
-| **⚙️ Tela de Carregamento (Splash)** | *Exibição do logotipo e inicialização das dependências principais.* |
 
 ---
 
@@ -180,6 +179,4 @@
 |---------|-----------|
 | **yarn install** | *Após clonar o repositório e configurar o arquivo .env, o próximo passo é instalar todas as dependências necessárias para rodar o projeto* 
 
-
-
-# 🧩 Estrutura do Projeto
+---
