@@ -162,7 +162,7 @@
 
 | Comando | Descrição |
 |---------|-----------|
-| **yarn install** | *Após clonar o repositório e configurar o arquivo .env, o próximo passo é instalar todas as dependências necessárias para rodar o projeto* 
+| **yarn install** | *Após clonar o repositório e configurar o arquivo .env, o próximo passo é instalar todas as dependências necessárias para rodar o projeto*
 
 # 👾 Comandos
 
@@ -173,5 +173,11 @@
 | **yarn workspace prisma migrate dev** | *Define a Estrutura: Este comando garante que o banco de dados esteja com o esquema correto (tabelas, colunas, relacionamentos) que você desenhou no schema.prisma.* |
 | **yarn workspace prisma generate** | *Cria o Código: Após o banco de dados estar pronto, este comando lê o esquema finalizado e gera o Prisma Client (as classes e métodos) que o seu código JavaScript/TypeScript usará para interagir com a nova estrutura.* |
 
+# 🚀 Como Rodar o Sistema
 
+### Para rodar o sistema em modo de desenvolvimento:
+
+| Comando | Descrição |
+|---------|-------------|
+| **yarn dev** | *O backend estará rodando em uma porta http://localhost:3000 e o frontend em outra http://localhost:5173 , mas o frontend conseguirá fazer requisições para o backend.* |
 ---
