@@ -21,6 +21,7 @@
 | Integrantes | Contato |
 |-------------|---------|
 | **🏦 ALÂNDERSON SANTOS LIMA DE QUEIROZ** | https://github.com/AlandersonSantos |
+| **🖱️ DANIEL MANOEL SANTOS DA SILVA** | https://github.com/daniel2311x |
 | **💻 RYAN RODRIGUES DOS SANTOS** | https://github.com/Ryan27r |
 | **🖥️ RAFAEL ALEXANDRE SOARES LEITE GALVÃO** | https://github.com/rafxys |
 | **🔍 SAMUEL DOUGLAS DOS SANTOS** | https://github.com/Sadousan |
