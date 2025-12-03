@@ -140,6 +140,8 @@
 | PATCH | /cards/:id | *Atualiza parcialmente os dados do cartão.* |
 | DELET | /cards/:id | *Remove (deleta) um cartão específica pelo ID.* |
 
+*Total de 30 Endpoint*
+
 ---
 
 # 🏃 Passos para Rodar o Sistema
