@@ -167,9 +167,7 @@ const TelaDashboard = () => {
                                         <Tr key={proj.id}>
                                             <Td>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <ProjectIcon>
-                                                        <LiaProjectDiagramSolid />
-                                                    </ProjectIcon>
+                                                    
                                                     <ProjectName>{proj.name}</ProjectName>
                                                 </div>
                                             </Td>
@@ -188,9 +186,6 @@ const TelaDashboard = () => {
                                                 </ProgressContainer>
                                             </Td>
                                             <Td>
-                                                <ActionButton>
-                                                    <MdMoreVert size={20} />
-                                                </ActionButton>
                                                 <ViewMoreButton onClick={() => setSelectedProject(proj)}>
                                                     Ver mais
                                                 </ViewMoreButton>

@@ -41,7 +41,7 @@ export const HeroContainer = styled(motion.main)`
 `;
 
 /* --- CONTAINER GENÉRICO --- */
-export const SectionContainer = styled(motion.section)` // <--- Convertido para motion
+export const SectionContainer = styled(motion.section)`
     width: 100%;
     max-width: 1200px; 
     margin: 0 auto;
@@ -49,10 +49,13 @@ export const SectionContainer = styled(motion.section)` // <--- Convertido para 
     
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 40px;
     
     position: relative;
     z-index: 1;
+
 
     p {
         font-family: 'Montserrat', sans-serif;
@@ -61,10 +64,16 @@ export const SectionContainer = styled(motion.section)` // <--- Convertido para 
         text-align: center;
         max-width: 800px;
         margin: 0 auto;
+        color: #fff; 
     }
 
     @media (max-width: 768px) {
         padding: 60px 20px;
+        
+        &::before {
+            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
     }
 `;
 
@@ -226,7 +235,7 @@ export const IconWrapper = styled.div`
     font-size: 3rem; 
     color: #ffffff;
     margin-bottom: 20px;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+    filter: drop-shadow(0 0 10px rgba(173, 171, 171, 0.4));
 `;
 
 export const FeatureTitle = styled.h3`
@@ -234,6 +243,7 @@ export const FeatureTitle = styled.h3`
     font-size: 1.25rem;
     font-weight: 700;
     color: #ffffff;
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     margin-bottom: 15px;
     text-align: center;
 `;
@@ -242,6 +252,7 @@ export const FeatureText = styled.p`
     font-size: 0.95rem !important; 
     line-height: 1.6;
     color: #e0e0e0;
+    text-shadow: 0 4px 5px rgba(0,0,0,0.3);
     text-align: justify;
     text-align-last: center; 
     width: 100%;
@@ -273,7 +284,7 @@ export const ScrollArea = styled(motion.div)`
 export const MouseIcon = styled.div`
     width: 26px;
     height: 42px;
-    border: 2px solid #fff;
+    border: 2px solid #302f2fff;
     border-radius: 20px;
     position: relative;
     display: flex;
@@ -284,21 +295,21 @@ export const MouseIcon = styled.div`
         top: 6px;
         width: 4px;
         height: 8px;
-        background-color: #fff;
+        background-color: #302f2fff;
         border-radius: 2px;
     }
 `;
 
 export const ScrollText = styled.span`
     font-family: 'Montserrat', sans-serif;
-    color: #fff;
+    color: #000000ff;
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.5px;
 `;
 
 /* --- SEÇÃO "COMO FUNCIONA" --- */
-export const WorkflowSection = styled(motion.section)` // <--- Convertido para motion
+export const WorkflowSection = styled(motion.section)`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -311,7 +322,7 @@ export const WorkflowSection = styled(motion.section)` // <--- Convertido para m
     z-index: 1;
 `;
 
-export const StepsContainer = styled(motion.div)` // <--- Convertido para motion
+export const StepsContainer = styled(motion.div)` 
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -320,7 +331,7 @@ export const StepsContainer = styled(motion.div)` // <--- Convertido para motion
     @media (max-width: 900px) { flex-direction: column; align-items: center; gap: 50px; }
 `;
 
-export const StepItem = styled(motion.div)` // <--- Convertido para motion
+export const StepItem = styled(motion.div)` 
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -342,7 +353,7 @@ export const StepItem = styled(motion.div)` // <--- Convertido para motion
     }
 `;
 
-export const StepNumber = styled(motion.div)` // <--- Convertido para motion
+export const StepNumber = styled(motion.div)` 
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -374,22 +385,51 @@ export const StepDescription = styled.p`
 `;
 
 /* --- CTA FINAL --- */
-export const CTAContainer = styled(motion.div)` // <--- Convertido para motion
+export const CTAContainer = styled(motion.div)`
     width: 100%;
     max-width: 100%;
     margin: 40px auto 100px auto;
     padding: 120px 20px 60px 20px;
-    background: linear-gradient(135deg, rgba(74, 144, 187, 0.49) 0%, rgba(1, 39, 58, 0.37) 100%);
-    backdrop-filter: blur(10px);
+    
+    /* Layout e Posicionamento */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 30px;
-    position: relative;
-    z-index: 1;
+    position: relative; 
+    z-index: 1; 
     text-shadow: 0 4px 5px rgba(0,0,0,0.3);
-    box-shadow: 0 20px 50px rgba(1, 145, 218, 0.3);
+
+    /* --- CAMADA DE FUNDO ISOLADA --- */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        
+        /* background de vidro */
+        background: linear-gradient(150deg, rgba(51, 116, 156, 0.62) 50%, rgba(51, 116, 156, 0.62)50%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        */
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%, 
+            black 25%,     /* 25% da altura é usada para o fade-in suave */
+            black 75%,     /* Mantém visível até 75% da altura */
+            transparent 100% /* Os últimos 25% são para o fade-out */
+        );
+
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%, 
+            black 25%,
+            black 75%,
+            transparent 100%
+        );
+    }
+
 
     h2 {
         font-family: 'Lobster Two', sans-serif;
@@ -410,6 +450,11 @@ export const CTAContainer = styled(motion.div)` // <--- Convertido para motion
         width: auto;
         padding: 40px 20px;
         h2 { font-size: 2rem; }
+        
+        &::before {
+             mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
     }
 `;
 

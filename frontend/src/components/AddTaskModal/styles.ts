@@ -43,7 +43,7 @@ export const ModalCard = styled.div`
 `;
 
 export const ModalHeader = styled.div`
-  background-color: #363636ff;
+  background: transparent;
   padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -55,7 +55,7 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.h2`
   font-size: 1.1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #2b2b2bff;
   margin: 0;
   display: flex;
   align-items: center;
@@ -71,9 +71,8 @@ export const ModalTitle = styled.h2`
 `;
 
 export const CloseButton = styled.button`
-  background: rgba(255,255,255,0.1);
   border: none;
-  color: #ffffff;
+  color: #313131ff;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -85,7 +84,7 @@ export const CloseButton = styled.button`
   font-size: 18px;
 
   &:hover {
-    background: rgba(255,255,255,0.2);
+
     transform: rotate(90deg);
   }
 `;
