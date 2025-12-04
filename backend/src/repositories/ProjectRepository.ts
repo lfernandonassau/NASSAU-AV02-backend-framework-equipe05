@@ -9,38 +9,62 @@ export type CreateProjectData = {
 
 export default {
     async create(data: CreateProjectData) {
-        const ownerIdBigInt = BigInt(data.ownerId)
+            const ownerIdBigInt = BigInt(data.ownerId)
 
-        return prisma.$transaction(async (tx) => {
-        // 1) Cria o projeto normalmente
-        const project = await tx.project.create({
-            data: {
-            title: data.title,
-            ...(data.subtitle !== undefined && { subtitle: data.subtitle }),
-            ownerId: ownerIdBigInt,
-            },
-        })
+            return prisma.$transaction(async (tx) => {
+                // 1) Cria o projeto normalmente
+                const project = await tx.project.create({
+                    data: {
+                        title: data.title,
+                        ...(data.subtitle !== undefined && { subtitle: data.subtitle }),
+                        ownerId: ownerIdBigInt,
+                    },
+                })
 
-        // 2) Cria o JOB de LEADER para esse projeto
-        const leaderJob = await tx.job.create({
-            data: {
-            position: 'LEADER',       // usa o enum ClassJob
-            projectId: project.id_project,
-            },
-        })
+                // 2) Cria as 3 colunas padrão do board desse projeto
+                //    (ajuste os títulos se quiser outro texto no front)
+                await tx.column.createMany({
+                    data: [
+                        {
+                            title: 'Pendentes',
+                            subtitle: 'Tarefas ainda não iniciadas',
+                            status: 'PENDENTE',
+                            projectId: project.id_project,
+                        },
+                        {
+                            title: 'Em andamento',
+                            subtitle: 'Tarefas em execução',
+                            status: 'EM_ANDAMENTO',
+                            projectId: project.id_project,
+                        },
+                        {
+                            title: 'Concluídos',
+                            subtitle: 'Tarefas finalizadas',
+                            status: 'CONCLUIDO',
+                            projectId: project.id_project,
+                        },
+                    ],
+                })
 
-        // 3) Vincula o dono do projeto a esse JOB como UserPosition
-        await tx.userPosition.create({
-            data: {
-            userId: ownerIdBigInt,
-            jobId: leaderJob.id_job,
-            },
-        })
+                // 3) Cria o JOB de LEADER para esse projeto
+                const leaderJob = await tx.job.create({
+                    data: {
+                        position: 'LEADER',
+                        projectId: project.id_project,
+                    },
+                })
 
-        // retorna só o projeto (como antes)
-        return project
-        })
-    },
+                // 4) Vincula o dono do projeto a esse JOB como UserPosition
+                await tx.userPosition.create({
+                    data: {
+                        userId: ownerIdBigInt,
+                        jobId: leaderJob.id_job,
+                    },
+                })
+
+                return project
+            })
+        },
 
     async listByOwner(userId: number) {
         return prisma.project.findMany({

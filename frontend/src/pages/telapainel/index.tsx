@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Tipos e Contexto
@@ -8,15 +8,15 @@ import { useTasks } from '../../context/TasksContext';
 
 // Componentes
 import { AddTaskModal } from '../../components/AddTaskModal';
-import { KanbanColumn } from '../../components/PainelCardsColumn';
 import { DeleteTaskModal } from '../../components/DeleteTaskModal';
-import { Sidebar } from '../../components/Sidebar';
+import { EditTaskModal } from '../../components/EditTaskModal';
 import { HeaderProfile } from '../../components/HeaderProfile';
 import MembersModal from '../../components/MembersModal';
-import { EditTaskModal } from '../../components/EditTaskModal';
+import { KanbanColumn } from '../../components/PainelCardsColumn';
+import { PerfilHomeBar } from '../../components/PerfilHomeBar';
 import { SelectProjectModal } from '../../components/SelectProjectModal';
 import { Project } from '../../components/SelectProjectModal/types';
-import { PerfilHomeBar } from '../../components/PerfilHomeBar';
+import { Sidebar } from '../../components/Sidebar';
 
 // Ícones
 import {
@@ -29,21 +29,21 @@ import {
 
 // Estilos
 import {
-    PageWrapper,
-    ContentContainer,
-    BoardOuterContainer,
+    AddMemberButton,
     BoardHeader,
     BoardInfoLeft,
     BoardInfoTitle,
-    ColumnsWrapper,
-    ContentWrapper,
-    AddMemberButton,
-    IconWrapper,
     BoardInfoTitleWrapper,
+    BoardOuterContainer,
+    ColumnsWrapper,
+    ContentContainer,
+    ContentWrapper,
+    IconWrapper,
+    PageWrapper,
 } from './styles';
 
 import { api } from '../../services/api';
-import { isoToBrazilianDate, brazilianToIsoDate } from '../../utils/date';
+import { brazilianToIsoDate, isoToBrazilianDate } from '../../utils/date';
 
 const USER_AVATAR = 'https://avatars.githubusercontent.com/u/179970243?v=4';
 
@@ -535,3 +535,4 @@ const PainelPage: React.FC = () => {
 };
 
 export { PainelPage };
+

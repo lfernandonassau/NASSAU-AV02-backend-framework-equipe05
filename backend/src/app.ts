@@ -15,6 +15,7 @@ const app = express()
 
 app.use(express.json())
 
+//Compartilhamento de recursos com origens diferentes
 const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true,

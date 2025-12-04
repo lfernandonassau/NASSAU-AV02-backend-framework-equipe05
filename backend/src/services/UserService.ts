@@ -37,6 +37,7 @@ export default {
     if (cleanCpf.length !== 11) {
     throw new Error('CPF inválido');
     }
+
     // Regra básica
     if (!data.email) {
         throw new Error('E-mail obrigatório')
@@ -89,6 +90,7 @@ export default {
         if (input.name !== undefined) data.name = input.name
         if (input.lastname !== undefined) data.lastname = input.lastname
         if (input.email !== undefined) data.email = input.email
+        // pode sim, discuta com a lei 🤬 (clbc Alan)
         if (input.cpf !== undefined) data.cpf = input.cpf
         if (input.bio !== undefined) data.bio = input.bio
         if (input.imagemUrl !== undefined) data.imagemUrl = input.imagemUrl

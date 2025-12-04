@@ -1,20 +1,11 @@
-// 1) Importamos apenas os TYPES do Express com `import type`
-//    => Isso evita que o TypeScript misture tipo e valor quando
-//    a opção `verbatimModuleSyntax` está ligada.
 import type { Request, Response, NextFunction } from 'express'
-
-// 2) Importa o "valor" default do jsonwebtoken (jwt)
-//    e, separadamente, o TYPE JwtPayload.
 import jwt from 'jsonwebtoken'
 import type { JwtPayload } from 'jsonwebtoken'
 
-// 3) Chave secreta usada para assinar e verificar o token.
-//    Ideal: vir do .env. Aqui forçamos pra string.
+//Chave secreta usada para assinar e verificar o token.
 const JWT_SECRET = (process.env.JWT_SECRET || 'dev-secret-define-no-.env') as string
 
-// 4) Definimos qual é o *formato* do payload do nosso token.
-//    Ele estende JwtPayload (que já tem coisas como `iat`, `exp`, etc),
-//    e adicionamos os campos específicos do Kodan.
+//Definimos qual é o *formato* do payload do nosso token.
 interface KodanJwtPayload extends JwtPayload {
     id_user: number
     name: string
@@ -22,8 +13,7 @@ interface KodanJwtPayload extends JwtPayload {
     email: string
 }
 
-// 5) Middleware propriamente dito.
-//    Ele deve ser usado nas rotas que precisam de autenticação.
+//    middleware usado nas rotas que precisam de autenticação.
 //    Ex: router.get('/me', ensureAuthenticated, UserController.me)
 export function ensureAuthenticated(
     req: Request,

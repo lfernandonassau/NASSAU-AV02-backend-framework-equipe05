@@ -67,11 +67,11 @@ const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }: IAddTaskModel
 
   // Efeito para Foco e Acessibilidade (Escape)
   useEffect(() => {
-    //  Focar o primeiro input ao abrir
+    // Focar o primeiro input apenas quando o modal abrir
     if (titleInputRef.current) {
-        titleInputRef.current.focus();
+      titleInputRef.current.focus();
     }
-    
+
     // Fechar o modal com a tecla ESC
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -80,8 +80,14 @@ const AddTaskModal = ({ columnName, onClose, onSave, userAvatar }: IAddTaskModel
     };
 
     window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+    // roda isso apenas na montagem do modal - resolvendo foco infinito no titulo, induzido pelo reload ao mudar campo
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   return (
     // Fechamento do modal ao clicar no Overlay 
