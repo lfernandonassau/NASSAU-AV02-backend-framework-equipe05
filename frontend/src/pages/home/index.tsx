@@ -162,7 +162,7 @@ const Home = () => {
                 </FeaturesGrid>
             </SectionContainer>
 
-            {/* SEÇÃO DE WORKFLOW (COMO FUNCIONA) */}
+            {/* (COMO FUNCIONA) */}
             <WorkflowSection
                 initial="hidden"
                 whileInView="visible"

@@ -55,7 +55,7 @@ export const CardContainer = styled.div<IAnimation>`
 // MINI SIDEBAR
 export const SidebarContainer = styled.div`
     width: 280px;
-    background: linear-gradient(160deg, #2b2b2bff 0%, #000000ff 100%); 
+    background: linear-gradient(160deg, #10b4f5ff 0%, #eeececff 100%); 
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -70,7 +70,7 @@ export const SidebarContainer = styled.div`
         left: -50px;
         width: 150px;
         height: 150px;
-        background-color: #000000ff; 
+        background-color: #eeececff; 
         border-radius: 50%;
         filter: blur(40px);
         opacity: 0.8;
@@ -83,7 +83,7 @@ export const SidebarContainer = styled.div`
         right: 20px;
         width: 80px;
         height: 80px;
-        background-color: #f1edeeff; /* Rosa */
+        background-color: #eeececff;
         border-radius: 50%;
         filter: blur(30px);
         opacity: 0.6;
@@ -143,8 +143,8 @@ export const StepNumber = styled.div<{ $active?: boolean }>`
     height: 35px;
     border-radius: 50%;
     border: 1px solid ${({ $active }) => $active ? 'transparent' : '#ffffff'};
-    background-color: ${({ $active }) => $active ? '#bfe2fd' : 'transparent'};
-    color: ${({ $active }) => $active ? '#022959' : '#ffffff'};
+    background-color: ${({ $active }) => $active ? '#ffffffff' : 'transparent'};
+    color: ${({ $active }) => $active ? '#000000ff' : '#ffffff'};
     
     display: flex;
     align-items: center;
@@ -199,7 +199,7 @@ export const FormHeader = styled.div`
     h2 {
         font-family: 'Montserrat', sans-serif;
         font-size: 2rem;
-        color: #022959;
+        color: #10b4f5ff;
         font-weight: 700;
         margin: 0 0 10px 0;
     }
@@ -224,7 +224,7 @@ export const FormBody = styled.div`
 export const Label = styled.label`
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
-    color: #022959;
+    color: #222222ff;
     font-weight: 500;
     margin-bottom: 6px;
     display: block;
@@ -245,7 +245,7 @@ export const ButtonsContainer = styled.div`
 `;
 
 export const NextButton = styled.button`
-    background-color: #022959;
+    background-color: #10b4f5ff;
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -256,7 +256,7 @@ export const NextButton = styled.button`
     cursor: pointer;
     transition: background 0.2s;
     
-    &:hover { background-color: #164a8a; }
+    &:hover { background-color: #242424ff; }
 `;
 
 export const BackButton = styled.button`
@@ -269,7 +269,7 @@ export const BackButton = styled.button`
     cursor: pointer;
     transition: color 0.2s;
 
-    &:hover { color: #022959; }
+    &:hover { color: #10b4f5ff; }
 `;
 
 /* UTILITÁRIOS E ÍCONES  */
@@ -296,7 +296,7 @@ export const TermsContainer = styled.div`
 export const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
     width: 18px;
     height: 18px;
-    accent-color: #483EFF;
+    accent-color: #10b4f5ff;
 `;
 
 export const TermsText = styled.p`
@@ -304,24 +304,24 @@ export const TermsText = styled.p`
     font-size: 14px;
     color: #9699aa;
     span { 
-        color: #483EFF; 
+        color: #10b4f5ff; 
         text-decoration: underline; 
         cursor: pointer; }
 `;
 
 export const LoginIconStyled = styled(MdEmail)` 
-    color: #022959; 
+    color: #10b4f5ff; 
     font-size: 20px; 
 `;
 export const PasswordStyled = styled(MdLock)` 
-    color: #022959; 
+    color: #10b4f5ff; 
     font-size: 20px; 
 `;
 export const MagicEye = styled(MdVisibility)` 
     color: #9699aa; cursor: pointer; 
     font-size: 20px; 
     &:hover { 
-        color: #022959; 
+        color: #10b4f5ff; 
     } 
 `;
 export const MagicEyeOff = styled(MdVisibilityOff)` 
@@ -329,7 +329,7 @@ export const MagicEyeOff = styled(MdVisibilityOff)`
     cursor: pointer; 
     font-size: 20px; 
     &:hover { 
-        color: #022959; 
+        color: #10b4f5ff; 
     } 
 `;
 
@@ -388,7 +388,7 @@ export const CenteredContainer = styled.div`
 
 export const LoadingText = styled.p`
     font-family: 'Montserrat', sans-serif;
-    color: #022959;
+    color: #10b4f5ff;
     font-weight: 600;
     font-size: 1rem;
 `;
