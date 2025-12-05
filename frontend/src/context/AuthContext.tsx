@@ -57,8 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 5. Função de Login
   const signIn = async ({ email, password }: SignInCredentials) => {
     try {
-      const response = await api.post('/sessions', { email, password }); 
-      // Ajuste '/sessions' para sua rota real de login (ex: '/auth/login')
+      const response = await api.post('/auth/login', { email, password }); 
 
       const { token, user } = response.data;
 

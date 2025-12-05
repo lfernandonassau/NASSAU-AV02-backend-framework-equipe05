@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
+import { useAuth } from '../../context/AuthContext';
 import {
     Column,
     LoginIconStyled,
@@ -43,6 +44,8 @@ const schema = yup.object({
 }).required()
 
 const Login = () => {
+    const { signIn } = useAuth();
+    const navigate = useNavigate();
 
     const [estaVisivel, setEstaVisivel] = useState(false)
     useEffect(() => {
@@ -60,19 +63,13 @@ const Login = () => {
     // Esqueci senha MODAL
     const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
-    const navigate = useNavigate()
-
     const onSubmit = async (formData: IFormData) => {
-    try {
-        const { data } = await api.post('/auth/login', {
+        try{
+            await signIn({
             email: formData.email,
             password: formData.password,
-        })
+      });
 
-        // data = { user, token }
-
-        localStorage.setItem('kodan_token', data.token)
-        localStorage.setItem('kodan_user', JSON.stringify(data.user))
 
         navigate('/perfil')
 
@@ -87,32 +84,32 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
 
     // LOGIN COM GOOGLE
+    const { updateUser } = useAuth();
+
     const handleGoogleLogin = async () => {
         try {
-            // Login no Firebase (popup)
-            const result = await signInWithPopup(auth, googleProvider)
-            const user = result.user
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            const idToken = await user.getIdToken();
 
-            // Pega o ID Token do Firebase
-            const idToken = await user.getIdToken()
+            const { data } = await api.post('/auth/google', { idToken });
 
-            // Envia pro backend validar e gerar o JWT do Kodan
-            const { data } = await api.post('/auth/google', { idToken })
+            localStorage.setItem('kodan_token', data.token);
+            localStorage.setItem('kodan_user', JSON.stringify(data.user));
 
-            // Espera que o backend devolva { user, token } igual ao /auth/login normal
-            localStorage.setItem('kodan_token', data.token)
-            localStorage.setItem('kodan_user', JSON.stringify(data.user))
+            api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+            updateUser(data.user);
 
-            navigate('/perfil')
-        } catch (error: any) {
-            console.error('Erro ao entrar com Google:', error)
+            navigate('/perfil');
+            } catch (error: any) {
+                console.error('Erro ao entrar com Google:', error)
 
-            const message =
-            error?.response?.data?.message ||
-            'Erro ao entrar com Google. Tente novamente.'
+                const message =
+                error?.response?.data?.message ||
+                'Erro ao entrar com Google. Tente novamente.'
 
-            alert(message)
-        }
+                alert(message)
+            }
     }
 
     return (
