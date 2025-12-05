@@ -12,6 +12,8 @@ import {Estatisticas} from "../pages/telaEstatisticas";
 import { TelaConfig } from "../pages/telaconfiguracoes";
 import { NossaEquipe } from "../pages/equipe";
 import { AlterarSenha } from "../pages/alterarsenha";
+import { ProtectedRoute } from "../components/Protected/ProtectedRoute";
+
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -20,16 +22,16 @@ const AppRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/painel" element={<PainelPage />} />
-          <Route path="/projetos" element={<TelaProjetos />} />
-          <Route path="/dashboard" element={<TelaDashboard />} />
-          <Route path="/perfil" element={<TelaPerfil />} />
-          <Route path="/estatisticas" element={<Estatisticas />} /> 
-          <Route path="/configuracoes" element={<TelaConfig />} />
-          <Route path="/configuracoes" element={<TelaConfig />} /> 
-          <Route path="/equipe" element={<NossaEquipe />} />
-          //<Route path="/reset-password" element={<AlterarSenha />} />
-          // apenas uma tela de teste por enquanto:
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/painel" element={<PainelPage />} />
+            <Route path="/projetos" element={<TelaProjetos />} />
+            <Route path="/dashboard" element={<TelaDashboard />} />
+            <Route path="/perfil" element={<TelaPerfil />} />
+            <Route path="/estatisticas" element={<Estatisticas />} />
+            <Route path="/configuracoes" element={<TelaConfig />} />
+            <Route path="/equipe" element={<NossaEquipe />} />
+          </Route>
+          <Route path="/reset-password" element={<AlterarSenha />} />
         </Routes>
       </TasksProvider>
     </BrowserRouter>
